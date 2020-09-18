@@ -26,11 +26,11 @@
 <!-- Site wrapper -->
 <div class="wrapper">
     <!-- Navbar -->
-@include('layouts.navbar')
+@include('partials.navbar')
 <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
-@include('layouts.sidebar')
+@include('partials.sidebar')
 
 <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -39,14 +39,11 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>@yield('content-title', 'Mercalub')</h1>
+                        <h1>@yield('content-title', 'Efigas')</h1>
                     </div>
-                    {{--<div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Blank Page</li>
-                        </ol>
-                    </div>--}}
+                    <div class="col-sm-6">
+                        @yield('action-button')
+                    </div>
                 </div>
             </div><!-- /.container-fluid -->
         </section>
@@ -61,15 +58,14 @@
         <div class="float-right d-none d-sm-block">
             <b>Version</b> 2.0
         </div>
-        <strong>Copyright &copy; {{ NOW()->format('Y') }} <a href="{{ config('app.url') }}">Mercalub</a>.</strong> Todos los derechos reservados.
+        <strong>Copyright &copy; {{ NOW()->format('Y') }} <a href="{{ config('app.url') }}">Efigas</a>.</strong> Todos los derechos reservados.
         <small class="text-muted">by <a href="http://jimmirobles.tech" target="_blank">Jimmi Robles</a></small>
     </footer>
 </div>
 <!-- ./wrapper -->
-{{--<form action="{{ Auth::guard('admin')->check() ? route('admin.logout') : route('logout') }}" method="POST"
-      id="logoutForm" class="d-none">
+<form action="{{ route('logout') }}" method="POST" id="logoutForm" class="d-none">
     @csrf
-</form>--}}
+</form>
 <script src="{{ asset('/js/app.js') }}"></script>
 <!-- SweetAlert2 -->
 <script src="{{ asset('/vendor/adminlte/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
@@ -81,5 +77,11 @@
 <!-- Select2 -->
 <script src="{{ asset('/vendor/adminlte/plugins/select2/js/select2.full.min.js') }}"></script>
 @yield('scripts')
+<script>
+    $('#logoutButton').on('click', function (event) {
+        event.preventDefault();
+        $('#logoutForm').submit();
+    });
+</script>
 </body>
 </html>
