@@ -27,7 +27,7 @@
                                         <td>{{ $client->name }}</td>
                                         <td>{{ $client->email }}</td>
                                         <td>{{ $client->phone }}</td>
-                                        <td><a href="" class="btn btn-xs btn-success">SMS Prueba</a></td>
+                                        <td><a href="{{ route('clients.show', $client) }}" class="btn btn-xs btn-primary float-sm-right"><i class="far fa-search"></i> Ver</a></td>
                                     </tr>
                                 @endforeach
                                 </tbody>

@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Clients;
 use Illuminate\Http\Request;
 use AWS;
 
 class SMSController extends Controller
 {
-    protected function sendSMS($phone_number){
+    protected function sendSMS($id){
+
+        $client = Clients::find($id);
+        $phone_number = $client->country_code.$client->phone;
+
         $sms = AWS::createClient('sns');
 
         $sms->publish([
@@ -20,5 +25,7 @@ class SMSController extends Controller
                 ]
             ],
         ]);
+
+        return redirect()->route('clients.index');
     }
 }

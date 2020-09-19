@@ -5,58 +5,32 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
+                    <div class="card-header">
+                        <nav class="nav nav-pills nav-justified">
+                            <a class="nav-link active" href="#">Paso 1. Datos generales</a>
+                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Paso 2.
+                                Contactos</a>
+                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Paso 3.
+                                Direcciones</a>
+                        </nav>
+                    </div>
                     <div class="card-body">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @endif
+                        <div class="">
+                            <p class="lead mb-3">Información general del cliente</p>
+                        </div>
 
-                            <form action="{{ route('clients.store') }}" role="form" method="POST">
-                                @csrf
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="code">Número de cuenta</label>
-                                            <input type="text" class="form-control {{ $errors->first('account_number') ? 'is-invalid' : '' }}" name="account_number" id="code" placeholder="Número de cuenta">
-                                            {!! $errors->first('account_number', '<div class="invalid-feedback">:message</div>') !!}
-                                        </div>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="form-group">
-                                            <label for="name">Nombre completo</label>
-                                            <input type="name" class="form-control {{ $errors->first('name') ? 'is-invalid' : '' }}" name="name" id="name" placeholder="Nombre completo">
-                                            {!! $errors->first('name', '<div class="invalid-feedback">:message</div>') !!}
-                                        </div>
-                                    </div>
+                        <form action="{{ route('clients.store') }}" role="form" method="POST">
+                            @csrf
+                            @include('partials.forms.client')
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <button class="btn btn-sm btn-primary" type="submit">Guardar y siguiente</button>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="rfc">RFC</label>
-                                            <input type="text" class="form-control {{ $errors->first('rfc') ? 'is-invalid' : '' }}" name="rfc" id="rfc" placeholder="RFC">
-                                            {!! $errors->first('rfc', '<div class="invalid-feedback">:message</div>') !!}
-                                        </div>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="form-group">
-                                            <label for="email">Email</label>
-                                            <input type="email" class="form-control {{ $errors->first('email') ? 'is-invalid' : '' }}" name="email" id="email" placeholder="Ingresar email">
-                                            {!! $errors->first('email', '<div class="invalid-feedback">:message</div>') !!}
-                                        </div>
-                                    </div>
+                                <div class="col-md-6">
+                                    <a class="btn btn-sm btn-danger float-sm-right" href="{{ route('clients.index') }}">Cancelar</a>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="phone">Teléfono</label>
-                                            <input type="text" class="form-control {{ $errors->first('phone') ? 'is-invalid' : '' }}" name="phone" id="phone" placeholder="Número de teléfono">
-                                            {!! $errors->first('phone', '<div class="invalid-feedback">:message</div>') !!}
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="btn btn-sm btn-primary" type="submit">Completar</button>
-                            </form>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

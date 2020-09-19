@@ -19,12 +19,12 @@ class CreateClientsTable extends Migration
             $table->string('name');
             $table->string('rfc')->unique();
             $table->string('email')->unique();
+            $table->string('country_code');
             $table->string('phone');
             $table->string('ref1_name')->nullable();
             $table->string('ref1_phone')->nullable();
             $table->string('ref2_name')->nullable();
             $table->string('ref2_phone')->nullable();
-            $table->integer('address_id')->nullable();
             $table->timestamps();
         });
     }
