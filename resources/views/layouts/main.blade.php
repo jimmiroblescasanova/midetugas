@@ -7,14 +7,14 @@
     <title>{{ config('app.name') }} | @yield('title', 'WebApp')</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('/vendor/adminlte/plugins/fontawesome-free/css/all.min.css') }}">
     <!-- SweetAlert2 -->
     <link rel="stylesheet" href="{{ asset('/vendor/adminlte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
     <!-- DataTables CSS -->
-    <link rel="stylesheet" href="{{ asset('/vendor/adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.css') }}">
-    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
+        <link rel="stylesheet" href="{{ asset('/vendor/adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.css') }}">
+{{--    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">--}}
 
     <link rel="stylesheet" href="{{ asset('/vendor/adminlte/plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/vendor/adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
@@ -38,18 +38,15 @@
         <section class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1>@yield('content-title', 'Efigas')</h1>
-                    </div>
-                    <div class="col-sm-6">
-                        @yield('action-button')
-                    </div>
+                    @yield('header')
                 </div>
-            </div><!-- /.container-fluid -->
+            </div>
         </section>
 
         <section class="content">
-            @yield('content')
+            <div class="container-fluid">
+                @yield('content')
+            </div>
         </section>
     </div>
     <!-- /.content-wrapper -->
@@ -61,6 +58,8 @@
         <strong>Copyright &copy; {{ NOW()->format('Y') }} <a href="{{ config('app.url') }}">Efigas</a>.</strong> Todos los derechos reservados.
         <small class="text-muted">by <a href="http://jimmirobles.tech" target="_blank">Jimmi Robles</a></small>
     </footer>
+
+    @yield('modal-section')
 </div>
 <!-- ./wrapper -->
 <form action="{{ route('logout') }}" method="POST" id="logoutForm" class="d-none">
@@ -73,7 +72,7 @@
 <!-- DataTables -->
 <script src="{{ asset('/vendor/adminlte/plugins/datatables/jquery.dataTables.js') }}"></script>
 <script src="{{ asset('/vendor/adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.js') }}"></script>
-<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+{{--<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>--}}
 <!-- Select2 -->
 <script src="{{ asset('/vendor/adminlte/plugins/select2/js/select2.full.min.js') }}"></script>
 @yield('scripts')

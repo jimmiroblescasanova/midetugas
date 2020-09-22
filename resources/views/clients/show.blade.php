@@ -43,34 +43,43 @@
                         <div class="tab-content" id="custom-tabs-four-tabContent">
                             <div class="tab-pane fade show active" id="custom-tabs-four-home" role="tabpanel"
                                  aria-labelledby="custom-tabs-four-home-tab">
-                                <form action="{{ route('clients.store') }}" role="form" method="POST">
+                                <form action="{{ route('clients.update', $client) }}" role="form" method="POST">
                                     @csrf
+                                    @method('patch')
                                     @include('partials.forms.client')
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <button class="btn btn-sm btn-primary" type="submit">Actualizar
-                                            </button>
+                                            <button class="btn btn-sm btn-primary" type="submit">Actualizar</button>
                                         </div>
                                     </div>
                                 </form>
                             </div>
                             <div class="tab-pane fade" id="custom-tabs-four-profile" role="tabpanel"
                                  aria-labelledby="custom-tabs-four-profile-tab">
-                                <form action="{{ route('clients.contacts.store') }}" role="form" method="POST">
-                                @csrf
-                                  @include('partials.forms.contacts')
+                                <form action="{{ route('contacts.update', $client) }}" role="form" method="POST">
+                                    @csrf
+                                    @method('patch')
+                                    @include('partials.forms.contacts')
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <button class="btn btn-sm btn-primary" type="submit">Actualizar</button>
+                                        </div>
+                                    </div>
                                 </form>
                             </div>
                             <div class="tab-pane fade" id="custom-tabs-four-messages" role="tabpanel"
                                  aria-labelledby="custom-tabs-four-messages-tab">
-                                Morbi turpis dolor, vulputate vitae felis non, tincidunt congue mauris. Phasellus
-                                volutpat augue id mi placerat mollis. Vivamus faucibus eu massa eget condimentum. Fusce
-                                nec hendrerit sem, ac tristique nulla. Integer vestibulum orci odio. Cras nec augue
-                                ipsum. Suspendisse ut velit condimentum, mattis urna a, malesuada nunc. Curabitur
-                                eleifend facilisis velit finibus tristique. Nam vulputate, eros non luctus efficitur,
-                                ipsum odio volutpat massa, sit amet sollicitudin est libero sed ipsum. Nulla lacinia, ex
-                                vitae gravida fermentum, lectus ipsum gravida arcu, id fermentum metus arcu vel metus.
-                                Curabitur eget sem eu risus tincidunt eleifend ac ornare magna.
+                                <form action="{{ route('address.update') }}" role="form" method="POST">
+                                    @csrf
+                                    @method('patch')
+                                    @include('partials.forms.address')
+                                    <input type="hidden" name="client_id" value="{{ $client->id }}">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <button class="btn btn-sm btn-primary" type="submit">Actualizar</button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>

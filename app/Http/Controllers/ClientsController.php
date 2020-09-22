@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Addresses;
 use App\Clients;
-use App\Http\Requests\SaveAddressRequest;
-use App\Http\Requests\SaveContactRequest;
 use App\Http\Requests\StoreClientRequest;
+use App\Http\Requests\UpdateClientRequest;
 use Illuminate\Http\Request;
 
 class ClientsController extends Controller
@@ -31,46 +30,25 @@ class ClientsController extends Controller
     {
         $client = Clients::create($request->validated());
 
-//        return $client;
-        return redirect()->route('clients.contacts.add', $client->id);
+        return redirect()->route('contacts.create', $client->id);
     }
 
     public function show(Clients $client)
     {
+        if ( !$address = Addresses::where('client_id', $client->id)->first() )
+        {
+            $address = new Addresses;
+        }
+
         return view('clients.show', [
             'client' => $client,
+            'address' => $address,
         ]);
     }
 
-    public function contacts($id)
+    public function update(Clients $client, UpdateClientRequest $request)
     {
-        $client = Clients::find($id);
-
-        return view('clients.contacts', [
-            'client' => $client,
-        ]);
-    }
-
-    public function saveContact(SaveContactRequest $request)
-    {
-        $client = Clients::find(request('id'));
-
         $client->update( $request->validated() );
-
-        return redirect()->route('clients.address.add', $client->id);
-
-    }
-
-    public function address($id)
-    {
-        return view('clients.addresses', [
-            'id' => $id,
-        ]);
-    }
-
-    public function saveAddress(SaveAddressRequest $request)
-    {
-        Addresses::create( $request->validated() );
 
         return redirect()->route('clients.index');
     }

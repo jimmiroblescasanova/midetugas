@@ -7,7 +7,8 @@
                    name="account_number"
                    id="account_number"
                    placeholder="Número de cuenta"
-                   value="{{ old('account_number', $client->account_number) }}">
+                   value="{{ old('account_number', $client->account_number) }}"
+                {{ request()->routeIs('clients.show') ? 'readonly' : '' }}/>
             {!! $errors->first('account_number', '<div class="invalid-feedback">:message</div>') !!}
         </div>
     </div>
