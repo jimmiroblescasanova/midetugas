@@ -34,4 +34,5 @@ Route::get('/measurers/create', 'MeasurersController@create')->name('measurers.c
 Route::post('/measurers', 'MeasurersController@store')->name('measurers.store');
 Route::delete('/measurers', 'MeasurersController@destroy')->name('measurers.destroy');
 
-
+// Routes for documents
+Route::get('/documents/create', 'DocumentsController@create')->name('documents.create');

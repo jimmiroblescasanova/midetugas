@@ -5,6 +5,11 @@ function setActive($routeName)
     return request()->routeIs($routeName) ? 'active' : '';
 }
 
+function showMenu($routeName)
+{
+    return request()->routeIs($routeName) ? 'menu-open' : '';
+}
+
 function setBadge($state)
 {
     if ($state)

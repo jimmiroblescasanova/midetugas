@@ -33,8 +33,8 @@
                         <p>Medidores</p>
                     </a>
                 </li>
-                <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link">
+                <li class="nav-item has-treeview {{ showMenu('documents.*') }}">
+                    <a href="#" class="nav-link {{ setActive('documents.*') }}">
                         <i class="nav-icon fas fa-receipt"></i>
                         <p>Recibos
                             <i class="right fas fa-angle-left"></i>
@@ -42,7 +42,7 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="" class="nav-link">
+                            <a href="{{ route('documents.create') }}" class="nav-link {{ setActive('documents.create') }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Capturar</p>
                             </a>
