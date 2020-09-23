@@ -41,6 +41,8 @@
                     @yield('header')
                 </div>
             </div>
+
+            @yield('alert')
         </section>
 
         <section class="content">

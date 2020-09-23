@@ -15,7 +15,7 @@ class CreateClientsTable extends Migration
     {
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
-            $table->integer('account_number');
+            $table->string('account_number');
             $table->string('name');
             $table->string('rfc')->unique();
             $table->string('email')->unique();
@@ -25,6 +25,7 @@ class CreateClientsTable extends Migration
             $table->string('ref1_phone')->nullable();
             $table->string('ref2_name')->nullable();
             $table->string('ref2_phone')->nullable();
+            $table->unsignedBigInteger('measurer_id')->nullable();
             $table->timestamps();
         });
     }

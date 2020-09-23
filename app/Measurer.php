@@ -12,4 +12,10 @@ class Measurer extends Model
     {
         $this->attributes['code'] = strtoupper($val);
     }
+
+    public function setSerialNumberAttribute($val)
+    {
+        $this->attributes['serial_number'] = strtoupper($val);
+    }
+
 }

@@ -18,7 +18,7 @@
                         <thead>
                         <tr>
                             <th>Número de cuenta</th>
-                            <th>Nombre</th>
+                            <th>Nombre completo</th>
                             <th>Email</th>
                             <th>Teléfono</th>
                             <th>Acción</th>
@@ -31,8 +31,12 @@
                                 <td>{{ $client->name }}</td>
                                 <td>{{ $client->email }}</td>
                                 <td>{{ $client->phone }}</td>
-                                <td><a href="{{ route('clients.show', $client) }}"
-                                       class="btn btn-xs btn-primary float-sm-right"><i class="far fa-search"></i>
+                                <td class="float-right">
+                                    @if (is_null($client->measurer_id))
+                                        <button class="btn btn-info btn-xs setMeasurerBtn" data-id="{{ $client->id }}"><i class="far fa-pencil-alt"></i> Asignar medidor</button>
+                                    @endif
+                                    <a href="{{ route('clients.show', $client) }}"
+                                       class="btn btn-xs btn-primary"><i class="far fa-search"></i>
                                         Ver</a></td>
                             </tr>
                         @endforeach
@@ -44,6 +48,40 @@
     </div>
 @stop
 
+@section('modal-section')
+    <div class="modal fade" id="setMeasurerModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Selecciona un medidor</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{{ route('clients.attach') }}" method="post" role="form">
+                    @csrf
+                    <input type="hidden" id="client_id" name="client_id" value="">
+                    <div class="modal-body">
+                        <label for="measurer_id" class="sr-only">Medidor</label>
+                        <select class="form-control" name="measurer_id" id="measurer_id">
+                            @foreach ($measurers as $measurer)
+                                <option value="{{ $measurer->id }}">{{ $measurer->code }} - {{ $measurer->serial_number }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Asignar</button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+@stop
+
 @section('scripts')
     <script>
         $(document).ready(function () {
@@ -53,6 +91,12 @@
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"
                 },
+            });
+
+            $('.setMeasurerBtn').on('click', function (e){
+                e.preventDefault();
+                $('#client_id').val($(this).data('id'));
+                $('#setMeasurerModal').modal();
             });
         });
     </script>

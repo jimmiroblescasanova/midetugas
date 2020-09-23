@@ -33,8 +33,16 @@ class MeasurersController extends Controller
 
     public function destroy(Request $request)
     {
-        Measurer::destroy($request->id);
+        $measurer = Measurer::findOrFail($request->id);
+
+        if ($measurer->active == true)
+        {
+            return redirect()->back()->with('message', 'No se puede eliminar un medidor activo. Se debe des-asociar del cliente primero.');
+        }
+
+        $measurer->delete();
 
         return redirect()->route('measurers.index');
     }
+
 }

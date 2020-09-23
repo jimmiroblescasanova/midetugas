@@ -51,6 +51,9 @@
                                         <div class="col-md-6">
                                             <button class="btn btn-sm btn-primary" type="submit">Actualizar</button>
                                         </div>
+                                        <div class="col-md-6">
+                                            <button class="btn btn-sm btn-danger float-sm-right" type="button" onclick="history.back()">Atrás</button>
+                                        </div>
                                     </div>
                                 </form>
                             </div>
@@ -63,6 +66,9 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <button class="btn btn-sm btn-primary" type="submit">Actualizar</button>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <button class="btn btn-sm btn-danger float-sm-right" type="button" onclick="history.back()">Atrás</button>
                                         </div>
                                     </div>
                                 </form>
@@ -77,6 +83,9 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <button class="btn btn-sm btn-primary" type="submit">Actualizar</button>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <button class="btn btn-sm btn-danger float-sm-right" type="button" onclick="history.back()">Atrás</button>
                                         </div>
                                     </div>
                                 </form>

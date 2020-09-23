@@ -20,26 +20,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="69af2c68-a0dd-4dd6-8b82-f5260a2376a0" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/AddressesController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/ContactsController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/MeasurersController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Requests/SaveMeasurerRequest.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Requests/UpdateClientRequest.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Measurer.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2020_09_20_011550_create_measurers_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/measurers/create.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/measurers/index.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/partials/forms/address.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2020_09_23_025140_add_foreign_key_to_clients_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/partials/alerts/danger.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Clients.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Clients.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ClientsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ClientsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/clients/addresses.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/clients/addresses.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/clients/contacts.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/clients/contacts.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/MeasurersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/MeasurersController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/SaveMeasurerRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/SaveMeasurerRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Measurer.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Measurer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/helpers.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/helpers.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_18_011455_create_clients_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_09_18_011455_create_clients_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_20_011550_create_measurers_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_09_20_011550_create_measurers_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/clients/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/clients/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/clients/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/clients/show.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/layouts/main.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/main.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/partials/forms/client.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/partials/forms/client.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/measurers/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/measurers/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/measurers/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/measurers/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/partials/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/partials/sidebar.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
@@ -187,6 +182,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/resources/views/partials" />
       <recent name="$PROJECT_DIR$/resources/views/auth" />
     </key>
   </component>
@@ -206,6 +202,8 @@
       <updated>1600211990733</updated>
       <workItem from="1600211991840" duration="12766000" />
       <workItem from="1600444865763" duration="43837000" />
+      <workItem from="1600824438765" duration="2523000" />
+      <workItem from="1600830016772" duration="4720000" />
     </task>
     <servers />
   </component>
@@ -222,6 +220,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
@@ -239,10 +238,10 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="458" y="212" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1440.900@0.0.1440.900" timestamp="1600497415232" />
-    <state x="539" y="376" key="NewPhpFileDialog" timestamp="1600571853750">
+    <state x="539" y="376" key="NewPhpFileDialog" timestamp="1600875325935">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="539" y="376" key="NewPhpFileDialog/0.0.1440.900@0.0.1440.900" timestamp="1600571853750" />
+    <state x="539" y="376" key="NewPhpFileDialog/0.0.1440.900@0.0.1440.900" timestamp="1600875325935" />
     <state x="98" y="23" key="SettingsEditor" timestamp="1600717975635">
       <screen x="0" y="0" width="1440" height="900" />
     </state>

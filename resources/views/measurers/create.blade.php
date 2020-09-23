@@ -49,19 +49,6 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label for="client_id">Seleccionar cliente</label>
-                                    <select class="form-control" name="client_id" id="client_id">
-                                        <option value="">Ninguno</option>
-                                        @foreach ($clients as $id => $client)
-                                            <option value="{{ $id }}">{{ $client }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
                             <button class="btn btn-primary btn-sm" type="submit">Guardar</button>
                         </div>
                     </form>

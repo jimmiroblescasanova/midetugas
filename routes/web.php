@@ -26,10 +26,12 @@ Route::patch('/clients-contacts-update/{client}', 'ContactsController@update')->
 Route::get('/clients-address/{id}', 'AddressesController@create')->name('address.create');
 Route::post('/clients-address', 'AddressesController@store')->name('address.store');
 Route::patch('/clients-address', 'AddressesController@update')->name('address.update');
+// Route for attaching a measurer
+Route::post('/clients/attach-measurer', 'ClientsController@attach')->name('clients.attach');
 
 Route::get('/measurers', 'MeasurersController@index')->name('measurers.index');
 Route::get('/measurers/create', 'MeasurersController@create')->name('measurers.create');
 Route::post('/measurers', 'MeasurersController@store')->name('measurers.store');
 Route::delete('/measurers', 'MeasurersController@destroy')->name('measurers.destroy');
 
-Route::post('/measurers/ajax/show', 'MeasurersController@show')->name('measurers.show');
+

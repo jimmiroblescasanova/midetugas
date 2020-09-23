@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMeasurersTable extends Migration
+class CreateDocumentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,8 @@ class CreateMeasurersTable extends Migration
      */
     public function up()
     {
-        Schema::create('measurers', function (Blueprint $table) {
+        Schema::create('documents', function (Blueprint $table) {
             $table->id();
-            $table->string('code')->unique();
-            $table->string('model');
-            $table->string('serial_number')->unique();
-            $table->boolean('active')->default(false);
             $table->timestamps();
         });
     }
@@ -30,6 +26,6 @@ class CreateMeasurersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('measurers');
+        Schema::dropIfExists('documents');
     }
 }

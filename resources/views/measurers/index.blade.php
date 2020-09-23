@@ -9,6 +9,11 @@
     </div>
 @stop
 
+@section('alert')
+    @include('partials.alerts.danger')
+@stop
+
+
 @section('content')
     <div class="row">
         <div class="col-12">
@@ -20,7 +25,7 @@
                             <th>Clave</th>
                             <th>Modelo</th>
                             <th>No. serie</th>
-                            <th>Cliente</th>
+                            <th>Estado</th>
                             <th>Acción</th>
                         </tr>
                         </thead>
@@ -30,16 +35,11 @@
                                 <td>{{ $measurer->code }}</td>
                                 <td>{{ $measurer->model }}</td>
                                 <td>{{ $measurer->serial_number }}</td>
-                                <td>
-                                    @if (is_null($measurer->client_id))
-
-                                    @else
-                                        {{ $measurer->client_id }}
-                                    @endif
-                                </td>
+                                <td>{!! setBadge($measurer->active) !!}</td>
                                 <td class="float-sm-right">
-                                    <a href="" class="btn btn-primary btn-xs setClientBtn"><i class="fas fa-user"></i> Asignar cliente</a>
-                                    <button type="button" class="btn btn-danger btn-xs delete" data-id="{{ $measurer->id }}"><i class="fas fa-trash"></i> Eliminar</button>
+                                    <button type="button" class="btn btn-danger btn-xs delete"
+                                            data-id="{{ $measurer->id }}"><i class="fas fa-trash"></i> Eliminar
+                                    </button>
                                 </td>
                             </tr>
                         @endforeach
@@ -78,41 +78,11 @@
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
-    <div class="modal fade" id="setClientModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Asignar cliente</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form action="" method="post" role="form">
-                    @csrf
-                    <div class="modal-body">
-                        <label for="client_id">Cliente</label>
-                        <select class="form-control" name="client_id" id="client_id">
-                            @foreach ($clients as $id => $client)
-                                <option value="">{{ $client }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-danger">Si, seguro!</button>
-                    </div>
-                </form>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->
 @stop
 
 @section('scripts')
     <script>
-        $(document).ready( function () {
+        $(document).ready(function () {
             $('#dataTableMeasurers').DataTable({
                 "responsive": true,
                 "autoWidth": false,
@@ -121,12 +91,7 @@
                 },
             });
 
-            $('.setClientBtn').on('click', function (e){
-                e.preventDefault();
-                $('#setClientModal').modal();
-            });
-
-            $('.delete').on('click', function (e){
+            $('.delete').on('click', function (e) {
                 e.preventDefault();
                 $('#deleteMeasurerInput').val($(this).data('id'));
                 $('#modalDelete').modal();
@@ -153,6 +118,6 @@
             });
 
 
-        } );
+        });
     </script>
 @stop
