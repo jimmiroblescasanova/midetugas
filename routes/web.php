@@ -35,4 +35,7 @@ Route::post('/measurers', 'MeasurersController@store')->name('measurers.store');
 Route::delete('/measurers', 'MeasurersController@destroy')->name('measurers.destroy');
 
 // Routes for documents
+Route::get('/documents', 'DocumentsController@index')->name('documents.index');
 Route::get('/documents/create', 'DocumentsController@create')->name('documents.create');
+Route::post('/documents', 'DocumentsController@store')->name('documents.store');
+Route::get('/documents/ver', 'DocumentsController@show')->name('documents.show');

@@ -15,9 +15,9 @@ class CreateMeasurersTable extends Migration
     {
         Schema::create('measurers', function (Blueprint $table) {
             $table->id();
-            $table->string('code')->unique();
-            $table->string('model');
             $table->string('serial_number')->unique();
+            $table->string('model');
+            $table->double('actual_measure')->default(0);
             $table->boolean('active')->default(false);
             $table->timestamps();
         });

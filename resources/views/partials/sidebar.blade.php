@@ -50,7 +50,7 @@
                     </ul>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="" class="nav-link">
+                            <a href="{{ route('documents.index') }}" class="nav-link {{ setActive('documents.index') }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Listado</p>
                             </a>

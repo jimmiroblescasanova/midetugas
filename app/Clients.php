@@ -8,8 +8,18 @@ class Clients extends Model
 {
     protected $guarded = [];
 
+    public function setNameAttribute($val)
+    {
+        $this->attributes['name'] = strtoupper($val);
+    }
+
+    public function setRfcAttribute($val)
+    {
+        $this->attributes['rfc'] = strtoupper($val);
+    }
+
     public function measurer()
     {
-        return $this->hasOne('App\Measurer');
+        return $this->belongsTo('App\Measurer');
     }
 }

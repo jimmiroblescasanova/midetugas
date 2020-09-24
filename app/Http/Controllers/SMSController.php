@@ -16,7 +16,7 @@ class SMSController extends Controller
         $sms = AWS::createClient('sns');
 
         $sms->publish([
-            'Message' => 'Estimado cliente, esta recibiendo este mensaje porque presenta un adeudo en su cuenta, o lo paga o se lo carga el payaso.',
+            'Message' => 'Estimado cliente, se acaba de dar de alta a nuestro servicio de alertas EFIGAS. Gracias por su preferencia.',
             'PhoneNumber' => $phone_number,
             'MessageAttributes' => [
                 'AWS.SNS.SMS.SMSType'  => [

@@ -15,6 +15,19 @@ class CreateDocumentsTable extends Migration
     {
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('client_id');
+            $table->dateTime('date');
+            $table->dateTime('payment_date');
+            $table->double('final_quantity');
+            $table->double('start_quantity');
+            $table->double('month_quantity');
+            $table->double('total');
+            $table->double('pending');
+            $table->string('payment_method')->nullable();
+            $table->boolean('active')->default(1);
+            $table->string('invoice')->nullable();
+            $table->string('photo');
+            $table->foreign('client_id')->references('id')->on('clients');
             $table->timestamps();
         });
     }

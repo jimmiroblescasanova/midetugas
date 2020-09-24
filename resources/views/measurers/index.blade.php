@@ -21,9 +21,9 @@
                     <table id="dataTableMeasurers" class="table table-striped">
                         <thead>
                         <tr>
-                            <th>Clave</th>
-                            <th>Modelo</th>
                             <th>No. serie</th>
+                            <th>Modelo</th>
+                            <th>Último consumo</th>
                             <th>Estado</th>
                             <th>Acción</th>
                         </tr>
@@ -31,9 +31,9 @@
                         <tbody>
                         @foreach ($measurers as $measurer)
                             <tr>
-                                <td>{{ $measurer->code }}</td>
-                                <td>{{ $measurer->model }}</td>
                                 <td>{{ $measurer->serial_number }}</td>
+                                <td>{{ $measurer->model }}</td>
+                                <td>{{ $measurer->actual_measure }} m3</td>
                                 <td>{!! setBadge($measurer->active) !!}</td>
                                 <td class="float-sm-right">
                                     <button type="button" class="btn btn-danger btn-xs delete"

@@ -8,9 +8,9 @@ class Measurer extends Model
 {
     protected $guarded = [];
 
-    public function setCodeAttribute($val)
+    public function setModelAttribute($val)
     {
-        $this->attributes['code'] = strtoupper($val);
+        $this->attributes['model'] = strtoupper($val);
     }
 
     public function setSerialNumberAttribute($val)

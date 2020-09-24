@@ -15,7 +15,7 @@ class ClientsController extends Controller
 
     public function index()
     {
-        $measurers = Measurer::select('id', 'code', 'serial_number')->where('active', false)->get();
+        $measurers = Measurer::select('id', 'serial_number')->where('active', false)->get();
 
         return view('clients.index', [
             'clients' => Clients::all(),

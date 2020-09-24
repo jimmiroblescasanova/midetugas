@@ -8,9 +8,9 @@ use Illuminate\Support\Str;
 
 $factory->define(Measurer::class, function (Faker $faker) {
     return [
-        'code' => $faker->numerify('PROD#####'),
-        'model' => $faker->city,
         'serial_number' => Str::random('12'),
+        'model' => $faker->city,
+        'actual_measure' => 0,
         'active' => false,
     ];
 });

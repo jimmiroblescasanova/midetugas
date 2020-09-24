@@ -31,13 +31,15 @@
                                 <td>{{ $client->name }}</td>
                                 <td>{{ $client->email }}</td>
                                 <td>{{ $client->phone }}</td>
-                                <td class="float-right">
+                                <td>
                                     @if (is_null($client->measurer_id))
-                                        <button class="btn btn-info btn-xs setMeasurerBtn" data-id="{{ $client->id }}"><i class="far fa-pencil-alt"></i> Asignar medidor</button>
+                                        <button class="btn btn-info btn-xs setMeasurerBtn" data-id="{{ $client->id }}"><i class="fas fa-pencil-alt"></i> Asignar medidor</button>
                                     @endif
                                     <a href="{{ route('clients.show', $client) }}"
-                                       class="btn btn-xs btn-primary"><i class="far fa-search"></i>
-                                        Ver</a></td>
+                                       class="btn btn-xs btn-primary"><i class="fas fa-search"></i>
+                                        Ver</a>
+                                        <a href="{{ route('sms', $client->id) }}" class="btn btn-xs btn-success"><i class="fas fa-sms"></i> Test</a>
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -65,7 +67,7 @@
                         <label for="measurer_id" class="sr-only">Medidor</label>
                         <select class="form-control" name="measurer_id" id="measurer_id">
                             @foreach ($measurers as $measurer)
-                                <option value="{{ $measurer->id }}">{{ $measurer->code }} - {{ $measurer->serial_number }}</option>
+                                <option value="{{ $measurer->id }}">{{ $measurer->serial_number }}</option>
                             @endforeach
                         </select>
                     </div>
