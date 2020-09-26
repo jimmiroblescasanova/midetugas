@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Addresses;
 use App\Clients;
+use App\Measurer;
+use App\Addresses;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreClientRequest;
 use App\Http\Requests\UpdateClientRequest;
-use App\Measurer;
-use Illuminate\Http\Request;
 
 class ClientsController extends Controller
 {
-    //
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     public function index()
     {

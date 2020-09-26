@@ -57,6 +57,12 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('payments.index') }}" class="nav-link {{ setActive('payments.*') }}">
+                        <i class="nav-icon fas fa-hand-holding-usd"></i>
+                        <p>Pagos</p>
+                    </a>
+                </li>
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-funnel-dollar"></i>

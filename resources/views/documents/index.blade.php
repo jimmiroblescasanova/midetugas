@@ -16,9 +16,11 @@
                         <tr>
                             <th>ID</th>
                             <th>Cliente</th>
-                            <th>Consumo</th>
+                            <th>Periodo</th>
                             <th>Total</th>
                             <th>Pendiente</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -26,9 +28,13 @@
                             <tr>
                                 <td>{{ $document->id }}</td>
                                 <td>{{ $document->client->name }}</td>
-                                <td>{{ $document->month_quantity }} m3</td>
+                                <td>{{ $document->period }}</td>
                                 <td>$ {{ $document->total }}</td>
                                 <td>$ {{ $document->pending }}</td>
+                                <td>{!! status($document->status) !!}</td>
+                                <td>
+                                    <a href="{{ route('documents.show', $document) }}" class="btn btn-xs btn-primary"><i class="fas fa-eye"></i> Revisar / Ver</a>
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>

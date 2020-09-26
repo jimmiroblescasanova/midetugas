@@ -2,7 +2,7 @@
 
 @section('header')
     <div class="col-sm-6">
-        <h1><i class="fas fa-tachometer"></i> Detalles del consumo</h1>
+        <h1><i class="fas fa-tachometer-alt"></i> Detalles del consumo</h1>
     </div>
 @stop
 
@@ -17,136 +17,185 @@
                                 <div class="col-12 col-sm-4">
                                     <div class="info-box bg-light">
                                         <div class="info-box-content">
-                                            <span class="info-box-text text-center text-muted">Estimated budget</span>
-                                            <span class="info-box-number text-center text-muted mb-0">2300</span>
+                                            <span class="info-box-text text-center text-muted">Consumo total</span>
+                                            <span class="info-box-number text-center text-muted mb-0">{{ $document->final_quantity }} m3</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-4">
                                     <div class="info-box bg-light">
                                         <div class="info-box-content">
-                                            <span class="info-box-text text-center text-muted">Total amount spent</span>
-                                            <span class="info-box-number text-center text-muted mb-0">2000</span>
+                                            <span class="info-box-text text-center text-muted">Consumo del mes</span>
+                                            <span class="info-box-number text-center text-muted mb-0">{{ $document->month_quantity }} m3</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-4">
                                     <div class="info-box bg-light">
                                         <div class="info-box-content">
-                                            <span class="info-box-text text-center text-muted">Estimated project duration</span>
-                                            <span class="info-box-number text-center text-muted mb-0">20 <span>
+                                            <span class="info-box-text text-center text-muted">TOTAL</span>
+                                            <span class="info-box-number text-center text-muted mb-0">$ {{ $document->total }}<span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-12">
-                                    <h4>Recent Activity</h4>
-                                    <div class="post">
-                                        <div class="user-block">
-                                            <img class="img-circle img-bordered-sm" src="../../dist/img/user1-128x128.jpg" alt="user image">
-                                            <span class="username">
-                          <a href="#">Jonathan Burke Jr.</a>
-                        </span>
-                                            <span class="description">Shared publicly - 7:45 PM today</span>
-                                        </div>
-                                        <!-- /.user-block -->
-                                        <p>
-                                            Lorem ipsum represents a long-held tradition for designers,
-                                            typographers and the like. Some people hate it and argue for
-                                            its demise, but others ignore.
-                                        </p>
-
-                                        <p>
-                                            <a href="#" class="link-black text-sm"><i class="fas fa-link mr-1"></i> Demo File 1 v2</a>
-                                        </p>
-                                    </div>
-
-                                    <div class="post clearfix">
-                                        <div class="user-block">
-                                            <img class="img-circle img-bordered-sm" src="../../dist/img/user7-128x128.jpg" alt="User Image">
-                                            <span class="username">
-                          <a href="#">Sarah Ross</a>
-                        </span>
-                                            <span class="description">Sent you a message - 3 days ago</span>
-                                        </div>
-                                        <!-- /.user-block -->
-                                        <p>
-                                            Lorem ipsum represents a long-held tradition for designers,
-                                            typographers and the like. Some people hate it and argue for
-                                            its demise, but others ignore.
-                                        </p>
-                                        <p>
-                                            <a href="#" class="link-black text-sm"><i class="fas fa-link mr-1"></i> Demo File 2</a>
-                                        </p>
-                                    </div>
-
-                                    <div class="post">
-                                        <div class="user-block">
-                                            <img class="img-circle img-bordered-sm" src="../../dist/img/user1-128x128.jpg" alt="user image">
-                                            <span class="username">
-                          <a href="#">Jonathan Burke Jr.</a>
-                        </span>
-                                            <span class="description">Shared publicly - 5 days ago</span>
-                                        </div>
-                                        <!-- /.user-block -->
-                                        <p>
-                                            Lorem ipsum represents a long-held tradition for designers,
-                                            typographers and the like. Some people hate it and argue for
-                                            its demise, but others ignore.
-                                        </p>
-
-                                        <p>
-                                            <a href="#" class="link-black text-sm"><i class="fas fa-link mr-1"></i> Demo File 1 v1</a>
-                                        </p>
-                                    </div>
+                                <div class="col-6">
+                                    <h4>Datos del cliente</h4>
+                                    <dl>
+                                        <dt>Nombre:</dt>
+                                        <dd>{{ $document->client->name }}</dd>
+                                        <dt>RFC:</dt>
+                                        <dd>{{ $document->client->rfc }}</dd>
+                                        <dt>Teléfono:</dt>
+                                        <dd>{{ $document->client->phone }}</dd>
+                                    </dl>
                                 </div>
+                                <div class="col-6">
+                                    <h4>Información del consumo</h4>
+                                    <dl>
+                                        <dt>Cantidad inicial:</dt>
+                                        <dd>{{ $document->start_quantity }} m3</dd>
+                                        <dt>Cantidad final:</dt>
+                                        <dd>{{ $document->final_quantity }} m3</dd>
+                                        <dt>Consumo del mes:</dt>
+                                        <dd>{{ $document->month_quantity }} m3</dd>
+                                    </dl>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <canvas id="myChart" height="120px"></canvas>
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
-                            <h3 class="text-primary"><i class="fas fa-paint-brush"></i> AdminLTE v3</h3>
-                            <p class="text-muted">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terr.</p>
-                            <br>
-                            <div class="text-muted">
-                                <p class="text-sm">Client Company
-                                    <b class="d-block">Deveint Inc</b>
-                                </p>
-                                <p class="text-sm">Project Leader
-                                    <b class="d-block">Tony Chicken</b>
+                            <h3 class="text-primary"><i class="fas fa-image"></i> Fotografía del medidor</h3>
+                            <img src="{{ asset($document->photo) }}" class="img-fluid mx-auto d-block rounded" alt="">
+
+                            <div class="text-muted float-sm-right">
+                                <p class="text-sm">
+                                    Fecha de captura: {{ $document->date->format('d-M-Y') }}
                                 </p>
                             </div>
 
-                            <h5 class="mt-5 text-muted">Project files</h5>
-                            <ul class="list-unstyled">
-                                <li>
-                                    <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-file-word"></i> Functional-requirements.docx</a>
-                                </li>
-                                <li>
-                                    <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-file-pdf"></i> UAT.pdf</a>
-                                </li>
-                                <li>
-                                    <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-envelope"></i> Email-from-flatbal.mln</a>
-                                </li>
-                                <li>
-                                    <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-image "></i> Logo.png</a>
-                                </li>
-                                <li>
-                                    <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-file-word"></i> Contract-10_12_2014.docx</a>
-                                </li>
-                            </ul>
                             <div class="text-center mt-5 mb-3">
-                                <a href="#" class="btn btn-sm btn-primary">Add files</a>
-                                <a href="#" class="btn btn-sm btn-warning">Report contact</a>
+                                @if ($document->status === 1)
+                                    <a href="{{ route('documents.authorize', $document->id) }}" class="btn btn-app">
+                                        <i class="far fa-thumbs-up"></i>Autorizar</a>
+                                @endif
+                                @if ($document->status === 2 && $document->pending > 0.01)
+                                    <button type="button" class="btn btn-app" id="pay">
+                                        <i class="fas fa-coins"></i>Pagar</button>
+                                @endif
+                                @if ($document->status != 3)
+                                    <a href="{{ route('documents.cancel', $document->id) }}" class="btn btn-app">
+                                        <i class="fas fa-ban"></i>Cancelar</a>
+                                @endif
+                                    <a href="{{ route('documents.print') }}" class="btn btn-app"><i class="fas fa-print"></i> Imprimir</a>
+                                    <button type="button" class="btn btn-app" onclick="history.back()">
+                                        <i class="far fa-hand-point-left"></i>Atrás</button>
                             </div>
                         </div>
                     </div>
                 </div>
-                </div>
             </div>
         </div>
     </div>
+    </div>
+@stop
+
+@section('modal-section')
+    <div class="modal fade" id="paymentModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Capturar pago</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{{ route('payments.store', '#pay') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="document_id" value="{{ $document->id }}">
+                    <input type="hidden" name="client_id" value="{{ $document->client_id }}">
+                    <div class="modal-body">
+                        @include('partials.alerts.danger')
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="date">Fecha</label>
+                                    <input type="date" class="form-control {{ $errors->first('date') ? 'is-invalid' : '' }}" name="date" id="date">
+                                    {!! $errors->first('date', '<div class="invalid-feedback">:message</div>') !!}
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="amount">Importe pagado</label>
+                                    <input type="text" class="form-control {{ $errors->first('amount') ? 'is-invalid' : '' }}" name="amount" id="amount" value="{{ $document->pending }}">
+                                    {!! $errors->first('amount', '<div class="invalid-feedback">:message</div>') !!}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success">Pagar</button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
 @stop
 
 @section('scripts')
+    <script>
+        if(window.location.hash === '#pay')
+        {
+            $('#paymentModal').modal('show');
+        }
 
+        let ctx = document.getElementById('myChart');
+        let myChart = new Chart(ctx, {
+            type: "bar",
+            data: {
+                datasets: [{
+                    label: 'Últimos consumos',
+                    backgroundColor: '#5D6D7E',
+                    borderColor: '#34495E',
+                    data: [
+                        @foreach($historic as $h)
+                            "{{ $h->month_quantity }}",
+                        @endforeach
+                    ],
+                }],
+                labels: [
+                    @foreach($historic as $h)
+                        "{{ $h->period }}",
+                    @endforeach
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            suggestedMin: 50,
+                            suggestedMax: 100
+                        }
+                    }]
+                }
+            }
+        });
+
+        $('#pay').on('click', function (e) {
+            e.preventDefault();
+            $('#paymentModal').modal();
+        });
+
+        $('#paymentModal').on('hide.bs.modal', function(){
+            window.location.hash = '#';
+        });
+    </script>
 @stop

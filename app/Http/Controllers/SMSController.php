@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use AWS;
 use App\Clients;
 use Illuminate\Http\Request;
-use AWS;
 
 class SMSController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     protected function sendSMS($id){
 
         $client = Clients::find($id);

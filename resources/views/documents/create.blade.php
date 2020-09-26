@@ -6,6 +6,10 @@
     </div>
 @stop
 
+@section('alert')
+    @include('partials.alerts.success')
+@stop
+
 @section('content')
     <div class="row">
         <div class="col-md-12">

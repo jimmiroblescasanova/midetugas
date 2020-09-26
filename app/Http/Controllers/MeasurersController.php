@@ -4,11 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Clients;
 use App\Measurer;
-use App\Http\Requests\SaveMeasurerRequest;
 use Illuminate\Http\Request;
+use App\Http\Requests\SaveMeasurerRequest;
 
 class MeasurersController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         return view('measurers.index', [

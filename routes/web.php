@@ -38,4 +38,10 @@ Route::delete('/measurers', 'MeasurersController@destroy')->name('measurers.dest
 Route::get('/documents', 'DocumentsController@index')->name('documents.index');
 Route::get('/documents/create', 'DocumentsController@create')->name('documents.create');
 Route::post('/documents', 'DocumentsController@store')->name('documents.store');
-Route::get('/documents/ver', 'DocumentsController@show')->name('documents.show');
+Route::get('/documents/{document}/ver', 'DocumentsController@show')->name('documents.show');
+Route::get('/documents/{id}/authorize', 'DocumentsController@authorize_docto')->name('documents.authorize');
+Route::get('/documents/{id}/cancel', 'DocumentsController@cancel')->name('documents.cancel');
+Route::get('/documents/print', 'DocumentsController@print')->name('documents.print');
+
+Route::get('/payments', 'PaymentsController@index')->name('payments.index');
+Route::post('/payments', 'PaymentsController@store')->name('payments.store');

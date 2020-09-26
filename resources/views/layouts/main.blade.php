@@ -77,6 +77,7 @@
 {{--<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>--}}
 <!-- Select2 -->
 <script src="{{ asset('/vendor/adminlte/plugins/select2/js/select2.full.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 @yield('scripts')
 <script>
     $('#logoutButton').on('click', function (event) {

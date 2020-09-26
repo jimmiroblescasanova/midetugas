@@ -1,0 +1,42 @@
+@extends('layouts.main')
+
+@section('header')
+    <div class="col-sm-6">
+        <h1><i class="fas fa-hand-holding-usd"></i> Pagos</h1>
+    </div>
+@stop
+
+@section('content')
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Cliente</th>
+                            <th>Fecha</th>
+                            <th>Importe</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach ($payments as $pay)
+                            <tr>
+                                <td>{{ $pay->id }}</td>
+                                <td>{{ $pay->client->name }}</td>
+                                <td>{{ $pay->date->format('d-m-Y') }}</td>
+                                <td>{{ $pay->amount }}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+@stop
+
+@section('scripts')
+
+@stop

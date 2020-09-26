@@ -4,10 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Clients;
 use App\Http\Requests\SaveContactRequest;
-use Illuminate\Http\Request;
 
 class ContactsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function create($id)
     {
         $client = Clients::find($id);
