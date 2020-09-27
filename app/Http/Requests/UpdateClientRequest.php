@@ -25,7 +25,6 @@ class UpdateClientRequest extends FormRequest
     public function rules()
     {
         return [
-            'account_number' => 'required|digits:5',
             'name' => 'required|string',
             'rfc' => [
                 'required',

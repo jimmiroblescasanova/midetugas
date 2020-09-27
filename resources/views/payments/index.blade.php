@@ -17,6 +17,7 @@
                             <th>ID</th>
                             <th>Cliente</th>
                             <th>Fecha</th>
+                            <th>Recibo pagado</th>
                             <th>Importe</th>
                         </tr>
                         </thead>
@@ -26,7 +27,10 @@
                                 <td>{{ $pay->id }}</td>
                                 <td>{{ $pay->client->name }}</td>
                                 <td>{{ $pay->date->format('d-m-Y') }}</td>
-                                <td>{{ $pay->amount }}</td>
+                                <td class="text-center">
+                                    <a href="{{ route('documents.show', $pay->document_id) }}">{{ $pay->document_id }}</a>
+                                </td>
+                                <td class="text-right">$ {{ $pay->amount }}</td>
                             </tr>
                         @endforeach
                         </tbody>

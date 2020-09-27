@@ -24,7 +24,7 @@ class CreateDocumentsTable extends Migration
             $table->string('period');
             $table->double('total');
             $table->double('pending');
-            $table->string('payment_method')->nullable();
+            $table->bigInteger('reference')->default(0);
             $table->string('invoice')->nullable();
             $table->integer('status')->default(1);
             $table->string('photo');

@@ -7,7 +7,7 @@ use App\Clients;
 use App\Document;
 use App\Measurer;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
+use App\Http\Requests\SaveDocumentRequest;
 
 class DocumentsController extends Controller
 {
@@ -26,11 +26,11 @@ class DocumentsController extends Controller
     public function create()
     {
         return view('documents.create', [
-            'clients' => Clients::select('id', 'name', 'account_number')->whereNotNull('measurer_id')->get(),
+            'clients' => Clients::select('id', 'name')->whereNotNull('measurer_id')->get(),
         ]);
     }
 
-    public function store(Request $request)
+    public function store(SaveDocumentRequest $request)
     {
         // Se obtiene el cliente capturado
         $client = Clients::findOrFail($request->client_id);
@@ -56,7 +56,11 @@ class DocumentsController extends Controller
             'photo' => $photo,
         ];
         // Crea el documento a partir de array
-        Document::create($data);
+        $document = Document::create($data);
+        // Crear la referencia de pago
+        $reference = $payment_date->format('Ym') . str_pad($document->id, 4, '0', STR_PAD_LEFT);
+        $document->reference = $reference;
+        $document->save();
         // Obtener el id del medidor usado y actualiza su valor
         $measurer = Measurer::findOrFail($client->measurer->id);
         $measurer->actual_measure = $request->final_quantity;
@@ -105,7 +109,6 @@ class DocumentsController extends Controller
 
     public function cancel($id)
     {
-
         $docto = Document::findOrFail($id);
         $docto->status = 3;
         $docto->pending = 0;
@@ -114,8 +117,47 @@ class DocumentsController extends Controller
         return back();
     }
 
-    public function print()
+    public function print($id)
     {
-        return view('print.document');
+        $docto = Document::findOrFail($id);
+
+        // Se obtiene los históricos de meses anteriores
+        $historic = Document::select('id', 'period', 'month_quantity')
+            ->where([
+            ['client_id', $docto->client_id],
+            ['id', '<=', $docto->id]
+            ])->orderByDesc('id')->get();
+
+        // Se arma el array para el histórico
+        $arr_period = '[';
+        $arr_data = '[';
+        foreach ($historic->take(6) as $h)
+        {
+            $arr_period = $arr_period . '"' . $h->period . '",';
+            $arr_data = $arr_data . $h->month_quantity . ',';
+        }
+        $arr_period = $arr_period . ']';
+        $arr_data = $arr_data . ']';
+
+        // Generar los valores de la gráfica
+        $chart = "{
+        type: 'bar',
+        data: {
+            labels: ". $arr_period .",
+            datasets: [{
+                'backgroundColor': 'rgba(169,169,169, 0.5)',
+                label: 'Consumos', data: ". $arr_data ."}
+                ]}
+            }";
+
+        // General el PDF
+        $pdf = \PDF::loadView('print.document', [
+            'docto' => $docto,
+            'chart' => urlencode($chart),
+        ]);
+        $pdf->setPaper('statement', 'portrait');
+        return $pdf->stream();
+
+//        return view('print.document');
     }
 }

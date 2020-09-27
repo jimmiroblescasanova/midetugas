@@ -90,7 +90,7 @@
                                     <a href="{{ route('documents.cancel', $document->id) }}" class="btn btn-app">
                                         <i class="fas fa-ban"></i>Cancelar</a>
                                 @endif
-                                    <a href="{{ route('documents.print') }}" class="btn btn-app"><i class="fas fa-print"></i> Imprimir</a>
+                                    <a href="{{ route('documents.print', $document->id) }}" class="btn btn-app"><i class="fas fa-print"></i> Imprimir</a>
                                     <button type="button" class="btn btn-app" onclick="history.back()">
                                         <i class="far fa-hand-point-left"></i>Atrás</button>
                             </div>
@@ -162,8 +162,8 @@
             data: {
                 datasets: [{
                     label: 'Últimos consumos',
-                    backgroundColor: '#5D6D7E',
-                    borderColor: '#34495E',
+                    backgroundColor: 'rgb(128,128,128, 0.5)',
+                    borderColor: 'rgb(128,128,128)',
                     data: [
                         @foreach($historic as $h)
                             "{{ $h->month_quantity }}",

@@ -66,7 +66,7 @@
     <div class="col-md-4">
         <div class="form-group">
             <label for="state_province">Estado</label>
-            <select id="state_province" name="state_province" class="form-control">
+            <select class="form-control select2bs4" id="state_province" name="state_province">
                 <option value="Aguascalientes">Aguascalientes</option>
                 <option value="Baja California">Baja California</option>
                 <option value="Baja California Sur">Baja California Sur</option>
@@ -105,7 +105,7 @@
     <div class="col-md-4">
         <div class="form-group">
             <label for="country">País</label>
-            <select class="form-control" id="country" name="country">
+            <select class="form-control select2bs4" id="country" name="country">
                 <option value="Elegir" id="AF">Elegir opción</option>
                 <option value="Afganistán" id="AF">Afganistán</option>
                 <option value="Albania" id="AL">Albania</option>

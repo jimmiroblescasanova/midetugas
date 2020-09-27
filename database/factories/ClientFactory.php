@@ -8,7 +8,6 @@ use Illuminate\Support\Str;
 
 $factory->define(Clients::class, function (Faker $faker) {
     return [
-        'account_number' => $faker->unique()->randomNumber(5),
         'name' => $faker->name,
         'rfc' => Str::random(12),
         'email' => $faker->unique()->email,

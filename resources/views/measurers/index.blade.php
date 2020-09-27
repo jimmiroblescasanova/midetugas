@@ -5,7 +5,8 @@
         <h1><i class="fas fa-tachometer-alt"></i> Medidores</h1>
     </div>
     <div class="col-sm-6">
-        <a href="{{ route('measurers.create') }}" class="btn btn-primary btn-sm float-sm-right">Crear nuevo</a>
+        <a href="{{ route('measurers.create') }}" class="btn btn-primary btn-sm float-sm-right btn-block-xs-only">
+            <i class="fas fa-pencil-alt"></i> Crear nuevo</a>
     </div>
 @stop
 
@@ -33,9 +34,9 @@
                             <tr>
                                 <td>{{ $measurer->serial_number }}</td>
                                 <td>{{ $measurer->model }}</td>
-                                <td>{{ $measurer->actual_measure }} m3</td>
-                                <td>{!! setBadge($measurer->active) !!}</td>
-                                <td class="float-sm-right">
+                                <td class="text-right">{{ $measurer->actual_measure }} m<sup>3</sup></td>
+                                <td class="text-center">{!! setBadge($measurer->active) !!}</td>
+                                <td class="text-right">
                                     <button type="button" class="btn btn-danger btn-xs delete"
                                             data-id="{{ $measurer->id }}"><i class="fas fa-trash"></i> Eliminar
                                     </button>

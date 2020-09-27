@@ -8,3 +8,11 @@
 //@import '~bootstrap/scss/bootstrap';
 
 @import '~admin-lte/build/scss/AdminLTE';
+
+@include media-breakpoint-only(xs) {
+    .btn-block-xs-only {
+        display: block;
+        margin-top: 15px;
+        width: 100%;
+    }
+}

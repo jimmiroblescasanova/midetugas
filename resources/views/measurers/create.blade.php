@@ -52,7 +52,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <button class="btn btn-primary btn-sm" type="submit">Guardar</button>
+                            <button class="btn btn-primary btn-sm" type="submit"><i class="fas fa-save"></i> Guardar</button>
                         </div>
                     </form>
                 </div>

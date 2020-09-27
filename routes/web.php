@@ -28,6 +28,7 @@ Route::post('/clients-address', 'AddressesController@store')->name('address.stor
 Route::patch('/clients-address', 'AddressesController@update')->name('address.update');
 // Route for attaching a measurer
 Route::post('/clients/attach-measurer', 'ClientsController@attach')->name('clients.attach');
+Route::get('/clients/{client}/detach-measurer', 'ClientsController@detach')->name('clients.detach');
 
 Route::get('/measurers', 'MeasurersController@index')->name('measurers.index');
 Route::get('/measurers/create', 'MeasurersController@create')->name('measurers.create');
@@ -41,7 +42,7 @@ Route::post('/documents', 'DocumentsController@store')->name('documents.store');
 Route::get('/documents/{document}/ver', 'DocumentsController@show')->name('documents.show');
 Route::get('/documents/{id}/authorize', 'DocumentsController@authorize_docto')->name('documents.authorize');
 Route::get('/documents/{id}/cancel', 'DocumentsController@cancel')->name('documents.cancel');
-Route::get('/documents/print', 'DocumentsController@print')->name('documents.print');
+Route::get('/documents/{id}/print', 'DocumentsController@print')->name('documents.print');
 
 Route::get('/payments', 'PaymentsController@index')->name('payments.index');
 Route::post('/payments', 'PaymentsController@store')->name('payments.store');

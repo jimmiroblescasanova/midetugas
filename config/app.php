@@ -166,6 +166,7 @@ return [
          * Package Service Providers...
          */
         Aws\Laravel\AwsServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -228,6 +229,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'AWS' => Aws\Laravel\AwsFacade::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
 
     ],
 

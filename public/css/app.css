@@ -32711,3 +32711,11 @@ a.text-muted:hover {
   color: #ffffff;
 }
 
+@media (max-width: 575.98px) {
+  .btn-block-xs-only {
+    display: block;
+    margin-top: 15px;
+    width: 100%;
+  }
+}
+

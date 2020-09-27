@@ -3,13 +3,10 @@
         <div class="form-group">
             <label for="account_number">Número de cuenta</label>
             <input type="text"
-                   class="form-control {{ $errors->first('account_number') ? 'is-invalid' : '' }}"
-                   name="account_number"
+                   class="form-control"
                    id="account_number"
                    placeholder="Número de cuenta"
-                   value="{{ old('account_number', $client->account_number) }}"
-                {{ request()->routeIs('clients.show') ? 'readonly' : '' }}/>
-            {!! $errors->first('account_number', '<div class="invalid-feedback">:message</div>') !!}
+                   value="{{ request()->routeIs('clients.show') ? $client->id : $next_id }}" readonly/>
         </div>
     </div>
     <div class="col-md-8">
@@ -55,7 +52,7 @@
     <div class="col-md-4">
         <div class="form-group">
             <label for='country_code'>País</label>
-            <select id='country_code' name='country_code' class='form-control'>
+            <select id='country_code' name='country_code' class='form-control select2bs4'>
                 @include('partials.country-codes')
             </select>
         </div>

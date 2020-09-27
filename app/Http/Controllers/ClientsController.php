@@ -28,8 +28,11 @@ class ClientsController extends Controller
 
     public function create()
     {
+        $next_id = Clients::orderByDesc('id')->first()->id+1;
+
         return view('clients.create', [
             'client' => new Clients,
+            'next_id' => str_pad($next_id, 5, '0', STR_PAD_LEFT),
         ]);
     }
 
@@ -69,6 +72,18 @@ class ClientsController extends Controller
         $measurer = Measurer::findOrFail($request->measurer_id);
         $measurer->active = true;
         $measurer->save();
+
+        return redirect()->route('clients.index');
+    }
+
+    public function detach(Clients $client)
+    {
+        $measurer = Measurer::findOrFail($client->measurer_id);
+        $measurer->active = false;
+        $measurer->save();
+
+        $client->measurer_id = NULL;
+        $client->save();
 
         return redirect()->route('clients.index');
     }

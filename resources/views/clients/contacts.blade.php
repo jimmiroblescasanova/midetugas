@@ -1,5 +1,11 @@
 @extends('layouts.main')
 
+@section('header')
+    <div class="col-sm-6">
+        <h1><i class="fas fa-users"></i> Nuevo cliente</h1>
+    </div>
+@stop
+
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
@@ -20,13 +26,13 @@
                         <form action="{{ route('contacts.store', $client) }}" role="form" method="POST">
                             @csrf
                             @method('patch')
-                            @include('partials.forms.contacts')
+                            @include('clients.forms.contacts')
                             <div class="row">
                                 <div class="col-md-6">
-                                    <button class="btn btn-sm btn-primary" type="submit">Guardar y siguiente</button>
+                                    <button class="btn btn-sm btn-primary btn-block-xs-only" type="submit">Guardar y siguiente</button>
                                 </div>
                                 <div class="col-md-6">
-                                    <a class="btn btn-sm btn-danger float-sm-right" href="{{ route('address.create', $client->id) }}">Capturar después</a>
+                                    <a class="btn btn-sm btn-danger float-sm-right btn-block-xs-only" href="{{ route('address.create', $client->id) }}">Capturar después</a>
                                 </div>
                             </div>
                         </form>

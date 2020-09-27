@@ -25,7 +25,7 @@
     </form>
 
     <!-- Right navbar links -->
-    <ul class="navbar-nav ml-auto">
+    {{--<ul class="navbar-nav ml-auto">
         <li class="nav-item dropdown user-menu">
             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
                 <img src="" class="user-image img-circle elevation-2" alt="User Image">
@@ -47,5 +47,5 @@
                 </li>
             </ul>
         </li>
-    </ul>
+    </ul>--}}
 </nav>

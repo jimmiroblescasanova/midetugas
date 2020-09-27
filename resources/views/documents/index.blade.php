@@ -10,8 +10,8 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-body">
-                    <table class="table">
+                <div class="card-body table-responsive">
+                    <table class="table" id="dataTable">
                         <thead>
                         <tr>
                             <th>ID</th>
@@ -29,10 +29,10 @@
                                 <td>{{ $document->id }}</td>
                                 <td>{{ $document->client->name }}</td>
                                 <td>{{ $document->period }}</td>
-                                <td>$ {{ $document->total }}</td>
-                                <td>$ {{ $document->pending }}</td>
-                                <td>{!! status($document->status) !!}</td>
-                                <td>
+                                <td class="text-center">$ {{ $document->total }}</td>
+                                <td class="text-center">$ {{ $document->pending }}</td>
+                                <td class="text-center">{!! status($document->status) !!}</td>
+                                <td class="text-right">
                                     <a href="{{ route('documents.show', $document) }}" class="btn btn-xs btn-primary"><i class="fas fa-eye"></i> Revisar / Ver</a>
                                 </td>
                             </tr>
@@ -46,5 +46,16 @@
 @stop
 
 @section('scripts')
-
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').DataTable({
+                "order": [ 0, 'desc' ],
+                "responsive": true,
+                "autoWidth": false,
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"
+                },
+            });
+        });
+    </script>
 @stop

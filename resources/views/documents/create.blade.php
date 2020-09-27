@@ -21,9 +21,9 @@
                             <div class="col-12">
                                 <div class="form-group">
                                     <label for="client_id">Seleccionar cliente</label>
-                                    <select class="form-control" name="client_id" id="client_id">
+                                    <select class="form-control select2bs4" name="client_id" id="client_id">
                                         @foreach ($clients as $client)
-                                            <option value="{{ $client->id }}">{{ $client->account_number }} - {{ $client->name }}</option>
+                                            <option value="{{ $client->id }}">{{ $client->id }} - {{ $client->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -33,13 +33,23 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="date">Fecha</label>
-                                    <input type="date" name="date" id="date" class="form-control">
+                                    <input type="date"
+                                           name="date"
+                                           id="date"
+                                           class="form-control {{ $errors->first('date') ? 'is-invalid' : '' }}"
+                                           value="{{ old('date') }}">
+                                    {!! $errors->first('date', '<div class="invalid-feedback">:message</div>') !!}
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="final_quantity">Lectura actual</label>
-                                    <input type="text" name="final_quantity" id="final_quantity" class="form-control">
+                                    <input type="text"
+                                           name="final_quantity"
+                                           id="final_quantity"
+                                           class="form-control {{ $errors->first('final_quantity') ? 'is-invalid' : '' }}"
+                                           value="{{ old('final_quantity') }}">
+                                    {!! $errors->first('final_quantity', '<div class="invalid-feedback">:message</div>') !!}
                                 </div>
                             </div>
                         </div>
@@ -54,19 +64,16 @@
                                            accept="image/*" capture>
                                     <i class="fas fa-camera"></i> Tomar foto
                                 </label>
-                                <span class='label label-info' id="upload-file-info"></span>
+                                <span class='label label-info {{ $errors->first('photo') ? 'is-invalid' : '' }}' id="upload-file-info"></span>
+                                {!! $errors->first('photo', '<div class="invalid-feedback">:message</div>') !!}
                             </div>
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary">Guardar</button>
+                            <button type="submit" class="btn btn-primary btn-block-xs-only"><i class="fas fa-save"></i> Guardar</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-@stop
-
-@section('scripts')
-
 @stop

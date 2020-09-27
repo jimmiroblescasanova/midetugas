@@ -5,7 +5,8 @@
         <h1><i class="fas fa-users"></i> Clientes</h1>
     </div>
     <div class="col-sm-6">
-        <a href="{{ route('clients.create') }}" class="btn btn-primary btn-sm float-sm-right">Crear nuevo</a>
+        <a href="{{ route('clients.create') }}" class="btn btn-primary btn-sm float-sm-right btn-block-xs-only">
+            <i class="fas fa-pencil-alt"></i> Crear nuevo</a>
     </div>
 @stop
 
@@ -27,18 +28,15 @@
                         <tbody>
                         @foreach ($clients as $client)
                             <tr>
-                                <td>{{ $client->account_number }}</td>
+                                <td>{{ $client->id }}</td>
                                 <td>{{ $client->name }}</td>
                                 <td>{{ $client->email }}</td>
                                 <td>{{ $client->phone }}</td>
-                                <td>
+                                <td class="text-right">
                                     @if (is_null($client->measurer_id))
-                                        <button class="btn btn-info btn-xs setMeasurerBtn" data-id="{{ $client->id }}"><i class="fas fa-pencil-alt"></i> Asignar medidor</button>
+                                        <button class="btn btn-info btn-xs setMeasurerBtn" data-id="{{ $client->id }}"><i class="fas fa-edit"></i> Asignar medidor</button>
                                     @endif
-                                    <a href="{{ route('clients.show', $client) }}"
-                                       class="btn btn-xs btn-primary"><i class="fas fa-search"></i>
-                                        Ver</a>
-                                        <a href="{{ route('sms', $client->id) }}" class="btn btn-xs btn-success"><i class="fas fa-sms"></i> Test</a>
+                                    <a href="{{ route('clients.show', $client) }}" class="btn btn-xs btn-primary"><i class="fas fa-eye"></i> Ver</a>
                                 </td>
                             </tr>
                         @endforeach
@@ -65,7 +63,7 @@
                     <input type="hidden" id="client_id" name="client_id" value="">
                     <div class="modal-body">
                         <label for="measurer_id" class="sr-only">Medidor</label>
-                        <select class="form-control" name="measurer_id" id="measurer_id">
+                        <select class="form-control select2bs4" name="measurer_id" id="measurer_id">
                             @foreach ($measurers as $measurer)
                                 <option value="{{ $measurer->id }}">{{ $measurer->serial_number }}</option>
                             @endforeach
