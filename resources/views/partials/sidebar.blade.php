@@ -80,6 +80,12 @@
                     </ul>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ route('users.index') }}" class="nav-link {{ setActive('users.*') }}">
+                        <i class="nav-icon fas fa-users-cog"></i>
+                        <p>Usuarios</p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="#" id="logoutButton" class="nav-link">
                         <i class="nav-icon fas fa-sign-out-alt"></i>
                         <p>Cerrar sesión</p>

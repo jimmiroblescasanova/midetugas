@@ -5,8 +5,8 @@
             <input type="text"
                    class="form-control"
                    id="account_number"
-                   placeholder="Número de cuenta"
-                   value="{{ request()->routeIs('clients.show') ? $client->id : $next_id }}" readonly/>
+                   placeholder="Se obtiene automáticamente"
+                   value="{{ request()->routeIs('clients.show') ? $client->id : '' }}" readonly/>
         </div>
     </div>
     <div class="col-md-8">

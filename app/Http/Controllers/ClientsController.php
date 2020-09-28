@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Clients;
 use App\Measurer;
 use App\Addresses;
+use App\Mail\TestEmail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\StoreClientRequest;
 use App\Http\Requests\UpdateClientRequest;
+use Psr\Log\NullLogger;
 
 class ClientsController extends Controller
 {
@@ -28,11 +31,8 @@ class ClientsController extends Controller
 
     public function create()
     {
-        $next_id = Clients::orderByDesc('id')->first()->id+1;
-
         return view('clients.create', [
             'client' => new Clients,
-            'next_id' => str_pad($next_id, 5, '0', STR_PAD_LEFT),
         ]);
     }
 
@@ -84,6 +84,15 @@ class ClientsController extends Controller
 
         $client->measurer_id = NULL;
         $client->save();
+
+        return redirect()->route('clients.index');
+    }
+
+    public function testEmail(Clients $client)
+    {
+        Mail::to($client->email)
+            ->cc('direccion@efigas.com.mx')
+            ->send( new TestEmail );
 
         return redirect()->route('clients.index');
     }

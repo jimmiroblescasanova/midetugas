@@ -29,6 +29,8 @@ Route::patch('/clients-address', 'AddressesController@update')->name('address.up
 // Route for attaching a measurer
 Route::post('/clients/attach-measurer', 'ClientsController@attach')->name('clients.attach');
 Route::get('/clients/{client}/detach-measurer', 'ClientsController@detach')->name('clients.detach');
+// Route for sending test email
+Route::get('/clients/{client}/test-email', 'ClientsController@testEmail')->name('clients.testEmail');
 
 Route::get('/measurers', 'MeasurersController@index')->name('measurers.index');
 Route::get('/measurers/create', 'MeasurersController@create')->name('measurers.create');
@@ -46,3 +48,7 @@ Route::get('/documents/{id}/print', 'DocumentsController@print')->name('document
 
 Route::get('/payments', 'PaymentsController@index')->name('payments.index');
 Route::post('/payments', 'PaymentsController@store')->name('payments.store');
+
+Route::get('/users', 'UsersController@index')->name('users.index');
+Route::get('/users/{user}/edit', 'UsersController@edit')->name('users.edit');
+Route::post('/users/{user}/update-profile', 'UsersController@permissions')->name('users.permissions');

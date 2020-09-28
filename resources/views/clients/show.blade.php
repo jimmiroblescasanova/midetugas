@@ -106,7 +106,7 @@
                                     <a href="{{ route('sms', $client->id) }}" class="btn btn-block btn-success"><i class="fas fa-sms"></i> Enviar SMS prueba</a>
                                 </div>
                                 <div class="col-4">
-                                    <button class="btn btn-block btn-primary"><i class="fas fa-envelope"></i> Enviar correo prueba</button>
+                                    <a href="{{ route('clients.testEmail', $client->id) }}" class="btn btn-block btn-primary"><i class="fas fa-envelope"></i> Enviar correo prueba</a>
                                 </div>
                                 @if ($client->measurer_id != NULL)
                                     <div class="col-4">

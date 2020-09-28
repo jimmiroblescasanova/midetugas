@@ -23,8 +23,4 @@ class Clients extends Model
         return $this->belongsTo('App\Measurer');
     }
 
-    public function getIdAttribute($id)
-    {
-        return str_pad($id, 5, '0', STR_PAD_LEFT);
-    }
 }

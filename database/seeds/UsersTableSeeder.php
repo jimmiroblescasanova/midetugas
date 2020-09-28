@@ -16,6 +16,7 @@ class UsersTableSeeder extends Seeder
             'name'          => 'Jimmi Robles',
             'email'         => 'jimmirobles@icloud.com',
             'password'      => Hash::make('password'),
+            'admin'         => true,
             'created_at'    => \Carbon\Carbon::now(),
         ]);
     }
