@@ -7,8 +7,8 @@
 @stop
 
 @section('content')
-    <div class="row justify-content-center">
-        <div class="col-md-12">
+    <div class="row">
+        <div class="col-12">
             <div class="card card-primary card-outline card-outline-tabs">
                 <div class="card-header p-0 border-bottom-0">
                     <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
@@ -108,15 +108,15 @@
                         <div class="tab-pane fade" id="custom-tabs-four-actions" role="tabpanel"
                              aria-labelledby="custom-tabs-four-actions-tab">
                             <div class="row">
-                                <div class="col-4">
-                                    <a href="{{ route('sms', $client->id) }}" class="btn btn-block btn-success"><i class="fas fa-sms"></i> Enviar SMS prueba</a>
+                                <div class="col-md-4">
+                                    <a href="{{ route('sms', $client->id) }}" class="btn btn-block btn-success mb-3"><i class="fas fa-sms"></i> Enviar SMS prueba</a>
                                 </div>
-                                <div class="col-4">
-                                    <a href="{{ route('clients.testEmail', $client->id) }}" class="btn btn-block btn-primary"><i class="fas fa-envelope"></i> Enviar correo prueba</a>
+                                <div class="col-md-4">
+                                    <a href="{{ route('clients.testEmail', $client->id) }}" class="btn btn-block btn-primary mb-3"><i class="fas fa-envelope"></i> Enviar correo prueba</a>
                                 </div>
                                 @if (($client->measurer_id != NULL) && (auth()->user()->can('edit_clients')))
-                                    <div class="col-4">
-                                        <a href="{{ route('clients.detach', $client->id) }}" class="btn btn-block btn-info"><i class="fas fa-tachometer-alt"></i> Des-asociar medidor</a>
+                                    <div class="col-md-4">
+                                        <a href="{{ route('clients.detach', $client->id) }}" class="btn btn-block btn-info mb-3"><i class="fas fa-tachometer-alt"></i> Des-asociar medidor</a>
                                     </div>
                                 @endif
                             </div>

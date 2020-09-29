@@ -12,7 +12,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-12">
             <div class="card">
                 <div class="card-body">
                     <form action="{{ route('documents.store') }}" method="post" role="form" enctype="multipart/form-data">
@@ -30,7 +30,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-md-6 col-12">
                                 <div class="form-group">
                                     <label for="date">Fecha</label>
                                     <input type="date"
@@ -41,7 +41,7 @@
                                     {!! $errors->first('date', '<div class="invalid-feedback">:message</div>') !!}
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-md-6 col-12">
                                 <div class="form-group">
                                     <label for="final_quantity">Lectura actual</label>
                                     <input type="text"

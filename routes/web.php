@@ -19,7 +19,7 @@ Route::get('/clients/create', 'ClientsController@create')
     ->name('clients.create')->middleware('permission:create_clients');
 Route::post('/clients', 'ClientsController@store')
     ->name('clients.store')->middleware('permission:create_clients');
-Route::get('/clients/{client}', 'Clientscontroller@show')
+Route::get('/clients/{client}', 'ClientsController@show')
     ->name('clients.show')->middleware('permission:show_clients');
 Route::patch('/clients/{client}', 'ClientsController@update')
     ->name('clients.update')->middleware('permission:edit_clients');

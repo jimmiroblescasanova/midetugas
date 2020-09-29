@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-6">
+    <div class="col-md-6">
         <div class="form-group">
             <label for="name">Nombre</label>
             <input type="text"
@@ -11,7 +11,7 @@
             {!! $errors->first('name', '<div class="invalid-feedback">:message</div>') !!}
         </div>
     </div>
-    <div class="col-6">
+    <div class="col-md-6">
         <div class="form-group">
             <label for="email">Email</label>
             <input type="email"
@@ -25,7 +25,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-6">
+    <div class="col-md-6">
         <div class="form-group">
             <label for="password">Contraseña</label>
             <input type="password"
@@ -36,7 +36,7 @@
             {!! $errors->first('password', '<div class="invalid-feedback">:message</div>') !!}
         </div>
     </div>
-    <div class="col-6">
+    <div class="col-md-6">
         <div class="form-group">
             <label for="password_confirmation">Confirmación</label>
             <input type="password"

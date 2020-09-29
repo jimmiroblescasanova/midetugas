@@ -8,15 +8,15 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-12">
             <div class="card">
                 <div class="card-body">
                     <form action="{{ route('users.store') }}" role="form" method="POST">
                         @csrf
                         @include('users._form')
                         <div class="row">
-                            <div class="col-6">
-                                <button type="submit" class="btn btn-sm btn-primary">Crear usuario</button>
+                            <div class="col-md-6">
+                                <button type="submit" class="btn btn-sm btn-primary btn-block-xs-only">Crear usuario</button>
                             </div>
                         </div>
                     </form>

@@ -39,7 +39,7 @@
                 </div>
             </form>
 
-            <p class="mb-1 mt-1">
+            <p class="mb-1 mt-3">
                 <a href="">Olvidé mi contraseña</a>
             </p>
         </div>

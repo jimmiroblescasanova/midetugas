@@ -29,7 +29,7 @@ class LoginController extends Controller
             return redirect()->route('home');
         }
 
-        return back()->withErrors(['email' => 'Datos incorrectos']);
+        return back()->withErrors(['email' => 'Datos incorrectos'])->withInput();
     }
 
     public function logout()
