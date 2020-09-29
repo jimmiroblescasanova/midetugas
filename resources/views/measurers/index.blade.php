@@ -4,10 +4,12 @@
     <div class="col-sm-6">
         <h1><i class="fas fa-tachometer-alt"></i> Medidores</h1>
     </div>
-    <div class="col-sm-6">
-        <a href="{{ route('measurers.create') }}" class="btn btn-primary btn-sm float-sm-right btn-block-xs-only">
-            <i class="fas fa-pencil-alt"></i> Crear nuevo</a>
-    </div>
+    @can('create_measurers')
+        <div class="col-sm-6">
+            <a href="{{ route('measurers.create') }}" class="btn btn-primary btn-sm float-sm-right btn-block-xs-only">
+                <i class="fas fa-pencil-alt"></i> Crear nuevo</a>
+        </div>
+    @endcan
 @stop
 
 @section('alert')
@@ -26,7 +28,9 @@
                             <th>Modelo</th>
                             <th>Último consumo</th>
                             <th>Estado</th>
-                            <th>Acción</th>
+                            @canany('delete_measurers')
+                                <th>Acción</th>
+                            @endcanany
                         </tr>
                         </thead>
                         <tbody>
@@ -36,11 +40,13 @@
                                 <td>{{ $measurer->model }}</td>
                                 <td class="text-right">{{ $measurer->actual_measure }} m<sup>3</sup></td>
                                 <td class="text-center">{!! setBadge($measurer->active) !!}</td>
-                                <td class="text-right">
-                                    <button type="button" class="btn btn-danger btn-xs delete"
-                                            data-id="{{ $measurer->id }}"><i class="fas fa-trash"></i> Eliminar
-                                    </button>
-                                </td>
+                                @can('delete_measurers')
+                                    <td class="text-right">
+                                        <button type="button" class="btn btn-danger btn-xs delete"
+                                                data-id="{{ $measurer->id }}"><i class="fas fa-trash"></i> Eliminar
+                                        </button>
+                                    </td>
+                                @endcan
                             </tr>
                         @endforeach
                         </tbody>

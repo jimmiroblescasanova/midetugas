@@ -78,15 +78,15 @@
                             </div>
 
                             <div class="text-center mt-5 mb-3">
-                                @if ($document->status === 1)
+                                @if ( ($document->status === 1) && ( auth()->user()->can('authorize_documents') ) )
                                     <a href="{{ route('documents.authorize', $document->id) }}" class="btn btn-app">
                                         <i class="far fa-thumbs-up"></i>Autorizar</a>
                                 @endif
-                                @if ($document->status === 2 && $document->pending > 0.01)
+                                @if ( ($document->status === 2) && ($document->pending > 0.01) && (auth()->user()->can('pay_documents')) )
                                     <button type="button" class="btn btn-app" id="pay">
                                         <i class="fas fa-coins"></i>Pagar</button>
                                 @endif
-                                @if ($document->status != 3)
+                                @if ( ($document->status != 3) && (auth()->user()->can('cancel_documents')) )
                                     <a href="{{ route('documents.cancel', $document->id) }}" class="btn btn-app">
                                         <i class="fas fa-ban"></i>Cancelar</a>
                                 @endif

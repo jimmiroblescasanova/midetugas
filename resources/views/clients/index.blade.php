@@ -4,10 +4,12 @@
     <div class="col-sm-6">
         <h1><i class="fas fa-users"></i> Clientes</h1>
     </div>
-    <div class="col-sm-6">
-        <a href="{{ route('clients.create') }}" class="btn btn-primary btn-sm float-sm-right btn-block-xs-only">
-            <i class="fas fa-pencil-alt"></i> Crear nuevo</a>
-    </div>
+    @can('create_clients')
+        <div class="col-sm-6">
+            <a href="{{ route('clients.create') }}" class="btn btn-primary btn-sm float-sm-right btn-block-xs-only">
+                <i class="fas fa-pencil-alt"></i> Crear nuevo</a>
+        </div>
+    @endcan
 @stop
 
 @section('content')
@@ -33,7 +35,7 @@
                                 <td>{{ $client->email }}</td>
                                 <td>{{ $client->phone }}</td>
                                 <td class="text-right">
-                                    @if (is_null($client->measurer_id))
+                                    @if (is_null($client->measurer_id) && (auth()->user()->can('edit_clients')))
                                         <button class="btn btn-info btn-xs setMeasurerBtn" data-id="{{ $client->id }}"><i class="fas fa-edit"></i> Asignar medidor</button>
                                     @endif
                                     <a href="{{ route('clients.show', $client) }}" class="btn btn-xs btn-primary"><i class="fas fa-eye"></i> Ver</a>

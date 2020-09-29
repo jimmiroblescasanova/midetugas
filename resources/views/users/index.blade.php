@@ -4,6 +4,12 @@
     <div class="col-sm-6">
         <h1><i class="fas fa-user"></i> Usuarios</h1>
     </div>
+    @can('create_users')
+        <div class="col-sm-6">
+            <a href="{{ route('users.create') }}" class="btn btn-primary btn-sm float-sm-right btn-block-xs-only">
+                <i class="fas fa-pencil-alt"></i> Crear nuevo</a>
+        </div>
+    @endcan
 @stop
 
 @section('content')
@@ -17,7 +23,9 @@
                             <th>ID</th>
                             <th>Nombre</th>
                             <th>Correo</th>
-                            <th>Acciones</th>
+                            @can('edit_users')
+                                <th>Acciones</th>
+                            @endcan
                         </tr>
                         </thead>
                         <tbody>
@@ -26,9 +34,11 @@
                                 <td>{{ $user->id }}</td>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
-                                <td>
-                                    <a href="{{ route('users.edit', $user) }}" class="btn btn-xs btn-primary"><i class="fas fa-edit"></i> Ver / Editar</a>
-                                </td>
+                                @can('edit_users')
+                                    <td class="text-right">
+                                        <a href="{{ route('users.edit', $user) }}" class="btn btn-xs btn-primary"><i class="fas fa-edit"></i> Ver / Editar</a>
+                                    </td>
+                                @endcan
                             </tr>
                         @endforeach
                         </tbody>
