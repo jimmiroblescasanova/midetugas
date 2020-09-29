@@ -62,12 +62,14 @@
                                 @csrf
                                 @method('patch')
                                 @include('clients.forms.general')
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <button class="btn btn-sm btn-primary" type="submit">
-                                            <i class="fas fa-save"></i> Actualizar</button>
+                                @can('edit_clients')
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <button class="btn btn-sm btn-primary" type="submit">
+                                                <i class="fas fa-save"></i> Actualizar</button>
+                                        </div>
                                     </div>
-                                </div>
+                                @endcan
                             </form>
                         </div>
                         <div class="tab-pane fade" id="custom-tabs-four-profile" role="tabpanel"
@@ -76,12 +78,14 @@
                                 @csrf
                                 @method('patch')
                                 @include('clients.forms.contacts')
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <button class="btn btn-sm btn-primary" type="submit">
-                                            <i class="fas fa-save"></i> Actualizar</button>
+                                @can('edit_contacts')
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <button class="btn btn-sm btn-primary" type="submit">
+                                                <i class="fas fa-save"></i> Actualizar</button>
+                                        </div>
                                     </div>
-                                </div>
+                                @endcan
                             </form>
                         </div>
                         <div class="tab-pane fade" id="custom-tabs-four-messages" role="tabpanel"
@@ -91,12 +95,14 @@
                                 @method('patch')
                                 @include('clients.forms.address')
                                 <input type="hidden" name="client_id" value="{{ $client->id }}">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <button class="btn btn-sm btn-primary" type="submit">
-                                            <i class="fas fa-save"></i> Actualizar</button>
+                                @can('edit_addresses')
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <button class="btn btn-sm btn-primary" type="submit">
+                                                <i class="fas fa-save"></i> Actualizar</button>
+                                        </div>
                                     </div>
-                                </div>
+                                @endcan
                             </form>
                         </div>
                         <div class="tab-pane fade" id="custom-tabs-four-actions" role="tabpanel"
@@ -108,7 +114,7 @@
                                 <div class="col-4">
                                     <a href="{{ route('clients.testEmail', $client->id) }}" class="btn btn-block btn-primary"><i class="fas fa-envelope"></i> Enviar correo prueba</a>
                                 </div>
-                                @if ($client->measurer_id != NULL)
+                                @if (($client->measurer_id != NULL) && (auth()->user()->can('edit_clients')))
                                     <div class="col-4">
                                         <a href="{{ route('clients.detach', $client->id) }}" class="btn btn-block btn-info"><i class="fas fa-tachometer-alt"></i> Des-asociar medidor</a>
                                     </div>
