@@ -50,7 +50,7 @@ class DocumentsController extends Controller
             'final_quantity' => $request->final_quantity,
             'start_quantity' => $client->measurer->actual_measure,
             'month_quantity' => $month_quantity,
-            'period' => Carbon::create($request->date)->subMonth()->format('F, Y'),
+            'period' => Carbon::create($request->date)->subMonth()->isoFormat('MMMM, Y'),
             'total' => $total,
             'pending' => $total,
             'photo' => $photo,

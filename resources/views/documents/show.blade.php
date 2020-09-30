@@ -123,7 +123,10 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="date">Fecha</label>
-                                    <input type="date" class="form-control {{ $errors->first('date') ? 'is-invalid' : '' }}" name="date" id="date">
+                                    <input type="date"
+                                           class="form-control {{ $errors->first('date') ? 'is-invalid' : '' }}"
+                                           name="date"
+                                           id="date" placeholder="dd/mm/yyyy">
                                     {!! $errors->first('date', '<div class="invalid-feedback">:message</div>') !!}
                                 </div>
                             </div>
