@@ -24,3 +24,4 @@ Homestead.json
 
 /.idea
 /public/index.php
+/public/.htaccess
