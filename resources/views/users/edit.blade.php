@@ -210,6 +210,16 @@
                                         </label>
                                     </div>
                                 </section>
+                                <section>
+                                    <hr data-content="Sección de Documentos" class="hr-text">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="checkbox" class="form-check-input" name="permissions[]"
+                                                   id="update_prices"
+                                                   value="update_prices" {{ (in_array('update_prices', $permissions)) ? 'checked' : '' }}>
+                                            Actualizar precios
+                                        </label>
+                                </section>
                                 <div class="row mt-3">
                                     <div class="col-12">
                                         <button type="submit" class="btn btn-sm btn-primary">Actualizar permisos</button>

@@ -22,6 +22,7 @@ class CreateDocumentsTable extends Migration
             $table->double('start_quantity');
             $table->double('month_quantity');
             $table->string('period');
+            $table->double('price');
             $table->double('total');
             $table->double('pending');
             $table->bigInteger('reference')->default(0);

@@ -39,5 +39,7 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'create_users']);
         Permission::create(['name' => 'edit_users']);
         Permission::create(['name' => 'delete_users']);
+        // Permisos para los precios
+        Permission::create(['name' => 'update_prices']);
     }
 }

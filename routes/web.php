@@ -88,3 +88,6 @@ Route::delete('/users/{user}', 'UsersController@destroy')
     ->name('users.destroy')->middleware('permission:delete_users');
 Route::post('/users/{user}/permissions', 'UsersController@permissions')
     ->name('users.permissions')->middleware('permission:edit_users');
+
+Route::post('/price', 'PricesController@store')
+    ->name('prices.store')->middleware('permission:update_prices');

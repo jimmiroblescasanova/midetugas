@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use AWS;
+use App\Price;
 use App\Clients;
 use App\Document;
 use App\Measurer;
@@ -32,6 +33,8 @@ class DocumentsController extends Controller
 
     public function store(SaveDocumentRequest $request)
     {
+        // Primero obtenemos el precio actual de la BD
+        $price = Price::latest()->first()->price;
         // Se obtiene el cliente capturado
         $client = Clients::findOrFail($request->client_id);
         // Se calcula el día de pago a partir de la fecha de captura
@@ -41,7 +44,7 @@ class DocumentsController extends Controller
         // Consumo del mes
         $month_quantity = $request->final_quantity - $client->measurer->actual_measure;
         // Importe total del mes
-        $total = $month_quantity * 2.5;
+        $total = $month_quantity * $price;
         // Guarda todos los calores en un array
         $data = [
             'client_id' => $request->client_id,
@@ -51,6 +54,7 @@ class DocumentsController extends Controller
             'start_quantity' => $client->measurer->actual_measure,
             'month_quantity' => $month_quantity,
             'period' => Carbon::create($request->date)->subMonth()->isoFormat('MMMM, Y'),
+            'price' => $price,
             'total' => $total,
             'pending' => $total,
             'photo' => $photo,
