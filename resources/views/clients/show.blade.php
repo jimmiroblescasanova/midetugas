@@ -44,16 +44,6 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link"
-                               id="custom-tabs-four-measurers-tab"
-                               data-toggle="pill"
-                               href="#custom-tabs-four-measurers"
-                               role="tab"
-                               aria-controls="custom-tabs-four-measurers"
-                               aria-selected="false"
-                            >Consumos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link"
                                id="custom-tabs-four-actions-tab"
                                data-toggle="pill"
                                href="#custom-tabs-four-actions"
@@ -114,12 +104,6 @@
                                     </div>
                                 @endcan
                             </form>
-                        </div>
-                        <div class="tab-pane fade" id="custom-tabs-four-measurers" role="tabpanel"
-                             aria-labelledby="custom-tabs-four-measurers-tab">
-                            <div class="row">
-                                Medidor asignado: {{ $client->measurer->serial_number }}
-                            </div>
                         </div>
                         <div class="tab-pane fade" id="custom-tabs-four-actions" role="tabpanel"
                              aria-labelledby="custom-tabs-four-actions-tab">

@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class CreateClientsTable extends Migration
@@ -27,6 +28,8 @@ class CreateClientsTable extends Migration
             $table->unsignedBigInteger('measurer_id')->nullable();
             $table->timestamps();
         });
+
+        DB::update("ALTER TABLE clients AUTO_INCREMENT = 5000;");
     }
 
     /**
