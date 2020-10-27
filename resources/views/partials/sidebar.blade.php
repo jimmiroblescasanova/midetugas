@@ -30,22 +30,42 @@
                         <p>Inicio</p>
                     </a>
                 </li>
-                @can('show_clients')
-                <li class="nav-item">
-                    <a href="{{ route('clients.index') }}" class="nav-link {{ setActive('clients.*') }}">
-                        <i class="nav-icon fas fa-users"></i>
-                        <p>Clientes</p>
+                <li class="nav-item has-treeview {{ showMenu('projects.*') . showMenu('tanks.*') . showMenu('measurers.*') . showMenu('clients.*') }}">
+                    <a href="#" class="nav-link {{ setActive('projects.*') . setActive('tanks.*') . setActive('measurers.*') . setActive('clients.*') }}">
+                        <i class="nav-icon fas fa-database"></i>
+                        <p>Catálogos
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
                     </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('projects.index') }}" class="nav-link {{ setActive('projects.*') }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Condominios</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('tanks.index') }}" class="nav-link {{ setActive('tanks.*') }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Tanques</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('measurers.index') }}" class="nav-link {{ setActive('measurers.*') }}">
+                                <i class="nav-icon far fa-circle"></i>
+                                <p>Medidores</p>
+                            </a>
+                        </li>
+                        @can('show_clients')
+                            <li class="nav-item">
+                                <a href="{{ route('clients.index') }}" class="nav-link {{ setActive('clients.*') }}">
+                                    <i class="nav-icon far fa-circle"></i>
+                                    <p>Clientes</p>
+                                </a>
+                            </li>
+                        @endcan
+                    </ul>
                 </li>
-                @endcan
-                @can('show_measurers')
-                <li class="nav-item">
-                    <a href="{{ route('measurers.index') }}" class="nav-link {{ setActive('measurers.*') }}">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>Medidores</p>
-                    </a>
-                </li>
-                @endcan
                 @canany(['show_documents', 'create_documents', 'pay_documents'])
                     <li class="nav-item has-treeview {{ showMenu('documents.*') }}">
                         <a href="#" class="nav-link {{ setActive('documents.*') }}">

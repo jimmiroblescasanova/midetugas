@@ -91,3 +91,14 @@ Route::post('/users/{user}/permissions', 'UsersController@permissions')
 
 Route::post('/price', 'PricesController@store')
     ->name('prices.store')->middleware('permission:update_prices');
+
+Route::get('/projects', 'ProjectsController@index')
+    ->name('projects.index');
+Route::post('/projects', 'ProjectsController@store')->name('projects.store');
+
+Route::get('/tanks', 'TanksController@index')
+    ->name('tanks.index');
+Route::get('/tanks/create', 'TanksController@create')
+    ->name('tanks.create');
+Route::post('/tanks', 'TanksController@store')
+    ->name('tanks.store');

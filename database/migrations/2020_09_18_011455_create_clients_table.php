@@ -26,6 +26,7 @@ class CreateClientsTable extends Migration
             $table->string('ref2_name')->nullable();
             $table->string('ref2_phone')->nullable();
             $table->unsignedBigInteger('measurer_id')->nullable();
+            $table->unsignedBigInteger('project_id');
             $table->timestamps();
         });
 

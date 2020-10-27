@@ -6,6 +6,7 @@ use App\Clients;
 use App\Measurer;
 use App\Addresses;
 use App\Mail\TestEmail;
+use App\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\StoreClientRequest;
@@ -32,12 +33,18 @@ class ClientsController extends Controller
     {
         return view('clients.create', [
             'client' => new Clients,
+            'projects' => Project::pluck('name', 'id'),
+            'measurers' => Measurer::select('id', 'serial_number')->where('active', false)->get(),
         ]);
     }
 
     public function store(StoreClientRequest $request)
     {
         $client = Clients::create($request->validated());
+
+        $measurer = Measurer::findOrFail($request->measurer_id);
+        $measurer->active = true;
+        $measurer->save();
 
         return redirect()->route('contacts.create', $client->id);
     }
@@ -52,6 +59,8 @@ class ClientsController extends Controller
         return view('clients.show', [
             'client' => $client,
             'address' => $address,
+            'projects' => Project::pluck('name', 'id'),
+            'measurers' => Measurer::select('id', 'serial_number')->where('active', false)->get(),
         ]);
     }
 

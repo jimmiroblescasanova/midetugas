@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Clients extends Model
 {
     protected $guarded = [];
-//    protected $with = ['measurer'];
 
     public function setNameAttribute($val)
     {

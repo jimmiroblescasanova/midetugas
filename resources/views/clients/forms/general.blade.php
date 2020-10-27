@@ -70,3 +70,32 @@
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+            <label for='measurer_id'>Medidor</label>
+            <select id='measurer_id' name='measurer_id' class='form-control select2bs4 {{ $errors->first('measurer_id') ? 'is-invalid' : '' }}'>
+                @if ($client->measurer_id == NULL)
+                    <option value="">Omitir (capturar después)</option>
+                    @else
+                    <option value="{{ $client->measurer_id }}" selected>{{ $client->measurer->serial_number }}</option>
+                @endif
+                @foreach ($measurers as $measurer)
+                    <option value="{{ $measurer->id }}">{{ $measurer->serial_number }}</option>
+                @endforeach
+            </select>
+            {!! $errors->first('measurer_id', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="form-group">
+            <label for='project_id'>Condominio</label>
+            <select id='project_id' name='project_id' class='form-control select2bs4 {{ $errors->first('project_id') ? 'is-invalid' : '' }}'>
+                @foreach ($projects as $id => $project)
+                    <option value="{{ $id }}" {{ ($id == $client->project_id) ? 'selected' : '' }}>{{ $project }}</option>
+                @endforeach
+            </select>
+            {!! $errors->first('project_id', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+    </div>
+</div>

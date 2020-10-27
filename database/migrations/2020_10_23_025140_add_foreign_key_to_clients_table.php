@@ -15,6 +15,7 @@ class AddForeignKeyToClientsTable extends Migration
     {
         Schema::table('clients', function (Blueprint $table) {
             $table->foreign('measurer_id')->references('id')->on('measurers');
+            $table->foreign('project_id')->references('id')->on('projects');
         });
     }
 
