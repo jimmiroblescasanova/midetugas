@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="{{ asset('/vendor/adminlte/plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/vendor/adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
     <!-- overlayScrollbars -->
-    <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" />
     <link rel="stylesheet" href="{{ asset('/css/app.css') }}">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed">
@@ -77,6 +77,8 @@
 {{--<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>--}}
 <!-- Select2 -->
 <script src="{{ asset('/vendor/adminlte/plugins/select2/js/select2.full.min.js') }}"></script>
+<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js"></script>
+<script src="https://unpkg.com/gijgo@1.9.13/js/messages/messages.es-es.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 @yield('scripts')
 <script>

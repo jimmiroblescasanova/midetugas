@@ -102,3 +102,8 @@ Route::get('/tanks/create', 'TanksController@create')
     ->name('tanks.create');
 Route::post('/tanks', 'TanksController@store')
     ->name('tanks.store');
+
+Route::get('/inventories', 'InventoriesController@index')->name('inventories.index');
+Route::get('/inventories/create', 'InventoriesController@create')->name('inventories.create');
+Route::post('/inventories', 'InventoriesController@store')->name('inventories.store');
+Route::post('inventories/fill-tank', 'InventoriesController@fillTanks')->name('inventories.fillTanks');

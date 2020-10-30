@@ -74,36 +74,48 @@
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
+                        <ul class="nav nav-treeview">
                         @can('create_documents')
-                            <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="{{ route('documents.create') }}" class="nav-link {{ setActive('documents.create') }}">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Capturar</p>
                                     </a>
                                 </li>
-                            </ul>
                         @endcan
                         @can('show_documents')
-                            <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="{{ route('documents.index') }}" class="nav-link {{ setActive('documents.index') }}">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Listado</p>
                                     </a>
                                 </li>
-                            </ul>
                         @endcan
+                        @can('pay_documents')
+                            <li class="nav-item">
+                                <a href="{{ route('payments.index') }}" class="nav-link {{ setActive('payments.*') }}">
+                                    <i class="nav-icon far fa-circle"></i>
+                                    <p>Pagos</p>
+                                </a>
+                            </li>
+                        @endcan
+                        </ul>
                     </li>
-                    @can('pay_documents')
-                        <li class="nav-item">
-                            <a href="{{ route('payments.index') }}" class="nav-link {{ setActive('payments.*') }}">
-                                <i class="nav-icon fas fa-hand-holding-usd"></i>
-                                <p>Pagos</p>
-                            </a>
-                        </li>
-                    @endcan
                 @endcanany
+                <li class="nav-item">
+                    <a href="{{ route('inventories.index') }}" class="nav-link {{ setActive('inventories.*') }}">
+                        <i class="nav-icon fas fa-boxes"></i>
+                        <p>Inventarios</p>
+                    </a>
+                </li>
+                @can('show_users')
+                    <li class="nav-item">
+                        <a href="{{ route('users.index') }}" class="nav-link {{ setActive('users.*') }}">
+                            <i class="nav-icon fas fa-users-cog"></i>
+                            <p>Usuarios</p>
+                        </a>
+                    </li>
+                @endcan
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-funnel-dollar"></i>
@@ -120,14 +132,6 @@
                         </li>
                     </ul>
                 </li>
-                @can('show_users')
-                    <li class="nav-item">
-                        <a href="{{ route('users.index') }}" class="nav-link {{ setActive('users.*') }}">
-                            <i class="nav-icon fas fa-users-cog"></i>
-                            <p>Usuarios</p>
-                        </a>
-                    </li>
-                @endcan
                 <li class="nav-item">
                     <a href="#" id="logoutButton" class="nav-link">
                         <i class="nav-icon fas fa-sign-out-alt"></i>

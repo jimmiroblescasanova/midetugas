@@ -42,9 +42,12 @@ class ClientsController extends Controller
     {
         $client = Clients::create($request->validated());
 
-        $measurer = Measurer::findOrFail($request->measurer_id);
-        $measurer->active = true;
-        $measurer->save();
+        if (!is_null($request->measurer_id))
+        {
+            $measurer = Measurer::findOrFail($request->measurer_id);
+            $measurer->active = true;
+            $measurer->save();
+        }
 
         return redirect()->route('contacts.create', $client->id);
     }

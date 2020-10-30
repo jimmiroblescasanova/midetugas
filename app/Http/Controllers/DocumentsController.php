@@ -4,14 +4,18 @@ namespace App\Http\Controllers;
 
 use AWS;
 use App\Price;
+use App\Project;
 use App\Clients;
 use App\Document;
 use App\Measurer;
 use Carbon\Carbon;
+use App\Traits\UpdateProjectTrait;
 use App\Http\Requests\SaveDocumentRequest;
 
 class DocumentsController extends Controller
 {
+    use UpdateProjectTrait;
+
     public function __construct()
     {
         $this->middleware('auth')->except('print');
@@ -69,6 +73,12 @@ class DocumentsController extends Controller
         $measurer = Measurer::findOrFail($client->measurer->id);
         $measurer->actual_measure = $request->final_quantity;
         $measurer->save();
+
+        // Descontar el consumo en el proyecto
+        $project = Project::find($client->project_id);
+        $project->actual_capacity = $project->actual_capacity - $month_quantity;
+        $this->calculatePercentage($project);
+        $project->save();
 
         return redirect()->route('documents.create')
             ->with('message', 'Lectura capturada correctamente.');
