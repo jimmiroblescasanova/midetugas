@@ -11,6 +11,7 @@ use App\Measurer;
 use Carbon\Carbon;
 use App\Traits\UpdateProjectTrait;
 use App\Http\Requests\SaveDocumentRequest;
+use Illuminate\Support\Facades\DB;
 
 class DocumentsController extends Controller
 {
@@ -47,9 +48,17 @@ class DocumentsController extends Controller
         $photo = $request->file('photo')->store('images');
         // Consumo del mes
         $month_quantity = $request->final_quantity - $client->measurer->actual_measure;
+//        Factor de correccion
+        $correction_factor = Measurer::findOrFail($client->measurer_id)->value('correction_factor');
         // Importe total del mes
-        $total = $month_quantity * $price;
-        // Guarda todos los calores en un array
+        $total = ($month_quantity * ($price * $correction_factor)) + $client->balance;
+        if ($client->reconnection_charge == TRUE) {
+            $total = $total + 99;
+        }
+        // Separar decimales
+        $decimals = explode('.', round($total,2));
+//        return $decimals;
+        // Guarda todos los valores en un array
         $data = [
             'client_id' => $request->client_id,
             'date' => $request->date,
@@ -57,26 +66,44 @@ class DocumentsController extends Controller
             'final_quantity' => $request->final_quantity,
             'start_quantity' => $client->measurer->actual_measure,
             'month_quantity' => $month_quantity,
+            'correction_factor' => $correction_factor,
             'period' => Carbon::create($request->date)->subMonth()->isoFormat('MMMM, Y'),
             'price' => $price,
-            'total' => $total,
-            'pending' => $total,
+            'total' => $decimals[0],
+            'pending' => $decimals[0],
+            'previous_balance' => $client->balance,
             'photo' => $photo,
         ];
-        // Crea el documento a partir de array
-        $document = Document::create($data);
-        // Crear la referencia de pago
-        $reference = $payment_date->format('Ym') . str_pad($document->id, 4, '0', STR_PAD_LEFT);
-        $document->reference = $reference;
-        $document->save();
-        // Obtener el id del medidor usado y actualiza su valor
-        $measurer = Measurer::findOrFail($client->measurer->id);
-        $measurer->actual_measure = $request->final_quantity;
-        $measurer->save();
+
+        DB::beginTransaction();
+        try {
+            // Crea el documento a partir de array
+            $document_id = DB::table('documents')->insertGetId($data);
+            // Actualiza el balance del cliente
+            DB::table('clients')
+                ->where('id', $request->client_id)
+                ->update([
+                    'balance' => array_key_exists(1, $decimals) ? $decimals[1] : 0,
+                    'reconnection_charge' => FALSE,
+                ]);
+            // Crear la referencia de pago
+            DB::table('documents')->where('id', $document_id)->update([
+                'reference' => $payment_date->format('Ym') . str_pad($document_id, 4, '0', STR_PAD_LEFT)
+            ]);
+            // Obtener el id del medidor usado y actualiza su valor
+            DB::table('measurers')->where('id', $client->measurer->id)->update([
+                'actual_measure' => $request['final_quantity'],
+            ]);
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return $e;
+        }
 
         // Descontar el consumo en el proyecto
         $project = Project::find($client->project_id);
-        $project->actual_capacity = $project->actual_capacity - $month_quantity;
+        $project->actual_capacity = $project->actual_capacity - ($month_quantity * 4.1848); // Se multiplica por la conversión a litros
         $this->calculatePercentage($project);
         $project->save();
 
@@ -92,9 +119,12 @@ class DocumentsController extends Controller
                 ['id', '<=', $document->id]
             ])->orderByDesc('id')->get();
 
+        $advance_payment = Clients::find($document->client_id)->value('advance_payment');
+
         return view('documents.show', [
             'document' => $document,
             'historic' => $historic->take(6),
+            'advance_payment' => $advance_payment,
         ]);
     }
 
@@ -136,7 +166,7 @@ class DocumentsController extends Controller
         $docto = Document::findOrFail($id);
 
         // Se obtiene los históricos de meses anteriores
-        $historic = Document::select('id', 'period', 'month_quantity')
+        $historic = Document::select('id', 'period', 'month_quantity', 'total')
             ->where([
             ['client_id', $docto->client_id],
             ['id', '<=', $docto->id]
@@ -168,10 +198,12 @@ class DocumentsController extends Controller
         $pdf = \PDF::loadView('print.document', [
             'docto' => $docto,
             'chart' => urlencode($chart),
+            'historic' => $historic->take(2),
         ]);
         $pdf->setPaper('statement', 'portrait');
         return $pdf->stream();
 
-//        return view('print.document');
+//        return $historic->take(1);
+
     }
 }

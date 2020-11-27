@@ -59,17 +59,32 @@ class ClientsController extends Controller
             $address = new Addresses;
         }
 
+        $measurer = Measurer::select('id', 'serial_number')
+            ->where([
+                ['active', false],
+                ['id', '!=', $client->measurer_id]
+            ])->get();
+
         return view('clients.show', [
             'client' => $client,
             'address' => $address,
             'projects' => Project::pluck('name', 'id'),
-            'measurers' => Measurer::select('id', 'serial_number')->where('active', false)->get(),
+            'measurers' => $measurer,
         ]);
     }
 
     public function update(Clients $client, UpdateClientRequest $request)
     {
-        $client->update( $request->validated() );
+        $measurer = Measurer::find($client->measurer_id);
+
+        if($client->update( $request->validated() ))
+        {
+            $measurer->update(['active' => false]);
+            $measurer->save();
+            $new_measurer = Measurer::find($request->measurer_id);
+            $new_measurer->update(['active' => true]);
+            $new_measurer->save();
+        }
 
         return redirect()->route('clients.index');
     }
@@ -94,6 +109,18 @@ class ClientsController extends Controller
         $measurer->save();
 
         $client->measurer_id = NULL;
+        $client->save();
+
+        return redirect()->route('clients.index');
+    }
+
+    public function status(Clients $client)
+    {
+        $client->status = !$client->status;
+        if ($client->reconnection_charge == FALSE)
+        {
+            $client->reconnection_charge = TRUE;
+        }
         $client->save();
 
         return redirect()->route('clients.index');

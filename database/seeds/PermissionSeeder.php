@@ -23,6 +23,7 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'edit_contacts']);
         Permission::create(['name' => 'edit_addresses']);
         Permission::create(['name' => 'delete_clients']);
+        Permission::create(['name' => 'change_status']);
         // Permisos para los medidores
         Permission::create(['name' => 'show_measurers']);
         Permission::create(['name' => 'create_measurers']);
@@ -41,5 +42,14 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'delete_users']);
         // Permisos para los precios
         Permission::create(['name' => 'update_prices']);
+        // Permisos para los proyectos
+        Permission::create(['name' => 'show_projects']);
+        Permission::create(['name' => 'create_projects']);
+        // Permisos para los tanques
+        Permission::create(['name' => 'show_tanks']);
+        Permission::create(['name' => 'create_tanks']);
+        // Permisos para los inventarios
+        Permission::create(['name' => 'show_inventories']);
+        Permission::create(['name' => 'create_inventories']);
     }
 }

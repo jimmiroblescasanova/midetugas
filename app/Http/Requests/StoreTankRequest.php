@@ -28,6 +28,7 @@ class StoreTankRequest extends FormRequest
             'model' => 'required',
             'serial_number' => 'required',
             'capacity' => 'required',
+            'manufacturing_date' => 'required|date',
             'project_id' => 'exists:projects,id'
         ];
     }

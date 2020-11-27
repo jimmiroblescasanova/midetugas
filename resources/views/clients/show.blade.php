@@ -66,7 +66,8 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <button class="btn btn-sm btn-primary" type="submit">
-                                                <i class="fas fa-save"></i> Actualizar</button>
+                                                <i class="fas fa-save"></i> Actualizar
+                                            </button>
                                         </div>
                                     </div>
                                 @endcan
@@ -82,7 +83,8 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <button class="btn btn-sm btn-primary" type="submit">
-                                                <i class="fas fa-save"></i> Actualizar</button>
+                                                <i class="fas fa-save"></i> Actualizar
+                                            </button>
                                         </div>
                                     </div>
                                 @endcan
@@ -99,7 +101,8 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <button class="btn btn-sm btn-primary" type="submit">
-                                                <i class="fas fa-save"></i> Actualizar</button>
+                                                <i class="fas fa-save"></i> Actualizar
+                                            </button>
                                         </div>
                                     </div>
                                 @endcan
@@ -109,24 +112,79 @@
                              aria-labelledby="custom-tabs-four-actions-tab">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <a href="{{ route('sms', $client->id) }}" class="btn btn-block btn-success mb-3"><i class="fas fa-sms"></i> Enviar SMS prueba</a>
+                                    <a href="{{ route('sms', $client->id) }}" class="btn btn-block btn-success mb-3"><i
+                                            class="fas fa-sms"></i> Enviar SMS prueba</a>
                                 </div>
                                 <div class="col-md-4">
-                                    <a href="{{ route('clients.testEmail', $client->id) }}" class="btn btn-block btn-primary mb-3"><i class="fas fa-envelope"></i> Enviar correo prueba</a>
+                                    <a href="{{ route('clients.testEmail', $client->id) }}"
+                                       class="btn btn-block btn-primary mb-3"><i class="fas fa-envelope"></i> Enviar
+                                        correo prueba</a>
                                 </div>
                                 @if (($client->measurer_id != NULL) && (auth()->user()->can('edit_clients')))
                                     <div class="col-md-4">
-                                        <a href="{{ route('clients.detach', $client->id) }}" class="btn btn-block btn-info mb-3"><i class="fas fa-tachometer-alt"></i> Des-asociar medidor</a>
+                                        <a href="{{ route('clients.detach', $client->id) }}"
+                                           class="btn btn-block btn-info mb-3"><i class="fas fa-tachometer-alt"></i>
+                                            Des-asociar medidor</a>
                                     </div>
                                 @endif
+                            </div>
+                            <div class="row">
+                                @can('change_status')
+                                    <div class="col-md-4">
+                                        @if($client->status == FALSE)
+                                            <a href="{{ route('clients.status', $client) }}"
+                                               class="btn btn-block btn-warning mb-3  text-white"><i
+                                                    class="fas fa-user-times"></i> Suspender</a>
+                                        @else
+                                            <a href="{{ route('clients.status', $client) }}"
+                                               class="btn btn-block btn-warning mb-3  text-white"><i
+                                                    class="fas fa-user-check"></i> Activar</a>
+                                        @endif
+                                    </div>
+                                @endcan
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="card-footer">
-                    <button class="btn btn-sm btn-danger float-sm-right" type="button" onclick="history.back()"><i class="fas fa-hand-point-left"></i> Atrás</button>
+                    <button class="btn btn-sm btn-danger float-sm-right" type="button" onclick="history.back()"><i
+                            class="fas fa-hand-point-left"></i> Atrás
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+@stop
+
+@section('modal-section')
+    <div class="modal fade" id="newPriceModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Suspender cliente</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="form-group form-check">
+                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                <label class="form-check-label" for="exampleCheck1">Incluir cargo por reconexión</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="submit" class="btn btn-sm btn-primary">Guardar</button>
+                        <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
 @stop

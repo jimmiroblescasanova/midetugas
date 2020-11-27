@@ -14,7 +14,7 @@
                     <form action="{{ route('tanks.store') }}" role="form" method="POST">
                         @csrf
                         <div class="row">
-                            <div class="col-12">
+                            <div class="col-md-6 col-12">
                                 <div class="form-group">
                                     <label for="project_id">Seleccionar condominio</label>
                                     <select class="form-control select2bs4 {{ $errors->first('brand') ? 'is-invalid' : '' }}"
@@ -26,6 +26,17 @@
                                         @endforeach
                                     </select>
                                     {!! $errors->first('project_id', '<div class="invalid-feedback">:message</div>') !!}
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="manufacturing_date">Fecha de fabricación</label>
+                                    <input type="date"
+                                           class="form-control {{ $errors->first('manufacturing_date') ? 'is-invalid' : '' }}"
+                                           name="manufacturing_date"
+                                           id="manufacturing_date"
+                                           value="{{ old('manufacturing_date') }}">
+                                    {!! $errors->first('manufacturing_date', '<div class="invalid-feedback">:message</div>') !!}
                                 </div>
                             </div>
                         </div>

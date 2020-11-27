@@ -17,4 +17,14 @@ class Document extends Model
     {
         return $this->belongsTo('App\Clients');
     }
+
+    public function setPreviousBalanceAttribute($val)
+    {
+        $this->attributes['previous_balance'] = $val * 100;
+    }
+
+    public function getPreviousBalanceAttribute()
+    {
+        return $this->attributes['previous_balance'] / 100;
+    }
 }

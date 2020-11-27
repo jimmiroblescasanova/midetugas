@@ -96,6 +96,14 @@
                                             Eliminar clientes
                                         </label>
                                     </div>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="checkbox" class="form-check-input" name="permissions[]"
+                                                   id="change_status"
+                                                   value="change_status" {{ (in_array('change_status', $permissions)) ? 'checked' : '' }}>
+                                            Cambiar estado del cliente
+                                        </label>
+                                    </div>
                                 </section>
                                 <section>
                                     <hr data-content="Sección de Medidores" class="hr-text">
@@ -211,6 +219,60 @@
                                     </div>
                                 </section>
                                 <section>
+                                    <hr data-content="Sección de Condominios" class="hr-text">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="checkbox" class="form-check-input" name="permissions[]"
+                                                   id="show_projects"
+                                                   value="show_projects" {{ (in_array('show_projects', $permissions)) ? 'checked' : '' }}>
+                                            Ver condominios
+                                        </label>
+                                    </div><div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="checkbox" class="form-check-input" name="permissions[]"
+                                                   id="create_projects"
+                                                   value="create_projects" {{ (in_array('create_projects', $permissions)) ? 'checked' : '' }}>
+                                            Crear condominios
+                                        </label>
+                                    </div>
+                                </section>
+                                <section>
+                                    <hr data-content="Sección de Tanques" class="hr-text">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="checkbox" class="form-check-input" name="permissions[]"
+                                                   id="show_tanks"
+                                                   value="show_tanks" {{ (in_array('show_tanks', $permissions)) ? 'checked' : '' }}>
+                                            Ver tanques
+                                        </label>
+                                    </div><div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="checkbox" class="form-check-input" name="permissions[]"
+                                                   id="create_tanks"
+                                                   value="create_tanks" {{ (in_array('create_tanks', $permissions)) ? 'checked' : '' }}>
+                                            Crear tanques
+                                        </label>
+                                    </div>
+                                </section>
+                                <section>
+                                    <hr data-content="Sección de Inventarios" class="hr-text">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="checkbox" class="form-check-input" name="permissions[]"
+                                                   id="show_inventories"
+                                                   value="show_inventories" {{ (in_array('show_inventories', $permissions)) ? 'checked' : '' }}>
+                                            Ver inventarios
+                                        </label>
+                                    </div><div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="checkbox" class="form-check-input" name="permissions[]"
+                                                   id="create_inventories"
+                                                   value="create_inventories" {{ (in_array('create_inventories', $permissions)) ? 'checked' : '' }}>
+                                            Crear inventario
+                                        </label>
+                                    </div>
+                                </section>
+                                <section>
                                     <hr data-content="Sección de Documentos" class="hr-text">
                                     <div class="form-check">
                                         <label class="form-check-label">
@@ -219,6 +281,7 @@
                                                    value="update_prices" {{ (in_array('update_prices', $permissions)) ? 'checked' : '' }}>
                                             Actualizar precios
                                         </label>
+                                    </div>
                                 </section>
                                 <div class="row mt-3">
                                     <div class="col-12">

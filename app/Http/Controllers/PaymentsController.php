@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Clients;
 use App\Payment;
 use App\Document;
 use App\Http\Requests\SavePaymentRequest;
@@ -23,19 +24,34 @@ class PaymentsController extends Controller
 
     public function store(SavePaymentRequest $request)
     {
-        $docto = Document::findOrFail($request->document_id);
-        $diff = $docto->pending - $request->amount;
+        $docto = Document::findOrFail($request['document_id']);
+        $client = Clients::findOrFail($request['client_id']);
 
-        if ($diff < 0)
+        $total = $request['amount'];
+
+        if (isset($request['advancePaymentCheck']))
         {
-            return redirect()->back()
-                ->with('message', 'No se puede aplicar una cantidad mayor al importe pendiente');
+            $total += $client->advance_payment;
         }
 
-        $docto->pending = $diff;
-        $docto->status = 4;
-        $docto->save();
-        Payment::create($request->validated());
+        if ($docto->pending > $total) {
+            $docto->update([
+                'pending' => $total,
+                'status' => 4,
+            ]);
+        } else {
+            $diff = $total - $docto->pending;
+
+            $docto->update([
+                'pending' => 0,
+                'status' => 4,
+            ]);
+            $client->update([
+                'advance_payment' => $diff,
+            ]);
+        }
+
+        Payment::create($request->except('advancePaymentCheck'));
 
         return redirect()->route('documents.index');
     }

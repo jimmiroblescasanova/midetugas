@@ -25,8 +25,12 @@ class CreateClientsTable extends Migration
             $table->string('ref1_phone')->nullable();
             $table->string('ref2_name')->nullable();
             $table->string('ref2_phone')->nullable();
-            $table->unsignedBigInteger('measurer_id')->default(NULL);
-            $table->unsignedBigInteger('project_id');
+            $table->integer('balance')->default(0);
+            $table->integer('advance_payment')->default(0);
+            $table->boolean('status')->default(0);
+            $table->boolean('reconnection_charge')->default(0);
+            $table->unsignedBigInteger('measurer_id')->nullable();
+            $table->unsignedBigInteger('project_id')->nullable();
             $table->timestamps();
         });
 

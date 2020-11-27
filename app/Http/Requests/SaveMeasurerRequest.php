@@ -24,9 +24,11 @@ class SaveMeasurerRequest extends FormRequest
     public function rules()
     {
         return [
+            'brand' => 'required|string',
+            'model' => 'required|string',
             'serial_number' => 'required|numeric|unique:measurers',
-            'model' => 'required',
-            'actual_measure' => 'required',
+            'actual_measure' => 'required|numeric',
+            'correction_factor' => 'required|numeric',
         ];
     }
 }

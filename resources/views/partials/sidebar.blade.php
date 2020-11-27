@@ -38,31 +38,37 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
+                        @can('show_projects')
                         <li class="nav-item">
                             <a href="{{ route('projects.index') }}" class="nav-link {{ setActive('projects.*') }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Condominios</p>
                             </a>
                         </li>
+                        @endcan
+                        @can('show_tanks')
                         <li class="nav-item">
                             <a href="{{ route('tanks.index') }}" class="nav-link {{ setActive('tanks.*') }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Tanques</p>
                             </a>
                         </li>
+                        @endcan
+                        @can('show_measurers')
                         <li class="nav-item">
                             <a href="{{ route('measurers.index') }}" class="nav-link {{ setActive('measurers.*') }}">
                                 <i class="nav-icon far fa-circle"></i>
                                 <p>Medidores</p>
                             </a>
                         </li>
+                        @endcan
                         @can('show_clients')
-                            <li class="nav-item">
-                                <a href="{{ route('clients.index') }}" class="nav-link {{ setActive('clients.*') }}">
-                                    <i class="nav-icon far fa-circle"></i>
-                                    <p>Clientes</p>
-                                </a>
-                            </li>
+                        <li class="nav-item">
+                            <a href="{{ route('clients.index') }}" class="nav-link {{ setActive('clients.*') }}">
+                                <i class="nav-icon far fa-circle"></i>
+                                <p>Clientes</p>
+                            </a>
+                        </li>
                         @endcan
                     </ul>
                 </li>
@@ -102,12 +108,14 @@
                         </ul>
                     </li>
                 @endcanany
+                @can('show_inventories')
                 <li class="nav-item">
                     <a href="{{ route('inventories.index') }}" class="nav-link {{ setActive('inventories.*') }}">
                         <i class="nav-icon fas fa-boxes"></i>
                         <p>Inventarios</p>
                     </a>
                 </li>
+                @endcan
                 @can('show_users')
                     <li class="nav-item">
                         <a href="{{ route('users.index') }}" class="nav-link {{ setActive('users.*') }}">

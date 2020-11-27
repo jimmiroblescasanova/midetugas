@@ -119,6 +119,16 @@
                     <input type="hidden" name="client_id" value="{{ $document->client_id }}">
                     <div class="modal-body">
                         @include('partials.alerts.danger')
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="1" name="advancePaymentCheck" id="advancePaymentCheck">
+                                    <label class="form-check-label" for="advancePaymentCheck">
+                                        Usar saldo anterior: $<b>{{ number_format($advance_payment, 2) }}</b> <small>(Por pagar: ${{ $document->pending - $advance_payment }})</small>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
@@ -133,11 +143,12 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="amount">Importe pagado</label>
-                                    <input type="text" class="form-control {{ $errors->first('amount') ? 'is-invalid' : '' }}" name="amount" id="amount" value="{{ $document->pending }}">
+                                    <input type="text" class="form-control {{ $errors->first('amount') ? 'is-invalid' : '' }}" name="amount" id="amount">
                                     {!! $errors->first('amount', '<div class="invalid-feedback">:message</div>') !!}
                                 </div>
                             </div>
                         </div>
+                        <small>El excedente será agregado a la cuenta del cliente.</small>
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>

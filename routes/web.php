@@ -42,6 +42,9 @@ Route::post('/clients/attach-measurer', 'ClientsController@attach')
     ->name('clients.attach')->middleware('permission:edit_clients');
 Route::get('/clients/{client}/detach-measurer', 'ClientsController@detach')
     ->name('clients.detach')->middleware('permission:edit_clients');
+// Route for change the status on a client
+Route::get('/clients/{client}/suspend', 'ClientsController@status')
+    ->name('clients.status')->middleware('permission:change_status');
 // Route for sending test email
 Route::get('/clients/{client}/test-email', 'ClientsController@testEmail')->name('clients.testEmail');
 
@@ -66,8 +69,7 @@ Route::get('/documents/{id}/authorize', 'DocumentsController@authorize_docto')
     ->name('documents.authorize')->middleware('permission:authorize_documents');
 Route::get('/documents/{id}/cancel', 'DocumentsController@cancel')
     ->name('documents.cancel')->middleware('permission:cancel_documents');
-Route::get('/documents/{id}/print', 'DocumentsController@print')
-    ->name('documents.print');
+Route::get('/documents/{id}/print', 'DocumentsController@print')->name('documents.print');
 
 Route::get('/payments', 'PaymentsController@index')
     ->name('payments.index')->middleware('permission:pay_documents');
@@ -93,17 +95,21 @@ Route::post('/price', 'PricesController@store')
     ->name('prices.store')->middleware('permission:update_prices');
 
 Route::get('/projects', 'ProjectsController@index')
-    ->name('projects.index');
-Route::post('/projects', 'ProjectsController@store')->name('projects.store');
+    ->name('projects.index')->middleware('permission:show_projects');
+Route::post('/projects', 'ProjectsController@store')
+    ->name('projects.store')->middleware('permission:create_projects');
 
 Route::get('/tanks', 'TanksController@index')
-    ->name('tanks.index');
+    ->name('tanks.index')->middleware('permission:show_tanks');
 Route::get('/tanks/create', 'TanksController@create')
-    ->name('tanks.create');
+    ->name('tanks.create')->middleware('permission:create_tanks');
 Route::post('/tanks', 'TanksController@store')
-    ->name('tanks.store');
+    ->name('tanks.store')->middleware('permission:create_tanks');
 
-Route::get('/inventories', 'InventoriesController@index')->name('inventories.index');
-Route::get('/inventories/create', 'InventoriesController@create')->name('inventories.create');
-Route::post('/inventories', 'InventoriesController@store')->name('inventories.store');
+Route::get('/inventories', 'InventoriesController@index')
+    ->name('inventories.index')->middleware('permission:show_inventories');
+Route::get('/inventories/create', 'InventoriesController@create')
+    ->name('inventories.create')->middleware('permission:create_inventories');
+Route::post('/inventories', 'InventoriesController@store')
+    ->name('inventories.store')->middleware('permission:create_inventories');
 Route::post('inventories/fill-tank', 'InventoriesController@fillTanks')->name('inventories.fillTanks');

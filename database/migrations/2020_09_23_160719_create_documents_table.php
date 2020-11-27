@@ -21,10 +21,12 @@ class CreateDocumentsTable extends Migration
             $table->double('final_quantity');
             $table->double('start_quantity');
             $table->double('month_quantity');
+            $table->double('correction_factor');
             $table->string('period');
             $table->double('price');
             $table->double('total');
             $table->double('pending');
+            $table->integer('previous_balance');
             $table->bigInteger('reference')->default(0);
             $table->string('invoice')->nullable();
             $table->integer('status')->default(1);

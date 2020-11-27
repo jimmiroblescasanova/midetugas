@@ -40,6 +40,8 @@ class UpdateClientRequest extends FormRequest
             ],
             'country_code' => 'required|string',
             'phone' => 'required|numeric',
+            'measurer_id' => 'required',
+            'project_id' => 'required',
         ];
     }
 }

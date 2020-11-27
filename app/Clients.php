@@ -23,4 +23,24 @@ class Clients extends Model
         return $this->belongsTo('App\Measurer');
     }
 
+    public function setBalanceAttribute($val)
+    {
+        $this->attributes['balance'] = $val * 100;
+    }
+
+    public function getBalanceAttribute()
+    {
+        return $this->attributes['balance'] / 100;
+    }
+
+    public function setAdvancePaymentAttribute($val)
+    {
+        $this->attributes['advance_payment'] = $val * 100;
+    }
+
+    public function getAdvancePaymentAttribute()
+    {
+        return $this->attributes['advance_payment'] / 100;
+    }
+
 }

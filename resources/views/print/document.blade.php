@@ -103,50 +103,29 @@
             </td>
         </tr>
         <tr class="cuerpo">
-            <td colspan="2">
+            <td>
                 <div class="cuerpo-titulo">Detalles del consumo</div>
                 <table class="consumo" style="width: 100%;">
                     <tr>
                         <th>Lectura anterior</th>
                         <th>Lectura actual</th>
                         <th>Consumo (m3)</th>
+                        <th>Factor de corrección</th>
                         <th>Precio por m3</th>
-                        <th>Total del mes</th>
                     </tr>
-                    <tr>
+                    <tr style="text-align: center;">
                         <td>{{ $docto->start_quantity }}</td>
                         <td>{{ $docto->final_quantity }}</td>
                         <td>{{ $docto->month_quantity }}</td>
-                        <td></td>
-                        <td>$ {{ $docto->total }}</td>
+                        <td>{{ $docto->correction_factor }}</td>
+                        <td>$ {{ number_format($docto->price, 2) }}</td>
                     </tr>
                 </table>
             </td>
-            {{--<td>
-                <div class="cuerpo-titulo">Estado de Cuenta</div>
-                <table class="consumo">
-                    <tr>
-                        <th>Concepto</th>
-                        <th>Importe</th>
-                    </tr>
-                    <tr>
-                        <td>Adeudo anterior</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Su pago</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Cargos del mes</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Total</td>
-                        <td></td>
-                    </tr>
-                </table>
-            </td>--}}
+            <td>
+                <div class="cuerpo-titulo">Foto del medidor</div>
+                <img src="{{ asset($docto->photo) }}" width="170px" alt="">
+            </td>
         </tr>
         <tr class="pie">
             <td style="width: 75%;">
@@ -154,8 +133,33 @@
                 <img src="https://quickchart.io/chart?bkg=white&c={{ $chart }}" height="220px" width="90%" alt="">
             </td>
             <td>
-                <div class="cuerpo-titulo">Foto del medidor</div>
-                <img src="{{ asset($docto->photo) }}" width="170px" alt="">
+                <div class="cuerpo-titulo">Estado de Cuenta</div>
+                <table class="consumo" style="width: 100%">
+                    <tr>
+                        <th>Concepto</th>
+                        <th>Importe</th>
+                    </tr>
+                    <tr>
+                        <td>Saldo</td>
+                        <td style="text-align: right;">$ {{ number_format($docto->client->advance_payment, 2) }}</td>
+                    </tr>
+                    <tr>
+                        <td>Ajuste meses ant.</td>
+                        <td style="text-align: right;">$ {{ number_format($docto->previous_balance, 2) }}</td>
+                    </tr>
+                    <tr>
+                        <td>Cargos del mes</td>
+                        <td style="text-align: right;">$ {{ number_format($docto->total+$docto->client->balance, 2) }}</td>
+                    </tr>
+                    <tr>
+                        <td>Ajuste mes siguiente</td>
+                        <td style="text-align: right;">$ {{ number_format($docto->client->balance, 2) }}</td>
+                    </tr>
+                    <tr>
+                        <td>A pagar</td>
+                        <td style="text-align: right;"><b>$ {{ number_format($docto->total, 2) }}</b></td>
+                    </tr>
+                </table>
             </td>
         </tr>
         <tr class="pagos">

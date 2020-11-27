@@ -15,9 +15,11 @@ class CreateMeasurersTable extends Migration
     {
         Schema::create('measurers', function (Blueprint $table) {
             $table->id();
+            $table->string('brand');
             $table->string('model');
             $table->string('serial_number')->unique();
             $table->double('actual_measure')->default(0);
+            $table->double('correction_factor')->default(1);
             $table->boolean('active')->default(false);
             $table->timestamps();
         });

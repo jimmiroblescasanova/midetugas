@@ -24,6 +24,7 @@
                             <th>Nombre completo</th>
                             <th>Email</th>
                             <th>Teléfono</th>
+                            <th>Estado</th>
                             <th>Acción</th>
                         </tr>
                         </thead>
@@ -34,11 +35,9 @@
                                 <td>{{ $client->name }}</td>
                                 <td>{{ $client->email }}</td>
                                 <td>{{ $client->phone }}</td>
+                                <td>{!! (!$client->status) ? '<span class="badge badge-success">Activo</span>' : '<span class="badge badge-warning">Inactivo</span>' !!}</td>
                                 <td class="text-right">
-                                    @if (is_null($client->measurer_id) && (auth()->user()->can('edit_clients')))
-                                        <button class="btn btn-info btn-xs setMeasurerBtn" data-id="{{ $client->id }}"><i class="fas fa-edit"></i> Asignar medidor</button>
-                                    @endif
-                                    <a href="{{ route('clients.show', $client) }}" class="btn btn-xs btn-primary"><i class="fas fa-eye"></i> Ver</a>
+                                    <a href="{{ route('clients.show', $client) }}" class="btn btn-xs btn-primary"><i class="fas fa-eye"></i> Ver / Editar</a>
                                 </td>
                             </tr>
                         @endforeach
@@ -48,40 +47,6 @@
             </div>
         </div>
     </div>
-@stop
-
-@section('modal-section')
-    <div class="modal fade" id="setMeasurerModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Selecciona un medidor</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form action="{{ route('clients.attach') }}" method="post" role="form">
-                    @csrf
-                    <input type="hidden" id="client_id" name="client_id" value="">
-                    <div class="modal-body">
-                        <label for="measurer_id" class="sr-only">Medidor</label>
-                        <select class="form-control select2bs4" name="measurer_id" id="measurer_id">
-                            @foreach ($measurers as $measurer)
-                                <option value="{{ $measurer->id }}">{{ $measurer->serial_number }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Asignar</button>
-                    </div>
-                </form>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->
 @stop
 
 @section('scripts')

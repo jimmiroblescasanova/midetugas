@@ -28,6 +28,7 @@ class SavePaymentRequest extends FormRequest
             'client_id' => 'required|exists:clients,id',
             'date' => 'required',
             'amount' => 'required',
+            'advancePaymentCheck' => 'sometimes',
         ];
     }
 }

@@ -15,13 +15,13 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('document_id');
             $table->unsignedBigInteger('client_id');
-            $table->double('amount');
+            $table->unsignedBigInteger('document_id');
             $table->dateTime('date');
+            $table->double('amount');
             $table->timestamps();
-            $table->foreign('document_id')->references('id')->on('documents');
             $table->foreign('client_id')->references('id')->on('clients');
+            $table->foreign('document_id')->references('id')->on('documents');
         });
     }
 

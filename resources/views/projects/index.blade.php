@@ -4,12 +4,14 @@
     <div class="col-sm-6">
         <h1><i class="far fa-building"></i> Condominios</h1>
     </div>
-    <div class="col-sm-6">
-        <button type="button" class="btn btn-primary btn-sm float-sm-right btn-block-xs-only"
-                data-toggle="modal" data-target="#createNewProject">
-            <i class="fas fa-pencil-alt"></i> Crear nuevo
-        </button>
-    </div>
+    @can('create_projects')
+        <div class="col-sm-6">
+            <button type="button" class="btn btn-primary btn-sm float-sm-right btn-block-xs-only"
+                    data-toggle="modal" data-target="#createNewProject">
+                <i class="fas fa-pencil-alt"></i> Crear nuevo
+            </button>
+        </div>
+    @endcan
 @stop
 
 @section('content')
@@ -17,12 +19,12 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <table class="table">
+                    <table class="table" id="dataTableProjects">
                         <thead>
                         <tr>
                             <th>Nombre</th>
-                            <th>Capacidad total</th>
-                            <th>Capacidad actual</th>
+                            <th>Capacidad total (L)</th>
+                            <th>Capacidad actual (L)</th>
                             <th>Porcentaje</th>
                             <th>Acción</th>
                         </tr>
@@ -44,7 +46,7 @@
                                         </div>
                                     </div>
                                     <small>
-                                        {{ $project->percentage }}% capacidad maxima
+                                        {{ $project->percentage }}% capacidad maxima (litros)
                                     </small>
                                 </td>
                                 <td></td>
@@ -94,5 +96,15 @@
 @stop
 
 @section('scripts')
-
+    <script>
+        $(document).ready(function () {
+            $('#dataTableProjects').DataTable({
+                "responsive": true,
+                "autoWidth": false,
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"
+                },
+            });
+        });
+    </script>
 @stop
