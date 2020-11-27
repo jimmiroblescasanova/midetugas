@@ -15,7 +15,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('documents.store') }}" method="post" role="form" enctype="multipart/form-data">
+                    <form action="{{ route('documents.store') }}" method="post" role="form" enctype="multipart/form-data" autocomplete="off">
                         @csrf
                         <div class="row">
                             <div class="col-12">
@@ -33,10 +33,10 @@
                             <div class="col-md-6 col-12">
                                 <div class="form-group">
                                     <label for="date">Fecha</label>
-                                    <input type="date"
+                                    <input type="text"
                                            name="date"
                                            id="date"
-                                           class="form-control {{ $errors->first('date') ? 'is-invalid' : '' }}"
+                                           class="form-control datepicker {{ $errors->first('date') ? 'is-invalid' : '' }}"
                                            value="{{ old('date') }}">
                                     {!! $errors->first('date', '<div class="invalid-feedback">:message</div>') !!}
                                 </div>
@@ -76,4 +76,16 @@
             </div>
         </div>
     </div>
+@stop
+
+@section('scripts')
+    <script>
+        let today, datepicker;
+        today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+        datepicker = $('.datepicker').datepicker({
+            minDate: today,
+            locale: 'es-es',
+            uiLibrary: 'bootstrap4',
+        });
+    </script>
 @stop

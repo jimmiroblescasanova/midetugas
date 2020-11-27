@@ -31,8 +31,8 @@
                             <div class="col-md-6 col-12">
                                 <div class="form-group">
                                     <label for="manufacturing_date">Fecha de fabricación</label>
-                                    <input type="date"
-                                           class="form-control {{ $errors->first('manufacturing_date') ? 'is-invalid' : '' }}"
+                                    <input type="text"
+                                           class="form-control datepicker {{ $errors->first('manufacturing_date') ? 'is-invalid' : '' }}"
                                            name="manufacturing_date"
                                            id="manufacturing_date"
                                            value="{{ old('manufacturing_date') }}">
@@ -79,7 +79,7 @@
                             <div class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label for="capacity">Capacidad (m3)</label>
-                                    <input type="number"
+                                    <input type="text"
                                            class="form-control {{ $errors->first('capacity') ? 'is-invalid' : '' }}"
                                            name="capacity"
                                            id="capacity"
@@ -97,5 +97,13 @@
 @stop
 
 @section('scripts')
-
+    <script>
+        let today, datepicker;
+        today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+        datepicker = $('.datepicker').datepicker({
+            minDate: today,
+            locale: 'es-es',
+            uiLibrary: 'bootstrap4',
+        });
+    </script>
 @stop
