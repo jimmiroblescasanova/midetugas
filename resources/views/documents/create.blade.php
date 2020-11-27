@@ -83,7 +83,7 @@
         let today, datepicker;
         today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
         datepicker = $('.datepicker').datepicker({
-            minDate: today,
+            // minDate: today,
             locale: 'es-es',
             uiLibrary: 'bootstrap4',
         });
