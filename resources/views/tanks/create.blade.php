@@ -101,8 +101,8 @@
         let today, datepicker;
         today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
         datepicker = $('.datepicker').datepicker({
-            minDate: today,
             locale: 'es-es',
+            format: 'yyyy-mm-dd',
             uiLibrary: 'bootstrap4',
         });
     </script>

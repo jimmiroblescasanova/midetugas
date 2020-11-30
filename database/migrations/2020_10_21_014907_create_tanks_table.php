@@ -19,7 +19,7 @@ class CreateTanksTable extends Migration
             $table->string('model');
             $table->string('serial_number');
             $table->bigInteger('capacity');
-            $table->date('manufacturing_date');
+            $table->dateTime('manufacturing_date');
             $table->unsignedBigInteger('project_id');
             $table->timestamps();
             $table->foreign('project_id')->references('id')->on('projects');

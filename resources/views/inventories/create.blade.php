@@ -86,6 +86,7 @@
         datepicker = $('.datepicker').datepicker({
             minDate: today,
             locale: 'es-es',
+            format: 'yyyy-mm-dd',
             uiLibrary: 'bootstrap4',
         });
 
