@@ -111,6 +111,9 @@
                         <div class="tab-pane fade" id="custom-tabs-four-actions" role="tabpanel"
                              aria-labelledby="custom-tabs-four-actions-tab">
                             <div class="row">
+                                <p>Saldo actual: {{ ($client->advance_payment>0.01) ? '-'.number_format($client->advance_payment, 2) : '0.00' }}</p>
+                            </div>
+                            <div class="row">
                                 <div class="col-md-4">
                                     <a href="{{ route('sms', $client->id) }}" class="btn btn-block btn-success mb-3"><i
                                             class="fas fa-sms"></i> Enviar SMS prueba</a>

@@ -46,9 +46,18 @@ class PaymentsController extends Controller
                 'pending' => 0,
                 'status' => 4,
             ]);
-            $client->update([
-                'advance_payment' => $diff,
-            ]);
+
+            if (isset($request['advancePaymentCheck']))
+            {
+                $client->update([
+                    'advance_payment' => $diff,
+                ]);
+            } else {
+                $new_total = $diff + $client->advance_payment;
+                $client->update([
+                    'advance_payment' => $new_total,
+                ]);
+            }
         }
 
         Payment::create($request->except('advancePaymentCheck'));

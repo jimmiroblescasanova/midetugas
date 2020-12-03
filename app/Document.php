@@ -20,7 +20,7 @@ class Document extends Model
 
     public function setPreviousBalanceAttribute($val)
     {
-        $this->attributes['previous_balance'] = $val * 100;
+        return $this->attributes['previous_balance'] = $val * 100;
     }
 
     public function getPreviousBalanceAttribute()

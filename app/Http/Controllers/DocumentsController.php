@@ -57,7 +57,7 @@ class DocumentsController extends Controller
         }
         // Separar decimales
         $decimals = explode('.', round($total,2));
-//        return $decimals;
+
         // Guarda todos los valores en un array
         $data = [
             'client_id' => $request->client_id,
@@ -72,7 +72,9 @@ class DocumentsController extends Controller
             'total' => $decimals[0],
             'pending' => $decimals[0],
             'previous_balance' => $client->balance,
+//            'clientLatestMonthAdjustment' => $client->balance,
             'photo' => $photo,
+            'created_at' => NOW(),
         ];
 
         DB::beginTransaction();
@@ -175,7 +177,7 @@ class DocumentsController extends Controller
         // Se arma el array para el histórico
         $arr_period = '[';
         $arr_data = '[';
-        foreach ($historic->take(6) as $h)
+        foreach ($historic->take(13) as $h)
         {
             $arr_period = $arr_period . '"' . $h->period . '",';
             $arr_data = $arr_data . $h->month_quantity . ',';

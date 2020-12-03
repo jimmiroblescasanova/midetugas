@@ -109,8 +109,9 @@
                     <tr>
                         <th>Lectura anterior</th>
                         <th>Lectura actual</th>
-                        <th>Consumo (m3)</th>
-                        <th>Factor de corrección</th>
+                        <th>Diferencia (m3)</th>
+                        <th>Factor de PyT</th>
+                        <th>Consumo</th>
                         <th>Precio por m3</th>
                     </tr>
                     <tr style="text-align: center;">
@@ -118,6 +119,7 @@
                         <td>{{ $docto->final_quantity }}</td>
                         <td>{{ $docto->month_quantity }}</td>
                         <td>{{ $docto->correction_factor }}</td>
+                        <td>{{ number_format($docto->month_quantity * $docto->correction_factor, 2) }}</td>
                         <td>$ {{ number_format($docto->price, 2) }}</td>
                     </tr>
                 </table>
@@ -140,8 +142,8 @@
                         <th>Importe</th>
                     </tr>
                     <tr>
-                        <td>Saldo</td>
-                        <td style="text-align: right;">$ {{ number_format($docto->client->advance_payment, 2) }}</td>
+                        <td>Saldo anterior</td>
+                        <td style="text-align: right;">$ {{ ($docto->client->advance_payment>0.01) ? '-'.number_format($docto->client->advance_payment, 2) : '0.00' }}</td>
                     </tr>
                     <tr>
                         <td>Ajuste meses ant.</td>
@@ -154,6 +156,10 @@
                     <tr>
                         <td>Ajuste mes siguiente</td>
                         <td style="text-align: right;">$ {{ number_format($docto->client->balance, 2) }}</td>
+                    </tr>
+                    <tr>
+                        <td>IVA</td>
+                        <td style="text-align: right;"><b>$ {{ number_format($docto->total-($docto->total/1.16), 2) }}</b></td>
                     </tr>
                     <tr>
                         <td>A pagar</td>
