@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Addresses;
 use App\Http\Requests\SaveAddressRequest;
+use App\Clients;
 use Illuminate\Http\Request;
 
 class AddressesController extends Controller
@@ -23,14 +24,19 @@ class AddressesController extends Controller
 
     public function store(SaveAddressRequest $request)
     {
-        Addresses::create( $request->validated() );
+        $address = Addresses::create( $request->validated() );
+
+        $client = Clients::findOrFail( $request['client_id'] );
+        $client->update([
+            'address_id' => $address->id,
+        ]);
 
         return redirect()->route('clients.index');
     }
 
     public function update(SaveAddressRequest $request)
     {
-        Addresses::updateOrCreate(
+        $address = Addresses::updateOrCreate(
             ['client_id' => $request->client_id],
             [
                 'line_1' => $request->line_1,
@@ -43,6 +49,11 @@ class AddressesController extends Controller
                 'zipcode' => $request->zipcode,
             ]
         );
+
+        $client = Clients::findOrFail( $request['client_id'] );
+        $client->update([
+            'address_id' => $address->id,
+        ]);
 
         return redirect()->route('clients.index');
     }

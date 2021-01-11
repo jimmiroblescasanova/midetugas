@@ -8,14 +8,14 @@ class Clients extends Model
 {
     protected $guarded = [];
 
-    public function setNameAttribute($val)
+    public function setNameAttribute($val): string
     {
-        $this->attributes['name'] = strtoupper($val);
+        return $this->attributes['name'] = strtoupper($val);
     }
 
-    public function setRfcAttribute($val)
+    public function setRfcAttribute($val): string
     {
-        $this->attributes['rfc'] = strtoupper($val);
+        return $this->attributes['rfc'] = strtoupper($val);
     }
 
     public function measurer()
@@ -23,9 +23,14 @@ class Clients extends Model
         return $this->belongsTo('App\Measurer');
     }
 
+    public function address()
+    {
+        return $this->belongsTo('App\Addresses');
+    }
+
     public function setBalanceAttribute($val)
     {
-        $this->attributes['balance'] = $val * 100;
+        return $this->attributes['balance'] = $val * 100;
     }
 
     public function getBalanceAttribute()
@@ -35,7 +40,7 @@ class Clients extends Model
 
     public function setAdvancePaymentAttribute($val)
     {
-        $this->attributes['advance_payment'] = $val * 100;
+        return $this->attributes['advance_payment'] = $val * 100;
     }
 
     public function getAdvancePaymentAttribute()

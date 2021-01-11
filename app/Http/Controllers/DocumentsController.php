@@ -196,6 +196,7 @@ class DocumentsController extends Controller
                 ]}
             }";
 
+        // return $docto;
         // General el PDF
         $pdf = \PDF::loadView('print.document', [
             'docto' => $docto,

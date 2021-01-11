@@ -82,9 +82,9 @@
                     <img src="{{ asset('logo_print.jpg') }}" alt="logo" width="200px">
                 </div>
                 <div class="cliente">
-                    <span class="nombre">Jimmi Robles Casanova</span>
-                    <span class="domicilio">Region 232 Manzana 5 Lote 1</span>
-                    <span>RFC: XAXX010101000</span>
+                    <span class="nombre">{{ $docto->client->name }}</span>
+                    <span class="domicilio">{{ $docto->client->address->full_address }}</span>
+                    <span>RFC: {{ $docto->client->rfc }}</span>
                 </div>
             </td>
             <td>
@@ -178,7 +178,7 @@
                     </tr>
                     <tr>
                         <td>No. Cuenta:</td>
-                        <td>1234567890</td>
+                        <td>65-50840631-7</td>
                     </tr>
                     <tr>
                         <td>No. Tarjeta:</td>
@@ -186,7 +186,7 @@
                     </tr>
                     <tr>
                         <td>Clabe interbancaria:</td>
-                        <td>123456789123456789</td>
+                        <td>014691655084063172</td>
                     </tr>
                 </table>
             </td>
