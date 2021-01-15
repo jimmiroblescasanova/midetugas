@@ -111,7 +111,20 @@
                         <div class="tab-pane fade" id="custom-tabs-four-actions" role="tabpanel"
                              aria-labelledby="custom-tabs-four-actions-tab">
                             <div class="row">
-                                <p>Saldo actual: {{ ($client->advance_payment>0.01) ? '-'.number_format($client->advance_payment, 2) : '0.00' }}</p>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="">Saldo actual</label>
+                                        <input type="text" name="" id="" class="form-control"
+                                               readonly value="{{ ($client->advance_payment>0.01) ? '-'.number_format($client->advance_payment, 2) : '0.00' }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="">CONTPAQi ID</label>
+                                        <input type="text" name="" id="" class="form-control"
+                                               readonly value="{{ $client->admCode }}">
+                                    </div>
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-4">
@@ -145,6 +158,11 @@
                                         @endif
                                     </div>
                                 @endcan
+                                @if($client->admCode == NULL)
+                                <div class="col-md-4">
+                                    <a href="{{ route('clients.link', $client) }}">Link to Comercial(R)</a>
+                                </div>
+                                @endif
                             </div>
                         </div>
                     </div>

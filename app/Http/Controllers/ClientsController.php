@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\admClientes;
 use App\Clients;
 use App\Measurer;
 use App\Addresses;
@@ -86,6 +87,14 @@ class ClientsController extends Controller
             $new_measurer->save();
         }
 
+        $cti_link = admClientes::findOrFail($client['admCode'], 'CIDCLIENTEPROVEEDOR');
+        $cti_link->update([
+            'CRAZONSOCIAL' => $request['name'],
+            'CRFC' => $request['rfc'],
+            'CEMAIL1' => $request['email'],
+        ]);
+        $cti_link->save();
+
         return redirect()->route('clients.index');
     }
 
@@ -134,4 +143,34 @@ class ClientsController extends Controller
 
         return redirect()->route('clients.index');
     }
+
+    public function link_client(Clients $client)
+    {
+        $id = admClientes::orderBy('CIDCLIENTEPROVEEDOR', 'DESC')->first()->CIDCLIENTEPROVEEDOR;
+
+        $client_linked = admClientes::create(
+            [
+                'CIDCLIENTEPROVEEDOR' => $id+1,
+                'CCODIGOCLIENTE' => $client['id'],
+                'CRAZONSOCIAL' => $client['name'],
+                'CFECHAALTA' => NOW(),
+                'CRFC' => $client['rfc'],
+                'CIDMONEDA' => '1',
+                'CLISTAPRECIOCLIENTE' => '1',
+                'CBANVENTACREDITO' => '1',
+                'CESTATUS' => '1',
+                'CTIPOCLIENTE' => '1',
+                'CEMAIL1' => $client['email'],
+                'CTEXTOEXTRA3' => 'web',
+            ]
+        );
+
+        $client->update([
+            'admCode' => $id+1
+        ]);
+        $client->save();
+
+        return $client_linked;
+    }
+
 }

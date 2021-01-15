@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'Auth\LoginController@showLoginForm')->name('showLoginForm');
@@ -113,3 +114,6 @@ Route::get('/inventories/create', 'InventoriesController@create')
 Route::post('/inventories', 'InventoriesController@store')
     ->name('inventories.store')->middleware('permission:create_inventories');
 Route::post('inventories/fill-tank', 'InventoriesController@fillTanks')->name('inventories.fillTanks');
+
+Route::get('/clients/{client}/link', 'ClientsController@link_client')
+    ->name('clients.link');

@@ -91,6 +91,19 @@ return [
             'prefix_indexes' => true,
         ],
 
+        'mssql' => [
+            'driver' => 'sqlsrv',
+            'url' => env('MSSQL_DATABASE_URL'),
+            'host' => env('MSSQL_DB_HOST', 'localhost'),
+            'port' => env('MSSQL_DB_PORT', '1433'),
+            'database' => env('MSSQL_DB_DATABASE', 'forge'),
+            'username' => env('MSSQL_DB_USERNAME', 'forge'),
+            'password' => env('MSSQL_DB_PASSWORD', ''),
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+        ],
+
     ],
 
     /*
