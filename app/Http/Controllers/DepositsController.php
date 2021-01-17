@@ -6,6 +6,7 @@ use App\Clients;
 use App\Deposit;
 use App\Http\Requests\StoreDepositRequest;
 use Illuminate\Support\Facades\DB;
+use Luecano\NumeroALetras\NumeroALetras;
 
 class DepositsController extends Controller
 {
@@ -50,7 +51,20 @@ class DepositsController extends Controller
 
     public function show(Deposit $deposit)
     {
-//        return $deposit->client;
-        return view('print.guarantee', compact('deposit'));
+        $formatter = new NumeroALetras();
+        $letras = $formatter->toMoney($deposit['total'], 2, 'pesos', 'centavos');
+
+        /*return view('print.guarantee', [
+            'deposit' => $deposit,
+            'letras' => $letras,
+        ]);*/
+
+        // Generar el PDF
+        $pdf = \PDF::loadView('print.guarantee', [
+            'deposit' => $deposit,
+            'letras' => $letras,
+        ]);
+        $pdf->setPaper('statement', 'portrait');
+        return $pdf->stream();
     }
 }

@@ -11,8 +11,8 @@
         p { margin:5px 0 10px 0; }
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            max-width: 1000px;
-            margin: 0 auto;
+            max-width: 90%;
+            margin: 25px auto;
             /*text-align: center;*/
         }
         span {
@@ -41,12 +41,15 @@
             text-align: right;
             font-weight: bold;
         }
+        .signature-line {
+            padding: 30px 0 0 0;
+        }
     </style>
 </head>
 <body>
 <table>
     <tr style="text-align: center;">
-        <td><img src="{{ asset('logo_new.png') }}" width="500px" alt=""></td>
+        <td><img src="{{ asset('logo_new.png') }}" width="400px" alt=""></td>
     </tr>
     <tr class="title">
         <td class="title-header">Recibo de deposito en garantía</td>
@@ -118,7 +121,7 @@
                     <td>&nbsp;</td>
                 </tr>
                 <tr>
-                    <td>son mil pesos</td>
+                    <td>{{ $letras }}</td>
                     <td>&nbsp;</td>
                 </tr>
             </table>
@@ -126,14 +129,37 @@
     </tr>
     <tr class="title">
         <td>
-            firmas de conformidad
+            Firmas de conformidad
         </td>
     </tr>
     <tr>
-        <td>firmas</td>
+        <td>
+            <table>
+                <tr style="text-align: center;">
+                    <td>
+                        <span>Administración</span>
+                        <span class="signature-line">__________________________</span>
+                        <span>Nombre y Firma</span>
+                    </td>
+                    <td>
+                        <span>Cliente</span>
+                        <span class="signature-line">__________________________</span>
+                        <span>Nombre y Firma</span>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr class="title">
+        <td>Información bancaria</td>
     </tr>
     <tr>
-        <td>informacion bancaria</td>
+        <td style="font-size: 14px;">
+            <span>Banco: Santander</span>
+            <span>No. Cuenta: 65-50840631-7</span>
+            <span>CLABE: 014691655084063172</span>
+            <span>Nombre: JOMAX OBRA Y EQUIPO INDUSTRIAL SA DE CV</span>
+        </td>
     </tr>
 </table>
 </body>
