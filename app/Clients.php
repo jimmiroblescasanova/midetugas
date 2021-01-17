@@ -48,4 +48,13 @@ class Clients extends Model
         return $this->attributes['advance_payment'] / 100;
     }
 
+    public function setDepositAttribute($val)
+    {
+        return $this->attributes['deposit'] = $val * 100;
+    }
+
+    public function getDepositAttribute()
+    {
+        return $this->attributes['deposit'] / 100;
+    }
 }

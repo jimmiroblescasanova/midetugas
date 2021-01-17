@@ -87,13 +87,16 @@ class ClientsController extends Controller
             $new_measurer->save();
         }
 
-        $cti_link = admClientes::findOrFail($client['admCode'], 'CIDCLIENTEPROVEEDOR');
-        $cti_link->update([
-            'CRAZONSOCIAL' => $request['name'],
-            'CRFC' => $request['rfc'],
-            'CEMAIL1' => $request['email'],
-        ]);
-        $cti_link->save();
+        if ($client->admCode != NULL)
+        {
+            $cti_link = admClientes::findOrFail($client['admCode'], 'CIDCLIENTEPROVEEDOR');
+            $cti_link->update([
+                'CRAZONSOCIAL' => $request['name'],
+                'CRFC' => $request['rfc'],
+                'CEMAIL1' => $request['email'],
+            ]);
+            $cti_link->save();
+        }
 
         return redirect()->route('clients.index');
     }

@@ -105,6 +105,12 @@
                                 </a>
                             </li>
                         @endcan
+                            <li class="nav-item">
+                                <a href="{{ route('deposits.index') }}" class="nav-link {{ setActive('deposits.*') }}">
+                                    <i class="nav-icon far fa-circle"></i>
+                                    <p>Depósito en garantía</p>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                 @endcanany
