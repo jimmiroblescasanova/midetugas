@@ -180,10 +180,10 @@
                         <td>No. Cuenta:</td>
                         <td>65-50840631-7</td>
                     </tr>
-                    <tr>
+<!--                    <tr>
                         <td>No. Tarjeta:</td>
                         <td>1111 2222 3333 4444</td>
-                    </tr>
+                    </tr>-->
                     <tr>
                         <td>Clabe interbancaria:</td>
                         <td>014691655084063172</td>

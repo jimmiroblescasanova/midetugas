@@ -120,6 +120,13 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
+                                        <label for="">Depósito en garantía</label>
+                                        <input type="text" name="" id="" class="form-control"
+                                               readonly value="{{ number_format($client->deposit, 2) }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
                                         <label for="">CONTPAQi ID</label>
                                         <input type="text" name="" id="" class="form-control"
                                                readonly value="{{ $client->admCode }}">

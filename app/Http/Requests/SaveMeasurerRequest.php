@@ -26,7 +26,7 @@ class SaveMeasurerRequest extends FormRequest
         return [
             'brand' => 'required|string',
             'model' => 'required|string',
-            'serial_number' => 'required|numeric|unique:measurers',
+            'serial_number' => 'required|string|unique:measurers',
             'actual_measure' => 'required|numeric',
             'correction_factor' => 'required|numeric',
         ];
