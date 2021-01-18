@@ -35,7 +35,7 @@ class ClientsController extends Controller
         return view('clients.create', [
             'client' => new Clients,
             'projects' => Project::pluck('name', 'id'),
-            'measurers' => Measurer::select('id', 'serial_number')->where('active', false)->get(),
+            'measurers' => Measurer::where('active', false)->get(),
         ]);
     }
 
@@ -60,8 +60,7 @@ class ClientsController extends Controller
             $address = new Addresses;
         }
 
-        $measurer = Measurer::select('id', 'serial_number')
-            ->where([
+        $measurer = Measurer::where([
                 ['active', false],
                 ['id', '!=', $client->measurer_id]
             ])->get();
@@ -76,15 +75,16 @@ class ClientsController extends Controller
 
     public function update(Clients $client, UpdateClientRequest $request)
     {
-        $measurer = Measurer::find($client->measurer_id);
+
+        if ($measurer = Measurer::find($client['measurer_id']))
+        {
+            $measurer->update(['active' => false]);
+        }
 
         if($client->update( $request->validated() ))
         {
-            $measurer->update(['active' => false]);
-            $measurer->save();
-            $new_measurer = Measurer::find($request->measurer_id);
+            $new_measurer = Measurer::find($request['measurer_id']);
             $new_measurer->update(['active' => true]);
-            $new_measurer->save();
         }
 
         if ($client->admCode != NULL)

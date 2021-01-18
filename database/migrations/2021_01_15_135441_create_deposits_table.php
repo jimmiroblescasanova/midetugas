@@ -21,6 +21,7 @@ class CreateDepositsTable extends Migration
             $table->longText('tax_address')->nullable();
             $table->string('type');
             $table->integer('total');
+            $table->boolean('active')->default(1);
             $table->timestamps();
             $table->foreign('client_id')->references('id')->on('clients');
         });

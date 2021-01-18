@@ -31,10 +31,18 @@
                             <tr>
                                 <td>{{ $deposit->id }}</td>
                                 <td>{{ $deposit->date->format('d-m-Y') }}</td>
-                                <td>{{ $deposit->client->name }}</td>
+                                <td>
+                                    {{ $deposit->client->name }}
+                                    @if(!$deposit->active)
+                                        <span class="badge badge-danger">cancelado</span>
+                                    @endif
+                                </td>
                                 <td>{{ $deposit->total }}</td>
                                 <td>
-                                    <a href="{{ route('deposits.show', $deposit) }}" class="btn btn-danger btn-xs"><i class="fas fa-print"></i> Imprimir</a>
+                                    <a href="{{ route('deposits.show', $deposit) }}" class="btn btn-default btn-xs" target="_blank"><i class="fas fa-print"></i> Imprimir</a>
+                                    @if($deposit->active)
+                                        <a href="{{ route('deposits.cancel', $deposit) }}" class="btn btn-danger btn-xs">Cancelar</a>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

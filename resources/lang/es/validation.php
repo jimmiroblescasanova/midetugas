@@ -157,7 +157,9 @@ return [
         'line_1' => 'calle',
         'locality' => 'municipio',
         'city' => 'ciudad',
-        'zipcode' => 'código postal'
+        'zipcode' => 'código postal',
+        'project_id' => 'condominio',
+        'measurer_id' => 'medidor',
     ],
 
 ];

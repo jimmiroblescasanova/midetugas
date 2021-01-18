@@ -1,15 +1,16 @@
 <div class="row">
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="account_number">Número de cuenta</label>
-            <input type="text"
-                   class="form-control"
-                   id="account_number"
-                   placeholder="Se obtiene automáticamente"
-                   value="{{ request()->routeIs('clients.show') ? $client->id : '' }}" readonly/>
+    @if(request()->routeIs('clients.show'))
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="account_number">Número de cuenta</label>
+                <input type="text"
+                       class="form-control"
+                       id="account_number"
+                       value="{{ $client->id }}" readonly/>
+            </div>
         </div>
-    </div>
-    <div class="col-md-8">
+    @endif
+    <div class="{{ request()->routeIs('clients.show') ? 'col-md-8' : 'col-md-12' }}">
         <div class="form-group">
             <label for="name">Nombre completo</label>
             <input type="text"
@@ -74,14 +75,17 @@
     <div class="col-md-4">
         <div class="form-group">
             <label for='measurer_id'>Medidor</label>
-            <select id='measurer_id' name='measurer_id' class='form-control select2bs4 {{ $errors->first('measurer_id') ? 'is-invalid' : '' }}'>
+            <select id='measurer_id'
+                    name='measurer_id'
+                    data-placeholder="Seleccionar o dejar en blanco"
+                    class='form-control select2bs4 {{ $errors->first('measurer_id') ? 'is-invalid' : '' }}'>
                 @if ($client->measurer_id == NULL)
-                    <option value="">Omitir (capturar después)</option>
+                    <option></option>
                     @else
-                    <option value="{{ $client->measurer_id }}" selected>{{ $client->measurer->serial_number }}</option>
+                    <option value="{{ $client->measurer_id }}" selected>{{ $client->measurer->brand .' - '. $client->measurer->model .' - '. $client->measurer->serial_number }}</option>
                 @endif
                 @foreach ($measurers as $measurer)
-                    <option value="{{ $measurer->id }}">{{ $measurer->serial_number }}</option>
+                    <option value="{{ $measurer->id }}">{{ $measurer->brand .' - '. $measurer->model .' - '. $measurer->serial_number }}</option>
                 @endforeach
             </select>
             {!! $errors->first('measurer_id', '<div class="invalid-feedback">:message</div>') !!}
@@ -90,7 +94,11 @@
     <div class="col-md-8">
         <div class="form-group">
             <label for='project_id'>Condominio</label>
-            <select id='project_id' name='project_id' class='form-control select2bs4 {{ $errors->first('project_id') ? 'is-invalid' : '' }}'>
+            <select id='project_id'
+                    name='project_id'
+                    data-placeholder="Seleccionar condominio"
+                    class='form-control select2bs4 {{ $errors->first('project_id') ? 'is-invalid' : '' }}'>
+                <option value=""></option>
                 @foreach ($projects as $id => $project)
                     <option value="{{ $id }}" {{ ($id == $client->project_id) ? 'selected' : '' }}>{{ $project }}</option>
                 @endforeach

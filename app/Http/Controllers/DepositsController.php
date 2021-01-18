@@ -20,7 +20,7 @@ class DepositsController extends Controller
     public function create()
     {
         return view('deposits.create', [
-            'clients' => Clients::where('measurer_id', !NULL)->pluck('name', 'id'),
+            'clients' => Clients::where('measurer_id', '!=', NULL)->pluck('name', 'id'),
         ]);
     }
 
@@ -54,11 +54,6 @@ class DepositsController extends Controller
         $formatter = new NumeroALetras();
         $letras = $formatter->toMoney($deposit['total'], 2, 'pesos', 'centavos');
 
-        /*return view('print.guarantee', [
-            'deposit' => $deposit,
-            'letras' => $letras,
-        ]);*/
-
         // Generar el PDF
         $pdf = \PDF::loadView('print.guarantee', [
             'deposit' => $deposit,
@@ -66,5 +61,17 @@ class DepositsController extends Controller
         ]);
         $pdf->setPaper('statement', 'portrait');
         return $pdf->stream();
+    }
+
+    public function cancel(Deposit $deposit)
+    {
+        $client = Clients::find( $deposit->client_id );
+        $client->deposit = $client->deposit - $deposit->total;
+        $client->save();
+
+        $deposit->active = false;
+        $deposit->save();
+
+        return redirect()->route('deposits.index');
     }
 }

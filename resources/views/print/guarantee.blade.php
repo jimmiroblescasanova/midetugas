@@ -97,8 +97,8 @@
                             <tr class="title">
                                 <td style="width: 15%;">Código</td>
                                 <td style="width: 15%;">Cantidad</td>
-                                <td style="width: 55%;">Descripción</td>
-                                <td style="width: 15%;">Importe</td>
+                                <td style="width: 45%;">Descripción</td>
+                                <td style="width: 25%;">Importe</td>
                             </tr>
                             <tr>
                                 <td>depgar</td>
