@@ -4,13 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class admClientes extends Model
+class admDocumentos extends Model
 {
     protected $connection ="mssql";
-    protected $table = "admClientes";
-    protected $primaryKey = 'CIDCLIENTEPROVEEDOR';
+    protected $table = "admDocumentos";
+    protected $primaryKey = 'CIDDOCUMENTO';
     public $timestamps = false;
 
     protected $guarded = [];
-
 }

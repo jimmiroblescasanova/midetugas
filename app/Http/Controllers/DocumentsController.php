@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\admConceptos;
+use App\admDocumentos;
 use AWS;
 use App\Price;
 use App\Project;
@@ -208,5 +210,48 @@ class DocumentsController extends Controller
 
 //        return $historic->take(1);
 
+    }
+
+    public function linkCtiComercial(Document $document)
+    {
+
+        $concepto = admConceptos::where('CIDCONCEPTODOCUMENTO', env('CONCEPTO_ID'))->first();
+
+        $data = [
+            'CIDDOCUMENTO' => $concepto['CNOFOLIO']+1,
+            'CIDDOCUMENTODE' => env('DOCUMENTO_ID'),
+            'CIDCONCEPTODOCUMENTO' => env('CONCEPTO_ID'),
+            'CSERIEDOCUMENTO' => 'S',
+            'CFOLIO' => $document['id'],
+            'CFECHA' => $document['date'],
+            'CIDCLIENTEPROVEEDOR' => $document['client_id'],
+            'CRAZONSOCIAL' => $document->client->name,
+            'CRFC' => $document->client->rfc,
+            'CIDMONEDA' => 1,
+            'CTIPOCAMBIO' => 1,
+            'CNATURALEZA' => 2,
+            'CUSACLIENTE' => 1,
+            'CAFECTADO' => 1,
+            'CESTADOCONTABLE' => 1,
+            'CNETO' => ($document->total / 1.16),
+            'CIMPUESTO1' => $document->total - ($document->total / 1.16),
+            'CTOTAL' => $document->total,
+            'CPENDIENTE' => $document->total,
+            'CTOTALUNIDADES' => 1,
+            'CUNIDADESPENDIENTES' => 1,
+            'CTIMESTAMP' => NOW(),
+            'CIMPCHEQPAQ' => 116,
+            'CSISTORIG' => 205,
+            'CIDMONEDCA' => 1,
+
+        ];
+
+        $docto = admDocumentos::create( $data );
+        $document->admDocumentId = $data['CIDDOCUMENTO'];
+        $document->save();
+        $concepto['CNOFOLIO'] += 1;
+        $concepto->save();
+
+        return redirect()->back();
     }
 }

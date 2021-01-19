@@ -154,7 +154,7 @@ class ClientsController extends Controller
         $client_linked = admClientes::create(
             [
                 'CIDCLIENTEPROVEEDOR' => $id+1,
-                'CCODIGOCLIENTE' => $client['id'],
+                'CCODIGOCLIENTE' => 'SMART'.$client['id'],
                 'CRAZONSOCIAL' => $client['name'],
                 'CFECHAALTA' => NOW(),
                 'CRFC' => $client['rfc'],

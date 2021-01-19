@@ -56,7 +56,7 @@
                             </div>
                             <div class="col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="quantity">Cantidad (m<sup>3</sup>)</label>
+                                    <label for="quantity">Cantidad (L)</label>
                                     <input type="text"
                                            class="form-control {{ $errors->first('quantity') ? 'is-invalid' : '' }}"
                                            name="quantity"

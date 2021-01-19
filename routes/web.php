@@ -71,6 +71,7 @@ Route::get('/documents/{id}/authorize', 'DocumentsController@authorize_docto')
 Route::get('/documents/{id}/cancel', 'DocumentsController@cancel')
     ->name('documents.cancel')->middleware('permission:cancel_documents');
 Route::get('/documents/{id}/print', 'DocumentsController@print')->name('documents.print');
+Route::get('/documents/{document}/sendtocomercial', 'DocumentsController@linkCtiComercial')->name('documents.linkCtiComercial');
 
 Route::get('/payments', 'PaymentsController@index')
     ->name('payments.index')->middleware('permission:pay_documents');

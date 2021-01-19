@@ -81,11 +81,13 @@
 @section('scripts')
     <script>
         let today, datepicker;
-        today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+        moment().format();
+        // today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
         datepicker = $('.datepicker').datepicker({
             locale: 'es-es',
             format: 'yyyy-mm-dd',
             uiLibrary: 'bootstrap4',
+            value: {{ Carbon\Carbon::now()->format('y-m-d') }},
         });
     </script>
 @stop
