@@ -45,7 +45,7 @@ class DocumentsController extends Controller
         // Se obtiene el cliente capturado
         $client = Clients::findOrFail($request->client_id);
         // Se calcula el día de pago a partir de la fecha de captura
-        $payment_date = Carbon::create($request->date)->addDays(20);
+        $payment_date = Carbon::create($request->date)->addDays(10);
         // Guarda la foto y asigna la ruta
         $photo = $request->file('photo')->store('images');
         // Consumo del mes
@@ -79,8 +79,8 @@ class DocumentsController extends Controller
             'created_at' => NOW(),
         ];
 
-        DB::beginTransaction();
         try {
+            DB::beginTransaction();
             // Crea el documento a partir de array
             $document_id = DB::table('documents')->insertGetId($data);
             // Actualiza el balance del cliente
