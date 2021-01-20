@@ -14,8 +14,8 @@ class Addresses extends Model
         return "{$this->line_1}  Ext. {$this->line_2} Int. {$this->line_3}, {$this->locality}, {$this->city}, {$this->state_province}, {$this->country}, CP {$this->zipcode}";
     }
 
-    public function measurer()
+    public function client()
     {
-        return $this->belongsTo('App\Measurer');
+        return $this->belongsTo('App\Clients');
     }
 }

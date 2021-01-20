@@ -18,4 +18,9 @@ class Measurer extends Model
         $this->attributes['serial_number'] = strtoupper($val);
     }
 
+    public function client()
+    {
+        return $this->belongsTo('App\Clients');
+    }
+
 }
