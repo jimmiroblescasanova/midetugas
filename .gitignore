@@ -25,3 +25,5 @@ Homestead.json
 /.idea
 /public/index.php
 /public/.htaccess
+_ide_helper.php
+.phpstorm.meta.php

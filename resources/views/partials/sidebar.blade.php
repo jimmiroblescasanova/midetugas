@@ -139,9 +139,9 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="" class="nav-link">
+                            <a href="{{ route('report01.parameters') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Comisiones</p>
+                                <p>Toma de lectura</p>
                             </a>
                         </li>
                     </ul>

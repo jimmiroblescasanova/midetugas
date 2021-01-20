@@ -128,3 +128,6 @@ Route::get('/deposits/create', 'DepositsController@create')->name('deposits.crea
 Route::post('/deposits', 'DepositsController@store')->name('deposits.store');
 Route::get('/deposits/{deposit}/show', 'DepositsController@show')->name('deposits.show');
 Route::get('/deposits/{deposit}/cancel', 'DepositsController@cancel')->name('deposits.cancel');
+
+Route::get('/reports/lecture', 'ReportsController@lectureReportParameters')->name('report01.parameters');
+Route::post('reports/lecture', 'ReportsController@lectureReport')->name('report01.show');

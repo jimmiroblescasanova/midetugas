@@ -20,12 +20,12 @@ class Clients extends Model
 
     public function measurer()
     {
-        return $this->belongsTo('App\Measurer');
+        return $this->hasOne('App\Measurer', 'client_id');
     }
 
     public function address()
     {
-        return $this->belongsTo('App\Addresses');
+        return $this->hasOne('App\Addresses', 'client_id');
     }
 
     public function setBalanceAttribute($val)
