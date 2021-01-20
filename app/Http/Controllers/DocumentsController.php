@@ -34,7 +34,7 @@ class DocumentsController extends Controller
     public function create()
     {
         return view('documents.create', [
-            'clients' => Clients::select('id', 'name')->whereNotNull('measurer_id')->get(),
+            'clients' => Clients::whereNotNull('measurer_id')->get(),
         ]);
     }
 
