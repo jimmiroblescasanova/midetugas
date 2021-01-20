@@ -18,9 +18,10 @@ class ReportsController extends Controller
     public function lectureReport(Request $request)
     {
         $project = Project::find($request->project_id);
-        $clients = Clients::where('project_id', $project->id)->with(['address', 'measurer'])->get();
+        $clients = Clients::where('project_id', $project->id)->get();
 
-//        $client = Clients::find(5000)->address;
-        return $clients;
+        return view('reports.lecture.print', [
+            'clients' => $clients,
+        ]);
     }
 }

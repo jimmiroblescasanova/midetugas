@@ -29,7 +29,7 @@ class StoreClientRequest extends FormRequest
             'email' => 'required|email|unique:clients',
             'country_code' => 'required|string',
             'phone' => 'required|numeric',
-            'measurer_id' => 'nullable',
+//            'measurer_id' => 'nullable',
             'project_id' => 'exists:projects,id',
         ];
     }
