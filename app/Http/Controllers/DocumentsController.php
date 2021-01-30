@@ -43,7 +43,8 @@ class DocumentsController extends Controller
         // Primero obtenemos el precio actual de la BD
         $price = Price::latest()->first()->price;
         // Se obtiene el cliente capturado
-        $client = Clients::findOrFail($request->client_id);
+        $client = Clients::where('id', $request->client_id)->with('measurer')->first();
+//        return $client->measurer->id;
         // Se calcula el día de pago a partir de la fecha de captura
         $payment_date = Carbon::create($request->date)->addDays(10);
         // Guarda la foto y asigna la ruta
