@@ -23,7 +23,7 @@
                                     <label for="client_id">Seleccionar cliente</label>
                                     <select class="form-control select2bs4" name="client_id" id="client_id">
                                         @foreach ($clients as $client)
-                                            <option value="{{ $client->id }}">{{ $client->name }} {{ (is_null($client->address_id)) ? '' : ' - Depto: '.$client->address->line_2 }} - No. serie: {{ $client->measurer->serial_number }}</option>
+                                            <option value="{{ $client->id }}">{{ $client->name }} {{ (is_null($client->address_id)) ? '' : ' - Depto: '.$client->address->line_2 }} </option>
                                         @endforeach
                                     </select>
                                 </div>
