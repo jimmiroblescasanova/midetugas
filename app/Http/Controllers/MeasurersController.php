@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Measurer;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Requests\StoreMeasurerRequest;
 use App\Http\Requests\UpdateMeasurerRequest;
 
@@ -31,7 +32,7 @@ class MeasurersController extends Controller
     public function store(StoreMeasurerRequest $request)
     {
         Measurer::create( $request->validated() );
-
+        Alert::success('Correcto', 'Medidor almacenado correctamente');
         return redirect()->route('measurers.index');
     }
 
@@ -45,6 +46,7 @@ class MeasurersController extends Controller
     public function update(Measurer $measurer, UpdateMeasurerRequest $request)
     {
         $measurer->update( $request->validated() );
+        Alert::success('Actualizado', 'Medidor actualizado correctamente');
         return redirect()->route('measurers.edit', compact('measurer'));
     }
 
@@ -58,7 +60,7 @@ class MeasurersController extends Controller
         }
 
         $measurer->delete();
-
+        Alert::info('Eliminado', 'Medidor eliminado correctamente');
         return redirect()->route('measurers.index');
     }
 

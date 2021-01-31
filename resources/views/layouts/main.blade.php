@@ -67,6 +67,7 @@
 <form action="{{ route('logout') }}" method="POST" id="logoutForm" class="d-none">
     @csrf
 </form>
+@include('sweetalert::alert')
 <script src="{{ asset('/js/app.js') }}"></script>
 <!-- SweetAlert2 -->
 <script src="{{ asset('/vendor/adminlte/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
