@@ -6,14 +6,13 @@ use App\admConceptos;
 use App\admDocumentos;
 use AWS;
 use App\Price;
+use App\Client;
 use App\Project;
-use App\Clients;
 use App\Document;
-use App\Measurer;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use App\Traits\UpdateProjectTrait;
 use App\Http\Requests\SaveDocumentRequest;
-use Illuminate\Support\Facades\DB;
 
 class DocumentsController extends Controller
 {
@@ -34,7 +33,7 @@ class DocumentsController extends Controller
     public function create()
     {
         return view('documents.create', [
-            'clients' => Clients::all(),
+            'clients' => Client::all(),
         ]);
     }
 
@@ -43,24 +42,25 @@ class DocumentsController extends Controller
         // Primero obtenemos el precio actual de la BD
         $price = Price::latest()->first()->price;
         // Se obtiene el cliente capturado
-        $client = Clients::where('id', $request->client_id)->with('measurer')->first();
-//        return $client->measurer->id;
+        $client = Client::find($request->client_id);
         // Se calcula el día de pago a partir de la fecha de captura
         $payment_date = Carbon::create($request->date)->addDays(10);
         // Guarda la foto y asigna la ruta
         $photo = $request->file('photo')->store('images');
         // Consumo del mes
         $month_quantity = $request->final_quantity - $client->measurer->actual_measure;
-//        Factor de correccion
-        $correction_factor = Measurer::findOrFail($client->measurer_id)->value('correction_factor');
+        // Factor de correccion
+        $correction_factor = $client->measurer->correction_factor;
         // Importe total del mes
         $total = ($month_quantity * ($price * $correction_factor)) + $client->balance;
+        // Se valida si el cliente tiene cargo adicional y se suma
         if ($client->reconnection_charge == TRUE) {
-            $total = $total + 99;
+            $total += 99;
         }
         // Separar decimales
-        $decimals = explode('.', round($total,2));
-
+        $arr_total = explode('.', round($total,2));
+        // Se obtiene el condominio del cliente
+        $project = Project::find($client->project_id);
         // Guarda todos los valores en un array
         $data = [
             'client_id' => $request->client_id,
@@ -72,10 +72,9 @@ class DocumentsController extends Controller
             'correction_factor' => $correction_factor,
             'period' => Carbon::create($request->date)->subMonth()->isoFormat('MMMM, Y'),
             'price' => $price,
-            'total' => $decimals[0],
-            'pending' => $decimals[0],
+            'total' => $arr_total[0],
+            'pending' => $arr_total[0],
             'previous_balance' => $client->balance,
-//            'clientLatestMonthAdjustment' => $client->balance,
             'photo' => $photo,
             'created_at' => NOW(),
         ];
@@ -88,29 +87,33 @@ class DocumentsController extends Controller
             DB::table('clients')
                 ->where('id', $request->client_id)
                 ->update([
-                    'balance' => array_key_exists(1, $decimals) ? $decimals[1] : 0,
+                    'balance' => array_key_exists(1, $arr_total) ? $arr_total[1] : 0,
                     'reconnection_charge' => FALSE,
                 ]);
             // Crear la referencia de pago
-            DB::table('documents')->where('id', $document_id)->update([
-                'reference' => $payment_date->format('Ym') . str_pad($document_id, 4, '0', STR_PAD_LEFT)
-            ]);
+            DB::table('documents')
+                ->where('id', $document_id)
+                ->update([
+                    'reference' => $payment_date->format('Ym') . str_pad($document_id, 4, '0', STR_PAD_LEFT)
+                ]);
             // Obtener el id del medidor usado y actualiza su valor
-            DB::table('measurers')->where('id', $client->measurer->id)->update([
-                'actual_measure' => $request['final_quantity'],
-            ]);
-
+            DB::table('measurers')
+                ->where('id', $client->measurer->id)
+                ->update([
+                    'actual_measure' => $request['final_quantity'],
+                ]);
+            DB::table('projects')
+                ->where('id', $client->project_id)
+                ->update([
+                    'actual_capacity' => $project->actual_capacity - ($month_quantity * 4.1848), // Se multiplica por la conversión a litros
+                    'percentage' => $this->calculatePercentage($project),
+                ]);
+            // Si es correcto, guarda los cambios
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
             return $e;
         }
-
-        // Descontar el consumo en el proyecto
-        $project = Project::find($client->project_id);
-        $project->actual_capacity = $project->actual_capacity - ($month_quantity * 4.1848); // Se multiplica por la conversión a litros
-        $this->calculatePercentage($project);
-        $project->save();
 
         return redirect()->route('documents.create')
             ->with('message', 'Lectura capturada correctamente.');
@@ -118,22 +121,21 @@ class DocumentsController extends Controller
 
     public function show(Document $document)
     {
+        // Obtener datos para la tabla de barras
         $historic = Document::select('id', 'period', 'month_quantity')
             ->where([
                 ['client_id', $document->client_id],
                 ['id', '<=', $document->id]
             ])->orderByDesc('id')->get();
 
-        $advance_payment = Clients::find($document->client_id)->value('advance_payment');
-
         return view('documents.show', [
             'document' => $document,
             'historic' => $historic->take(6),
-            'advance_payment' => $advance_payment,
+            'advance_payment' => Client::findOrFail($document->client_id)->advance_payment,
         ]);
     }
 
-    public function authorize_docto($id)
+    public function authorizeDocument($id)
     {
         $docto = Document::findOrFail($id);
         $docto->status = 2;

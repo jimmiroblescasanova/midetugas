@@ -15,7 +15,7 @@ class Document extends Model
 
     public function client()
     {
-        return $this->belongsTo('App\Clients');
+        return $this->belongsTo('App\Client');
     }
 
     public function setPreviousBalanceAttribute($val)

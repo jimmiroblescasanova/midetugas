@@ -70,6 +70,7 @@
                                 <div class="form-group">
                                     <label for="correction_factor">Factor de corrección:</label>
                                     <select class="form-control" name="correction_factor" id="correction_factor">
+                                        <option value="1.17">2.5 PSI</option>
                                         <option value="1.34">5 PSI</option>
                                         <option value="1.6802">10 PSI</option>
                                         <option value="2.0204">15 PSI</option>

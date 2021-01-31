@@ -16,6 +16,6 @@ class Addresses extends Model
 
     public function client()
     {
-        return $this->belongsTo('App\Clients');
+        return $this->belongsTo('App\Client');
     }
 }

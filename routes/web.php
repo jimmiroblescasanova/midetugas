@@ -66,7 +66,7 @@ Route::post('/documents', 'DocumentsController@store')
     ->name('documents.store')->middleware('permission:create_documents');
 Route::get('/documents/{document}/ver', 'DocumentsController@show')
     ->name('documents.show')->middleware('permission:show_documents');
-Route::get('/documents/{id}/authorize', 'DocumentsController@authorize_docto')
+Route::get('/documents/{id}/authorize', 'DocumentsController@authorizeDocument')
     ->name('documents.authorize')->middleware('permission:authorize_documents');
 Route::get('/documents/{id}/cancel', 'DocumentsController@cancel')
     ->name('documents.cancel')->middleware('permission:cancel_documents');

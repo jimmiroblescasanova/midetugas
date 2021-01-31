@@ -10,4 +10,19 @@ class Project extends Model
         'name',
         'reference'
     ];
+
+    public function tanks()
+    {
+        return $this->hasMany('App\Tank');
+    }
+
+    public function inventories()
+    {
+        return $this->hasMany('App\Inventory');
+    }
+
+    public function clients()
+    {
+        return $this->hasMany('App\Client');
+    }
 }

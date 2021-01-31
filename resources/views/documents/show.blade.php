@@ -92,7 +92,7 @@
                                 @endif
                                 @if($document->admDocumentId == NULL)
                                     <a href="{{ route('documents.linkCtiComercial', $document) }}" class="btn btn-app">Link to Comercial(r)</a>
-                                @endifw
+                                @endif
                                     <a href="{{ route('documents.print', $document->id) }}" class="btn btn-app" target="_blank"><i class="fas fa-print"></i> Imprimir</a>
                                     <button type="button" class="btn btn-app" onclick="history.back()">
                                         <i class="far fa-hand-point-left"></i>Atrás</button>

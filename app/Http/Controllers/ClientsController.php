@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\admClientes;
-use App\Clients;
+use App\Client;
 use App\Measurer;
 use App\Addresses;
 use App\Mail\TestEmail;
@@ -25,7 +25,7 @@ class ClientsController extends Controller
         $measurers = Measurer::select('id', 'serial_number')->where('active', false)->get();
 
         return view('clients.index', [
-            'clients' => Clients::all(),
+            'clients' => Client::all(),
             'measurers' => $measurers,
         ]);
     }
@@ -33,7 +33,7 @@ class ClientsController extends Controller
     public function create()
     {
         return view('clients.create', [
-            'client' => new Clients,
+            'client' => new Client,
             'projects' => Project::pluck('name', 'id'),
             'measurers' => Measurer::where('active', false)->get(),
         ]);
@@ -41,7 +41,7 @@ class ClientsController extends Controller
 
     public function store(StoreClientRequest $request)
     {
-        $client = Clients::create($request->validated());
+        $client = Client::create($request->validated());
 
         if (!is_null($request->measurer_id))
         {
@@ -54,7 +54,7 @@ class ClientsController extends Controller
         return redirect()->route('contacts.create', $client->id);
     }
 
-    public function show(Clients $client)
+    public function show(Client $client)
     {
         if ( !$address = Addresses::where('client_id', $client->id)->first() )
         {
@@ -71,7 +71,7 @@ class ClientsController extends Controller
         ]);
     }
 
-    public function update(Clients $client, UpdateClientRequest $request)
+    public function update(Client $client, UpdateClientRequest $request)
     {
         if ($request['measurer_id'] != NULL)
         {
@@ -107,7 +107,7 @@ class ClientsController extends Controller
 
     public function attach(Request $request)
     {
-        $client = Clients::findOrFail($request->client_id);
+        $client = Client::findOrFail($request->client_id);
         $client->measurer_id = $request->measurer_id;
         $client->save();
 
@@ -118,7 +118,7 @@ class ClientsController extends Controller
         return redirect()->route('clients.index');
     }
 
-    public function detach(Clients $client)
+    public function detach(Client $client)
     {
         $measurer = Measurer::findOrFail($client->measurer_id);
         $measurer->active = false;
@@ -130,7 +130,7 @@ class ClientsController extends Controller
         return redirect()->route('clients.index');
     }
 
-    public function status(Clients $client)
+    public function status(Client $client)
     {
         $client->status = !$client->status;
         if ($client->reconnection_charge == FALSE)
@@ -142,7 +142,7 @@ class ClientsController extends Controller
         return redirect()->route('clients.index');
     }
 
-    public function testEmail(Clients $client)
+    public function testEmail(Client $client)
     {
         Mail::to($client->email)
             ->cc('direccion@efigas.com.mx')
@@ -151,7 +151,7 @@ class ClientsController extends Controller
         return redirect()->route('clients.index');
     }
 
-    public function link_client(Clients $client)
+    public function link_client(Client $client)
     {
         $id = admClientes::orderBy('CIDCLIENTEPROVEEDOR', 'DESC')->first()->CIDCLIENTEPROVEEDOR;
 

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Addresses;
 use App\Http\Requests\SaveAddressRequest;
-use App\Clients;
+use App\Client;
 use Illuminate\Http\Request;
 
 class AddressesController extends Controller
@@ -26,7 +26,7 @@ class AddressesController extends Controller
     {
         $address = Addresses::create( $request->validated() );
 
-        $client = Clients::findOrFail( $request['client_id'] );
+        $client = Client::findOrFail( $request['client_id'] );
         $client->update([
             'address_id' => $address->id,
         ]);
@@ -50,7 +50,7 @@ class AddressesController extends Controller
             ]
         );
 
-        $client = Clients::findOrFail( $request['client_id'] );
+        $client = Client::findOrFail( $request['client_id'] );
         $client->update([
             'address_id' => $address->id,
         ]);

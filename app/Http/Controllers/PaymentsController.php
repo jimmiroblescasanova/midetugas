@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Clients;
+use App\Client;
 use App\Payment;
 use App\Document;
 use App\Http\Requests\SavePaymentRequest;
@@ -25,7 +25,7 @@ class PaymentsController extends Controller
     public function store(SavePaymentRequest $request)
     {
         $docto = Document::findOrFail($request['document_id']);
-        $client = Clients::findOrFail($request['client_id']);
+        $client = Client::findOrFail($request['client_id']);
 
         $total = $request['amount'];
 

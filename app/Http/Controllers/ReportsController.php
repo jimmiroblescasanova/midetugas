@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Clients;
+use App\Client;
 use App\Project;
 use Illuminate\Http\Request;
 
@@ -18,7 +18,7 @@ class ReportsController extends Controller
     public function lectureReport(Request $request)
     {
         $project = Project::find($request->project_id);
-        $clients = Clients::where('project_id', $project->id)->orderBy('name', $request['order'])->get();
+        $clients = Client::where('project_id', $project->id)->orderBy('name', $request['order'])->get();
 
         // Generar el PDF
         $pdf = \PDF::loadView('reports.lecture.print', [

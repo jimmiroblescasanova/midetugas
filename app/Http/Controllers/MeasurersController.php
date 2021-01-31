@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Clients;
+use App\Client;
 use App\Measurer;
 use Illuminate\Http\Request;
 use App\Http\Requests\SaveMeasurerRequest;
@@ -18,14 +18,14 @@ class MeasurersController extends Controller
     {
         return view('measurers.index', [
             'measurers' => Measurer::all(),
-            'clients' => Clients::pluck('name', 'id'),
+            'clients' => Client::pluck('name', 'id'),
         ]);
     }
 
     public function create()
     {
         return view('measurers.create', [
-            'clients' => Clients::pluck('name', 'id'),
+            'clients' => Client::pluck('name', 'id'),
         ]);
     }
 

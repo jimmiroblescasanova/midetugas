@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Clients extends Model
+class Client extends Model
 {
     protected $guarded = [];
 
@@ -20,7 +20,12 @@ class Clients extends Model
 
     public function measurer()
     {
-        return $this->hasOne('App\Measurer', 'client_id');
+        return $this->hasOne('App\Measurer');
+    }
+
+    public function project()
+    {
+        return $this->belongsTo('App\Project');
     }
 
     public function address()

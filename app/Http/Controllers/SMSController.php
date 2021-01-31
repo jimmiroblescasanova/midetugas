@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use AWS;
-use App\Clients;
+use App\Client;
 use Illuminate\Http\Request;
 
 class SMSController extends Controller
@@ -15,7 +15,7 @@ class SMSController extends Controller
 
     protected function sendSMS($id){
 
-        $client = Clients::find($id);
+        $client = Client::find($id);
         $phone_number = $client->country_code.$client->phone;
 
         $sms = AWS::createClient('sns');

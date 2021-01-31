@@ -32,8 +32,8 @@
                             <tr>
                                 <td>{{ $inventory->date->format('d-m-Y') }}</td>
                                 <td>{{ $inventory->project->name }}</td>
-                                <td>{{ $inventory->tank->model . ' - ' . $inventory->tank->serial_number }}</td>
-                                <td>{{ $inventory->quantity }}</td>
+                                <td>{{ $inventory->tank->brand . ' - ' . $inventory->tank->model . ' - ' . $inventory->tank->serial_number }}</td>
+                                <td>{{ $inventory->quantity }} L</td>
                             </tr>
                         @endforeach
                         </tbody>

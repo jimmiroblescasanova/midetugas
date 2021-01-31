@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Inventory extends Model
 {
-    //
     protected $guarded = [];
     protected $dates = ['date'];
 
@@ -22,7 +21,7 @@ class Inventory extends Model
 
     public function setQuantityAttribute($val)
     {
-        $this->attributes['quantity'] = $val * 100;
+        return $this->attributes['quantity'] = $val * 100;
     }
 
     public function getQuantityAttribute()

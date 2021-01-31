@@ -84,7 +84,7 @@
         let today, datepicker;
         today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
         datepicker = $('.datepicker').datepicker({
-            minDate: today,
+            // minDate: today,
             locale: 'es-es',
             format: 'yyyy-mm-dd',
             uiLibrary: 'bootstrap4',
@@ -109,7 +109,7 @@
                         console.log(data.tanks);
                         $.each(data.tanks, function(index, tank){
                             // console.log(tank.serial_number);
-                            $('#tank_id').append('<option value="'+tank.id+'">'+tank.model + ' - ' + tank.serial_number+'</option>');
+                            $('#tank_id').append('<option value="'+tank.id+'">'+ tank.brand + ' - ' + tank.model + ' - ' + tank.serial_number+'</option>');
                         });
 
                     }

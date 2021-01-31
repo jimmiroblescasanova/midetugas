@@ -40,7 +40,7 @@ class InventoriesController extends Controller
         if ($project->total_capacity >= $new_total)
         {
             $project->actual_capacity = $new_total;
-            $this->calculatePercentage($project);
+            $project->percentage = $this->calculatePercentage($project);
             $project->save();
 
             Inventory::create( $request->validated() );
@@ -53,7 +53,7 @@ class InventoriesController extends Controller
     {
         if (request()->ajax())
         {
-            $tanks = Tank::select('id', 'model', 'serial_number')
+            $tanks = Tank::select('id', 'brand', 'model', 'serial_number')
                 ->where('project_id', request()->input('project_id'))
                 ->get();
 

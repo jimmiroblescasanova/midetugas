@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Clients;
+use App\Client;
 use App\Deposit;
 use App\Http\Requests\StoreDepositRequest;
 use Illuminate\Support\Facades\DB;
@@ -20,7 +20,7 @@ class DepositsController extends Controller
     public function create()
     {
         return view('deposits.create', [
-            'clients' => Clients::where('measurer_id', '!=', NULL)->pluck('name', 'id'),
+            'clients' => Client::where('measurer_id', '!=', NULL)->pluck('name', 'id'),
         ]);
     }
 
@@ -29,7 +29,7 @@ class DepositsController extends Controller
 
         DB::transaction(function () use ($request) {
             $deposit = Deposit::create( $request->validated() );
-            $client = Clients::findOrFail($request['client_id']);
+            $client = Client::findOrFail($request['client_id']);
             $client->deposit += $request['total'];
             $client->save();
         });
@@ -65,7 +65,7 @@ class DepositsController extends Controller
 
     public function cancel(Deposit $deposit)
     {
-        $client = Clients::find( $deposit->client_id );
+        $client = Client::find( $deposit->client_id );
         $client->deposit = $client->deposit - $deposit->total;
         $client->save();
 
