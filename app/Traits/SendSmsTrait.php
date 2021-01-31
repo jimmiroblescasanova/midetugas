@@ -2,7 +2,7 @@
 
 namespace App\Traits;
 
-trait SendSms
+trait SendSmsTrait
 {
     public function receiptGenerated($phoneNumber)
     {

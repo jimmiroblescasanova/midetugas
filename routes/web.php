@@ -32,11 +32,9 @@ Route::patch('/clients-contacts/{client}', 'ContactsController@store')
 Route::patch('/clients-contacts-update/{client}', 'ContactsController@update')
     ->name('contacts.update')->middleware('permission:edit_contacts');
 //Routes for creating or updating addresses
-Route::get('/clients-address/{id}', 'AddressesController@create')
+Route::get('/clients-address/{client}', 'AddressesController@create')
     ->name('address.create')->middleware('permission:create_clients');
-Route::post('/clients-address', 'AddressesController@store')
-    ->name('address.store')->middleware('permission:create_clients');
-Route::patch('/clients-address', 'AddressesController@update')
+Route::patch('/clients-address/{client}', 'AddressesController@update')
     ->name('address.update')->middleware('permission:edit_addresses');
 // Route for attaching a measurer
 Route::post('/clients/attach-measurer', 'ClientsController@attach')
@@ -131,3 +129,5 @@ Route::get('/deposits/{deposit}/cancel', 'DepositsController@cancel')->name('dep
 
 Route::get('/reports/lecture', 'ReportsController@lectureReportParameters')->name('report01.parameters');
 Route::post('reports/lecture', 'ReportsController@lectureReport')->name('report01.show');
+
+Route::get('migrate-addresses', 'ScriptsController@migrateAddresses');

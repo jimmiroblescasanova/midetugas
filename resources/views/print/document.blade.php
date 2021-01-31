@@ -83,7 +83,7 @@
                 </div>
                 <div class="cliente">
                     <span class="nombre">{{ $docto->client->name }}</span>
-                    <span class="domicilio">{{ $docto->client->address->full_address }}</span>
+                    <span class="domicilio">{{ $docto->client->full_address }}</span>
                     <span>RFC: {{ $docto->client->rfc }}</span>
                 </div>
             </td>

@@ -174,37 +174,7 @@
         }
 
         let ctx = document.getElementById('myChart');
-        let myChart = new Chart(ctx, {
-            type: "bar",
-            data: {
-                datasets: [{
-                    label: 'Últimos consumos',
-                    backgroundColor: 'rgb(128,128,128, 0.5)',
-                    borderColor: 'rgb(128,128,128)',
-                    data: [
-                        @foreach($historic as $h)
-                            "{{ $h->month_quantity }}",
-                        @endforeach
-                    ],
-                }],
-                labels: [
-                    @foreach($historic as $h)
-                        "{{ $h->period }}",
-                    @endforeach
-                ]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            suggestedMin: 50,
-                            suggestedMax: 100
-                        }
-                    }]
-                }
-            }
-        });
+        let myChart = new Chart(ctx, {!! $chart !!});
 
         $('#pay').on('click', function (e) {
             e.preventDefault();

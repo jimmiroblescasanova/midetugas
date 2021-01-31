@@ -4,19 +4,24 @@ namespace App\Http\Controllers;
 
 use App\admConceptos;
 use App\admDocumentos;
+use App\Mail\AuthorizeReceipt;
 use App\Price;
 use App\Client;
 use App\Project;
 use App\Document;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
-use App\Traits\SendSms;
+use App\Traits\SendSmsTrait;
+use App\Traits\GraphBarTrait;
 use App\Traits\UpdateProjectTrait;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\SaveDocumentRequest;
+use Illuminate\Support\Facades\Mail;
+use Storage;
 
 class DocumentsController extends Controller
 {
-    use SendSms;
+    use SendSmsTrait;
+    use GraphBarTrait;
     use UpdateProjectTrait;
 
     public function __construct()
@@ -129,9 +134,11 @@ class DocumentsController extends Controller
                 ['id', '<=', $document->id]
             ])->orderByDesc('id')->get();
 
+        $chart = $this->generateChart($historic);
+
         return view('documents.show', [
             'document' => $document,
-            'historic' => $historic->take(6),
+            'chart' => $chart,
             'advance_payment' => Client::findOrFail($document->client_id)->advance_payment,
         ]);
     }
@@ -139,12 +146,37 @@ class DocumentsController extends Controller
     public function authorizeDocument($id)
     {
         $docto = Document::findOrFail($id);
-        $docto->status = 2;
-        $docto->save();
+        // Se obtiene los históricos de meses anteriores
+        $historic = Document::select('id', 'period', 'month_quantity', 'total')
+            ->where([
+                ['client_id', $docto->client_id],
+                ['id', '<=', $docto->id]
+            ])->orderByDesc('id')->get();
 
-        $phone_number = $docto->client->country_code . $docto->client->phone;
+        // Trait to generate the chart
+        $chart = $this->generateChart($historic);
 
-        $this->receiptGenerated($phone_number);
+        // Generar el PDF
+        $pdf = \PDF::loadView('print.document', [
+            'docto' => $docto,
+            'chart' => urlencode($chart),
+            'historic' => $historic->take(2),
+        ]);
+        $pdf->setPaper('statement', 'portrait');
+        Storage::put('/pdf/'. $docto->reference .'.pdf', $pdf->output());
+
+        try {
+            DB::beginTransaction();
+            Mail::to($docto->client->email)->queue(new AuthorizeReceipt( $docto->reference ));
+            $this->receiptGenerated($docto->client->phoneNumber);
+            $docto->status = 2;
+            $docto->save();
+            DB::commit();
+        } catch (\Exception $e)
+        {
+            DB::rollBack();
+            return $e;
+        }
 
         return redirect()->route('documents.index');
     }
@@ -170,27 +202,8 @@ class DocumentsController extends Controller
             ['id', '<=', $docto->id]
             ])->orderByDesc('id')->get();
 
-        // Se arma el array para el histórico
-        $arr_period = '[';
-        $arr_data = '[';
-        foreach ($historic->take(13) as $h)
-        {
-            $arr_period = $arr_period . '"' . $h->period . '",';
-            $arr_data = $arr_data . $h->month_quantity . ',';
-        }
-        $arr_period = $arr_period . ']';
-        $arr_data = $arr_data . ']';
-
-        // Generar los valores de la gráfica
-        $chart = "{
-        type: 'bar',
-        data: {
-            labels: ". $arr_period .",
-            datasets: [{
-                'backgroundColor': 'rgba(169,169,169, 0.5)',
-                label: 'Consumos', data: ". $arr_data ."}
-                ]}
-            }";
+        // Trait to generate the chart
+        $chart = $this->generateChart($historic);
 
         // Generar el PDF
         $pdf = \PDF::loadView('print.document', [

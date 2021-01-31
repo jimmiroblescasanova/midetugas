@@ -28,11 +28,6 @@ class Client extends Model
         return $this->belongsTo('App\Project');
     }
 
-    public function address()
-    {
-        return $this->hasOne('App\Addresses', 'client_id');
-    }
-
     public function setBalanceAttribute($val)
     {
         return $this->attributes['balance'] = $val * 100;
@@ -61,5 +56,15 @@ class Client extends Model
     public function getDepositAttribute()
     {
         return $this->attributes['deposit'] / 100;
+    }
+
+    public function getFullAddressAttribute()
+    {
+        return "{$this->line_1}  Ext. {$this->line_2} Int. {$this->line_3}, {$this->locality}, {$this->city}, {$this->state_province}, {$this->country}, CP {$this->zipcode}";
+    }
+
+    public function getPhoneNumberAttribute()
+    {
+        return $this->country_code . $this->phone;
     }
 }

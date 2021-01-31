@@ -7,7 +7,7 @@
                    name="line_1"
                    id="line_1"
                    placeholder="Calle"
-                   value="{{ old('line_1', $address->line_1) }}">
+                   value="{{ old('line_1', $client->line_1) }}">
             {!! $errors->first('line_1', '<div class="invalid-feedback">:message</div>') !!}
         </div>
     </div>
@@ -21,7 +21,7 @@
                    name="line_2"
                    id="line_2"
                    placeholder="Número exterior / edificio"
-                   value="{{ old('line_2', $address->line_2) }}">
+                   value="{{ old('line_2', $client->line_2) }}">
             {!! $errors->first('line_2', '<div class="invalid-feedback">:message</div>') !!}
         </div>
     </div>
@@ -33,7 +33,7 @@
                    name="line_3"
                    id="line_3"
                    placeholder="Número interior / departamento"
-                   value="{{ old('line_3', $address->line_3) }}">
+                   value="{{ old('line_3', $client->line_3) }}">
             {!! $errors->first('line_3', '<div class="invalid-feedback">:message</div>') !!}
         </div>
     </div>
@@ -45,7 +45,7 @@
                    name="locality"
                    id="locality"
                    placeholder="Municipio"
-                   value="{{ old('locality', $address->locality) }}">
+                   value="{{ old('locality', $client->locality) }}">
             {!! $errors->first('locality', '<div class="invalid-feedback">:message</div>') !!}
         </div>
     </div>
@@ -59,7 +59,7 @@
                    name="city"
                    id="city"
                    placeholder="Ciudad"
-                   value="{{ old('city', $address->city) }}">
+                   value="{{ old('city', $client->city) }}">
             {!! $errors->first('city', '<div class="invalid-feedback">:message</div>') !!}
         </div>
     </div>
@@ -357,7 +357,7 @@
                    name="zipcode"
                    id="zipcode"
                    placeholder="Código postal"
-                   value="{{ old('zipcode', $address->zipcode) }}">
+                   value="{{ old('zipcode', $client->zipcode) }}">
             {!! $errors->first('zipcode', '<div class="invalid-feedback">:message</div>') !!}
         </div>
     </div>

@@ -92,11 +92,10 @@
                         </div>
                         <div class="tab-pane fade" id="custom-tabs-four-messages" role="tabpanel"
                              aria-labelledby="custom-tabs-four-messages-tab">
-                            <form action="{{ route('address.update') }}" role="form" method="POST">
+                            <form action="{{ route('address.update', $client) }}" role="form" method="POST">
                                 @csrf
                                 @method('patch')
                                 @include('clients.forms.address')
-                                <input type="hidden" name="client_id" value="{{ $client->id }}">
                                 @can('edit_addresses')
                                     <div class="row">
                                         <div class="col-md-6">

@@ -24,10 +24,10 @@
                         <p class="lead mb-3">Capturar información de la dirección</p>
                     </div>
 
-                    <form action="{{ route('address.store') }}" role="form" method="POST">
+                    <form action="{{ route('address.update', $client) }}" role="form" method="POST">
                         @csrf
+                        @method('patch')
                         @include('clients.forms.address')
-                        <input type="hidden" name="client_id" value="{{ $id }}">
                         <div class="row">
                             <div class="col-md-6">
                                 <button type="submit" class="btn btn-sm btn-primary btn-block-xs-only"><i class="fas fa-save"></i> Guardar y
