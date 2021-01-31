@@ -23,6 +23,7 @@
                             <th>Número de cuenta</th>
                             <th>Nombre completo</th>
                             <th>Email</th>
+                            <th>Nombre corto</th>
                             <th>Teléfono</th>
                             <th>Estado</th>
                             <th>Acción</th>
@@ -34,6 +35,7 @@
                                 <td>{{ $client->id }}</td>
                                 <td>{{ $client->name }}</td>
                                 <td>{{ $client->email }}</td>
+                                <td>{{ $client->shortName }}</td>
                                 <td>{{ $client->phone }}</td>
                                 <td>{!! (!$client->status) ? '<span class="badge badge-success">Activo</span>' : '<span class="badge badge-warning">Inactivo</span>' !!}</td>
                                 <td class="text-right">

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Client;
 use App\Measurer;
 use Illuminate\Http\Request;
-use App\Http\Requests\SaveMeasurerRequest;
+use App\Http\Requests\StoreMeasurerRequest;
+use App\Http\Requests\UpdateMeasurerRequest;
 
 class MeasurersController extends Controller
 {
@@ -18,22 +18,34 @@ class MeasurersController extends Controller
     {
         return view('measurers.index', [
             'measurers' => Measurer::all(),
-            'clients' => Client::pluck('name', 'id'),
         ]);
     }
 
     public function create()
     {
         return view('measurers.create', [
-            'clients' => Client::pluck('name', 'id'),
+            'measurer' => new Measurer(),
         ]);
     }
 
-    public function store(SaveMeasurerRequest $request)
+    public function store(StoreMeasurerRequest $request)
     {
         Measurer::create( $request->validated() );
 
         return redirect()->route('measurers.index');
+    }
+
+    public function edit(Measurer $measurer)
+    {
+        return view('measurers.edit', [
+            'measurer' => $measurer,
+        ]);
+    }
+
+    public function update(Measurer $measurer, UpdateMeasurerRequest $request)
+    {
+        $measurer->update( $request->validated() );
+        return redirect()->route('measurers.edit', compact('measurer'));
     }
 
     public function destroy(Request $request)

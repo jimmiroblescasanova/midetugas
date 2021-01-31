@@ -34,7 +34,7 @@ class ClientsController extends Controller
     {
         return view('clients.create', [
             'client' => new Client,
-            'projects' => Project::pluck('name', 'id'),
+//            'projects' => Project::pluck('name', 'id'),
             'measurers' => Measurer::where('active', false)->get(),
         ]);
     }

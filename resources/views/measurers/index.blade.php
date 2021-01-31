@@ -42,6 +42,7 @@
                                 <td class="text-center">{!! setBadge($measurer->active) !!}</td>
                                 @can('delete_measurers')
                                     <td class="text-right">
+                                        <a href="{{ route('measurers.edit', $measurer) }}" class="btn btn-default btn-xs"><i class="fas fa-edit"></i> Editar</a>
                                         <button type="button" class="btn btn-danger btn-xs delete"
                                                 data-id="{{ $measurer->id }}"><i class="fas fa-trash"></i> Eliminar
                                         </button>

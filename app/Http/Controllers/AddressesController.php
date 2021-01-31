@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Addresses;
 use App\Http\Requests\SaveAddressRequest;
 use App\Client;
+use App\Project;
 use Illuminate\Http\Request;
 
 class AddressesController extends Controller
@@ -18,6 +19,7 @@ class AddressesController extends Controller
     {
         return view('clients.addresses', [
             'client' => $client,
+            'projects' => Project::pluck('name', 'id'),
         ]);
     }
 

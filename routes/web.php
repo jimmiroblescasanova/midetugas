@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'Auth\LoginController@showLoginForm')->name('showLoginForm');
@@ -53,6 +52,10 @@ Route::get('/measurers/create', 'MeasurersController@create')
     ->name('measurers.create')->middleware('permission:create_measurers');
 Route::post('/measurers', 'MeasurersController@store')
     ->name('measurers.store')->middleware('permission:create_measurers');
+Route::get('measurers/{measurer}/edit', 'MeasurersController@edit')
+    ->name('measurers.edit');
+Route::patch('measurers/{measurer}', 'MeasurersController@update')
+    ->name('measurers.update');
 Route::delete('/measurers', 'MeasurersController@destroy')
     ->name('measurers.destroy')->middleware('permission:delete_measurers');
 
@@ -112,14 +115,11 @@ Route::get('/inventories/create', 'InventoriesController@create')
     ->name('inventories.create')->middleware('permission:create_inventories');
 Route::post('/inventories', 'InventoriesController@store')
     ->name('inventories.store')->middleware('permission:create_inventories');
-Route::post('inventories/fill-tank', 'InventoriesController@fillTanks')->name('inventories.fillTanks');
+Route::post('inventories/fill-tank', 'InventoriesController@fillTanks')
+    ->name('inventories.fillTanks');
 
 Route::get('/clients/{client}/link', 'ClientsController@link_client')
     ->name('clients.link');
-
-Route::get('/test-print', function (){
-    return view('print.guarantee');
-});
 
 Route::get('/deposits', 'DepositsController@index')->name('deposits.index');
 Route::get('/deposits/create', 'DepositsController@create')->name('deposits.create');
@@ -130,4 +130,4 @@ Route::get('/deposits/{deposit}/cancel', 'DepositsController@cancel')->name('dep
 Route::get('/reports/lecture', 'ReportsController@lectureReportParameters')->name('report01.parameters');
 Route::post('reports/lecture', 'ReportsController@lectureReport')->name('report01.show');
 
-Route::get('migrate-addresses', 'ScriptsController@migrateAddresses');
+//Route::get('migrate-addresses', 'ScriptsController@migrateAddresses');

@@ -97,17 +97,14 @@
     </div>
     <div class="col-md-8">
         <div class="form-group">
-            <label for='project_id'>Condominio</label>
-            <select id='project_id'
-                    name='project_id'
-                    data-placeholder="Seleccionar condominio"
-                    class='form-control select2bs4 {{ $errors->first('project_id') ? 'is-invalid' : '' }}'>
-                <option value=""></option>
-                @foreach ($projects as $id => $project)
-                    <option value="{{ $id }}" {{ ($id == $client->project_id) ? 'selected' : '' }}>{{ $project }}</option>
-                @endforeach
-            </select>
-            {!! $errors->first('project_id', '<div class="invalid-feedback">:message</div>') !!}
+            <label for="shortName">Nombre corto</label>
+            <input type="text"
+                   class="form-control {{ $errors->first('shortName') ? 'is-invalid' : '' }}"
+                   name="shortName"
+                   id="shortName"
+                   placeholder="Nombre corto"
+                   value="{{ old('shortName', $client->shortName) }}">
+            {!! $errors->first('shortName', '<div class="invalid-feedback">:message</div>') !!}
         </div>
     </div>
 </div>

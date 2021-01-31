@@ -33,6 +33,7 @@ class SaveAddressRequest extends FormRequest
             'state_province' => 'required|string',
             'country' => 'required|string',
             'zipcode' => 'required|numeric',
+            'project_id' => 'exists:projects,id',
         ];
     }
 }

@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UpdateClientRequest extends FormRequest
+class UpdateMeasurerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,22 +25,14 @@ class UpdateClientRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string',
-            'rfc' => [
+            'brand' => 'required|string',
+            'model' => 'required|string',
+            'correction_factor' => 'required|numeric',
+            'serial_number' => [
                 'required',
                 'string',
-                'min:12',
-                'max:13',
-                Rule::unique('clients')->ignore($this->client->id),
+                Rule::unique('measurers')->ignore($this->measurer->id),
             ],
-            'email' => [
-                'required',
-                'email',
-                Rule::unique('clients')->ignore($this->client->id),
-            ],
-            'country_code' => 'required|string',
-            'phone' => 'required|numeric',
-            'shortName' => 'string|nullable',
         ];
     }
 }
