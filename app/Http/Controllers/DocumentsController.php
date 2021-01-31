@@ -4,18 +4,19 @@ namespace App\Http\Controllers;
 
 use App\admConceptos;
 use App\admDocumentos;
-use AWS;
 use App\Price;
 use App\Client;
 use App\Project;
 use App\Document;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use App\Traits\SendSms;
 use App\Traits\UpdateProjectTrait;
 use App\Http\Requests\SaveDocumentRequest;
 
 class DocumentsController extends Controller
 {
+    use SendSms;
     use UpdateProjectTrait;
 
     public function __construct()
@@ -143,17 +144,7 @@ class DocumentsController extends Controller
 
         $phone_number = $docto->client->country_code . $docto->client->phone;
 
-        $sms = AWS::createClient('sns');
-        $sms->publish([
-            'Message' => 'Estimado cliente, se ha generado su recibo de servicio de gas y se ha enviado a su correo electrónico registrado.',
-            'PhoneNumber' => $phone_number,
-            'MessageAttributes' => [
-                'AWS.SNS.SMS.SMSType'  => [
-                    'DataType'    => 'String',
-                    'StringValue' => 'Transactional',
-                ]
-            ],
-        ]);
+        $this->receiptGenerated($phone_number);
 
         return redirect()->route('documents.index');
     }
@@ -201,7 +192,6 @@ class DocumentsController extends Controller
                 ]}
             }";
 
-        // return $docto;
         // Generar el PDF
         $pdf = \PDF::loadView('print.document', [
             'docto' => $docto,
@@ -210,9 +200,6 @@ class DocumentsController extends Controller
         ]);
         $pdf->setPaper('statement', 'portrait');
         return $pdf->stream();
-
-//        return $historic->take(1);
-
     }
 
     public function linkCtiComercial(Document $document)
