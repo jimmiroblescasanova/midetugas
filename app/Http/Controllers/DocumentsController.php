@@ -146,23 +146,7 @@ class DocumentsController extends Controller
     public function authorizeDocument($id)
     {
         $docto = Document::findOrFail($id);
-        // Se obtiene los históricos de meses anteriores
-        $historic = Document::select('id', 'period', 'month_quantity', 'total')
-            ->where([
-                ['client_id', $docto->client_id],
-                ['id', '<=', $docto->id]
-            ])->orderByDesc('id')->get();
-
-        // Trait to generate the chart
-        $chart = $this->generateChart($historic);
-
-        // Generar el PDF
-        $pdf = \PDF::loadView('print.document', [
-            'docto' => $docto,
-            'chart' => urlencode($chart),
-            'historic' => $historic->take(2),
-        ]);
-        $pdf->setPaper('statement', 'portrait');
+        $pdf = $this->getPDF($docto);
         Storage::put('/pdf/'. $docto->reference .'.pdf', $pdf->output());
 
         try {
@@ -194,25 +178,15 @@ class DocumentsController extends Controller
     public function print($id)
     {
         $docto = Document::findOrFail($id);
-
-        // Se obtiene los históricos de meses anteriores
-        $historic = Document::select('id', 'period', 'month_quantity', 'total')
-            ->where([
-            ['client_id', $docto->client_id],
-            ['id', '<=', $docto->id]
-            ])->orderByDesc('id')->get();
-
-        // Trait to generate the chart
-        $chart = $this->generateChart($historic);
-
-        // Generar el PDF
-        $pdf = \PDF::loadView('print.document', [
-            'docto' => $docto,
-            'chart' => urlencode($chart),
-            'historic' => $historic->take(2),
-        ]);
-        $pdf->setPaper('statement', 'portrait');
-        return $pdf->stream();
+        $file = '/pdf/'.$docto->reference.'.pdf';
+        if (Storage::disk('public')->exists( $file ))
+        {
+            return response()->file( storage_path("app/public/{$file}") );
+        }
+        else {
+            $pdf = $this->getPDF($docto);
+            return $pdf->stream();
+        }
     }
 
     public function linkCtiComercial(Document $document)
@@ -256,5 +230,28 @@ class DocumentsController extends Controller
         $concepto->save();
 
         return redirect()->back();
+    }
+
+    public function getPDF($docto)
+    {
+        // Se obtiene los históricos de meses anteriores
+        $historic = Document::select('id', 'period', 'month_quantity', 'total')
+            ->where([
+                ['client_id', $docto->client_id],
+                ['id', '<=', $docto->id]
+            ])->orderByDesc('id')->get();
+
+        // Trait to generate the chart
+        $chart = $this->generateChart($historic);
+
+        // Generar el PDF
+        $pdf = \PDF::loadView('print.document', [
+            'docto' => $docto,
+            'chart' => urlencode($chart),
+            'historic' => $historic->take(2),
+        ]);
+        $pdf->setPaper('statement', 'portrait');
+//        Storage::put('/pdf/'. $docto->reference .'.pdf', $pdf->output());
+        return $pdf;
     }
 }
