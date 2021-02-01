@@ -137,7 +137,8 @@ class DocumentsController extends Controller
         $historic = Document::select('id', 'period', 'month_quantity')
             ->where([
                 ['client_id', $document->client_id],
-                ['id', '<=', $document->id]
+                ['id', '<=', $document->id],
+                ['status', '!=', 3]
             ])->orderByDesc('id')->get();
 
         $chart = $this->generateChart($historic);
