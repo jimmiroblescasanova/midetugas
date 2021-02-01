@@ -23,7 +23,9 @@
                                     <label for="client_id">Seleccionar cliente</label>
                                     <select class="form-control select2bs4" name="client_id" id="client_id">
                                         @foreach ($clients as $client)
-                                            <option value="{{ $client->id }}">{{ $client->name }} - Depto: {{ $client->line_2 }} </option>
+                                            @if($client->measurer()->exists())
+                                                <option value="{{ $client->id }}">{{ $client->name }} - Depto: {{ $client->line_2 }} </option>
+                                            @endif
                                         @endforeach
                                     </select>
                                 </div>

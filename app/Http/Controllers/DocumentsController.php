@@ -41,8 +41,11 @@ class DocumentsController extends Controller
 
     public function create()
     {
+        $measurer = Measurer::where('active', '=', 1)->get();
+
         return view('documents.create', [
             'clients' => Client::all(),
+            'measurer' => $measurer,
         ]);
     }
 

@@ -70,7 +70,8 @@ class ClientsController extends Controller
             $actual_measurer = Measurer::where('client_id', $client->id)->first();
             $new_measurer = Measurer::find($request['measurer_id']);
 
-            if ($new_measurer->id != $actual_measurer->id)
+//            return $actual_measurer;
+            if ( ($actual_measurer != NULL ) && ($new_measurer->id != $actual_measurer->id) )
             {
                 $actual_measurer->client_id = NULL;
                 $actual_measurer->active = false;

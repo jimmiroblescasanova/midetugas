@@ -154,12 +154,20 @@
                         <td style="text-align: right;">$ {{ number_format($docto->total+$docto->client->balance, 2) }}</td>
                     </tr>
                     <tr>
-                        <td>Ajuste mes siguiente</td>
-                        <td style="text-align: right;">$ {{ number_format($docto->client->balance, 2) }}</td>
+                        <td>Subtotal</td>
+                        <td style="text-align: right;">$ {{ number_format(($docto->total/1.16), 2) }}</td>
                     </tr>
                     <tr>
                         <td>IVA</td>
                         <td style="text-align: right;"><b>$ {{ number_format($docto->total-($docto->total/1.16), 2) }}</b></td>
+                    </tr>
+                    <tr>
+                        <td>Cargos del mes</td>
+                        <td style="text-align: right;">$ {{ number_format($docto->total+$docto->client->balance, 2) }}</td>
+                    </tr>
+                    <tr>
+                        <td>Ajuste mes siguiente</td>
+                        <td style="text-align: right;">$ {{ number_format($docto->client->balance, 2) }}</td>
                     </tr>
                     <tr>
                         <td>A pagar</td>
