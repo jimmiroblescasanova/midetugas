@@ -79,7 +79,7 @@
         <tr class="headers">
             <td style="width: 75%;">
                 <div class="logo">
-                    <img src="{{ url('logo_new.jpg') }}" alt="logo" width="400px">
+                    <img src="{{ asset('logo_new.jpg') }}" alt="logo" width="400px">
                 </div>
                 <div class="cliente">
                     <span class="nombre">{{ $docto->client->name }}</span>
