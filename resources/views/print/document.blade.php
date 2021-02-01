@@ -152,6 +152,10 @@
                         <td style="text-align: right;">$ {{ number_format($docto->previous_balance, 2) }}</td>
                     </tr>
                     <tr>
+                        <td>Consumo del mes</td>
+                        <td style="text-align: right;">$ {{ number_format((($docto->total+$docto->client->balance)/1.16), 2) }}</td>
+                    </tr>
+                    <tr>
                         <td>Cargo por administración</td>
                         <td style="text-align: right;">$ 100.00</td>
                     </tr>
