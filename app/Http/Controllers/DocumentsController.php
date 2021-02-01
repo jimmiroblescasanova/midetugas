@@ -294,7 +294,7 @@ class DocumentsController extends Controller
             'chart' => urlencode($chart),
             'historic' => $historic->take(2),
         ]);
-        $pdf->setPaper('statement', 'portrait');
+        $pdf->setPaper('A4', 'portrait');
 //        Storage::put('/pdf/'. $docto->reference .'.pdf', $pdf->output());
         return $pdf;
     }
