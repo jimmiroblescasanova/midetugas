@@ -150,10 +150,6 @@
                         <td style="text-align: right;">$ {{ number_format($docto->previous_balance, 2) }}</td>
                     </tr>
                     <tr>
-                        <td>Cargos del mes</td>
-                        <td style="text-align: right;">$ {{ number_format($docto->total+$docto->client->balance, 2) }}</td>
-                    </tr>
-                    <tr>
                         <td>Subtotal</td>
                         <td style="text-align: right;">$ {{ number_format(($docto->total/1.16), 2) }}</td>
                     </tr>
