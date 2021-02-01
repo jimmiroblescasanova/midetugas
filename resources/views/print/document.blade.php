@@ -109,9 +109,9 @@
                     <tr>
                         <th>Lectura anterior</th>
                         <th>Lectura actual</th>
-                        <th>Diferencia (m3)</th>
+                        <th>Diferencia</th>
                         <th>Factor de PyT</th>
-                        <th>Consumo</th>
+                        <th>Consumo (m3)</th>
                         <th>Precio por m3</th>
                     </tr>
                     <tr style="text-align: center;">
