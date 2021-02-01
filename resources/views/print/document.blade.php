@@ -161,11 +161,11 @@
                     </tr>
                     <tr>
                         <td>Subtotal</td>
-                        <td style="text-align: right;">$ {{ number_format((($docto->total+100)/1.16), 2) }}</td>
+                        <td style="text-align: right;">$ {{ number_format((($docto->total+$docto->client->balance)/1.16)+100, 2) }}</td>
                     </tr>
                     <tr>
                         <td>IVA</td>
-                        <td style="text-align: right;"><b>$ {{ number_format(($docto->total+100)-($docto->total/1.16), 2) }}</b></td>
+                        <td style="text-align: right;"><b>$ {{ number_format(($docto->total+$docto->client->balance)-(($docto->total+$docto->client->balance)/1.16)+16, 2) }}</b></td>
                     </tr>
                     <tr>
                         <td>Cargos del mes</td>
