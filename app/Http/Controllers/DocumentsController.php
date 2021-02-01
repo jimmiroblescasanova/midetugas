@@ -282,7 +282,8 @@ class DocumentsController extends Controller
         $historic = Document::select('id', 'period', 'month_quantity', 'total')
             ->where([
                 ['client_id', $docto->client_id],
-                ['id', '<=', $docto->id]
+                ['id', '<=', $docto->id],
+                ['status', '!=', 3]
             ])->orderByDesc('id')->get();
 
         // Trait to generate the chart
