@@ -19,13 +19,14 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <table class="table" id="dataTableProjects">
+                    <table class="table table-striped" id="dataTableProjects">
                         <thead>
                         <tr>
                             <th>Nombre</th>
                             <th>Capacidad total (L)</th>
                             <th>Capacidad actual (L)</th>
                             <th>Porcentaje</th>
+                            <th>Referencia</th>
                             <th>Acción</th>
                         </tr>
                         </thead>
@@ -49,6 +50,7 @@
                                         {{ $project->percentage }}% capacidad maxima (litros)
                                     </small>
                                 </td>
+                                <td>{{ $project->reference }}</td>
                                 <td></td>
                             </tr>
                         @endforeach

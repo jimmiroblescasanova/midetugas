@@ -42,7 +42,7 @@ class TanksController extends Controller
         {
             $project['percentage'] =  0;
         } else {
-            $this->calculatePercentage($project);
+            $project['percentage'] = $this->calculatePercentage($project);
         }
         $project->save();
 

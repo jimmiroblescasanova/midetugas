@@ -63,11 +63,7 @@
         @if($client->measurer()->exists())
         <tr>
             <td>{{ $client->name }}</td>
-            <td>
-                @if($client->address()->exists())
-                    {{ $client->address->line_2 }}
-                @endif
-            </td>
+            <td>{{ $client->line_2 }}</td>
             <td>{{ $client->measurer->serial_number }}</td>
             <td>{{ $client->measurer->actual_measure }}</td>
             <td>_____________</td>

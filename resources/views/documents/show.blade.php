@@ -91,7 +91,7 @@
                                         <i class="fas fa-ban"></i>Cancelar</a>
                                 @endif
                                 @if($document->admDocumentId == NULL)
-                                    <a href="{{ route('documents.linkCtiComercial', $document) }}" class="btn btn-app">Link to Comercial(r)</a>
+                                    <a href="{{ route('documents.linkCtiComercial', $document) }}" class="btn btn-app"><i class="fas fa-hdd"></i> CTiComercial</a>
                                 @endif
                                     <a href="{{ route('documents.print', $document->id) }}" class="btn btn-app" target="_blank"><i class="fas fa-print"></i> Imprimir</a>
                                     <button type="button" class="btn btn-app" onclick="history.back()">

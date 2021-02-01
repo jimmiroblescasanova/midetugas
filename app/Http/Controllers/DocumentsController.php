@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\admConceptos;
 use App\admDocumentos;
+use App\admMovimientos;
 use App\Mail\AuthorizeReceipt;
+use App\Measurer;
 use App\Price;
 use App\Client;
 use App\Project;
@@ -16,6 +18,7 @@ use App\Traits\UpdateProjectTrait;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\SaveDocumentRequest;
 use Illuminate\Support\Facades\Mail;
+use RealRashid\SweetAlert\Facades\Alert;
 use Storage;
 
 class DocumentsController extends Controller
@@ -178,7 +181,7 @@ class DocumentsController extends Controller
     public function print($id)
     {
         $docto = Document::findOrFail($id);
-        $file = '/pdf/'.$docto->reference.'.pdf';
+        $file = "/pdf/{$docto->reference}.pdf";
         if (Storage::disk('public')->exists( $file ))
         {
             return response()->file( storage_path("app/public/{$file}") );
@@ -191,23 +194,30 @@ class DocumentsController extends Controller
 
     public function linkCtiComercial(Document $document)
     {
+        $idDocumento = admDocumentos::orderBy('CIDDOCUMENTO', 'DESC')->first()->CIDDOCUMENTO;
+        $idMovimiento = admMovimientos::orderBy('CIDMOVIMIENTO', 'DESC')->first()->CIDMOVIMIENTO;
 
-        $concepto = admConceptos::where('CIDCONCEPTODOCUMENTO', env('CONCEPTO_ID'))->first();
-
-        $data = [
-            'CIDDOCUMENTO' => $concepto['CNOFOLIO']+1,
+        // Crea el array para los datos generales del pedido
+        $dEncabezados = [
+            'CIDDOCUMENTO' => $idDocumento+1,
             'CIDDOCUMENTODE' => env('DOCUMENTO_ID'),
             'CIDCONCEPTODOCUMENTO' => env('CONCEPTO_ID'),
             'CSERIEDOCUMENTO' => 'S',
             'CFOLIO' => $document['id'],
-            'CFECHA' => $document['date'],
-            'CIDCLIENTEPROVEEDOR' => $document['client_id'],
+            'CFECHA' => NOW(),
+            'CIDCLIENTEPROVEEDOR' => $document->client->admCode,
             'CRAZONSOCIAL' => $document->client->name,
             'CRFC' => $document->client->rfc,
+            'CFECHAVENCIMIENTO' => NOW(),
+            'CFECHAPRONTOPAGO' => NOW(),
+            'CFECHAENTREGARECEPCION' => NOW(),
+            'CFECHAULTIMOINTERES' => NOW(),
             'CIDMONEDA' => 1,
             'CTIPOCAMBIO' => 1,
+            'CREFERENCIA' => $document['reference'],
             'CNATURALEZA' => 2,
             'CUSACLIENTE' => 1,
+            'CUSAPROVEEDOR' => 0,
             'CAFECTADO' => 1,
             'CESTADOCONTABLE' => 1,
             'CNETO' => ($document->total / 1.16),
@@ -219,16 +229,47 @@ class DocumentsController extends Controller
             'CTIMESTAMP' => NOW(),
             'CIMPCHEQPAQ' => 116,
             'CSISTORIG' => 205,
-            'CIDMONEDCA' => 1,
-
+            'CIDMONEDCA' => 0,
+        ];
+        // Crea el array para el movimiento del pedido
+        $dMovimiento = [
+            'CIDMOVIMIENTO' => $idMovimiento+1,
+            'CIDDOCUMENTO' => $dEncabezados['CIDDOCUMENTO'],
+            'CNUMEROMOVIMIENTO' => 1,
+            'CIDDOCUMENTODE' => 2,
+            'CIDPRODUCTO' => env('PRODUCTO_ID'),
+            'CIDALMACEN' => 1,
+            'CUNIDADES' => 1,
+            'CUNIDADESCAPTURADAS' => 1,
+            'CPRECIO' => round(($document->total / 1.16), 2),
+            'CPRECIOCAPTURADO' => round(($document->total / 1.16), 2),
+            'CNETO' => round(($document->total / 1.16), 2),
+            'CIMPUESTO1' => round($document->total - ($document->total / 1.16), 2),
+            'CPORCENTAJEIMPUESTO1' => 16,
+            'CTOTAL' => $document->total,
+            'CAFECTAEXISTENCIA' => 3,
+            'CAFECTADOSALDOS' => 1,
+            'CFECHA' => NOW(),
+            'CUNIDADESPENDIENTES' => 1,
+            'CTIPOTRASPASO' => 1,
         ];
 
-        $docto = admDocumentos::create( $data );
-        $document->admDocumentId = $data['CIDDOCUMENTO'];
-        $document->save();
-        $concepto['CNOFOLIO'] += 1;
-        $concepto->save();
+        try {
+            DB::connection('mssql')->beginTransaction();
+            // Crea el documento a partir de array
+            DB::connection('mssql')->table('admDocumentos')->insert($dEncabezados);
+            // Crea el movimiento en la tabla
+            DB::connection('mssql')->table('admMovimientos')->insert($dMovimiento);
+            // Asocia el ID del documento comercial en la webapp
+            $document->admDocumentId = $dEncabezados['CIDDOCUMENTO'];
+            $document->save();
+            DB::connection('mssql')->commit();
+        } catch (\Throwable $e) {
+            DB::connection('mssql')->rollBack();
+            throw $e;
+        }
 
+        Alert::success('Creado', "El documento se ha creado en el sistema comercial con ID {$dEncabezados['CIDDOCUMENTO']}");
         return redirect()->back();
     }
 

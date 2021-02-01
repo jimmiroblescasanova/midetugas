@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 use App\admClientes;
 use App\Client;
-use App\Measurer;
-use App\Addresses;
-use App\Mail\TestEmail;
 use App\Project;
+use App\Measurer;
+use App\Mail\TestEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\StoreClientRequest;
@@ -34,7 +33,6 @@ class ClientsController extends Controller
     {
         return view('clients.create', [
             'client' => new Client,
-//            'projects' => Project::pluck('name', 'id'),
             'measurers' => Measurer::where('active', false)->get(),
         ]);
     }
@@ -56,16 +54,10 @@ class ClientsController extends Controller
 
     public function show(Client $client)
     {
-        if ( !$address = Addresses::where('client_id', $client->id)->first() )
-        {
-            $address = new Addresses;
-        }
-
         $measurers = Measurer::where('active', false)->get();
 
         return view('clients.show', [
             'client' => $client,
-            'address' => $address,
             'projects' => Project::pluck('name', 'id'),
             'measurers' => $measurers,
         ]);
@@ -165,10 +157,22 @@ class ClientsController extends Controller
                 'CIDMONEDA' => '1',
                 'CLISTAPRECIOCLIENTE' => '1',
                 'CBANVENTACREDITO' => '1',
-                'CESTATUS' => '1',
                 'CTIPOCLIENTE' => '1',
-                'CEMAIL1' => $client['email'],
+                'CESTATUS' => '1',
+                'CDIAPAGO' => '31',
+                'CDIASREVISION' => '31',
+                'CDIASEMBARQUECLIENTE' => '31',
+                'CDIASEMBARQUEPROVEEDOR' => '31',
                 'CTEXTOEXTRA3' => 'web',
+                'CBANCREDITOYCOBRANZA' => '1',
+                'CBANENVIO' => '1',
+                'CBANAGENTE' => '1',
+                'CBANIMPUESTO' => '1',
+                'CTIMESTAMP' => NOW(),
+                'CIDMONEDA2' => '1',
+                'CEMAIL1' => $client['email'],
+                'CIDADDENDA' => '-1',
+                'CIDCOMPLEM' => '-1',
             ]
         );
 

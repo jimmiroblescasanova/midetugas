@@ -25,18 +25,7 @@ class AddressesController extends Controller
 
     public function update(Client $client, SaveAddressRequest $request)
     {
-        $data = [
-            'line_1' => $request->line_1,
-            'line_2' => $request->line_2,
-            'line_3' => $request->line_3,
-            'locality' => $request->locality,
-            'city' => $request->city,
-            'state_province' => $request->state_province,
-            'country' => $request->country,
-            'zipcode' => $request->zipcode,
-        ];
-
-        $client->update( $data );
+        $client->update( $request->validated() );
 
         return redirect()->route('clients.index');
     }

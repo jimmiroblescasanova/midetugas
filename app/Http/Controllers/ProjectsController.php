@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Project;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ProjectsController extends Controller
 {
@@ -27,7 +28,7 @@ class ProjectsController extends Controller
         ]);
 
         Project::create( $data );
-
+        Alert::success('Correcto', 'Condominio creado correctamente');
         return redirect()->route('projects.index');
     }
 

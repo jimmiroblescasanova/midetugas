@@ -23,7 +23,7 @@
                                            name="actual_measure"
                                            id="actual_measure"
                                            placeholder="Consumo actual"
-                                           value="">
+                                           value="0">
                                     {!! $errors->first('actual_measure', '<div class="invalid-feedback">:message</div>') !!}
                                 </div>
                             </div>

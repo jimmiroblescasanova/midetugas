@@ -78,7 +78,7 @@
                             </div>
                             <div class="col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="capacity">Capacidad (m3)</label>
+                                    <label for="capacity">Capacidad (L)</label>
                                     <input type="text"
                                            class="form-control {{ $errors->first('capacity') ? 'is-invalid' : '' }}"
                                            name="capacity"
