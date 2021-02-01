@@ -47,6 +47,7 @@
             /*border: 2px solid #0956a0;*/
             border-collapse: collapse;
             border-spacing: 0;
+            font-size: 12px;
         }
         .consumo tr:first-child {
             background-color: #0956a0;
