@@ -42,10 +42,22 @@
                 </div>
                 <div class="card-body p-0">
                     <table class="table table-sm table-striped">
+                        <thead>
                         <tr>
+                            <th>Folio</th>
                             <th>Cliente</th>
-                            <th>Recibo</th>
+                            <th>Vencimiento</th>
                         </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($documents as $document)
+                            <tr>
+                                <td><a href="{{ route('documents.show', $document->id) }}">{{ $document->id }}</a></td>
+                                <td>{{ $document->client->name }}</td>
+                                <td>{{ $document->payment_date->diffForHumans() }}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
                     </table>
                 </div>
             </div>

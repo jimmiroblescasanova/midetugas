@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Document;
 use App\Price;
 use Illuminate\Http\Request;
 
@@ -17,15 +18,16 @@ class HomeController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function index()
     {
+        $documents = Document::where([
+            ['pending', '>', 0.01],
+            ['status', '=', 2]
+        ])->take(5)->get();
+
         return view('home', [
             'actual_price' => Price::latest()->first()->price,
+            'documents' => $documents,
         ]);
     }
 }

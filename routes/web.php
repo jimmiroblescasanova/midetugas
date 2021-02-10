@@ -130,4 +130,4 @@ Route::get('/deposits/{deposit}/cancel', 'DepositsController@cancel')->name('dep
 Route::get('/reports/lecture', 'ReportsController@lectureReportParameters')->name('report01.parameters');
 Route::post('reports/lecture', 'ReportsController@lectureReport')->name('report01.show');
 
-Route::get('scripts', 'ScriptsController@calculateIvaColumn');
+//Route::get('scripts', 'ScriptsController@calculateIvaColumn');
