@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Client;
 use App\Addresses;
+use App\Document;
 
 class ScriptsController extends Controller
 {
@@ -24,5 +25,30 @@ class ScriptsController extends Controller
             $client->zipcode = $direccion->zipcode;
             $client->save();
         }
+    }
+
+    public function calculateIvaColumn()
+    {
+        $documents = Document::where('status', '!=', '3')->get();
+
+        foreach ($documents as $document)
+        {
+            echo "ID: {$document->id}... <br>";
+            $client = Client::find($document->client_id);
+
+            $subtotal = (100 + ($document->month_quantity * $document->correction_factor) * $document->price);
+            $iva = ($subtotal * 1.16) - $subtotal;
+            $total = $subtotal + $iva;
+            $arr_total = explode('.', round($total,2));
+
+            $document->subtotal = $subtotal;
+            $document->iva = $iva;
+            $document->total = $arr_total[0];
+            $document->pending = $arr_total[0];
+            $document->save();
+            $client->balance = $arr_total[1];
+            $client->save();
+        }
+        echo "Done.";
     }
 }

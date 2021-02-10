@@ -28,10 +28,10 @@ class Client extends Model
         return $this->belongsTo('App\Project');
     }
 
-    public function setBalanceAttribute($val)
+    /*public function setBalanceAttribute($val)
     {
         return $this->attributes['balance'] = $val * 100;
-    }
+    }*/
 
     public function getBalanceAttribute()
     {

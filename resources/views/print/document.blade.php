@@ -41,6 +41,7 @@
         }
         .cliente .domicilio {
             display: block;
+            font-size: 14px;
         }
         /*    Estilos para el cuerpo */
         .consumo {
@@ -85,8 +86,8 @@
                 <div class="cliente">
                     <span class="contrato">CLIENTE: {{ $docto->client->id }}</span>
                     <span class="nombre">{{ $docto->client->name }}</span>
-                    <span class="domicilio">{{ $docto->client->full_address }}</span>
                     <span>RFC: {{ $docto->client->rfc }}</span>
+                    <span class="domicilio">{{ $docto->client->full_address }}</span>
                 </div>
             </td>
             <td>
@@ -153,23 +154,23 @@
                     </tr>
                     <tr>
                         <td>Consumo del mes</td>
-                        <td style="text-align: right;">$ {{ number_format((($docto->total+$docto->client->balance)/1.16), 2) }}</td>
+                        <td style="text-align: right;">$ {{ number_format(($docto->subtotal-100), 2) }}</td>
                     </tr>
                     <tr>
                         <td>Cargo por administración</td>
-                        <td style="text-align: right;">$ 100.00</td>
+                        <td style="text-align: right;">$ {{ number_format($docto->adm_charge, 2) }}</td>
                     </tr>
                     <tr>
                         <td>Subtotal</td>
-                        <td style="text-align: right;">$ {{ number_format((($docto->total+$docto->client->balance)/1.16)+100, 2) }}</td>
+                        <td style="text-align: right;">$ {{ number_format($docto->subtotal, 2) }}</td>
                     </tr>
                     <tr>
                         <td>IVA</td>
-                        <td style="text-align: right;"><b>$ {{ number_format(($docto->total+$docto->client->balance)-(($docto->total+$docto->client->balance)/1.16)+16, 2) }}</b></td>
+                        <td style="text-align: right;"><b>$ {{ number_format($docto->iva, 2) }}</b></td>
                     </tr>
                     <tr>
                         <td>Cargos del mes</td>
-                        <td style="text-align: right;">$ {{ number_format(($docto->total+116)+$docto->client->balance, 2) }}</td>
+                        <td style="text-align: right;">$ {{ number_format($docto->total+$docto->client->balance, 2) }}</td>
                     </tr>
                     <tr>
                         <td>Ajuste mes siguiente</td>
@@ -177,7 +178,7 @@
                     </tr>
                     <tr>
                         <td>A pagar</td>
-                        <td style="text-align: right;"><b>$ {{ number_format($docto->total+116, 2) }}</b></td>
+                        <td style="text-align: right;"><b>$ {{ number_format($docto->total, 2) }}</b></td>
                     </tr>
                 </table>
             </td>

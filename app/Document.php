@@ -27,4 +27,24 @@ class Document extends Model
     {
         return $this->attributes['previous_balance'] / 100;
     }
+
+    public function setSubtotalAttribute($val)
+    {
+        return $this->attributes['subtotal'] = $val * 100;
+    }
+
+    public function getSubtotalAttribute()
+    {
+        return $this->attributes['subtotal'] / 100;
+    }
+
+    public function setIvaAttribute($val)
+    {
+        return $this->attributes['iva'] = $val * 100;
+    }
+
+    public function getIvaAttribute()
+    {
+        return $this->attributes['iva'] / 100;
+    }
 }
