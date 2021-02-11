@@ -86,7 +86,7 @@
                                     <button type="button" class="btn btn-app" id="pay">
                                         <i class="fas fa-coins"></i>Pagar</button>
                                 @endif
-                                @if ( ($document->status != 3) && (auth()->user()->can('cancel_documents')) )
+                                @if ( (($document->status != 3) || ($document->pending > 0.01)) && (auth()->user()->can('cancel_documents')) )
                                     <a href="{{ route('documents.cancel', $document->id) }}" class="btn btn-app">
                                         <i class="fas fa-ban"></i>Cancelar</a>
                                 @endif

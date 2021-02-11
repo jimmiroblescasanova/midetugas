@@ -63,6 +63,10 @@ class DocumentsController extends Controller
         $month_quantity = $request->final_quantity - $client->measurer->actual_measure;
         // Factor de correccion
         $correction_factor = $client->measurer->correction_factor;
+        // Subtotal del mes
+        $subtotal = (100 + ($month_quantity * $correction_factor) * $price);
+        // Calculo del IVA
+        $iva = ($subtotal * 1.16) - $subtotal;
         // Importe total del mes
         $total = ($month_quantity * ($price * $correction_factor)) + $client->balance;
         // Se valida si el cliente tiene cargo adicional y se suma
@@ -84,6 +88,8 @@ class DocumentsController extends Controller
             'correction_factor' => $correction_factor,
             'period' => Carbon::create($request->date)->subMonth()->isoFormat('MMMM, Y'),
             'price' => $price,
+            'subtotal' => $subtotal*100,
+            'iva' => $iva*100,
             'total' => $arr_total[0],
             'pending' => $arr_total[0],
             'previous_balance' => $client->balance,

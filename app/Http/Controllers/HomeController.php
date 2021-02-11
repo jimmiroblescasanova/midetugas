@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Document;
 use App\Price;
-use Illuminate\Http\Request;
+use App\Document;
 
 class HomeController extends Controller
 {

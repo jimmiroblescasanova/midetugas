@@ -54,12 +54,10 @@ class ClientsController extends Controller
 
     public function show(Client $client)
     {
-        $measurers = Measurer::where('active', false)->get();
-
         return view('clients.show', [
             'client' => $client,
             'projects' => Project::pluck('name', 'id'),
-            'measurers' => $measurers,
+            'measurers' => Measurer::all(),
         ]);
     }
 
@@ -70,16 +68,15 @@ class ClientsController extends Controller
             $actual_measurer = Measurer::where('client_id', $client->id)->first();
             $new_measurer = Measurer::find($request['measurer_id']);
 
-//            return $actual_measurer;
-            if ( ($actual_measurer != NULL ) && ($new_measurer->id != $actual_measurer->id) )
+            if ($actual_measurer != NULL)
             {
                 $actual_measurer->client_id = NULL;
                 $actual_measurer->active = false;
                 $actual_measurer->save();
-                $new_measurer->client_id = $client->id;
-                $new_measurer->active = true;
-                $new_measurer->save();
             }
+            $new_measurer->client_id = $client->id;
+            $new_measurer->active = true;
+            $new_measurer->save();
         }
 
         $client->update( $request->validated() );
