@@ -181,9 +181,23 @@ class DocumentsController extends Controller
     public function cancel($id)
     {
         $docto = Document::findOrFail($id);
+        $client = Client::findOrFail($docto->client_id);
+        $measurer = Measurer::findOrFail($client->measurer->id);
+        $project = Project::findOrFail($client->project_id);
+
         $docto->status = 3;
         $docto->pending = 0;
         $docto->save();
+        // Deshacer el balance del cliente
+        $client->balance = $docto->previous_balance;
+        $client->save();
+        // Regresar el valor del medidor
+        $measurer->actual_measure = $docto->start_quantity;
+        $measurer->save();
+        // Actualizar el porcentaje del proyecto
+        $project->actual_capacity = $project->actual_capacity + ($docto->month_quantity * 4.1848);
+        $project->percentage = $this->calculatePercentage($project);
+        $project->save();
 
         return back();
     }
