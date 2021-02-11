@@ -9,6 +9,32 @@
 @section('content')
     <div class="row">
         <div class="col-12">
+            <div class="card pt-2">
+                <div class="text-center">
+                    @if ( ($document->status === 1) && ( auth()->user()->can('authorize_documents') ) )
+                        <a href="{{ route('documents.authorize', $document->id) }}" class="btn btn-app">
+                            <i class="far fa-thumbs-up"></i>Autorizar</a>
+                    @endif
+                    @if ( ($document->status === 2) && ($document->pending > 0.01) && (auth()->user()->can('pay_documents')) )
+                        <button type="button" class="btn btn-app" id="pay">
+                            <i class="fas fa-coins"></i>Pagar</button>
+                    @endif
+                    @if ( (($document->status == 1) || ($document->status == 2)) && (auth()->user()->can('cancel_documents')) )
+                        <a href="{{ route('documents.cancel', $document->id) }}" class="btn btn-app">
+                            <i class="fas fa-ban"></i>Cancelar</a>
+                    @endif
+                    @if(($document->admDocumentId == NULL) && ($document->status != 3))
+                        <a href="{{ route('documents.linkCtiComercial', $document) }}" class="btn btn-app"><i class="fas fa-hdd"></i> CTiComercial</a>
+                    @endif
+                    <a href="{{ route('documents.print', $document->id) }}" class="btn btn-app" target="_blank"><i class="fas fa-print"></i> Imprimir</a>
+                    <button type="button" class="btn btn-app" onclick="history.back()">
+                        <i class="far fa-hand-point-left"></i>Atrás</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
             <div class="card">
                 <div class="card-body">
                     <div class="row">
@@ -68,6 +94,9 @@
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
+                            <div class="mb-3">
+                                Estado del documento: {!! status($document->status) !!}
+                            </div>
                             <h3 class="text-primary"><i class="fas fa-image"></i> Fotografía del medidor</h3>
                             <img src="{{ asset($document->photo) }}" class="img-fluid mx-auto d-block rounded" alt="">
 
@@ -75,27 +104,6 @@
                                 <p class="text-sm">
                                     Fecha de captura: {{ $document->date->format('d-M-Y') }}
                                 </p>
-                            </div>
-
-                            <div class="text-center mt-5 mb-3">
-                                @if ( ($document->status === 1) && ( auth()->user()->can('authorize_documents') ) )
-                                    <a href="{{ route('documents.authorize', $document->id) }}" class="btn btn-app">
-                                        <i class="far fa-thumbs-up"></i>Autorizar</a>
-                                @endif
-                                @if ( ($document->status === 2) && ($document->pending > 0.01) && (auth()->user()->can('pay_documents')) )
-                                    <button type="button" class="btn btn-app" id="pay">
-                                        <i class="fas fa-coins"></i>Pagar</button>
-                                @endif
-                                @if ( (($document->status != 3) || ($document->pending > 0.01)) && (auth()->user()->can('cancel_documents')) )
-                                    <a href="{{ route('documents.cancel', $document->id) }}" class="btn btn-app">
-                                        <i class="fas fa-ban"></i>Cancelar</a>
-                                @endif
-                                @if($document->admDocumentId == NULL)
-                                    <a href="{{ route('documents.linkCtiComercial', $document) }}" class="btn btn-app"><i class="fas fa-hdd"></i> CTiComercial</a>
-                                @endif
-                                    <a href="{{ route('documents.print', $document->id) }}" class="btn btn-app" target="_blank"><i class="fas fa-print"></i> Imprimir</a>
-                                    <button type="button" class="btn btn-app" onclick="history.back()">
-                                        <i class="far fa-hand-point-left"></i>Atrás</button>
                             </div>
                         </div>
                     </div>
