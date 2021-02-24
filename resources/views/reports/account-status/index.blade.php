@@ -11,7 +11,19 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form id="account-status">
+                    <div id="messageError">
+                        @if($errors->any())
+                        <div class="alert alert-danger alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                            <span>
+                                @error('client_first')
+                                {{ $message }}
+                                @enderror
+                            </span>
+                        </div>
+                        @endif
+                    </div>
+                    <form id="account-status" method="POST">
                         @csrf
                         <div class="row">
                             <div class="col-md-2">
@@ -64,11 +76,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="messageError" class="row">
-
-                        </div>
                         <button type="submit" id="execute" class="btn btn-sm btn-primary"><i class="fas fa-desktop"></i> Pantalla</button>
-                        <button type="submit" formaction="/action_two" id="" class="btn btn-sm btn-success"><i class="fas fa-file-excel"></i> Excel</button>
+                        <button type="submit" id="exportExcel" formaction="{{ route('reports.accountStatusExcel') }}" class="btn btn-sm btn-success"><i class="fas fa-file-excel"></i> Excel</button>
                     </form>
                 </div>
             </div>
@@ -104,7 +113,6 @@
             const token = $('meta[name="csrf-token"]').attr('content');
             let route = "{{ route('ajax.accountStatus') }}";
             let data = $('#account-status').serialize();
-            $('#messageError').html("");
 
             $.ajax({
                 type: 'POST',
@@ -127,8 +135,8 @@
                     $('#result>tbody').html(html);
                 },
                 error: function (data) {
-                    let message = JSON.parse(data.responseText);
-                    $('#messageError').html("<li>"+ message.error +"</li>");
+                    console.log(data);
+                    $('#messageError').html('<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> El cliente inicial no puede ser mayor que el cliente final</div>');
                 },
             });
         });

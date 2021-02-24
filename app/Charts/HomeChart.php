@@ -21,10 +21,12 @@ class HomeChart extends BaseChart
     public function handler(Request $request): Chartisan
     {
         $documents = DB::table('documents')
-            ->select(DB::raw('period, SUM(total) as total_amount, SUM(pending) as total_pending'))
+            ->select(DB::raw('period, year(date) as year, month(date) as month, SUM(total) as total_amount, SUM(pending) as total_pending'))
             ->where('status', '2')
             ->orWhere('status', '4')
-            ->groupBy('period')
+            ->groupBy('period', 'month', 'year')
+            ->orderBy('year')
+            ->orderBy('month')
             ->get();
 
         $dates = [];

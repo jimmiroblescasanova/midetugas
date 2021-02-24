@@ -130,7 +130,8 @@ Route::get('/deposits/{deposit}/cancel', 'DepositsController@cancel')->name('dep
 Route::get('/reports/lecture', 'ReportsController@lectureReportParameters')->name('report01.parameters');
 Route::post('reports/lecture', 'ReportsController@lectureReport')->name('report01.show');
 Route::get('/reports/account-status', 'ReportsController@accountStatusParameters')->name('reports.accountStatus');
+Route::post('/reports/account-status/excel', 'ReportsController@accountStatusExcel')->name('reports.accountStatusExcel');
 Route::post('/ajax/account-status', 'ReportsController@accountStatusajax')->name('ajax.accountStatus');
 
-//Route::get('/test', 'TestController@index');
+Route::get('/test', 'TestController@index');
 //Route::get('scripts', 'ScriptsController@calculateIvaColumn');

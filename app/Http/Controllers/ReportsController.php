@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Client;
 use App\Document;
+use App\Exports\AccountStatusReport;
 use App\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ReportsController extends Controller
 {
@@ -71,5 +73,17 @@ class ReportsController extends Controller
             ], 200);
         }
 
+    }
+
+    public function accountStatusExcel(Request $request)
+    {
+        $request->validate([
+            'client_first' => 'required|lte:client_last',
+            'client_last' => 'required'
+        ], [
+            'client_first.lte' => 'El cliente inicial no puede ser mayor que el cliente final'
+        ]);
+
+        return Excel::download(new AccountStatusReport($request), 'invoices.xlsx');
     }
 }
