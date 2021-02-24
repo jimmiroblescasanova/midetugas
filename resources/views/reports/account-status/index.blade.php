@@ -36,8 +36,11 @@
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="year">Año</label>
-                                    <input type="text" class="form-control" name="year" id="year"
-                                           placeholder="Año a 4 digitos">
+                                    <select name="year" id="year" class="form-control">
+                                        @foreach($years as $i)
+                                            <option value="{{ $i->year }}">{{ $i->year }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -125,18 +128,7 @@
                 },
                 error: function (data) {
                     let message = JSON.parse(data.responseText);
-                    // console.log(err);
-                    let html = "";
-                    $.each(message.errors, function(i, val){
-                        html += "<li>"+ val +"</li>";
-                    });
-                    $('#messageError').html(html);
-                },
-                statusCode: {
-                    400: function(data) {
-                        let message = JSON.parse(data.responseText);
-                        $('#messageError').html("<li>"+ message.error +"</li>");
-                    }
+                    $('#messageError').html("<li>"+ message.error +"</li>");
                 },
             });
         });

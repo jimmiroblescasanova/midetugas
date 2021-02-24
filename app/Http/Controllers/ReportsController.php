@@ -6,6 +6,7 @@ use App\Client;
 use App\Document;
 use App\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ReportsController extends Controller
 {
@@ -32,8 +33,17 @@ class ReportsController extends Controller
 
     public function accountStatusParameters()
     {
+        $years = DB::table('documents')->selectRaw('year(date) as year')
+            ->where('status', '2')
+            ->orWhere('status', '4')
+            ->groupBy('year')
+            ->orderByDesc('year')
+            ->get();
+
+
         return view('reports.account-status.index',[
             'clients' => Client::pluck('name', 'id'),
+            'years' => $years,
         ]);
     }
 
@@ -41,13 +51,6 @@ class ReportsController extends Controller
     {
         if ($request->ajax())
         {
-            $request->validate([
-                'year' => 'required|digits:4',
-            ], [
-                'year.required' => 'El año es obligatorio.',
-                'year.digits' => 'El año debe ser 4 dígitos.',
-            ]);
-
             if ($request['client_first'] > $request['client_last'])
             {
                 return response()->json([
