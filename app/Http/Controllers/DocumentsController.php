@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\admConceptos;
 use App\admDocumentos;
 use App\admMovimientos;
 use App\Mail\AuthorizeReceipt;
