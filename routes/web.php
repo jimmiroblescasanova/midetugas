@@ -132,4 +132,5 @@ Route::post('reports/lecture', 'ReportsController@lectureReport')->name('report0
 Route::get('/reports/account-status', 'ReportsController@accountStatusParameters')->name('reports.accountStatus');
 Route::post('/ajax/account-status', 'ReportsController@accountStatusajax')->name('ajax.accountStatus');
 
+Route::get('/test', 'TestController@index');
 //Route::get('scripts', 'ScriptsController@calculateIvaColumn');

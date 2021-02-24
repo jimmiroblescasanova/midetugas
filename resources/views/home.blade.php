@@ -15,8 +15,9 @@
                 </div>
                 <div class="card-body">
                     <div class="chart">
-                        <canvas id="barChart"
-                                style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                        <div id="chart" style="height: 300px;"></div>
+<!--                        <canvas id="barChart"
+                                style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>-->
                     </div>
                 </div>
             </div>
@@ -104,37 +105,13 @@
 
 @section('scripts')
     <script>
-        var areaChartData = {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-            datasets: [
-                {
-                    label: 'Gas m3',
-                    backgroundColor: 'rgba(60,141,188,0.9)',
-                    borderColor: 'rgba(60,141,188,0.8)',
-                    pointRadius: false,
-                    pointColor: '#3b8bba',
-                    pointStrokeColor: 'rgba(60,141,188,1)',
-                    pointHighlightFill: '#fff',
-                    pointHighlightStroke: 'rgba(60,141,188,1)',
-                    data: [28, 48, 40, 19, 86, 27, 90]
-                },
-            ]
-        };
-        //-------------
-        //- BAR CHART -
-        //-------------
-        var barChartCanvas = $('#barChart').get(0).getContext('2d');
-
-        var barChartOptions = {
-            responsive: true,
-            maintainAspectRatio: false,
-            datasetFill: false
-        };
-
-        var barChart = new Chart(barChartCanvas, {
-            type: 'bar',
-            data: areaChartData,
-            options: barChartOptions
+        const chart = new Chartisan({
+            el: '#chart',
+            url: "@chart('home_chart')",
+            hooks: new ChartisanHooks()
+                .colors(['#0b60d2', '#b7b6b6'])
+                .legend({ position: 'bottom' })
+                .tooltip(),
         });
 
         $('#newPrice').on('click', function (e) {
