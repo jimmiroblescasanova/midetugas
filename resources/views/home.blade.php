@@ -105,14 +105,14 @@
 
 @section('scripts')
     <script>
-        const chart = new Chartisan({
+        /*const chart = new Chartisan({
             el: '#chart',
             url: "@chart('home_chart')",
             hooks: new ChartisanHooks()
                 .colors(['#0b60d2', '#b7b6b6'])
                 .legend({ position: 'bottom' })
                 .tooltip(),
-        });
+        });*/
 
         $('#newPrice').on('click', function (e) {
             e.preventDefault();
