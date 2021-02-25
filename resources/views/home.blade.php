@@ -15,9 +15,7 @@
                 </div>
                 <div class="card-body">
                     <div class="chart">
-                        <div id="chart" style="height: 300px;"></div>
-<!--                        <canvas id="barChart"
-                                style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>-->
+                        <canvas id="myChart" style="min-height: 300px; height: 300px; max-height: 300px; max-width: 100%;"></canvas>
                     </div>
                 </div>
             </div>
@@ -86,6 +84,7 @@
                                 <i class="fas fa-dollar-sign"></i>
                             </span>
                                 </div>
+                                <label for="price" class="sr-only">Precio/label>
                                 <input type="text" class="form-control" name="price" id="price" autofocus>
                             </div>
                         </div>
@@ -105,14 +104,31 @@
 
 @section('scripts')
     <script>
-        /*const chart = new Chartisan({
-            el: '#chart',
-            url: "@chart('home_chart')",
-            hooks: new ChartisanHooks()
-                .colors(['#0b60d2', '#b7b6b6'])
-                .legend({ position: 'bottom' })
-                .tooltip(),
-        });*/
+        let ctx = document.getElementById('myChart').getContext('2d');
+        let myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: {!! json_encode($chart['label']) !!},
+                datasets: [{
+                    label: 'Facturado',
+                    data: {!! json_encode($chart['total_amount']) !!},
+                    backgroundColor: '#1b7ed4',
+                }, {
+                        label: 'Pendiente de pago',
+                        data: {!! json_encode($chart['total_pending']) !!},
+                        backgroundColor: '#a9a9a9',
+                    }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
 
         $('#newPrice').on('click', function (e) {
             e.preventDefault();

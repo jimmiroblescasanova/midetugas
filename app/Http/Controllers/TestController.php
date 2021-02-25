@@ -17,7 +17,7 @@ class TestController extends Controller
             ->orWhere('status', '4')
             ->groupBy('period', 'month', 'year')
             ->orderBy('year')
-            ->orderByDesc('month')
+            ->orderBy('month')
             ->get();
 
 

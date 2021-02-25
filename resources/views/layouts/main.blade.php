@@ -82,10 +82,6 @@
 <script src="https://unpkg.com/gijgo@1.9.13/js/messages/messages.es-es.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/min/moment-with-locales.min.js"></script>
-<!-- Charting library -->
-<script src="https://unpkg.com/echarts/dist/echarts.min.js"></script>
-<!-- Chartisan -->
-<script src="https://unpkg.com/@chartisan/echarts/dist/chartisan_echarts.js"></script>
 @yield('scripts')
 <script>
     $('#logoutButton').on('click', function (event) {
