@@ -73,8 +73,8 @@
                     </ul>
                 </li>
                 @canany(['show_documents', 'create_documents', 'pay_documents'])
-                    <li class="nav-item has-treeview {{ showMenu('documents.*') }}">
-                        <a href="#" class="nav-link {{ setActive('documents.*') }}">
+                    <li class="nav-item has-treeview {{ showMenu('documents.*') . showMenu('payments.*') . showMenu('deposits.*') }}">
+                        <a href="#" class="nav-link {{ setActive('documents.*') . setActive('payments.*') . setActive('deposits.*') }}">
                             <i class="nav-icon fas fa-receipt"></i>
                             <p>Recibos
                                 <i class="right fas fa-angle-left"></i>

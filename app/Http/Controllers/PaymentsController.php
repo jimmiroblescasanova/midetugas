@@ -7,6 +7,7 @@ use App\Payment;
 use App\Document;
 use App\Http\Requests\SavePaymentRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PaymentsController extends Controller
 {
@@ -63,5 +64,27 @@ class PaymentsController extends Controller
         Payment::create($request->except('advancePaymentCheck'));
 
         return redirect()->route('documents.index');
+    }
+
+    public function destroy(Request $request)
+    {
+        $payment = Payment::findOrFail($request['id']);
+        $document = Document::findOrFail($payment->document_id);
+
+        try {
+            DB::beginTransaction();
+            $document->pending = $document->pending + $payment->amount;
+            $document->status = 2;
+            $document->save();
+            $payment->delete();
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return $e;
+        }
+
+        return response()->json([
+            'msg' => 'Eliminado correctamente',
+        ], 200);
     }
 }

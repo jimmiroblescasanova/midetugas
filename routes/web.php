@@ -78,6 +78,8 @@ Route::get('/payments', 'PaymentsController@index')
     ->name('payments.index')->middleware('permission:pay_documents');
 Route::post('/payments', 'PaymentsController@store')
     ->name('payments.store')->middleware('permission:pay_documents');
+Route::delete('/payments', 'PaymentsController@destroy')
+    ->name('payments.delete');
 
 Route::get('/users', 'UsersController@index')
     ->name('users.index')->middleware('permission:show_users');

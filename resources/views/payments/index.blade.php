@@ -15,22 +15,26 @@
                         <thead>
                         <tr>
                             <th>ID</th>
+                            <th>Recibo pagado</th>
                             <th>Cliente</th>
                             <th>Fecha</th>
-                            <th>Recibo pagado</th>
                             <th>Importe</th>
+                            <th>Acción</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach ($payments as $pay)
                             <tr>
                                 <td>{{ $pay->id }}</td>
-                                <td>{{ $pay->client->name }}</td>
-                                <td>{{ $pay->date->format('d-m-Y') }}</td>
                                 <td class="text-center">
                                     <a href="{{ route('documents.show', $pay->document_id) }}">{{ $pay->document_id }}</a>
                                 </td>
-                                <td class="text-right">$ {{ $pay->amount }}</td>
+                                <td>{{ $pay->client->name }}</td>
+                                <td>{{ $pay->date->format('d-m-Y') }}</td>
+                                <td class="text-right">$ {{ number_format($pay->amount, 2) }}</td>
+                                <td class="text-right">
+                                    <button data-id="{{ $pay->id }}" class="btn btn-xs btn-danger cancelPayment"><i class="fas fa-ban"></i> Eliminar</button>
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -44,7 +48,32 @@
 @section('scripts')
     <script>
         $(document).ready(function () {
+           const token = $('meta[name="csrf-token"]').attr('content');
+
+           $('.cancelPayment').on('click', function (e){
+               e.preventDefault();
+               let id = $(this).data('id');
+               let route = "{{ route('payments.delete') }}";
+               let tr = $(this).closest('tr');
+
+               $.ajax({
+                    type: 'POST',
+                    url: route,
+                    headers: {'X-CSRF-TOKEN': token},
+                    data: {id:id,_method:'delete'},
+                    dataType: 'json',
+                    success: function (data) {
+                        console.log(data);
+                        tr.hide('slow');
+                    },
+                    error: function (data) {
+                        console.log(data);
+                    },
+               });
+            });
+
             $('#dataTablePayments').DataTable({
+                "order": [ 0, 'desc' ],
                 "responsive": true,
                 "autoWidth": false,
                 "language": {
