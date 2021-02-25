@@ -130,8 +130,8 @@
                         </a>
                     </li>
                 @endcan
-                <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link">
+                <li class="nav-item has-treeview {{ showMenu('report01.*') . showMenu('report02.*') }}">
+                    <a href="#" class="nav-link {{ setActive('report01.*') . setActive('report02.*') }}">
                         <i class="nav-icon fas fa-funnel-dollar"></i>
                         <p>Reportes
                             <i class="right fas fa-angle-left"></i>
@@ -139,13 +139,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('report01.parameters') }}" class="nav-link">
+                            <a href="{{ route('report01.parameters') }}" class="nav-link {{ setActive('report01.*') }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Toma de lectura</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('reports.accountStatus') }}" class="nav-link">
+                            <a href="{{ route('report02.parameters') }}" class="nav-link {{ setActive('report02.*') }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Saldo de clientes</p>
                             </a>

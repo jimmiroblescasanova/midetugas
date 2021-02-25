@@ -77,7 +77,7 @@
                             </div>
                         </div>
                         <button type="submit" id="execute" class="btn btn-sm btn-primary"><i class="fas fa-desktop"></i> Pantalla</button>
-                        <button type="submit" id="exportExcel" formaction="{{ route('reports.accountStatusExcel') }}" class="btn btn-sm btn-success"><i class="fas fa-file-excel"></i> Excel</button>
+                        <button type="submit" id="exportExcel" formaction="{{ route('report02.excel') }}" class="btn btn-sm btn-success"><i class="fas fa-file-excel"></i> Excel</button>
                     </form>
                 </div>
             </div>
@@ -111,7 +111,7 @@
         $("#execute").click(function(event){
             event.preventDefault();
             const token = $('meta[name="csrf-token"]').attr('content');
-            let route = "{{ route('ajax.accountStatus') }}";
+            let route = "{{ route('report02.screen') }}";
             let data = $('#account-status').serialize();
 
             $.ajax({
