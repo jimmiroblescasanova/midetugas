@@ -32,7 +32,7 @@ class HomeController extends Controller
         $chart['label'] = [];
         $chart['total_amount'] = [];
         $chart['total_pending'] = [];
-        foreach ($datasets as $data)
+        foreach ($datasets->reverse()->take(12) as $data)
         {
             array_push($chart['label'], $data->period);
             array_push($chart['total_amount'], $data->total_amount);

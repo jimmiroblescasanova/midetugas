@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Document;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class TestController extends Controller
@@ -20,7 +17,6 @@ class TestController extends Controller
             ->orderBy('month')
             ->get();
 
-
-        return $documents;
+        return $documents->reverse()->take(2);
     }
 }
