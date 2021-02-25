@@ -30,8 +30,8 @@
                         <p>Inicio</p>
                     </a>
                 </li>
-                <li class="nav-item has-treeview {{ showMenu('projects.*') . showMenu('tanks.*') . showMenu('measurers.*') . showMenu('clients.*') }}">
-                    <a href="#" class="nav-link {{ setActive('projects.*') . setActive('tanks.*') . setActive('measurers.*') . setActive('clients.*') }}">
+                <li class="nav-item has-treeview {{ showMenu('projects.*') . showMenu('tanks.*') . showMenu('measurers.*') . showMenu('clients.*') . showMenu('contacts.*') . showMenu('address.*') }}">
+                    <a href="#" class="nav-link {{ setActive('projects.*') . setActive('tanks.*') . setActive('measurers.*') . setActive('clients.*') . setActive('contacts.*') . setActive('address.*') }}">
                         <i class="nav-icon fas fa-database"></i>
                         <p>Catálogos
                             <i class="right fas fa-angle-left"></i>
@@ -64,7 +64,7 @@
                         @endcan
                         @can('show_clients')
                         <li class="nav-item">
-                            <a href="{{ route('clients.index') }}" class="nav-link {{ setActive('clients.*') }}">
+                            <a href="{{ route('clients.index') }}" class="nav-link {{ setActive('clients.*') . setActive('contacts.*') . setActive('address.*') }}">
                                 <i class="nav-icon far fa-circle"></i>
                                 <p>Clientes</p>
                             </a>

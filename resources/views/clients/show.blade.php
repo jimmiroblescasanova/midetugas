@@ -142,7 +142,7 @@
                                        class="btn btn-block btn-primary mb-3"><i class="fas fa-envelope"></i> Enviar
                                         correo prueba</a>
                                 </div>
-                                @if (($client->measurer_id != NULL) && (auth()->user()->can('edit_clients')))
+                                @if (($client->measurer()->exists()) && (auth()->user()->can('edit_clients')))
                                     <div class="col-md-4">
                                         <a href="{{ route('clients.detach', $client->id) }}"
                                            class="btn btn-block btn-info mb-3"><i class="fas fa-tachometer-alt"></i>

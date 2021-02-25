@@ -79,13 +79,22 @@
                     name='measurer_id'
                     data-placeholder="Seleccionar o dejar en blanco"
                     class='form-control select2bs4 {{ $errors->first('measurer_id') ? 'is-invalid' : '' }}'>
-                @foreach($measurers as $measurer)
-                    @if(($measurer->client_id == NULL) || ($measurer->client_id == $client->id))
-                        <option value="{{ $measurer->id }}" {{ ($measurer->client_id == $client->id) ? "selected" : "" }}>
+                @if(!is_null($actual_measurer))
+                    <optgroup label="Medidor actual">
+                        <option value="{{ $actual_measurer->id }}">
+                            {{ $actual_measurer->brand }}, {{ $actual_measurer->model }}, {{ $actual_measurer->serial_number }}
+                        </option>
+                    </optgroup>
+                @else
+                    <option value="NULL">Sin medidor</option>
+                @endif
+                <optgroup label="Medidores disponibles">
+                    @foreach($measurers as $measurer)
+                        <option value="{{ $measurer->id }}">
                             {{ $measurer->brand }}, {{ $measurer->model }} ({{ $measurer->serial_number }})
                         </option>
-                    @endif
-                @endforeach
+                    @endforeach
+                </optgroup>
             </select>
             {!! $errors->first('measurer_id', '<div class="invalid-feedback">:message</div>') !!}
         </div>

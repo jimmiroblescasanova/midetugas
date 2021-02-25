@@ -54,16 +54,19 @@ class ClientsController extends Controller
 
     public function show(Client $client)
     {
+        $actual_measurer = Measurer::where('client_id', $client->id)->first();
+
         return view('clients.show', [
             'client' => $client,
             'projects' => Project::pluck('name', 'id'),
-            'measurers' => Measurer::all(),
+            'actual_measurer' => $actual_measurer,
+            'measurers' => Measurer::where('active', 0)->get(),
         ]);
     }
 
     public function update(Client $client, UpdateClientRequest $request)
     {
-        if ($request['measurer_id'] != NULL)
+        if ($request['measurer_id'] != 'NULL')
         {
             $actual_measurer = Measurer::where('client_id', $client->id)->first();
             $new_measurer = Measurer::find($request['measurer_id']);
@@ -77,6 +80,13 @@ class ClientsController extends Controller
             $new_measurer->client_id = $client->id;
             $new_measurer->active = true;
             $new_measurer->save();
+        } else {
+            $measurer = Measurer::where('client_id', $client['id'])->first();
+            if (!is_null($measurer))
+            {
+                $measurer->client_id = NULL;
+                $measurer->save();
+            }
         }
 
         $client->update( $request->validated() );
@@ -110,12 +120,10 @@ class ClientsController extends Controller
 
     public function detach(Client $client)
     {
-        $measurer = Measurer::findOrFail($client->measurer_id);
+        $measurer = Measurer::where('client_id', $client->id)->first();
         $measurer->active = false;
+        $measurer->client_id = NULL;
         $measurer->save();
-
-        $client->measurer_id = NULL;
-        $client->save();
 
         return redirect()->route('clients.index');
     }

@@ -41,7 +41,7 @@ class UpdateClientRequest extends FormRequest
             'country_code' => 'required|string',
             'phone' => 'required|numeric',
             'shortName' => 'string|nullable',
-            'measurer_id' => 'nullable',
+//            'measurer_id' => 'nullable',
         ];
     }
 }
