@@ -2,7 +2,7 @@
 
 @section('header')
     <div class="col-sm-6">
-        <h1><i class="fas fa-user"></i> Parámetros: Reporte 1</h1>
+        <h1><i class="fas fa-user"></i> Reporte: Toma de lecturas</h1>
     </div>
 @stop
 
@@ -23,7 +23,6 @@
                                             <option value="{{ $project->id }}">{{ $project->name }}</option>
                                         @endforeach
                                     </select>
-                                    <small id="helpId" class="form-text text-muted">Help text</small>
                                 </div>
                             </div>
                             <div class="col-md-4">
