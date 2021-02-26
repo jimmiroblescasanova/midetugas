@@ -40,7 +40,7 @@
             </form>
 
             <p class="mb-1 mt-3">
-                <a href="">Olvidé mi contraseña</a>
+                <a href="{{ route('password.request') }}">Olvidé mi contraseña</a>
             </p>
         </div>
         <!-- /.login-card-body -->
