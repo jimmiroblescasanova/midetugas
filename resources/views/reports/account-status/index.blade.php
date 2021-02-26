@@ -107,6 +107,7 @@
 @stop
 
 @section('scripts')
+    <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
     <script>
         $("#execute").click(function(event){
             event.preventDefault();
@@ -128,8 +129,8 @@
                         // console.log(val.id);
                         html += "<tr><td>"+val.id+"</td>" +
                             "<td>"+val.client.name+"</td>" +
-                            "<td>"+val.total+"</td>" +
-                            "<td>"+val.pending+"</td>" +
+                            "<td class='text-right'>"+numeral(val.total).format('$0,0.00')+"</td>" +
+                            "<td class='text-right'>"+numeral(val.pending).format('$0,0.00')+"</td>" +
                             "</tr>";
                     });
                     $('#result>tbody').html(html);
