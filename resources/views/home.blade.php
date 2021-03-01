@@ -84,7 +84,7 @@
                                 <i class="fas fa-dollar-sign"></i>
                             </span>
                                 </div>
-                                <label for="price" class="sr-only">Precio/label>
+                                <label for="price" class="sr-only">Precio</label>
                                 <input type="text" class="form-control" name="price" id="price" autofocus>
                             </div>
                         </div>
