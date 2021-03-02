@@ -8,7 +8,7 @@
             <a href="/" class="nav-link">Inicio</a>
         </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="" class="nav-link">Soporte</a>
+                <a href="{{ url('docs') }}" class="nav-link">Manual de usuario</a>
             </li>
     </ul>
 
