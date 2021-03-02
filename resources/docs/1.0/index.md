@@ -1,5 +1,0 @@
-- ## Acceso
-    - [Iniciar sesión](/{{route}}/{{version}}/login/login)
-    - [Contraseña olvidada](/{{route}}/{{version}}/login/forgotPassword)
-- ## Página principal
-    - [Inicio](/{{route}}/{{version}}/home/home)

@@ -16,7 +16,7 @@ return [
     'docs'        => [
         'route'   => '/docs',
         'path'    => '/resources/docs',
-        'landing' => 'overview',
+        'landing' => 'login/login',
         'middleware' => ['web'],
     ],
 
@@ -33,9 +33,9 @@ return [
     */
 
     'versions'      => [
-        'default'   => '1.0',
+        'default'   => 'master',
         'published' => [
-            '1.0'
+            'master'
         ]
     ],
 
@@ -55,10 +55,10 @@ return [
     */
 
     'settings'       => [
-        'auth'       => false,
+        'auth'       => true,
         'ga_id'      => '',
         'middleware' => [
-            'web',
+            'auth',
         ]
     ],
 
@@ -94,14 +94,14 @@ return [
     */
 
     'search'            => [
-        'enabled'       => false,
+        'enabled'       => true,
         'default'       => 'algolia',
         'engines'       => [
             'internal'  => [
                 'index' => ['h2', 'h3']
             ],
             'algolia'   => [
-                'key'   => '',
+                'key'   => 'h2',
                 'index' => ''
             ]
         ]

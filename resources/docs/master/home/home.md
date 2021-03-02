@@ -9,7 +9,9 @@
 <a name="monthly-sales"></a>
 ## Gráfica de ventas mensuales
 
-<img alt="Gráfica de ventas">
+<img alt="Gráfica de ventas" src="/documentation/monthly_sales.png" width="300">
+
+- Se mostrarán la suma de las ventas mensuales, gráfica dinámica, lo facturado y lo pendiente de pago. 
 
 <a name="change-price"></a>
 ## Cambiar precio
