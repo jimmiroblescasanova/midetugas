@@ -67,7 +67,7 @@ class DocumentsController extends Controller
         // Calculo del IVA
         $iva = ($subtotal * 1.16) - $subtotal;
         // Importe total del mes
-        $total = ($month_quantity * ($price * $correction_factor)) + $client->balance;
+        $total = $subtotal + $iva;
         // Se valida si el cliente tiene cargo adicional y se suma
         if ($client->reconnection_charge == TRUE) {
             $total += 99;
