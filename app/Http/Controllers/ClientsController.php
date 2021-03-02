@@ -41,7 +41,7 @@ class ClientsController extends Controller
     {
         $client = Client::create($request->validated());
 
-        if (!is_null($request->measurer_id))
+        if ($request['measurer_id'] != 'NULL')
         {
             $measurer = Measurer::findOrFail($request->measurer_id);
             $measurer->client_id = $client->id;

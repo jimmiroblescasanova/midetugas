@@ -80,7 +80,7 @@
                     data-placeholder="Seleccionar o dejar en blanco"
                     class='form-control select2bs4 {{ $errors->first('measurer_id') ? 'is-invalid' : '' }}'>
                 <optgroup label="Medidor actual">
-                    @if(!is_null($actual_measurer))
+                    @if(isset($actual_measurer))
                             <option value="{{ $actual_measurer->id }}">
                                 {{ $actual_measurer->brand }}, {{ $actual_measurer->model }}, {{ $actual_measurer->serial_number }}
                             </option>
