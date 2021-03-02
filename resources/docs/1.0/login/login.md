@@ -7,9 +7,7 @@
 <a name="login-form"></a>
 ## Formulario
 
-<div style="text-align:center">
 <img alt="Login Form" src="/documentation/loginForm.jpeg" width="300">
-</div>
 
 - Ingresar el correo electrónico registrado en el primer campo
 - Ingresar la contraseña de acceso en el campo 2
