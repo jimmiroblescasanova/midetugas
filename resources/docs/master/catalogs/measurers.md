@@ -23,3 +23,5 @@ Este es el formulario para agregar un nuevo medidor:
 - **Número de serie**: Indicar el numero de serie, solo se aceptan números. 
 - **Factor de corrección**: Seleccionar del listado el factor que corresponda a la instalación del medidor. 
 - **Consumo actual**: Indicar cual es el consumo actual del medidor, en metros cúbicos. 
+
+> {warning} Tener cuidado al capturar el consumo actual, ya que después no podrá ser modificado. 

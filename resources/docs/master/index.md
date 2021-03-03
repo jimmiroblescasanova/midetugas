@@ -8,3 +8,8 @@
     - [Tanques](/{{route}}/{{version}}/catalogs/tanks)
     - [Medidores](/{{route}}/{{version}}/catalogs/measurers)
     - [Clientes](/{{route}}/{{version}}/catalogs/clients)
+- ## Recibos 
+    - [Capturar](/{{route}}/{{version}}/documents/create)
+    - [Listado](/{{route}}/{{version}}/documents/index)
+    - [Pagos](/{{route}}/{{version}}/documents/payments)
+    - [Depósitos](/{{route}}/{{version}}/documents/deposits)

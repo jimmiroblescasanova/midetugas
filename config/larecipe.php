@@ -95,13 +95,13 @@ return [
 
     'search'            => [
         'enabled'       => true,
-        'default'       => 'algolia',
+        'default'       => 'internal',
         'engines'       => [
             'internal'  => [
                 'index' => ['h2', 'h3']
             ],
             'algolia'   => [
-                'key'   => 'h2',
+                'key'   => '',
                 'index' => ''
             ]
         ]
