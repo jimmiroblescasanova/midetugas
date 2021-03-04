@@ -1,0 +1,21 @@
+- ## Acceso
+    - [Iniciar sesión](/{{route}}/{{version}}/login/login)
+    - [Contraseña olvidada](/{{route}}/{{version}}/login/forgotPassword)
+- ## Página principal
+    - [Inicio](/{{route}}/{{version}}/home/home)
+- ## Catálogos
+    - [Condominios](/{{route}}/{{version}}/catalogs/projects)
+    - [Tanques](/{{route}}/{{version}}/catalogs/tanks)
+    - [Medidores](/{{route}}/{{version}}/catalogs/measurers)
+    - [Clientes](/{{route}}/{{version}}/catalogs/clients)
+- ## Recibos 
+    - [Capturar](/{{route}}/{{version}}/documents/create)
+    - [Listado](/{{route}}/{{version}}/documents/index)
+    - [Pagos](/{{route}}/{{version}}/documents/payments)
+    - [Depósitos](/{{route}}/{{version}}/documents/deposits)
+- ## Inventarios 
+    - [Inventarios](/{{route}}/{{version}}/inventories/inventory)
+- ## Usuarios
+    - [Lista de usuarios](/{{route}}/{{version}}/users/users)
+- ## Reportes
+    - [Reportes](/{{route}}/{{version}}/reports/reports)
