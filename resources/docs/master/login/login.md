@@ -13,4 +13,4 @@
 - Ingresar la contraseña de acceso en el campo 2
 - Para ingresar al panel hacer clic en el botón Ingresar
 
-Si se olvidó la contraseña deberán hacer clic en el enlace [Olvide mi contraseña](forgotPassword.md)
+Si se olvidó la contraseña deberán hacer clic en el enlace [Olvide mi contraseña](/{{route}}/{{version}}/login/forgotPassword)
