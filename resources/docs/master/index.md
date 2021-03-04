@@ -13,3 +13,9 @@
     - [Listado](/{{route}}/{{version}}/documents/index)
     - [Pagos](/{{route}}/{{version}}/documents/payments)
     - [Depósitos](/{{route}}/{{version}}/documents/deposits)
+- ## Inventarios 
+    - [Inventarios](/{{route}}/{{version}}/inventories/inventory)
+- ## Usuarios
+    - [Lista de usuarios](/{{route}}/{{version}}/users/users)
+- ## Reportes
+    - [Reportes](/{{route}}/{{version}}/reports/reports)
