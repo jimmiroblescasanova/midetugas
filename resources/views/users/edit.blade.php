@@ -283,6 +283,17 @@
                                         </label>
                                     </div>
                                 </section>
+                                <section>
+                                    <hr data-content="Sección de Procesos" class="hr-text">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="checkbox" class="form-check-input" name="permissions[]"
+                                                   id="run_tasks"
+                                                   value="run_tasks" {{ (in_array('run_tasks', $permissions)) ? 'checked' : '' }}>
+                                            Ejecutar procesos
+                                        </label>
+                                    </div>
+                                </section>
                                 <div class="row mt-3">
                                     <div class="col-12">
                                         <button type="submit" class="btn btn-sm btn-primary">Actualizar permisos</button>

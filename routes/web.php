@@ -137,6 +137,8 @@ Route::post('/ajax/account-status', 'ReportsController@accountStatusajax')->name
 Route::get('/test', 'TestController@index');
 //Route::get('scripts', 'ScriptsController@calculateIvaColumn');
 Route::get('/configurations/tasks', 'ConfigurationsController@tasks')
-    ->name('configuration.tasks');
+    ->name('configuration.tasks')
+    ->middleware('permission:run_tasks');
 Route::post('/configurations/tasks', 'ConfigurationsController@recalcularInventario')
-    ->name('configurations.run.recalcularInventario');
+    ->name('configurations.run.recalcularInventario')
+    ->middleware('permission:run_tasks');

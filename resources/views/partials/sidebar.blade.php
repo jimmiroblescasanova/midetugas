@@ -152,6 +152,7 @@
                         </li>
                     </ul>
                 </li>
+                @can('run_tasks')
                 <li class="nav-item has-treeview {{ showMenu('configuration.*') }}">
                     <a href="#" class="nav-link {{ setActive('configuration.*') }}">
                         <i class="nav-icon fas fa-cogs"></i>
@@ -168,6 +169,7 @@
                         </li>
                     </ul>
                 </li>
+                @endcan
                 <li class="nav-item">
                     <a href="#" id="logoutButton" class="nav-link">
                         <i class="nav-icon fas fa-sign-out-alt"></i>
