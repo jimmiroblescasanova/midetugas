@@ -136,3 +136,7 @@ Route::post('/ajax/account-status', 'ReportsController@accountStatusajax')->name
 
 Route::get('/test', 'TestController@index');
 //Route::get('scripts', 'ScriptsController@calculateIvaColumn');
+Route::get('/configurations/tasks', 'ConfigurationsController@tasks')
+    ->name('configuration.tasks');
+Route::post('/configurations/tasks', 'ConfigurationsController@recalcularInventario')
+    ->name('configurations.run.recalcularInventario');

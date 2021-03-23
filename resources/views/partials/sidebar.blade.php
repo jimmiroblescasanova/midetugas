@@ -152,6 +152,22 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item has-treeview {{ showMenu('configuration.*') }}">
+                    <a href="#" class="nav-link {{ setActive('configuration.*') }}">
+                        <i class="nav-icon fas fa-cogs"></i>
+                        <p>Configuraciones
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('configuration.tasks') }}" class="nav-link {{ setActive('configuration.tasks') }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Procesos especiales</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="nav-item">
                     <a href="#" id="logoutButton" class="nav-link">
                         <i class="nav-icon fas fa-sign-out-alt"></i>
