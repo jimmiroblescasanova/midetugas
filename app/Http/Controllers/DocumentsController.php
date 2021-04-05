@@ -164,7 +164,7 @@ class DocumentsController extends Controller
         try {
             DB::beginTransaction();
             Mail::to($docto->client->email)->queue(new AuthorizeReceipt( $docto->reference ));
-            $this->receiptGenerated($docto->client->phoneNumber);
+//            $this->receiptGenerated($docto->client->phoneNumber);
             $docto->status = 2;
             $docto->save();
             DB::commit();
