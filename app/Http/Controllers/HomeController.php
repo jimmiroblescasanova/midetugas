@@ -41,8 +41,8 @@ class HomeController extends Controller
 
         $documents = Document::where([
             ['pending', '>', 0.01],
-            ['status', '=', 2]
-        ])->take(5)->get();
+            ['status', '!=', 1]
+        ])->take(10)->get();
 
         return view('home', [
             'actual_price' => Price::latest()->first()->price,

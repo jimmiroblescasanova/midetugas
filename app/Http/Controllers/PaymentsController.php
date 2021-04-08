@@ -37,7 +37,7 @@ class PaymentsController extends Controller
 
         if ($docto->pending > $total) {
             $docto->update([
-                'pending' => $total,
+                'pending' => $docto->pending - $total,
                 'status' => 4,
             ]);
         } else {
