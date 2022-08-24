@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="login-logo">
-        <a href="#"><b>EFIGAS</b> Admin</a>
+        <a href="#"><b>{{ config('app.name') }}</b> Admin</a>
     </div>
     <!-- /.login-logo -->
     <div class="card">
@@ -15,8 +15,9 @@
                 @csrf
                 <div class="input-group mb-3">
                     <label for="email" class="sr-only">Correo electrónico</label>
-                    <input type="email" id="email" class="form-control {{ $errors->first('email') ? 'is-invalid' : '' }}" name="email" placeholder="Correo electrónico"
-                           value="{{ old('email') }}" autofocus>
+                    <input type="email" id="email"
+                        class="form-control {{ $errors->first('email') ? 'is-invalid' : '' }}" name="email"
+                        placeholder="Correo electrónico" value="{{ old('email') }}" autofocus>
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-envelope"></span>
@@ -26,7 +27,8 @@
                 </div>
                 <div class="input-group mb-3">
                     <label for="password" class="sr-only">Contraseña:</label>
-                    <input type="password" class="form-control {{ $errors->first('password') ? 'is-invalid' : '' }}" id="password" name="password" placeholder="Contraseña">
+                    <input type="password" class="form-control {{ $errors->first('password') ? 'is-invalid' : '' }}"
+                        id="password" name="password" placeholder="Contraseña">
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-lock"></span>

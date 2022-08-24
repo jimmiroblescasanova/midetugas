@@ -14,9 +14,10 @@ class TasksPermissionSeeder extends Seeder
     public function run()
     {
         // Reset cached roles and permissions
-        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+        // app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+
         // Configurations tasks
-        Permission::create(['name'=> 'run_tasks']);
+        // Permission::create(['name'=> 'run_tasks']);
         $user = User::find(1);
         $user->givePermissionTo('run_tasks');
     }

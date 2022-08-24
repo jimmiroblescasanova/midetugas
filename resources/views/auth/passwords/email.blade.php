@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="login-logo">
-        <a href="#"><b>EFIGAS</b> Admin</a>
+        <a href="#"><b>{{ config('app.name') }}</b> Admin</a>
     </div>
     <!-- /.login-logo -->
     <div class="card">
@@ -22,8 +22,9 @@
 
                 <div class="input-group mb-3">
                     <label for="email" class="sr-only">Correo electrónico</label>
-                    <input type="email" id="email" class="form-control {{ $errors->first('email') ? 'is-invalid' : '' }}" name="email" placeholder="Correo electrónico"
-                           value="{{ old('email') }}" autofocus>
+                    <input type="email" id="email"
+                        class="form-control {{ $errors->first('email') ? 'is-invalid' : '' }}" name="email"
+                        placeholder="Correo electrónico" value="{{ old('email') }}" autofocus>
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-envelope"></span>

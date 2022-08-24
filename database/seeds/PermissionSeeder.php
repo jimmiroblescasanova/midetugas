@@ -51,5 +51,7 @@ class PermissionSeeder extends Seeder
         // Permisos para los inventarios
         Permission::create(['name' => 'show_inventories']);
         Permission::create(['name' => 'create_inventories']);
+        // Permisos para los procesos especiales
+        Permission::create(['name'=> 'run_tasks']);
     }
 }
