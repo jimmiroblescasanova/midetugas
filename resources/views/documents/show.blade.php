@@ -11,22 +11,24 @@
         <div class="col-12">
             <div class="card pt-2">
                 <div class="text-center">
-                    @if ( ($document->status === 1) && ( auth()->user()->can('authorize_documents') ) )
+                    @if ($document->status === 1 &&
+                        auth()->user()->can('authorize_documents'))
                         <a href="{{ route('documents.authorize', $document->id) }}" class="btn btn-app">
                             <i class="far fa-thumbs-up"></i>Autorizar</a>
                     @endif
-                    @if ( ($document->status === 2) && ($document->pending > 0.01) && (auth()->user()->can('pay_documents')) )
+                    @if ($document->status === 2 &&
+                        $document->pending > 0.01 &&
+                        auth()->user()->can('pay_documents'))
                         <button type="button" class="btn btn-app" id="pay">
                             <i class="fas fa-coins"></i>Pagar</button>
                     @endif
-                    @if ( (($document->status == 1) || ($document->status == 2)) && (auth()->user()->can('cancel_documents')) )
+                    @if (($document->status == 1 || $document->status == 2) &&
+                        auth()->user()->can('cancel_documents'))
                         <a href="{{ route('documents.cancel', $document->id) }}" class="btn btn-app">
                             <i class="fas fa-ban"></i>Cancelar</a>
                     @endif
-                    @if(($document->admDocumentId == NULL) && ($document->status != 3))
-                        <a href="{{ route('documents.linkCtiComercial', $document) }}" class="btn btn-app"><i class="fas fa-hdd"></i> CTiComercial</a>
-                    @endif
-                    <a href="{{ route('documents.print', $document->id) }}" class="btn btn-app" target="_blank"><i class="fas fa-print"></i> Imprimir</a>
+                    <a href="{{ route('documents.print', $document->id) }}" class="btn btn-app" target="_blank"><i
+                            class="fas fa-print"></i> Imprimir</a>
                     <button type="button" class="btn btn-app" onclick="history.back()">
                         <i class="far fa-hand-point-left"></i>Atrás</button>
                 </div>
@@ -40,27 +42,41 @@
                     <div class="row">
                         <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1">
                             <div class="row">
-                                <div class="col-12 col-sm-4">
+                                <div class="col-12 col-sm-3">
                                     <div class="info-box bg-light">
                                         <div class="info-box-content">
                                             <span class="info-box-text text-center text-muted">Consumo total</span>
-                                            <span class="info-box-number text-center text-muted mb-0">{{ $document->final_quantity }} m3</span>
+                                            <span
+                                                class="info-box-number text-center text-muted mb-0">{{ $document->final_quantity }}
+                                                m3</span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-4">
+                                <div class="col-12 col-sm-3">
                                     <div class="info-box bg-light">
                                         <div class="info-box-content">
                                             <span class="info-box-text text-center text-muted">Consumo del mes</span>
-                                            <span class="info-box-number text-center text-muted mb-0">{{ $document->month_quantity }} m3</span>
+                                            <span
+                                                class="info-box-number text-center text-muted mb-0">{{ $document->month_quantity }}
+                                                m3</span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-4">
+                                <div class="col-12 col-sm-3">
                                     <div class="info-box bg-light">
                                         <div class="info-box-content">
                                             <span class="info-box-text text-center text-muted">TOTAL</span>
-                                            <span class="info-box-number text-center text-muted mb-0">$ {{ $document->total }}<span>
+                                            <span class="info-box-number text-center text-muted mb-0">$
+                                                {{ $document->total }}<span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-3">
+                                    <div class="info-box bg-light">
+                                        <div class="info-box-content">
+                                            <span class="info-box-text text-center text-muted">Saldo Anterior</span>
+                                            <span class="info-box-number text-center text-muted mb-0">$
+                                                {{ $document->previous_balance }}<span>
                                         </div>
                                     </div>
                                 </div>
@@ -98,7 +114,8 @@
                                 Estado del documento: {!! status($document->status) !!}
                             </div>
                             <h3 class="text-primary"><i class="fas fa-image"></i> Fotografía del medidor</h3>
-                            <img src="{{ asset($document->photo) }}" class="img-fluid mx-auto d-block rounded" alt="">
+                            <img src="{{ asset($document->photo) }}" class="img-fluid mx-auto d-block rounded"
+                                alt="">
 
                             <div class="text-muted float-sm-right">
                                 <p class="text-sm">
@@ -133,9 +150,11 @@
                         <div class="row mb-3">
                             <div class="col-12">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="1" name="advancePaymentCheck" id="advancePaymentCheck">
+                                    <input class="form-check-input" type="checkbox" value="1"
+                                        name="advancePaymentCheck" id="advancePaymentCheck">
                                     <label class="form-check-label" for="advancePaymentCheck">
-                                        Usar saldo anterior: $<b>{{ number_format($advance_payment, 2) }}</b> <small>(Por pagar: ${{ $document->pending - $advance_payment }})</small>
+                                        Usar saldo anterior: $<b>{{ number_format($advance_payment, 2) }}</b> <small>(Por
+                                            pagar: ${{ $document->pending - $advance_payment }})</small>
                                     </label>
                                 </div>
                             </div>
@@ -145,16 +164,17 @@
                                 <div class="form-group">
                                     <label for="date">Fecha</label>
                                     <input type="date"
-                                           class="form-control {{ $errors->first('date') ? 'is-invalid' : '' }}"
-                                           name="date"
-                                           id="date" placeholder="dd/mm/yyyy">
+                                        class="form-control {{ $errors->first('date') ? 'is-invalid' : '' }}"
+                                        name="date" id="date" placeholder="dd/mm/yyyy">
                                     {!! $errors->first('date', '<div class="invalid-feedback">:message</div>') !!}
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="amount">Importe pagado</label>
-                                    <input type="text" class="form-control {{ $errors->first('amount') ? 'is-invalid' : '' }}" name="amount" id="amount">
+                                    <input type="text"
+                                        class="form-control {{ $errors->first('amount') ? 'is-invalid' : '' }}"
+                                        name="amount" id="amount">
                                     {!! $errors->first('amount', '<div class="invalid-feedback">:message</div>') !!}
                                 </div>
                             </div>
@@ -176,20 +196,19 @@
 
 @section('scripts')
     <script>
-        if(window.location.hash === '#pay')
-        {
+        if (window.location.hash === '#pay') {
             $('#paymentModal').modal('show');
         }
 
         let ctx = document.getElementById('myChart');
         let myChart = new Chart(ctx, {!! $chart !!});
 
-        $('#pay').on('click', function (e) {
+        $('#pay').on('click', function(e) {
             e.preventDefault();
             $('#paymentModal').modal();
         });
 
-        $('#paymentModal').on('hide.bs.modal', function(){
+        $('#paymentModal').on('hide.bs.modal', function() {
             window.location.hash = '#';
         });
     </script>

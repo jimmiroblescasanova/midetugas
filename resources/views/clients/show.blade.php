@@ -13,51 +13,31 @@
                 <div class="card-header p-0 border-bottom-0">
                     <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active"
-                               id="custom-tabs-four-home-tab"
-                               data-toggle="pill"
-                               href="#custom-tabs-four-home"
-                               role="tab"
-                               aria-controls="custom-tabs-four-home"
-                               aria-selected="true"
-                            >Datos generales</a>
+                            <a class="nav-link active" id="custom-tabs-four-home-tab" data-toggle="pill"
+                                href="#custom-tabs-four-home" role="tab" aria-controls="custom-tabs-four-home"
+                                aria-selected="true">Datos generales</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link"
-                               id="custom-tabs-four-profile-tab"
-                               data-toggle="pill"
-                               href="#custom-tabs-four-profile"
-                               role="tab"
-                               aria-controls="custom-tabs-four-profile"
-                               aria-selected="false"
-                            >Información de contactos</a>
+                            <a class="nav-link" id="custom-tabs-four-profile-tab" data-toggle="pill"
+                                href="#custom-tabs-four-profile" role="tab" aria-controls="custom-tabs-four-profile"
+                                aria-selected="false">Información de contactos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link"
-                               id="custom-tabs-four-messages-tab"
-                               data-toggle="pill"
-                               href="#custom-tabs-four-messages"
-                               role="tab"
-                               aria-controls="custom-tabs-four-messages"
-                               aria-selected="false"
-                            >Dirección</a>
+                            <a class="nav-link" id="custom-tabs-four-messages-tab" data-toggle="pill"
+                                href="#custom-tabs-four-messages" role="tab" aria-controls="custom-tabs-four-messages"
+                                aria-selected="false">Dirección</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link"
-                               id="custom-tabs-four-actions-tab"
-                               data-toggle="pill"
-                               href="#custom-tabs-four-actions"
-                               role="tab"
-                               aria-controls="custom-tabs-four-actions"
-                               aria-selected="false"
-                            >Acciones</a>
+                            <a class="nav-link" id="custom-tabs-four-actions-tab" data-toggle="pill"
+                                href="#custom-tabs-four-actions" role="tab" aria-controls="custom-tabs-four-actions"
+                                aria-selected="false">Acciones</a>
                         </li>
                     </ul>
                 </div>
                 <div class="card-body">
                     <div class="tab-content" id="custom-tabs-four-tabContent">
                         <div class="tab-pane fade show active" id="custom-tabs-four-home" role="tabpanel"
-                             aria-labelledby="custom-tabs-four-home-tab">
+                            aria-labelledby="custom-tabs-four-home-tab">
                             <form action="{{ route('clients.update', $client) }}" role="form" method="POST">
                                 @csrf
                                 @method('patch')
@@ -74,7 +54,7 @@
                             </form>
                         </div>
                         <div class="tab-pane fade" id="custom-tabs-four-profile" role="tabpanel"
-                             aria-labelledby="custom-tabs-four-profile-tab">
+                            aria-labelledby="custom-tabs-four-profile-tab">
                             <form action="{{ route('contacts.update', $client) }}" role="form" method="POST">
                                 @csrf
                                 @method('patch')
@@ -91,7 +71,7 @@
                             </form>
                         </div>
                         <div class="tab-pane fade" id="custom-tabs-four-messages" role="tabpanel"
-                             aria-labelledby="custom-tabs-four-messages-tab">
+                            aria-labelledby="custom-tabs-four-messages-tab">
                             <form action="{{ route('address.update', $client) }}" role="form" method="POST">
                                 @csrf
                                 @method('patch')
@@ -108,28 +88,24 @@
                             </form>
                         </div>
                         <div class="tab-pane fade" id="custom-tabs-four-actions" role="tabpanel"
-                             aria-labelledby="custom-tabs-four-actions-tab">
+                            aria-labelledby="custom-tabs-four-actions-tab">
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="">Saldo actual</label>
-                                        <input type="text" name="" id="" class="form-control"
-                                               readonly value="{{ ($client->advance_payment>0.01) ? '-'.number_format($client->advance_payment, 2) : '0.00' }}">
+                                        <input type="text" name="" id="" class="form-control" readonly
+                                            value="{{ $client->advance_payment > 0.01 ? '-' . number_format($client->advance_payment, 2) : '0.00' }}">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="">Depósito en garantía</label>
-                                        <input type="text" name="" id="" class="form-control"
-                                               readonly value="{{ number_format($client->deposit, 2) }}">
+                                        <input type="text" name="" id="" class="form-control" readonly
+                                            value="{{ number_format($client->deposit, 2) }}">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="">CONTPAQi ID</label>
-                                        <input type="text" name="" id="" class="form-control"
-                                               readonly value="{{ $client->admCode }}">
-                                    </div>
+
                                 </div>
                             </div>
                             <div class="row">
@@ -139,13 +115,14 @@
                                 </div>
                                 <div class="col-md-4">
                                     <a href="{{ route('clients.testEmail', $client->id) }}"
-                                       class="btn btn-block btn-primary mb-3"><i class="fas fa-envelope"></i> Enviar
+                                        class="btn btn-block btn-primary mb-3"><i class="fas fa-envelope"></i> Enviar
                                         correo prueba</a>
                                 </div>
-                                @if (($client->measurer()->exists()) && (auth()->user()->can('edit_clients')))
+                                @if ($client->measurer()->exists() &&
+                                    auth()->user()->can('edit_clients'))
                                     <div class="col-md-4">
                                         <a href="{{ route('clients.detach', $client->id) }}"
-                                           class="btn btn-block btn-info mb-3"><i class="fas fa-tachometer-alt"></i>
+                                            class="btn btn-block btn-info mb-3"><i class="fas fa-tachometer-alt"></i>
                                             Des-asociar medidor</a>
                                     </div>
                                 @endif
@@ -153,22 +130,17 @@
                             <div class="row">
                                 @can('change_status')
                                     <div class="col-md-4">
-                                        @if($client->status == FALSE)
+                                        @if ($client->status == false)
                                             <a href="{{ route('clients.status', $client) }}"
-                                               class="btn btn-block btn-warning mb-3  text-white"><i
+                                                class="btn btn-block btn-warning mb-3  text-white"><i
                                                     class="fas fa-user-times"></i> Suspender</a>
                                         @else
                                             <a href="{{ route('clients.status', $client) }}"
-                                               class="btn btn-block btn-warning mb-3  text-white"><i
+                                                class="btn btn-block btn-warning mb-3  text-white"><i
                                                     class="fas fa-user-check"></i> Activar</a>
                                         @endif
                                     </div>
                                 @endcan
-                                @if($client->admCode == NULL)
-                                <div class="col-md-4">
-                                    <a href="{{ route('clients.link', $client) }}">Link to Comercial(R)</a>
-                                </div>
-                                @endif
                             </div>
                         </div>
                     </div>

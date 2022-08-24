@@ -28,6 +28,11 @@ class Client extends Model
         return $this->belongsTo('App\Project');
     }
 
+    public function documents()
+    {
+        return $this->hasMany('App\Document');
+    }
+
     /*public function setBalanceAttribute($val)
     {
         return $this->attributes['balance'] = $val * 100;

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Client;
 use App\Document;
 use App\Exports\AccountStatusReport;
+use App\Exports\EdcExportReport;
 use App\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -85,5 +86,41 @@ class ReportsController extends Controller
         ]);
 
         return Excel::download(new AccountStatusReport($request), 'invoices.xlsx');
+    }
+
+    public function edcParameters()
+    {
+        $years = DB::table('documents')->selectRaw('year(date) as year')
+        ->where('status', '2')
+        ->orWhere('status', '4')
+        ->groupBy('year')
+        ->orderByDesc('year')
+        ->get();
+
+        return view('reports.edc.parameters', [
+            'clients' => Client::pluck('name', 'id'),
+            'years' => $years
+        ]);
+    }
+
+    public function edcScreen(Request $request)
+    {
+        if($request->ajax())
+        {
+            $documents = Document::where('client_id', $request->client)
+                ->with('client')
+                ->get();
+
+            return response()->json([
+                'status' => 'OK',
+                'documents' => $documents,
+            ], 200);
+        }
+    }
+
+    public function edcExportExcel(Request $request)
+    {
+
+        return Excel::download( new EdcExportReport($request), 'estado_de_cuenta.xlsx');
     }
 }

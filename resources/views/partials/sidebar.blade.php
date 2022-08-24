@@ -157,6 +157,12 @@
                                 <p>Saldo de clientes</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('edc.parameters') }}" class="nav-link {{ setActive('edc.*') }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Estado de cuenta</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 @can('run_tasks')
