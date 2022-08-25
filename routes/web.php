@@ -132,7 +132,8 @@ Route::get('/reports/lecture', 'ReportsController@lectureReportParameters')->nam
 Route::post('reports/lecture', 'ReportsController@lectureReport')->name('report01.show');
 Route::get('/reports/account-status', 'ReportsController@accountStatusParameters')->name('report02.parameters');
 Route::post('/reports/account-status/excel', 'ReportsController@accountStatusExcel')->name('report02.excel');
-Route::post('/ajax/account-status', 'ReportsController@accountStatusajax')->name('report02.screen');
+Route::post('/reports/account/print', 'ReportsController@printAccount')->name('account.print');
+Route::post('/ajax/account-status', 'ReportsController@accountStatusAjax')->name('report02.screen');
 Route::get('/reports/edc', 'ReportsController@edcParameters')->name('edc.parameters');
 Route::post('/ajax/edc', 'ReportsController@edcScreen')->name('edc.screen');
 Route::post('/reports/edc/excel', 'ReportsController@edcExportExcel')->name('edc.excel');

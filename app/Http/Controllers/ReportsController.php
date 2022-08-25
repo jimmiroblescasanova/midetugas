@@ -50,8 +50,27 @@ class ReportsController extends Controller
         ]);
     }
 
+    public function printAccount(Request $request)
+    {
+        $documents = Document::whereBetween('client_id', [$request['client_first'], $request['client_last']])
+        ->whereMonth('date', '<=', $request['month'])
+        ->whereYear('date', '<=', $request['year'])
+        ->groupBy('client_id')
+        ->selectRaw('client_id, SUM(total) as suma, SUM(pending) as pendiente')
+        ->get();
+
+
+        // Generar el PDF
+        $pdf = \PDF::loadView('reports.account-status.print', [
+        'documents' => $documents,
+        ]);
+        $pdf->setPaper('statement', 'portrait');
+        return $pdf->stream();
+    }
+
     public function accountStatusAjax(Request $request)
     {
+
         if ($request->ajax())
         {
             if ($request['client_first'] > $request['client_last'])
@@ -61,13 +80,13 @@ class ReportsController extends Controller
                 ], 400);
             }
 
-            $documents = Document::where('status', '!=', 3)
-                ->whereBetween('client_id', [$request['client_first'], $request['client_last']])
-                ->whereMonth('date', '=', $request['month'])
-                ->whereYear('date', '=', $request['year'])
-                ->with('client')
-                ->get();
-
+            $documents = Document::whereBetween('client_id', [$request['client_first'], $request['client_last']])
+            ->whereMonth('date', '<=', $request['month'])
+            ->whereYear('date', '<=', $request['year'])
+            ->groupBy('client_id')
+            ->selectRaw('client_id, SUM(total) as suma, SUM(pending) as pendiente')
+            ->with('client')
+            ->get();
 
             return response()->json([
                 'documents' => $documents,
