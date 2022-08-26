@@ -1,7 +1,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="{{ url('/') }}" class="brand-link">
-        <img src="{{ asset('/logo.png') }}" alt="Efigas Logo" class="brand-image elevation-3">
+        <img src="{{ asset(config('app.logo')) }}" alt="Efigas Logo" class="brand-image elevation-3">
         <span class="brand-text font-weight-light">{{ config('app.name') }}</span>
     </a>
 

@@ -54,7 +54,7 @@
             <td colspan="2" style="text-align: right;">{{ NOW()->format('d-m-Y') }}</td>
         </tr>
         <tr>
-            <td class="img-header"><img src="{{ asset('logo_new.png') }}" width="200px"></td>
+            <td class="img-header"><img src="{{ asset(config('app.logo')) }}" width="200px"></td>
             <td class="report-header">Reporte de saldos de cliente</td>
         </tr>
     </table>
