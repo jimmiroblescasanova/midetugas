@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Client;
 use App\Payment;
 use App\Document;
+use App\Http\Requests\CreatePaymentRequest;
 use App\Http\Requests\SavePaymentRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -20,50 +21,18 @@ class PaymentsController extends Controller
     {
         return view('payments.index', [
             'payments' => Payment::orderByDesc('id')->get(),
+            'clients' => Client::pluck('name', 'id'),
         ]);
     }
 
-    public function store(SavePaymentRequest $request)
+    public function createForm(CreatePaymentRequest $request)
     {
-        $docto = Document::findOrFail($request['document_id']);
-        $client = Client::findOrFail($request['client_id']);
+        return redirect()->route('payments.create', $request->client);
+    }
 
-        $total = $request['amount'];
-
-        if (isset($request['advancePaymentCheck']))
-        {
-            $total += $client->advance_payment;
-        }
-
-        if ($docto->pending > $total) {
-            $docto->update([
-                'pending' => $docto->pending - $total,
-                'status' => 4,
-            ]);
-        } else {
-            $diff = $total - $docto->pending;
-
-            $docto->update([
-                'pending' => 0,
-                'status' => 4,
-            ]);
-
-            if (isset($request['advancePaymentCheck']))
-            {
-                $client->update([
-                    'advance_payment' => $diff,
-                ]);
-            } else {
-                $new_total = $diff + $client->advance_payment;
-                $client->update([
-                    'advance_payment' => $new_total,
-                ]);
-            }
-        }
-
-        Payment::create($request->except('advancePaymentCheck'));
-
-        return redirect()->route('documents.index');
+    public function store(Request $request)
+    {
+        return $request;
     }
 
     public function destroy(Request $request)

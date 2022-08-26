@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Auth::routes();
@@ -73,10 +74,13 @@ Route::get('/documents/{id}/cancel', 'DocumentsController@cancel')
 Route::get('/documents/{id}/print', 'DocumentsController@print')->name('documents.print');
 Route::get('/documents/{document}/sendtocomercial', 'DocumentsController@linkCtiComercial')->name('documents.linkCtiComercial');
 
-Route::get('/payments', 'PaymentsController@index')
-    ->name('payments.index')->middleware('permission:pay_documents');
+Route::get('/payments', 'PaymentsController@index')->name('payments.index')->middleware('permission:pay_documents');
+Route::post('/payments/create', 'PaymentsController@createForm')->name('payments.createForm');
+Route::get('/payments/create/client/{id}', Livewire\CreatePayment::class)->name('payments.create');
+
 Route::post('/payments', 'PaymentsController@store')
     ->name('payments.store')->middleware('permission:pay_documents');
+
 Route::delete('/payments', 'PaymentsController@destroy')
     ->name('payments.delete');
 

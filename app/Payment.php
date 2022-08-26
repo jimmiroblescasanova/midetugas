@@ -17,8 +17,8 @@ class Payment extends Model
         return $this->belongsTo('App\Client');
     }
 
-    public function document()
+    public function documents()
     {
-        return $this->belongsTo('App\Document');
+        return $this->belongsToMany('App\Document');
     }
 }
