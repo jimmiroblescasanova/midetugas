@@ -33,24 +33,14 @@ class Client extends Model
         return $this->hasMany('App\Document');
     }
 
-    /*public function setBalanceAttribute($val)
+    public function setBalanceAttribute($val)
     {
         return $this->attributes['balance'] = $val * 100;
-    }*/
+    }
 
     public function getBalanceAttribute()
     {
         return $this->attributes['balance'] / 100;
-    }
-
-    public function setAdvancePaymentAttribute($val)
-    {
-        return $this->attributes['advance_payment'] = $val * 100;
-    }
-
-    public function getAdvancePaymentAttribute()
-    {
-        return $this->attributes['advance_payment'] / 100;
     }
 
     public function setDepositAttribute($val)

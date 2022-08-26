@@ -37,12 +37,13 @@
                                     <label for="total" class="col-sm-3 col-form-label">Importe del pago</label>
                                     <div class="col-sm-3">
                                         <input type="number" step=".01" wire:model="total" name="total"
-                                            id="total" class="form-control">
+                                            id="total" class="form-control" required>
                                     </div>
                                     <label for="pending" class="col-sm-3 col-form-label">Pendiente por abonar</label>
                                     <div class="col-sm-3">
                                         <input type="text" readonly id="pending" name="pending"
-                                            class="form-control-plaintext" value="{{ $total - $paymentSum }}">
+                                            class="form-control-plaintext"
+                                            value="{{ number_format($total - $paymentSum, 2) }}">
                                     </div>
                                 </div>
                                 <hr>
@@ -58,7 +59,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($client->documents as $i => $document)
+                                        @foreach ($documents as $i => $document)
                                             <tr>
                                                 <td scope="row">{{ $document->date->format('d/m/Y') }}</td>
                                                 <td>{{ $document->id }}</td>
@@ -93,8 +94,10 @@
             var pending = document.getElementById("pending").value;
 
             for (let i = 1, row; row = tabla.rows[i]; i++) {
-                var saldoDocumento = row.cells[4].innerText;
-                var abonoDocumento = document.getElementById("pay-" + (i - 1)).value;
+                var saldoDocumento = Math.round((row.cells[4].innerText) * 100) / 100;
+                var abonoDocumento = Math.round((document.getElementById("pay-" + (i - 1)).value) * 100) / 100;
+
+                console.log(abonoDocumento - saldoDocumento);
 
                 if (abonoDocumento > saldoDocumento) {
                     alert("El abono no puede ser mayor que el saldo pendiente");

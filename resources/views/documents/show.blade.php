@@ -42,41 +42,30 @@
                     <div class="row">
                         <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1">
                             <div class="row">
-                                <div class="col-12 col-sm-3">
+                                <div class="col-12 col-sm-4">
                                     <div class="info-box bg-light">
                                         <div class="info-box-content">
-                                            <span class="info-box-text text-center text-muted">Consumo total</span>
-                                            <span
-                                                class="info-box-number text-center text-muted mb-0">{{ $document->final_quantity }}
-                                                m3</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-3">
-                                    <div class="info-box bg-light">
-                                        <div class="info-box-content">
-                                            <span class="info-box-text text-center text-muted">Consumo del mes</span>
-                                            <span
-                                                class="info-box-number text-center text-muted mb-0">{{ $document->month_quantity }}
-                                                m3</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-3">
-                                    <div class="info-box bg-light">
-                                        <div class="info-box-content">
-                                            <span class="info-box-text text-center text-muted">TOTAL</span>
+                                            <span class="info-box-text text-center text-muted">Total del mes</span>
                                             <span class="info-box-number text-center text-muted mb-0">$
                                                 {{ $document->total }}<span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-3">
+                                <div class="col-12 col-sm-4">
                                     <div class="info-box bg-light">
                                         <div class="info-box-content">
                                             <span class="info-box-text text-center text-muted">Saldo Anterior</span>
                                             <span class="info-box-number text-center text-muted mb-0">$
                                                 {{ $document->previous_balance }}<span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-4">
+                                    <div class="info-box bg-light">
+                                        <div class="info-box-content">
+                                            <span class="info-box-text text-center text-muted">TOTAL POR PAGAR</span>
+                                            <span class="info-box-number text-center text-muted mb-0">$
+                                                {{ $document->total + $document->previous_balance }}<span>
                                         </div>
                                     </div>
                                 </div>

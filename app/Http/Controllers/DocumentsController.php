@@ -76,6 +76,8 @@ class DocumentsController extends Controller
         $arr_total = explode('.', round($total,2));
         // Se obtiene el condominio del cliente
         $project = Project::find($client->project_id);
+        // Calcula el nuevo saldo total del cliente
+        $new_balance = $client->balance + $total;
         // Guarda todos los valores en un array
         $data = [
             'client_id' => $request->client_id,
@@ -86,12 +88,13 @@ class DocumentsController extends Controller
             'month_quantity' => $month_quantity,
             'correction_factor' => $correction_factor,
             'period' => Carbon::create($request->date)->subMonth()->isoFormat('MMMM, Y'),
+            'adm_charge' => 100,
             'price' => $price,
             'subtotal' => $subtotal*100,
             'iva' => $iva*100,
-            'total' => $arr_total[0],
-            'pending' => $arr_total[0],
-            'previous_balance' => $client->balance,
+            'total' => $total*100,
+            'pending' => $total*100,
+            'previous_balance' => $client->balance*100,
             'photo' => $photo,
             'created_at' => NOW(),
         ];
@@ -104,7 +107,8 @@ class DocumentsController extends Controller
             DB::table('clients')
                 ->where('id', $request->client_id)
                 ->update([
-                    'balance' => array_key_exists(1, $arr_total) ? $arr_total[1] : 0,
+                    // 'balance' => array_key_exists(1, $arr_total) ? $arr_total[1] : 0,
+                    'balance' => ($new_balance)*100,
                     'reconnection_charge' => FALSE,
                 ]);
             // Crear la referencia de pago
@@ -119,6 +123,7 @@ class DocumentsController extends Controller
                 ->update([
                     'actual_measure' => $request['final_quantity'],
                 ]);
+            // Descuenta la capacidad actual y calcula el pocentaje
             DB::table('projects')
                 ->where('id', $client->project_id)
                 ->update([

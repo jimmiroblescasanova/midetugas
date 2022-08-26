@@ -19,6 +19,14 @@ class Payment extends Model
 
     public function documents()
     {
-        return $this->belongsToMany('App\Document');
+        return $this->belongsToMany('App\Document')->withPivot('amount')->withTimestamps();
+    }
+
+    public function setAmountAttribute($val) {
+        return $this->attributes['amount'] = $val * 100;
+    }
+
+    public function getAmountAttribute() {
+        return $this->attributes['amount'] / 100;
     }
 }

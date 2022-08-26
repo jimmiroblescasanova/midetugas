@@ -20,7 +20,7 @@ class Document extends Model
 
     public function payments()
     {
-        return $this->belongsToMany('App\Payment')->withPivot('amount');
+        return $this->belongsToMany('App\Payment')->withPivot('amount')->withTimestamps();
     }
 
     public function setPreviousBalanceAttribute($val)
@@ -52,4 +52,25 @@ class Document extends Model
     {
         return $this->attributes['iva'] / 100;
     }
+
+    public function setTotalAtribute($val)
+    {
+        return $this->attributes['total'] = $val*100;
+    }
+
+    public function getTotalAttribute()
+    {
+        return $this->attributes['total'] / 100;
+    }
+
+    public function setPendingAttribute($val)
+    {
+        return $this->attributes['pending'] = $val * 100;
+    }
+
+    public function getPendingAttribute()
+    {
+        return $this->attributes['pending'] / 100;
+    }
+
 }

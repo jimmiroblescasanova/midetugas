@@ -23,12 +23,14 @@ class CreateDocumentsTable extends Migration
             $table->double('month_quantity');
             $table->double('correction_factor');
             $table->string('period');
+            $table->integer('adm_charge');
+            $table->integer('subtotal');
+            $table->integer('iva');
             $table->double('price');
-            $table->double('total');
-            $table->double('pending');
+            $table->integer('total');
+            $table->integer('pending');
             $table->integer('previous_balance');
             $table->bigInteger('reference')->default(0);
-            $table->string('invoice')->nullable();
             $table->integer('status')->default(1);
             $table->string('photo');
             $table->foreign('client_id')->references('id')->on('clients');

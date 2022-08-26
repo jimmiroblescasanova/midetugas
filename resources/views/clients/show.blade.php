@@ -94,7 +94,7 @@
                                     <div class="form-group">
                                         <label for="">Saldo actual</label>
                                         <input type="text" name="" id="" class="form-control" readonly
-                                            value="{{ $client->advance_payment > 0.01 ? '-' . number_format($client->advance_payment, 2) : '0.00' }}">
+                                            value="{{ $client->balance > 0.01 ? '-' . number_format($client->balance, 2) : '0.00' }}">
                                     </div>
                                 </div>
                                 <div class="col-md-4">

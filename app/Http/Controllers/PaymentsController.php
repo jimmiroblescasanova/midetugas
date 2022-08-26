@@ -32,7 +32,31 @@ class PaymentsController extends Controller
 
     public function store(Request $request)
     {
-        return $request;
+        $paymentData = [
+            'client_id' => $request->client,
+            'amount' => $request->total,
+            'date' => NOW(),
+        ];
+
+        $pay = Payment::create($paymentData);
+
+        $client = Client::findOrFail($request->client);
+        $client->balance = $client->balance - $request->total;
+        $client->save();
+
+        foreach ($request->pay as $id => $value) {
+            if (!is_null($value)) {
+                $document = Document::findOrFail($id);
+                $document->pending = $document->pending - $value;
+                $document->save();
+
+                $pay->documents()->attach($id, [
+                'amount' => $value * 100,
+                ]);
+            }
+        }
+
+        return redirect()->route('payments.index');
     }
 
     public function destroy(Request $request)

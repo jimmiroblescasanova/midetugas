@@ -20,7 +20,6 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Recibo pagado</th>
                                 <th>Cliente</th>
                                 <th>Fecha</th>
                                 <th>Importe</th>
@@ -31,10 +30,6 @@
                             @foreach ($payments as $pay)
                                 <tr>
                                     <td>{{ $pay->id }}</td>
-                                    <td class="text-center">
-                                        <a
-                                            href="{{ route('documents.show', $pay->document_id) }}">{{ $pay->document_id }}</a>
-                                    </td>
                                     <td>{{ $pay->client->name }}</td>
                                     <td>{{ $pay->date->format('d-m-Y') }}</td>
                                     <td class="text-right">$ {{ number_format($pay->amount, 2) }}</td>

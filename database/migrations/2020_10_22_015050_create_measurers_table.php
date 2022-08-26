@@ -21,6 +21,7 @@ class CreateMeasurersTable extends Migration
             $table->double('actual_measure')->default(0);
             $table->double('correction_factor')->default(1);
             $table->boolean('active')->default(false);
+            $table->foreignId('client_id')->nullable()->constrained('clients');
             $table->timestamps();
         });
     }
