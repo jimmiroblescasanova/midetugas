@@ -77,9 +77,9 @@ Route::get('/documents/{document}/sendtocomercial', 'DocumentsController@linkCti
 Route::get('/payments', 'PaymentsController@index')->name('payments.index')->middleware('permission:pay_documents');
 Route::post('/payments/create', 'PaymentsController@createForm')->name('payments.createForm');
 Route::get('/payments/create/client/{id}', Livewire\CreatePayment::class)->name('payments.create');
-
 Route::post('/payments', 'PaymentsController@store')
     ->name('payments.store')->middleware('permission:pay_documents');
+Route::get('/payments/show/{payment}', 'PaymentsController@show')->name('payments.show');
 
 Route::delete('/payments', 'PaymentsController@destroy')
     ->name('payments.delete');

@@ -59,6 +59,13 @@ class PaymentsController extends Controller
         return redirect()->route('payments.index');
     }
 
+    function show(Payment $payment)
+    {
+        return view('payments.show', [
+            'payment' => $payment,
+        ]);
+    }
+
     public function destroy(Request $request)
     {
         $payment = Payment::findOrFail($request['id']);

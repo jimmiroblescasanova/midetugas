@@ -2,12 +2,12 @@
 
 @section('header')
     <div class="col-sm-6">
-        <h1><i class="fas fa-hand-holding-usd"></i> Pagos</h1>
+        <h1><i class="fas fa-hand-holding-usd mr-2"></i>Lista de Pagos</h1>
     </div>
     <div class="col-sm-6">
         <button type="button" class="btn btn-primary btn-sm float-sm-right btn-block-xs-only" data-toggle="modal"
             data-target="#new_payment">
-            <i class="fas fa-pencil-alt"></i> Crear nuevo</button>
+            <i class="fas fa-pencil-alt mr-2"></i>Crear nuevo</button>
     </div>
 @stop
 
@@ -34,8 +34,8 @@
                                     <td>{{ $pay->date->format('d-m-Y') }}</td>
                                     <td class="text-right">$ {{ number_format($pay->amount, 2) }}</td>
                                     <td class="text-right">
-                                        <button data-id="{{ $pay->id }}" class="btn btn-xs btn-danger cancelPayment"><i
-                                                class="fas fa-ban"></i> Eliminar</button>
+                                        <a href="{{ route('payments.show', $pay) }}" class="btn btn-xs btn-primary"><i
+                                                class="fas fa-eye mr-2"></i>Ver</a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -82,35 +82,6 @@
 @section('scripts')
     <script>
         $(document).ready(function() {
-            const token = $('meta[name="csrf-token"]').attr('content');
-
-            $('.cancelPayment').on('click', function(e) {
-                e.preventDefault();
-                let id = $(this).data('id');
-                let route = "{{ route('payments.delete') }}";
-                let tr = $(this).closest('tr');
-
-                $.ajax({
-                    type: 'POST',
-                    url: route,
-                    headers: {
-                        'X-CSRF-TOKEN': token
-                    },
-                    data: {
-                        id: id,
-                        _method: 'delete'
-                    },
-                    dataType: 'json',
-                    success: function(data) {
-                        console.log(data);
-                        tr.hide('slow');
-                    },
-                    error: function(data) {
-                        console.log(data);
-                    },
-                });
-            });
-
             $('#dataTablePayments').DataTable({
                 "order": [0, 'desc'],
                 "responsive": true,

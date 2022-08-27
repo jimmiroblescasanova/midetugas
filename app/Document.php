@@ -20,7 +20,10 @@ class Document extends Model
 
     public function payments()
     {
-        return $this->belongsToMany('App\Payment')->withPivot('amount')->withTimestamps();
+        return $this->belongsToMany('App\Payment')
+            ->using(RoleUser::class)
+            ->withPivot('amount')
+            ->withTimestamps();
     }
 
     public function setPreviousBalanceAttribute($val)
