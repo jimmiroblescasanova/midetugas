@@ -6,23 +6,120 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>RECIBO</title>
     <style>
+        @font-face {
+            font-family: 'Montserrat';
+            src: url("https://fonts.googleapis.com/css?family=Montserrat") format('truetype');
+        }
+
+        body {
+            font-family: "Montserrat", sans-serif;
+        }
+
         .container {
             width: 100%;
         }
 
-        /* Estilos para las secciones */
-        .headers,
-        .cuerpo,
-        .pie,
-        .pagos {
+        .section {
+            display: block;
+            margin-bottom: 30px;
+        }
+
+        .section span {
+            display: block;
+            text-align: center;
+            padding: 2px 0;
+        }
+
+        #main-table {
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        #leftColumn {
             vertical-align: top;
         }
 
-        .main-table {
-            /*border: 1px solid;
-            border-radius: 10px;*/
-            margin: 0 auto;
+        #rightColumn {
+            vertical-align: top;
+        }
+
+        /* Seccion del logo  */
+        #logo {
+            text-align: center;
+        }
+
+        /* Seccion para los datos de cliente  */
+        #client {}
+
+        #client .addressTable {
+            font-size: 12px;
             width: 100%;
+        }
+
+        #client .addressTable tr td:nth-child(odd) {
+            color: gray;
+        }
+
+        #client .addressContent {
+            font-weight: bold;
+        }
+
+        /* Seccion de los datos de consumo del mes  */
+        #dataUsage {}
+
+        #dataUsage span {
+            background-color: #0CBE32;
+            border: 1px solid white;
+            color: white;
+        }
+
+        /*    Tabla de datos del consumo */
+        .consumo {
+            /*border: 2px solid #0956a0;*/
+            border-collapse: collapse;
+            border-spacing: 0;
+            font-size: 12px;
+        }
+
+        .consumo thead tr:first-child {
+            background-color: #0CBE32;
+            color: white;
+        }
+
+        .consumo tbody tr:nth-child(odd) {
+            background-color: #d9d9d9;
+        }
+
+        .consumo tbody tr td,
+        th {
+            border: 1px solid white;
+        }
+
+        /* Seccion para la grafica dinamica  */
+        .grafica {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .grafica .title {
+            display: block;
+        }
+
+        /* Seccion para los datos de pago  */
+        #payment {
+            border: 2px solid orange;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        #payment .titleOrange {
+            background-color: orange;
+            color: white;
+        }
+
+        .datos-documento {
+            font-size: 12px;
+            margin-bottom: 30px;
         }
 
         .headers-table {
@@ -33,218 +130,317 @@
             width: 100%;
         }
 
-        .headers-table-title {
+        .headers-table tbody tr:nth-child(odd) {
             background-color: #0956a0;
             color: white;
         }
 
-        .logo {
+        .headers-table tbody tr td {
+            padding: 2px 0;
+        }
+
+        .estado-de-cuenta {
+            border: 2px solid orange;
             margin-bottom: 30px;
+            text-align: center;
         }
 
-        .cliente .nombre {
+        .estado-de-cuenta .title {
+            background-color: orange;
+            color: white;
             display: block;
         }
 
-        .cliente .domicilio {
-            display: block;
-            font-size: 14px;
+        .medidor {
+            border: 2px solid #0956a0;
+            margin-bottom: 30px;
+            text-align: center;
         }
 
-        /*    Estilos para el cuerpo */
-        .consumo {
-            /*border: 2px solid #0956a0;*/
-            border-collapse: collapse;
-            border-spacing: 0;
-            font-size: 12px;
-        }
-
-        .consumo tr:first-child {
+        .medidor .title {
             background-color: #0956a0;
             color: white;
+            display: block;
+            padding: 2px 0;
         }
 
-        .consumo tr:nth-child(even) {
+        /* Tabla de saldos de la cuenta */
+        #tabla-saldos {
+            border-spacing: 0;
+            font-size: 11px;
+            text-align: right;
+            width: 100%;
+        }
+
+        #tabla-saldos tbody tr:nth-child(odd) {
             background-color: #d9d9d9;
         }
 
-        .consumo tr td {
+        #tabla-saldos tbody tr td:nth-child(1) {
+            text-align: left;
+        }
+
+        #tabla-saldos tbody tr td {
             border: 1px solid white;
         }
 
-        .cuerpo-titulo {
+        #footer {
             background-color: #0956a0;
-            border-radius: 10px;
+            border: 3px solid #0956a0;
+            border-collapse: collapse;
+            border-spacing: 0;
             color: white;
-            margin: 10px auto;
-            padding: 3px;
+            font-size: 14px;
             text-align: center;
-            width: 80%;
+            width: 100%;
         }
 
-        .datos-banco tr td:first-child {
-            text-align: right;
-            width: 50%;
+        #footer tbody tr td {
+            border: 2px solid white;
+            padding: 3px 0;
+            vertical-align: middle;
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <table class="main-table">
-            <tr class="headers">
-                <td style="width: 75%;">
-                    <div class="logo">
+        <table id="main-table">
+            <tr>
+                {{-- primera columna con logo, datos y consumo --}}
+                <td id="leftColumn">
+                    <div id="logo" class="section">
                         <img src="{{ asset(config('app.logo')) }}" alt="Efigas SMART" width="300px">
                     </div>
-                    <div class="cliente">
-                        <span class="contrato">CLIENTE: {{ $docto->client->id }}</span>
-                        <span class="nombre">{{ $docto->client->name }}</span>
-                        <span>RFC: {{ $docto->client->rfc }}</span>
-                        <span class="domicilio">{{ $docto->client->full_address }}</span>
+                    {{-- consumo mensual --}}
+                    <div id="client" class="section">
+                        <table class="addressTable">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 15%;">Contrato</td>
+                                    <td class="addressContent" style="width: 35%;">{{ $docto->client->id }}</td>
+                                    <td style="width: 15%;">&nbsp;</td>
+                                    <td style="width: 35%;">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td>Cliente</td>
+                                    <td>{{ $docto->client->name }}</td>
+                                    <td>Colonia</td>
+                                    <td>{{ $docto->client->locality }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Calle / Mz / Lt</td>
+                                    <td>{{ $docto->client->line_1 }}, {{ $docto->client->line_2 }}</td>
+                                    <td>Ciudad</td>
+                                    <td>{{ $docto->client->city }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Condominio</td>
+                                    <td>{{ $docto->client->project->name }}</td>
+                                    <td>C.P.</td>
+                                    <td>{{ $docto->client->zipcode }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Edificio</td>
+                                    <td>{{ $docto->client->line_2 }}</td>
+                                    <td>Teléfono</td>
+                                    <td>{{ $docto->client->phone }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Departamento</td>
+                                    <td>{{ $docto->client->line_3 }}</td>
+                                    <td>Email</td>
+                                    <td>{{ $docto->client->email }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="dataUsage" class="section">
+                        <span>CALCULO DEL CONSUMO MENSUAL</span>
+                        <table class="consumo" style="width: 100%;">
+                            <thead>
+                                <tr class="titles">
+                                    <th>Lectura anterior</th>
+                                    <th>Lectura actual</th>
+                                    <th>Diferencia</th>
+                                    <th>Factor de PyT</th>
+                                    <th>Consumo (m3)</th>
+                                    <th>Precio por m3</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="text-align: center;">
+                                    <td>{{ $docto->start_quantity }}</td>
+                                    <td>{{ $docto->final_quantity }}</td>
+                                    <td>{{ $docto->month_quantity }}</td>
+                                    <td>{{ $docto->correction_factor }}</td>
+                                    <td>{{ number_format($docto->month_quantity * $docto->correction_factor, 2) }}</td>
+                                    <td>$ {{ number_format($docto->price, 2) }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    {{-- historial del consumo, chart --}}
+                    <div class="grafica">
+                        <img src="https://quickchart.io/chart?bkg=white&c={{ $chart }}" height="220px"
+                            width="75%" alt="historico de consumos">
+                    </div>
+                    {{-- datos para pago --}}
+                    <div id="payment" class="section">
+                        <span class="titleOrange">DATOS PARA PAGO</span>
+                        <table class="datos-banco" style="width: 100%">
+                            <tr>
+                                <td><img src="{{ asset('logos/scotiabank.jpg') }}" alt="logo scotiabank"
+                                        width="100px;"></td>
+                                <td><img src="{{ asset('logos/paypal.jpg') }}" alt="logo paypal" width="100px"></td>
+                                <td><img src="{{ asset('logos/oxxo.jpg') }}" alt="logo oxxo" width="100px"></td>
+                            </tr>
+                            <tr>
+                                <td>Clabe interbancaria</td>
+                                <td>Link de pago</td>
+                                <td>Tarjeta para depósito</td>
+                            </tr>
+                            <tr>
+                                <td>0446 9125 6035 8889</td>
+                                <td>https://paypal.me/midetugas</td>
+                                <td>4043 1300 0532 8964</td>
+                            </tr>
+                        </table>
                     </div>
                 </td>
-                <td>
-                    <table class="headers-table">
-                        <tr class="headers-table-title">
-                            <td>Folio</td>
-                        </tr>
-                        <tr>
-                            <td>{{ $docto->id }}</td>
-                        </tr>
-                        <tr class="headers-table-title">
-                            <td>Total a pagar</td>
-                        </tr>
-                        <tr>
-                            <td>$ {{ $docto->total }}</td>
-                        </tr>
-                        <tr class="headers-table-title">
-                            <td>Periodo</td>
-                        </tr>
-                        <tr>
-                            <td>{{ $docto->period }}</td>
-                        </tr>
-                        <tr class="headers-table-title">
-                            <td>Referencia</td>
-                        </tr>
-                        <tr>
-                            <td>{{ $docto->reference }}</td>
-                        </tr>
-                        <tr class="headers-table-title">
-                            <td>Fecha limite de pago</td>
-                        </tr>
-                        <tr>
-                            <td>{{ $docto->payment_date->format('d-M-Y') }}</td>
-                        </tr>
-                    </table>
+                {{-- segunda columna, medidor, resumen de cuenta --}}
+                <td id="rightColumn">
+                    {{-- datos del docto --}}
+                    <div class="datos-documento">
+                        <table class="headers-table">
+                            <tbody>
+                                <tr>
+                                    <td>FOLIO</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ $docto->id }}</td>
+                                </tr>
+                                <tr>
+                                    <td>TOTAL A PAGAR</td>
+                                </tr>
+                                <tr>
+                                    <td>$ {{ number_format($docto->total + $docto->client->balance, 2) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>PERIODO</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ $docto->period }}</td>
+                                </tr>
+                                <tr>
+                                    <td>REFERENCIA</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ $docto->reference }}</td>
+                                </tr>
+                                <tr>
+                                    <td>FECHA LIMITE DE PAGO</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ $docto->payment_date->format('d-M-Y') }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    {{-- estado de cuenta --}}
+                    <div class="estado-de-cuenta">
+                        <div class="title">Estado de Cuenta</div>
+                        <table id="tabla-saldos">
+                            <tr>
+                                <td>Saldo anterior</td>
+                                <td style="width: 40%;">
+                                    <span>$</span>
+                                    <span>
+                                        {{ number_format($docto->client->balance, 2) }}
+                                    </span>
+                                </td>
+                            </tr>
+                            {{-- <tr>
+                                <td>Ajuste meses ant.</td>
+                                <td>
+                                    <span>$</span>
+                                    <span>{{ number_format($docto->previous_balance, 2) }}</span>
+                                </td>
+                            </tr> --}}
+                            <tr>
+                                <td>Consumo del mes</td>
+                                <td>
+                                    <span>$</span>
+                                    <span>{{ number_format($docto->subtotal - 100, 2) }}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Cargo por administración</td>
+                                <td>
+                                    <span>$</span>
+                                    <span>{{ number_format($docto->adm_charge, 2) }}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Subtotal</td>
+                                <td>
+                                    <span>$</span>
+                                    <span>{{ number_format($docto->subtotal, 2) }}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>IVA</td>
+                                <td>
+                                    <span>$</span>
+                                    <span>{{ number_format($docto->iva, 2) }}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Cargos del mes</td>
+                                <td>
+                                    <span>$</span>
+                                    <span>{{ number_format($docto->total, 2) }}</span>
+                                </td>
+                            </tr>
+                            {{-- <tr>
+                                <td>Ajuste mes siguiente</td>
+                                <td>
+                                    <span>$</span>
+                                    <span>{{ number_format($docto->client->balance, 2) }}</span>
+                                </td>
+                            </tr> --}}
+                            <tr>
+                                <td>A pagar</td>
+                                <td>
+                                    <span>$</span>
+                                    <span>{{ number_format($docto->total + $docto->client->balance, 2) }}</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    {{-- medidor --}}
+                    <div class="medidor">
+                        <div class="title">Medidor</div>
+                        <img src="{{ asset($docto->photo) }}" width="170px" alt="">
+                    </div>
                 </td>
             </tr>
-            <tr class="cuerpo">
-                <td>
-                    <div class="cuerpo-titulo">Detalles del consumo</div>
-                    <table class="consumo" style="width: 100%;">
-                        <tr>
-                            <th>Lectura anterior</th>
-                            <th>Lectura actual</th>
-                            <th>Diferencia</th>
-                            <th>Factor de PyT</th>
-                            <th>Consumo (m3)</th>
-                            <th>Precio por m3</th>
-                        </tr>
-                        <tr style="text-align: center;">
-                            <td>{{ $docto->start_quantity }}</td>
-                            <td>{{ $docto->final_quantity }}</td>
-                            <td>{{ $docto->month_quantity }}</td>
-                            <td>{{ $docto->correction_factor }}</td>
-                            <td>{{ number_format($docto->month_quantity * $docto->correction_factor, 2) }}</td>
-                            <td>$ {{ number_format($docto->price, 2) }}</td>
-                        </tr>
+            {{-- pie de pagina --}}
+            <tr>
+                <td colspan="2">
+                    <table id="footer">
+                        <tbody>
+                            <tr>
+                                <td>admon@midetugas.com</td>
+                                <td>Tel / Whatsapp (+52) 9983 90 5132</td>
+                                <td>Emergencias 911</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">Envíanos una copia del comprobante de pago por Whatsapp o email para
+                                    abonar a tu cuenta</td>
+                            </tr>
+                        </tbody>
                     </table>
-                </td>
-                <td>
-                    <div class="cuerpo-titulo">Foto del medidor</div>
-                    <img src="{{ asset($docto->photo) }}" width="170px" alt="">
-                </td>
-            </tr>
-            <tr class="pie">
-                <td style="width: 75%;">
-                    <div class="cuerpo-titulo">Historial de consumo</div>
-                    <img src="https://quickchart.io/chart?bkg=white&c={{ $chart }}" height="220px"
-                        width="90%" alt="">
-                </td>
-                <td>
-                    <div class="cuerpo-titulo">Estado de Cuenta</div>
-                    <table class="consumo" style="width: 100%">
-                        <tr>
-                            <th>Concepto</th>
-                            <th>Importe</th>
-                        </tr>
-                        <tr>
-                            <td>Saldo anterior</td>
-                            <td style="text-align: right;">$
-                                {{ $docto->client->advance_payment > 0.01 ? '-' . number_format($docto->client->advance_payment, 2) : '0.00' }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Ajuste meses ant.</td>
-                            <td style="text-align: right;">$ {{ number_format($docto->previous_balance, 2) }}</td>
-                        </tr>
-                        <tr>
-                            <td>Consumo del mes</td>
-                            <td style="text-align: right;">$ {{ number_format($docto->subtotal - 100, 2) }}</td>
-                        </tr>
-                        <tr>
-                            <td>Cargo por administración</td>
-                            <td style="text-align: right;">$ {{ number_format($docto->adm_charge, 2) }}</td>
-                        </tr>
-                        <tr>
-                            <td>Subtotal</td>
-                            <td style="text-align: right;">$ {{ number_format($docto->subtotal, 2) }}</td>
-                        </tr>
-                        <tr>
-                            <td>IVA</td>
-                            <td style="text-align: right;"><b>$ {{ number_format($docto->iva, 2) }}</b></td>
-                        </tr>
-                        <tr>
-                            <td>Cargos del mes</td>
-                            <td style="text-align: right;">$
-                                {{ number_format($docto->total + $docto->client->balance, 2) }}</td>
-                        </tr>
-                        <tr>
-                            <td>Ajuste mes siguiente</td>
-                            <td style="text-align: right;">$ {{ number_format($docto->client->balance, 2) }}</td>
-                        </tr>
-                        <tr>
-                            <td>A pagar</td>
-                            <td style="text-align: right;"><b>$ {{ number_format($docto->total, 2) }}</b></td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            <tr class="pagos">
-                <td style="width: 75%;">
-                    <div class="cuerpo-titulo">Datos para pago</div>
-                    <table class="datos-banco" style="width: 100%">
-                        <tr>
-                            <td>Banco:</td>
-                            <td>Santander</td>
-                        </tr>
-                        <tr>
-                            <td>No. Cuenta:</td>
-                            <td>65-50840631-7</td>
-                        </tr>
-                        <!--                    <tr>
-                        <td>No. Tarjeta:</td>
-                        <td>1111 2222 3333 4444</td>
-                    </tr>-->
-                        <tr>
-                            <td>Clabe interbancaria:</td>
-                            <td>014691655084063172</td>
-                        </tr>
-                    </table>
-                </td>
-                <td>
-                    <img src="{{ asset('pagos_aceptados_01.jpg') }}" width="170px" alt="">
                 </td>
             </tr>
         </table>

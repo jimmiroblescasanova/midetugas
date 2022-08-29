@@ -136,11 +136,12 @@
                     $.each(rows, function(i, val) {
                         // console.log(val.id);
                         html += "<tr><td>" + val.client.name + "</td>" +
-                            "<td>" + numeral(val.suma).format('$0,0.00') + "</td>" +
-                            "<td class='text-right'>" + numeral(val.suma - val.pendiente)
+                            "<td>" + numeral(val.suma / 100).format('$0,0.00') + "</td>" +
+                            "<td class='text-right'>" + numeral((val.suma - val.pendiente) /
+                                100)
                             .format('$0,0.00') +
                             "</td>" +
-                            "<td class='text-right'>" + numeral(val.pendiente).format(
+                            "<td class='text-right'>" + numeral(val.pendiente / 100).format(
                                 '$0,0.00') +
                             "</td>" +
                             "</tr>";

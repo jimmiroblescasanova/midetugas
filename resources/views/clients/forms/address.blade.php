@@ -1,13 +1,9 @@
 <div class="row">
     <div class="col-md-12">
         <div class="form-group">
-            <label for="line_1">Calle</label>
-            <input type="text"
-                   class="form-control {{ $errors->first('line_1') ? 'is-invalid' : '' }}"
-                   name="line_1"
-                   id="line_1"
-                   placeholder="Calle"
-                   value="{{ old('line_1', $client->line_1) }}">
+            <label for="line_1">Calle y número</label>
+            <input type="text" class="form-control {{ $errors->first('line_1') ? 'is-invalid' : '' }}" name="line_1"
+                id="line_1" placeholder="Calle" value="{{ old('line_1', $client->line_1) }}">
             {!! $errors->first('line_1', '<div class="invalid-feedback">:message</div>') !!}
         </div>
     </div>
@@ -15,37 +11,25 @@
 <div class="row">
     <div class="col-md-4">
         <div class="form-group">
-            <label for="line_2">Número exterior</label>
-            <input type="text"
-                   class="form-control {{ $errors->first('line_2') ? 'is-invalid' : '' }}"
-                   name="line_2"
-                   id="line_2"
-                   placeholder="Número exterior / edificio"
-                   value="{{ old('line_2', $client->line_2) }}">
+            <label for="line_2">Edificio</label>
+            <input type="text" class="form-control {{ $errors->first('line_2') ? 'is-invalid' : '' }}" name="line_2"
+                id="line_2" placeholder="Edificio" value="{{ old('line_2', $client->line_2) }}">
             {!! $errors->first('line_2', '<div class="invalid-feedback">:message</div>') !!}
         </div>
     </div>
     <div class="col-md-4">
         <div class="form-group">
-            <label for="line_3">Número interior</label>
-            <input type="text"
-                   class="form-control {{ $errors->first('line_3') ? 'is-invalid' : '' }}"
-                   name="line_3"
-                   id="line_3"
-                   placeholder="Número interior / departamento"
-                   value="{{ old('line_3', $client->line_3) }}">
+            <label for="line_3">Departamento</label>
+            <input type="text" class="form-control {{ $errors->first('line_3') ? 'is-invalid' : '' }}" name="line_3"
+                id="line_3" placeholder="Departamento" value="{{ old('line_3', $client->line_3) }}">
             {!! $errors->first('line_3', '<div class="invalid-feedback">:message</div>') !!}
         </div>
     </div>
     <div class="col-md-4">
         <div class="form-group">
-            <label for="locality">Municipio</label>
-            <input type="text"
-                   class="form-control {{ $errors->first('locality') ? 'is-invalid' : '' }}"
-                   name="locality"
-                   id="locality"
-                   placeholder="Municipio"
-                   value="{{ old('locality', $client->locality) }}">
+            <label for="locality">Colonia</label>
+            <input type="text" class="form-control {{ $errors->first('locality') ? 'is-invalid' : '' }}"
+                name="locality" id="locality" placeholder="Colonia" value="{{ old('locality', $client->locality) }}">
             {!! $errors->first('locality', '<div class="invalid-feedback">:message</div>') !!}
         </div>
     </div>
@@ -54,12 +38,8 @@
     <div class="col-md-4">
         <div class="form-group">
             <label for="city">Ciudad</label>
-            <input type="text"
-                   class="form-control {{ $errors->first('city') ? 'is-invalid' : '' }}"
-                   name="city"
-                   id="city"
-                   placeholder="Ciudad"
-                   value="{{ old('city', $client->city) }}">
+            <input type="text" class="form-control {{ $errors->first('city') ? 'is-invalid' : '' }}" name="city"
+                id="city" placeholder="Ciudad" value="{{ old('city', $client->city) }}">
             {!! $errors->first('city', '<div class="invalid-feedback">:message</div>') !!}
         </div>
     </div>
@@ -175,14 +155,16 @@
                 <option value="Estados Unidos" id="US">Estados Unidos</option>
                 <option value="Estonia" id="EE">Estonia</option>
                 <option value="c" id="ET">Etiopía</option>
-                <option value="Ex-República Yugoslava de Macedonia" id="MK">Ex-República Yugoslava de Macedonia</option>
+                <option value="Ex-República Yugoslava de Macedonia" id="MK">Ex-República Yugoslava de Macedonia
+                </option>
                 <option value="Filipinas" id="PH">Filipinas</option>
                 <option value="Finlandia" id="FI">Finlandia</option>
                 <option value="Francia" id="FR">Francia</option>
                 <option value="Gabón" id="GA">Gabón</option>
                 <option value="Gambia" id="GM">Gambia</option>
                 <option value="Georgia" id="GE">Georgia</option>
-                <option value="Georgia del Sur y las islas Sandwich del Sur" id="GS">Georgia del Sur y las islas Sandwich del Sur</option>
+                <option value="Georgia del Sur y las islas Sandwich del Sur" id="GS">Georgia del Sur y las
+                    islas Sandwich del Sur</option>
                 <option value="Ghana" id="GH">Ghana</option>
                 <option value="Gibraltar" id="GI">Gibraltar</option>
                 <option value="Granada" id="GD">Granada</option>
@@ -218,7 +200,8 @@
                 <option value="Islas Malvinas Islas Falkland" id="FK">Islas Malvinas Islas Falkland</option>
                 <option value="Islas Marianas del norte" id="MP">Islas Marianas del norte</option>
                 <option value="Islas Marshall" id="MH">Islas Marshall</option>
-                <option value="Islas menores de Estados Unidos" id="UM">Islas menores de Estados Unidos</option>
+                <option value="Islas menores de Estados Unidos" id="UM">Islas menores de Estados Unidos
+                </option>
                 <option value="Islas Palau" id="PW">Islas Palau</option>
                 <option value="Islas Salomón" d="SB">Islas Salomón</option>
                 <option value="Islas Tokelau" id="TK">Islas Tokelau</option>
@@ -290,7 +273,8 @@
                 <option value="República Centroafricana" id="CF">República Centroafricana</option>
                 <option value="República Checa" id="CZ">República Checa</option>
                 <option value="República de Sudáfrica" id="ZA">República de Sudáfrica</option>
-                <option value="República Democrática del Congo Zaire" id="CD">República Democrática del Congo Zaire</option>
+                <option value="República Democrática del Congo Zaire" id="CD">República Democrática del Congo
+                    Zaire</option>
                 <option value="República Dominicana" id="DO">República Dominicana</option>
                 <option value="Reunión" id="RE">Reunión</option>
                 <option value="Ruanda" id="RW">Ruanda</option>
@@ -323,7 +307,8 @@
                 <option value="Taiwán" id="TW">Taiwán</option>
                 <option value="Tanzania" id="TZ">Tanzania</option>
                 <option value="Tayikistán" id="TJ">Tayikistán</option>
-                <option value="Territorios británicos del océano Indico" id="IO">Territorios británicos del océano Indico</option>
+                <option value="Territorios británicos del océano Indico" id="IO">Territorios británicos del
+                    océano Indico</option>
                 <option value="Territorios franceses del sur" id="TF">Territorios franceses del sur</option>
                 <option value="Timor Oriental" id="TP">Timor Oriental</option>
                 <option value="Togo" id="TG">Togo</option>
@@ -352,25 +337,21 @@
     <div class="col-md-4">
         <div class="form-group">
             <label for="zipcode">Código postal</label>
-            <input type="text"
-                   class="form-control {{ $errors->first('zipcode') ? 'is-invalid' : '' }}"
-                   name="zipcode"
-                   id="zipcode"
-                   placeholder="Código postal"
-                   value="{{ old('zipcode', $client->zipcode) }}">
+            <input type="text" class="form-control {{ $errors->first('zipcode') ? 'is-invalid' : '' }}"
+                name="zipcode" id="zipcode" placeholder="Código postal"
+                value="{{ old('zipcode', $client->zipcode) }}">
             {!! $errors->first('zipcode', '<div class="invalid-feedback">:message</div>') !!}
         </div>
     </div>
     <div class="col-md-8">
         <div class="form-group">
             <label for='project_id'>Condominio</label>
-            <select id='project_id'
-                    name='project_id'
-                    data-placeholder="Seleccionar condominio"
-                    class='form-control select2bs4 {{ $errors->first('project_id') ? 'is-invalid' : '' }}'>
+            <select id='project_id' name='project_id' data-placeholder="Seleccionar condominio"
+                class='form-control select2bs4 {{ $errors->first('project_id') ? 'is-invalid' : '' }}'>
                 <option value=""></option>
                 @foreach ($projects as $id => $project)
-                    <option value="{{ $id }}" {{ ($id == $client->project_id) ? 'selected' : '' }}>{{ $project }}</option>
+                    <option value="{{ $id }}" {{ $id == $client->project_id ? 'selected' : '' }}>
+                        {{ $project }}</option>
                 @endforeach
             </select>
             {!! $errors->first('project_id', '<div class="invalid-feedback">:message</div>') !!}

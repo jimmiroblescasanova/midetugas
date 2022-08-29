@@ -210,6 +210,11 @@ class DocumentsController extends Controller
     {
         $docto = Document::findOrFail($id);
         $file = "/pdf/{$docto->reference}.pdf";
+
+       /*  return view('print.document', [
+            'docto' => $docto,
+        ]); */
+
         if (Storage::disk('public')->exists( $file ))
         {
             return response()->file( storage_path("app/public/{$file}") );
