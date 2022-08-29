@@ -1,5 +1,5 @@
 ---
-deplyment:
+deployment:
   tasks:
     - export DEPLOYPATH=/home3/midetuga/public_html/
     - /bin/cp -R public/ $DEPLOYPATH
