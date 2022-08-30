@@ -27,6 +27,7 @@ class StoreClientRequest extends FormRequest
             'name' => 'required|string',
             'rfc' => 'required|string|unique:clients|min:12|max:13',
             'email' => 'required|email|unique:clients',
+            'reference' => 'required|string|size:7',
             'country_code' => 'required|string',
             'phone' => 'required|numeric',
             'shortName' => 'string|nullable',

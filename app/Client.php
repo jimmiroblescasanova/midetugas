@@ -18,6 +18,11 @@ class Client extends Model
         return $this->attributes['rfc'] = strtoupper($val);
     }
 
+    public function setReferenceAttribute($val) :string
+    {
+        return $this->attributes['reference'] = strtoupper($val);
+    }
+
     public function measurer()
     {
         return $this->hasOne('App\Measurer');

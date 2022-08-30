@@ -305,6 +305,9 @@
                                 <td>https://paypal.me/midetugas</td>
                                 <td>4043 1300 0532 8964</td>
                             </tr>
+                            <tr>
+                                <td colspan="3">Pagos a nombre de: YURI ENRIQUETA SANCHEZ CONTRERAS</td>
+                            </tr>
                         </table>
                     </div>
                 </td>
@@ -336,7 +339,7 @@
                                     <td>REFERENCIA</td>
                                 </tr>
                                 <tr>
-                                    <td>{{ $docto->reference }}</td>
+                                    <td>{{ $docto->client->reference }}</td>
                                 </tr>
                                 <tr>
                                     <td>FECHA LIMITE DE PAGO</td>

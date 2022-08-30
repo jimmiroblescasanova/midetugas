@@ -160,6 +160,8 @@ return [
         'zipcode' => 'código postal',
         'project_id' => 'condominio',
         'measurer_id' => 'medidor',
+        'reference' => 'referencia',
+        'shortName' => 'nombre corto',
     ],
 
 ];

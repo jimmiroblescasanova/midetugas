@@ -38,10 +38,10 @@ class UpdateClientRequest extends FormRequest
                 'email',
                 Rule::unique('clients')->ignore($this->client->id),
             ],
+            'reference' => 'required|string|size:7',
             'country_code' => 'required|string',
             'phone' => 'required|numeric',
             'shortName' => 'string|nullable',
-//            'measurer_id' => 'nullable',
         ];
     }
 }
