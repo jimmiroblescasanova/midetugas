@@ -27,3 +27,4 @@ Homestead.json
 /public/.htaccess
 _ide_helper.php
 .phpstorm.meta.php
+error_log
