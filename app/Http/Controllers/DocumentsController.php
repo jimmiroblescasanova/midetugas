@@ -54,6 +54,11 @@ class DocumentsController extends Controller
         $price = Price::latest()->first()->price;
         // Se obtiene el cliente capturado
         $client = Client::find($request->client_id);
+        // Calcula el saldo a favor del cliente
+        $saldoAFavor = Document::where([
+                ['client_id', $client->id],
+                ['pending', '>=', 0.01]
+            ])->sum('pending');
         // Se calcula el día de pago a partir de la fecha de captura
         $payment_date = Carbon::create($request->date)->addDays(10);
         // Guarda la foto y asigna la ruta
@@ -94,7 +99,7 @@ class DocumentsController extends Controller
             'iva' => $iva*100,
             'total' => $total*100,
             'pending' => $total*100,
-            'previous_balance' => $client->balance*100,
+            'previous_balance' => $saldoAFavor,
             'photo' => $photo,
             'created_at' => NOW(),
         ];
@@ -104,13 +109,13 @@ class DocumentsController extends Controller
             // Crea el documento a partir de array
             $document_id = DB::table('documents')->insertGetId($data);
             // Actualiza el balance del cliente
-            DB::table('clients')
+            /* DB::table('clients')
                 ->where('id', $request->client_id)
                 ->update([
                     // 'balance' => array_key_exists(1, $arr_total) ? $arr_total[1] : 0,
                     'balance' => ($new_balance)*100,
                     'reconnection_charge' => FALSE,
-                ]);
+                ]); */
             // Crear la referencia de pago
             DB::table('documents')
                 ->where('id', $document_id)

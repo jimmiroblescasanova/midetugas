@@ -1,5 +1,5 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home3/midetuga/public_html/
+    - export DEPLOYPATH=/home3/midetuga/app.midetugas.com.mx/
     - /bin/rsync -av public/ $DEPLOYPATH

@@ -76,4 +76,9 @@ class Document extends Model
         return $this->attributes['pending'] / 100;
     }
 
+    public function getGrandTotalAttribute()
+    {
+        return $this->total + $this->previous_balance;
+    }
+
 }

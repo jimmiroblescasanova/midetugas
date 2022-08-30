@@ -9,6 +9,7 @@ use Livewire\Component;
 class CreatePayment extends Component
 {
     public $client;
+    public $balance = false;
     public $documents;
     public $total;
     public $pay = [];

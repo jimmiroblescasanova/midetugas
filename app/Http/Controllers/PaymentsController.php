@@ -41,7 +41,11 @@ class PaymentsController extends Controller
         $pay = Payment::create($paymentData);
 
         $client = Client::findOrFail($request->client);
-        $client->balance = $client->balance - $request->total;
+        if (array_key_exists('useBalance', $request->toArray())) {
+            $client->balance = $request->pending;
+        } else {
+            $client->balance = $client->balance + $request->pending;
+        }
         $client->save();
 
         foreach ($request->pay as $id => $value) {

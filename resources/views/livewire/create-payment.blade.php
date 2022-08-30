@@ -20,6 +20,13 @@
                                 @csrf
                                 <input type="hidden" name="client" value="{{ $client->id }}">
                                 <div class="form-group row">
+                                    <label for="rfc" class="col-sm-3 col-form-label">No. de cuenta</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" readonly class="form-control-plaintext" id="rfc"
+                                            value="{{ $client->id }}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
                                     <label for="name" class="col-sm-3 col-form-label">Nombre del cliente</label>
                                     <div class="col-sm-9">
                                         <input type="text" readonly class="form-control-plaintext" id="name"
@@ -27,23 +34,30 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="rfc" class="col-sm-3 col-form-label">R.F.C.</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" readonly class="form-control-plaintext" id="rfc"
-                                            value="{{ $client->rfc }}">
+                                    <label for="name" class="col-sm-3 col-form-label">Saldo a favor</label>
+                                    <div class="col-sm-3">
+                                        <input type="text" readonly class="form-control-plaintext" id="saldo"
+                                            value="{{ $client->balance }}">
+                                    </div>
+                                    <div class="form-check col-sm-6">
+                                        <label class="form-check-label">
+                                            <input type="checkbox" wire:model="balance" class="form-check-input"
+                                                name="useBalance" id="useBalance">
+                                            Usar saldo en cuenta
+                                        </label>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="total" class="col-sm-3 col-form-label">Importe del pago</label>
                                     <div class="col-sm-3">
-                                        <input type="number" step=".01" wire:model="total" name="total"
+                                        <input type="number" step=".01" wire:model.lazy="total" name="total"
                                             id="total" class="form-control" required>
                                     </div>
                                     <label for="pending" class="col-sm-3 col-form-label">Pendiente por abonar</label>
                                     <div class="col-sm-3">
                                         <input type="text" readonly id="pending" name="pending"
                                             class="form-control-plaintext"
-                                            value="{{ number_format($total - $paymentSum, 2) }}">
+                                            value="{{ number_format(($balance != false ? $total + $client->balance : $total) - $paymentSum, 2) }}">
                                     </div>
                                 </div>
                                 <hr>
@@ -64,12 +78,13 @@
                                                 <td scope="row">{{ $document->date->format('d/m/Y') }}</td>
                                                 <td>{{ $document->id }}</td>
                                                 <td>{{ $document->period }}</td>
-                                                <td>{{ $document->total }}</td>
-                                                <td id="row-{{ $i }}">{{ $document->pending }}</td>
+                                                <td>{{ number_format($document->total, 2) }}</td>
+                                                <td id="row-{{ $i }}">
+                                                    {{ number_format($document->pending, 2) }}</td>
                                                 <td style="width:15%;">
                                                     <input class="form-control form-control-sm" type="number"
                                                         name="pay[{{ $document->id }}]" step=".01"
-                                                        wire:model="pay.{{ $i }}"
+                                                        wire:model.lazy="pay.{{ $i }}"
                                                         id="pay-{{ $i }}">
                                                 </td>
                                             </tr>

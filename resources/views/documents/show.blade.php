@@ -2,7 +2,7 @@
 
 @section('header')
     <div class="col-sm-6">
-        <h1><i class="fas fa-tachometer-alt"></i> Detalles del consumo</h1>
+        <h1><i class="fas fa-tachometer-alt mr-2"></i>Detalles del consumo</h1>
     </div>
 @stop
 
@@ -19,8 +19,8 @@
                     @if ($document->status === 2 &&
                         $document->pending > 0.01 &&
                         auth()->user()->can('pay_documents'))
-                        <button type="button" class="btn btn-app" id="pay">
-                            <i class="fas fa-coins"></i>Pagar</button>
+                        <a href="{{ route('payments.create', $document->client_id) }}" class="btn btn-app">
+                            <i class="fas fa-coins"></i>Pagar</a>
                     @endif
                     @if (($document->status == 1 || $document->status == 2) &&
                         auth()->user()->can('cancel_documents'))
@@ -42,30 +42,45 @@
                     <div class="row">
                         <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1">
                             <div class="row">
-                                <div class="col-12 col-sm-4">
-                                    <div class="info-box bg-light">
-                                        <div class="info-box-content">
-                                            <span class="info-box-text text-center text-muted">Total del mes</span>
-                                            <span class="info-box-number text-center text-muted mb-0">$
-                                                {{ $document->total }}<span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-4">
+                                <div class="col-12 col-sm-3">
                                     <div class="info-box bg-light">
                                         <div class="info-box-content">
                                             <span class="info-box-text text-center text-muted">Saldo Anterior</span>
                                             <span class="info-box-number text-center text-muted mb-0">$
-                                                {{ $document->previous_balance }}<span>
+                                                {{ number_format($document->previous_balance, 2) }}<span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-4">
+                                <div class="col-12 col-sm-3">
                                     <div class="info-box bg-light">
                                         <div class="info-box-content">
-                                            <span class="info-box-text text-center text-muted">TOTAL POR PAGAR</span>
+                                            <span class="info-box-text text-center text-muted">Total del mes</span>
                                             <span class="info-box-number text-center text-muted mb-0">$
-                                                {{ $document->total + $document->previous_balance }}<span>
+                                                {{ number_format($document->total, 2) }}<span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-3">
+                                    <div class="info-box bg-light">
+                                        <div class="info-box-content">
+                                            <span class="info-box-text text-center text-muted">Saldo Cliente</span>
+                                            <span class="info-box-number text-center text-muted mb-0">$
+                                                -{{ number_format($document->client->balance, 2) }}
+                                                <span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-3">
+                                    <div class="info-box bg-light">
+                                        <div class="info-box-content">
+                                            <span class="info-box-text text-center text-muted">A PAGAR</span>
+                                            <span class="info-box-number text-center text-muted mb-0">$
+                                                @if ($document->pending >= 0.01)
+                                                    {{ number_format($document->grand_total - $document->client->balance, 2) }}
+                                                @else
+                                                    {{ number_format($document->pending, 2) }}
+                                                @endif
+                                                <span>
                                         </div>
                                     </div>
                                 </div>
@@ -120,85 +135,9 @@
     </div>
 @stop
 
-@section('modal-section')
-    <div class="modal fade" id="paymentModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Capturar pago</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form action="{{ route('payments.store', '#pay') }}" method="POST">
-                    @csrf
-                    <input type="hidden" name="document_id" value="{{ $document->id }}">
-                    <input type="hidden" name="client_id" value="{{ $document->client_id }}">
-                    <div class="modal-body">
-                        @include('partials.alerts.danger')
-                        <div class="row mb-3">
-                            <div class="col-12">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="1"
-                                        name="advancePaymentCheck" id="advancePaymentCheck">
-                                    <label class="form-check-label" for="advancePaymentCheck">
-                                        Usar saldo anterior: $<b>{{ number_format($advance_payment, 2) }}</b> <small>(Por
-                                            pagar: ${{ $document->pending - $advance_payment }})</small>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="date">Fecha</label>
-                                    <input type="date"
-                                        class="form-control {{ $errors->first('date') ? 'is-invalid' : '' }}"
-                                        name="date" id="date" placeholder="dd/mm/yyyy">
-                                    {!! $errors->first('date', '<div class="invalid-feedback">:message</div>') !!}
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="amount">Importe pagado</label>
-                                    <input type="text"
-                                        class="form-control {{ $errors->first('amount') ? 'is-invalid' : '' }}"
-                                        name="amount" id="amount">
-                                    {!! $errors->first('amount', '<div class="invalid-feedback">:message</div>') !!}
-                                </div>
-                            </div>
-                        </div>
-                        <small>El excedente será agregado a la cuenta del cliente.</small>
-                    </div>
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-success">Pagar</button>
-                    </div>
-                </form>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->
-@stop
-
 @section('scripts')
     <script>
-        if (window.location.hash === '#pay') {
-            $('#paymentModal').modal('show');
-        }
-
         let ctx = document.getElementById('myChart');
         let myChart = new Chart(ctx, {!! $chart !!});
-
-        $('#pay').on('click', function(e) {
-            e.preventDefault();
-            $('#paymentModal').modal();
-        });
-
-        $('#paymentModal').on('hide.bs.modal', function() {
-            window.location.hash = '#';
-        });
     </script>
 @stop
