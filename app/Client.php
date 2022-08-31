@@ -67,4 +67,9 @@ class Client extends Model
     {
         return $this->country_code . $this->phone;
     }
+
+    public function getAccountNumberAttribute()
+    {
+        return str_pad($this->attributes['id'], 4, '0', STR_PAD_LEFT);
+    }
 }

@@ -127,6 +127,9 @@ class ReportsController extends Controller
         if($request->ajax())
         {
             $documents = Document::where('client_id', $request->client)
+                ->when(!$request->allDocuments, function ($q){
+                    $q->where('pending', '>', 0);
+                })
                 ->with('client')
                 ->get();
 

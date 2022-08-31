@@ -2,7 +2,7 @@
 
 @section('header')
     <div class="col-sm-6">
-        <h1><i class="fas fa-user"></i> Reporte: Estado de Cuenta</h1>
+        <h1><i class="fas fa-user mr-2"></i>Reporte: Estado de Cuenta</h1>
     </div>
 @stop
 
@@ -55,7 +55,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-5">
                                 <div class="form-group">
                                     <label for="client">Seleccionar cliente</label>
                                     <select name="client" id="client" class="form-control">
@@ -65,22 +65,30 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <div class="form-check">
                                         <label class="form-check-label">
-                                            <input type="checkbox" class="form-check-input" name="all" id="all"
-                                                value="1">
-                                            Todos
+                                            <input type="checkbox" class="form-check-input" name="allClients"
+                                                id="allClients" value="1">
+                                            Todos los clientes
                                         </label>
                                     </div>
                                 </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" class="form-check-input" name="allDocuments"
+                                            id="allDocuments" value="1">
+                                        Incluir documentos saldo cero
+                                    </label>
+                                </div>
                             </div>
                         </div>
-                        <button type="submit" id="execute" class="btn btn-sm btn-primary"><i class="fas fa-desktop"></i>
-                            Pantalla</button>
+                        <button type="submit" id="execute" class="btn btn-sm btn-primary">
+                            <i class="fas fa-desktop mr-2"></i>Pantalla
+                        </button>
                         <button type="submit" id="exportExcel" formaction="{{ route('edc.excel') }}"
-                            class="btn btn-sm btn-success"><i class="fas fa-file-excel"></i> Excel</button>
+                            class="btn btn-sm btn-success"><i class="fas fa-file-excel mr-2"></i>Excel</button>
                     </form>
                 </div>
             </div>
@@ -114,7 +122,7 @@
 @section('scripts')
     <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
     <script>
-        var checkbox = document.getElementById('all');
+        var checkbox = document.getElementById('allClients');
         checkbox.addEventListener("change", disableClient, false);
 
         function disableClient() {

@@ -50,26 +50,18 @@ class EdcExportReport implements FromView, ShouldAutoSize, WithStyles, WithColum
     public function view(): View
     {
 
-        if($this->request['all'] == 1) {
-            $clients = Client::select('id', 'rfc', 'name')
-            ->with(['documents' => function($q){
-                $q->where('pending', '>', 0.01)
-                ->whereMonth('date', '>=', $this->request->month)
-                ->whereYear('date', '>=', $this->request->year);
-            }])
-            ->get();
-        } else {
-            $clients = Client::where('id', $this->request->client)
-            ->select('id', 'rfc', 'name')
-            ->with(['documents' =>
-                function($q){
-                $q->where('pending', '>', 0.01)
-                ->whereMonth('date', '>=', $this->request->month)
-                ->whereYear('date', '>=', $this->request->year);
-            }])
-            ->get();
-        }
-
+        $clients = Client::select('id', 'rfc', 'name')
+        ->when(!$this->request->allClients, function($query){
+            $query->where('id', $this->request->client);
+        })
+        ->with(['documents' => function($q){
+            $q->when(!$this->request->allDocuments, function ($query){
+                $query->where('pending', '>', 0);
+            })
+            ->whereMonth('date', '>=', $this->request->month)
+            ->whereYear('date', '>=', $this->request->year);
+        }])
+        ->get();
 
         return view('exports.reports.edc', [
             'clients' => $clients,

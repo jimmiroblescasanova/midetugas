@@ -218,7 +218,9 @@
                             <tbody>
                                 <tr>
                                     <td style="width: 15%;">Contrato</td>
-                                    <td class="addressContent" style="width: 35%;">{{ $docto->client->id }}</td>
+                                    <td class="addressContent" style="width: 35%;">
+                                        {{ $docto->client->account_number }}
+                                    </td>
                                     <td style="width: 15%;">&nbsp;</td>
                                     <td style="width: 35%;">&nbsp;</td>
                                 </tr>

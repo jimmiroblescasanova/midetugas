@@ -89,10 +89,10 @@
                                 <div class="col-6">
                                     <h4>Datos del cliente</h4>
                                     <dl>
+                                        <dt>No. Cuenta:</dt>
+                                        <dd>{{ $document->client->accountNumber }}</dd>
                                         <dt>Nombre:</dt>
                                         <dd>{{ $document->client->name }}</dd>
-                                        <dt>RFC:</dt>
-                                        <dd>{{ $document->client->rfc }}</dd>
                                         <dt>Teléfono:</dt>
                                         <dd>{{ $document->client->phone }}</dd>
                                     </dl>

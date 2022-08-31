@@ -2,13 +2,13 @@
 
 @section('header')
     <div class="col-sm-6">
-        <h1><i class="far fa-building"></i> Condominios</h1>
+        <h1><i class="far fa-building mr-2"></i>Condominios</h1>
     </div>
     @can('create_projects')
         <div class="col-sm-6">
-            <button type="button" class="btn btn-primary btn-sm float-sm-right btn-block-xs-only"
-                    data-toggle="modal" data-target="#createNewProject">
-                <i class="fas fa-pencil-alt"></i> Crear nuevo
+            <button type="button" class="btn btn-primary btn-sm float-sm-right btn-block-xs-only" data-toggle="modal"
+                data-target="#createNewProject">
+                <i class="fas fa-pencil-alt mr-2"></i>Crear nuevo
             </button>
         </div>
     @endcan
@@ -21,39 +21,36 @@
                 <div class="card-body">
                     <table class="table table-striped" id="dataTableProjects">
                         <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Capacidad total (L)</th>
-                            <th>Capacidad actual (L)</th>
-                            <th>Porcentaje</th>
-                            <th>Referencia</th>
-                            <th>Acción</th>
-                        </tr>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Capacidad total (L)</th>
+                                <th>Capacidad actual (L)</th>
+                                <th>Porcentaje</th>
+                                <th>Referencia</th>
+                                <th>Acción</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        @foreach ($projects as $project)
-                            <tr>
-                                <td>{{ $project->name }}</td>
-                                <td>{{ $project->total_capacity }}</td>
-                                <td>{{ $project->actual_capacity }}</td>
-                                <td>
-                                    <div class="progress progress-sm">
-                                        <div class="progress-bar bg-green"
-                                             role="progressbar"
-                                             aria-volumenow="{{ $project->percentage }}"
-                                             aria-volumemin="0"
-                                             aria-volumemax="100"
-                                             style="width: {{ $project->percentage }}%">
+                            @foreach ($projects as $project)
+                                <tr>
+                                    <td>{{ $project->name }}</td>
+                                    <td>{{ $project->total_capacity }}</td>
+                                    <td>{{ $project->actual_capacity }}</td>
+                                    <td>
+                                        <div class="progress progress-sm">
+                                            <div class="progress-bar bg-green" role="progressbar"
+                                                aria-volumenow="{{ $project->percentage }}" aria-volumemin="0"
+                                                aria-volumemax="100" style="width: {{ $project->percentage }}%">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <small>
-                                        {{ $project->percentage }}% capacidad maxima (litros)
-                                    </small>
-                                </td>
-                                <td>{{ $project->reference }}</td>
-                                <td></td>
-                            </tr>
-                        @endforeach
+                                        <small>
+                                            {{ $project->percentage }}% capacidad maxima (litros)
+                                        </small>
+                                    </td>
+                                    <td>{{ $project->reference }}</td>
+                                    <td></td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -85,8 +82,12 @@
                         </div>
                     </div>
                     <div class="modal-footer justify-content-between">
-                        <button type="submit" class="btn btn-sm btn-primary">Guardar</button>
-                        <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-sm btn-primary">
+                            <i class="fas fa-save mr-2"></i>Guardar
+                        </button>
+                        <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">
+                            <i class="fas fa-ban mr-2"></i>Cancelar
+                        </button>
                     </div>
                 </form>
             </div>
@@ -99,7 +100,7 @@
 
 @section('scripts')
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('#dataTableProjects').DataTable({
                 "responsive": true,
                 "autoWidth": false,

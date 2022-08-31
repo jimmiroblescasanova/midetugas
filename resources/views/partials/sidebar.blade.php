@@ -135,7 +135,8 @@
                         </a>
                     </li>
                 @endcan
-                <li class="nav-item has-treeview {{ showMenu('report01.*') . showMenu('report02.*') }}">
+                <li
+                    class="nav-item has-treeview {{ showMenu('report01.*') . showMenu('report02.*') . showMenu('edc.*') }}">
                     <a href="#" class="nav-link {{ setActive('report01.*') . setActive('report02.*') }}">
                         <i class="nav-icon fas fa-funnel-dollar"></i>
                         <p>Reportes
