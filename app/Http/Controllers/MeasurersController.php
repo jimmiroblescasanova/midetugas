@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Factor;
 use App\Measurer;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -26,6 +27,7 @@ class MeasurersController extends Controller
     {
         return view('measurers.create', [
             'measurer' => new Measurer(),
+            'factors' => Factor::all(),
         ]);
     }
 
@@ -40,6 +42,7 @@ class MeasurersController extends Controller
     {
         return view('measurers.edit', [
             'measurer' => $measurer,
+            'factors' => Factor::all(),
         ]);
     }
 

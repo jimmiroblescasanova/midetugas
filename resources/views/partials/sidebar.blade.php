@@ -176,6 +176,14 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
+                                <a href="{{ route('factors.index') }}" class="nav-link {{ setActive('factors.index') }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Fact. de correccion</p>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
                                 <a href="{{ route('configuration.tasks') }}"
                                     class="nav-link {{ setActive('configuration.tasks') }}">
                                     <i class="far fa-circle nav-icon"></i>

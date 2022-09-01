@@ -150,3 +150,6 @@ Route::get('/configurations/tasks', 'ConfigurationsController@tasks')
 Route::post('/configurations/tasks', 'ConfigurationsController@recalcularInventario')
     ->name('configurations.run.recalcularInventario')
     ->middleware('permission:run_tasks');
+
+Route::get('/configuration/factors', 'FactorsController@index')->name('factors.index');
+Route::post('/configuration/factors', 'FactorsController@store')->name('factors.store');
