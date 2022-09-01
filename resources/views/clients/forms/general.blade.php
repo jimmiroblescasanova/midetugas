@@ -68,23 +68,13 @@
             <label for='measurer_id'>Medidor</label>
             <select id='measurer_id' name='measurer_id' data-placeholder="Seleccionar o dejar en blanco"
                 class='form-control select2bs4 {{ $errors->first('measurer_id') ? 'is-invalid' : '' }}'>
-                <optgroup label="Medidor actual">
-                    @if (isset($actual_measurer))
-                        <option value="{{ $actual_measurer->id }}">
-                            {{ $actual_measurer->brand }}, {{ $actual_measurer->model }},
-                            {{ $actual_measurer->serial_number }}
-                        </option>
-                    @else
-                        <option value="NULL">Sin medidor</option>
-                    @endif
-                </optgroup>
-                <optgroup label="Medidores disponibles">
-                    @foreach ($measurers as $measurer)
-                        <option value="{{ $measurer->id }}">
-                            {{ $measurer->brand }}, {{ $measurer->model }} ({{ $measurer->serial_number }})
-                        </option>
-                    @endforeach
-                </optgroup>
+                <option value="0">Sin medidor</option>
+                @if ($client->measurer()->exists())
+                    <option value="{{ $client->measurer->id }}" selected>{{ $client->measurer->model }}</option>
+                @endif
+                @foreach ($measurers as $measurer)
+                    <option value="{{ $measurer->id }}">{{ $measurer->model }}</option>
+                @endforeach
             </select>
             {!! $errors->first('measurer_id', '<div class="invalid-feedback">:message</div>') !!}
         </div>

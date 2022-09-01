@@ -54,53 +54,31 @@ class ClientsController extends Controller
 
     public function show(Client $client)
     {
-        $actual_measurer = Measurer::where('client_id', $client->id)->first();
-
         return view('clients.show', [
             'client' => $client,
             'projects' => Project::pluck('name', 'id'),
-            'actual_measurer' => $actual_measurer,
-            'measurers' => Measurer::where('active', 0)->get(),
+            'measurers' => Measurer::where('client_id', NULL)->get(),
         ]);
     }
 
     public function update(Client $client, UpdateClientRequest $request)
     {
-        if ($request['measurer_id'] != 'NULL')
-        {
-            $actual_measurer = Measurer::where('client_id', $client->id)->first();
-            $new_measurer = Measurer::find($request['measurer_id']);
 
-            if ($actual_measurer != NULL)
-            {
-                $actual_measurer->client_id = NULL;
-                $actual_measurer->active = false;
-                $actual_measurer->save();
-            }
-            $new_measurer->client_id = $client->id;
-            $new_measurer->active = true;
-            $new_measurer->save();
-        } else {
-            $measurer = Measurer::where('client_id', $client['id'])->first();
-            if (!is_null($measurer))
-            {
-                $measurer->client_id = NULL;
-                $measurer->save();
-            }
+        if($client->measurer()->exists()){
+            $client->measurer->update([
+            'client_id' => NULL,
+            ]);
+        }
+
+        if ($request->measurer_id != '0')
+        {
+            Measurer::findOrFail($request->measurer_id)->update([
+            'client_id' => $client->id,
+            ]);
+
         }
 
         $client->update( $request->validated() );
-
-        if ($client->admCode != NULL)
-        {
-            $cti_link = admClientes::findOrFail($client['admCode'], 'CIDCLIENTEPROVEEDOR');
-            $cti_link->update([
-                'CRAZONSOCIAL' => $request['name'],
-                'CRFC' => $request['rfc'],
-                'CEMAIL1' => $request['email'],
-            ]);
-            $cti_link->save();
-        }
 
         return redirect()->route('clients.index');
     }
