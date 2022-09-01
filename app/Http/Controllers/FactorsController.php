@@ -21,6 +21,6 @@ class FactorsController extends Controller
     {
         $factor = Factor::create($request->only('psig', 'value'));
 
-        return $factor;
+        return redirect()->route('factors.index');
     }
 }
