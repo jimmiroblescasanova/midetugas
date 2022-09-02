@@ -109,6 +109,8 @@ Route::get('/projects', 'ProjectsController@index')
     ->name('projects.index')->middleware('permission:show_projects');
 Route::post('/projects', 'ProjectsController@store')
     ->name('projects.store')->middleware('permission:create_projects');
+Route::get('/projects/{project}/edit', 'ProjectsController@edit')->name('projects.edit');
+Route::patch('/projects/{project}/edit', 'ProjectsController@update')->name('projects.update');
 
 Route::get('/tanks', 'TanksController@index')
     ->name('tanks.index')->middleware('permission:show_tanks');

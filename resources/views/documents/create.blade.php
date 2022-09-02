@@ -89,6 +89,6 @@
             value: moment().format('YYYY-MM-DD'),
         });
 
-        $('[data-toggle="tooltip"]').tooltip()
+        $('[data-toggle="tooltip"]').tooltip();
     </script>
 @stop

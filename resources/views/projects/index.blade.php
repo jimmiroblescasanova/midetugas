@@ -48,7 +48,10 @@
                                         </small>
                                     </td>
                                     <td>{{ $project->reference }}</td>
-                                    <td></td>
+                                    <td>
+                                        <a href="{{ route('projects.edit', $project) }}" class="btn btn-xs btn-primary"><i
+                                                class="fas fa-edit mr-2"></i>Editar</a>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

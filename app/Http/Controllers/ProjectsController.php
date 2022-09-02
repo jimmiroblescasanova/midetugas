@@ -32,4 +32,23 @@ class ProjectsController extends Controller
         return redirect()->route('projects.index');
     }
 
+    public function edit(Project $project)
+    {
+        return view('projects.edit', [
+            'project' => $project,
+        ]);
+    }
+
+    public function update(Project $project, Request $request)
+    {
+        $data = $request->validate([
+            'name' => 'required',
+            'reference' => 'required',
+        ]);
+
+        $project->update( $data );
+
+        return redirect()->route('projects.index');
+    }
+
 }
