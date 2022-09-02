@@ -75,19 +75,15 @@
     <script src="https://unpkg.com/gijgo@1.9.13/js/messages/messages.es-es.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/min/moment-with-locales.min.js"></script>
-    @yield('scripts')
+    {{-- @yield('scripts') --}}
     <script>
         $('#logoutButton').on('click', function(event) {
             event.preventDefault();
             $('#logoutForm').submit();
         });
-        //Initialize Select2 Elements
-        $('.select2bs4').select2({
-            theme: 'bootstrap4',
-            allowClear: true
-        });
     </script>
     @livewireScripts
+    @stack('scripts')
 </body>
 
 </html>

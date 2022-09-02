@@ -63,6 +63,8 @@ Route::delete('/measurers', 'MeasurersController@destroy')
 Route::get('/documents', 'DocumentsController@index')->name('documents.index');
 Route::get('/documents/create', 'DocumentsController@create')
     ->name('documents.create')->middleware('permission:create_documents');
+// Livewire component
+// Route::get('/documents/create', Livewire\CreateDocument::class)->name('documents.create');
 Route::post('/documents', 'DocumentsController@store')
     ->name('documents.store')->middleware('permission:create_documents');
 Route::get('/documents/{document}/ver', 'DocumentsController@show')
@@ -76,6 +78,7 @@ Route::get('/documents/{document}/sendtocomercial', 'DocumentsController@linkCti
 
 Route::get('/payments', 'PaymentsController@index')->name('payments.index')->middleware('permission:pay_documents');
 Route::post('/payments/create', 'PaymentsController@createForm')->name('payments.createForm');
+// Livewire component
 Route::get('/payments/create/client/{id}', Livewire\CreatePayment::class)->name('payments.create');
 Route::post('/payments', 'PaymentsController@store')
     ->name('payments.store')->middleware('permission:pay_documents');
