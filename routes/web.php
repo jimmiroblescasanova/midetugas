@@ -118,6 +118,8 @@ Route::get('/tanks/create', 'TanksController@create')
     ->name('tanks.create')->middleware('permission:create_tanks');
 Route::post('/tanks', 'TanksController@store')
     ->name('tanks.store')->middleware('permission:create_tanks');
+Route::get('/tanks/{tank}/edit', 'TanksController@edit')->name('tanks.edit');
+Route::patch('/tank/{tank}/edit', 'TanksController@update')->name('tanks.update');
 
 Route::get('/inventories', 'InventoriesController@index')
     ->name('inventories.index')->middleware('permission:show_inventories');

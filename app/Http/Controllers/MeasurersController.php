@@ -50,7 +50,8 @@ class MeasurersController extends Controller
     {
         $measurer->update( $request->validated() );
         Alert::success('Actualizado', 'Medidor actualizado correctamente');
-        return redirect()->route('measurers.edit', compact('measurer'));
+
+        return redirect()->route('measurers.index');
     }
 
     public function destroy(Request $request)

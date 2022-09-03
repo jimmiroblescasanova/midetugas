@@ -23,33 +23,34 @@
                 <div class="card-body table-responsive">
                     <table id="dataTableMeasurers" class="table table-striped">
                         <thead>
-                        <tr>
-                            <th>No. serie</th>
-                            <th>Modelo</th>
-                            <th>Último consumo</th>
-                            <th>Estado</th>
-                            @canany('delete_measurers')
-                                <th>Acción</th>
-                            @endcanany
-                        </tr>
+                            <tr>
+                                <th>No. serie</th>
+                                <th>Modelo</th>
+                                <th>Último consumo</th>
+                                <th>Estado</th>
+                                @canany('delete_measurers')
+                                    <th>Acción</th>
+                                @endcanany
+                            </tr>
                         </thead>
                         <tbody>
-                        @foreach ($measurers as $measurer)
-                            <tr>
-                                <td>{{ $measurer->serial_number }}</td>
-                                <td>{{ $measurer->model }}</td>
-                                <td class="text-right">{{ $measurer->actual_measure }} m<sup>3</sup></td>
-                                <td class="text-center">{!! setBadge($measurer->active) !!}</td>
-                                @can('delete_measurers')
-                                    <td class="text-right">
-                                        <a href="{{ route('measurers.edit', $measurer) }}" class="btn btn-default btn-xs"><i class="fas fa-edit"></i> Editar</a>
-                                        <button type="button" class="btn btn-danger btn-xs delete"
+                            @foreach ($measurers as $measurer)
+                                <tr>
+                                    <td>{{ $measurer->serial_number }}</td>
+                                    <td>{{ $measurer->model }}</td>
+                                    <td class="text-right">{{ $measurer->actual_measure }} m<sup>3</sup></td>
+                                    <td class="text-center">{!! setBadge(!is_null($measurer->client_id)) !!}</td>
+                                    @can('delete_measurers')
+                                        <td class="text-right">
+                                            <a href="{{ route('measurers.edit', $measurer) }}" class="btn btn-default btn-xs"><i
+                                                    class="fas fa-edit"></i> Editar</a>
+                                            <button type="button" class="btn btn-danger btn-xs delete"
                                                 data-id="{{ $measurer->id }}"><i class="fas fa-trash"></i> Eliminar
-                                        </button>
-                                    </td>
-                                @endcan
-                            </tr>
-                        @endforeach
+                                            </button>
+                                        </td>
+                                    @endcan
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -68,9 +69,9 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                {{--<div class="modal-body">
+                {{-- <div class="modal-body">
                     <span id="showModalContent"></span>
-                </div>--}}
+                </div> --}}
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                     <form action="{{ route('measurers.destroy') }}" method="POST">
@@ -89,7 +90,7 @@
 
 @section('scripts')
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('#dataTableMeasurers').DataTable({
                 "responsive": true,
                 "autoWidth": false,
@@ -98,7 +99,7 @@
                 },
             });
 
-            $('.delete').on('click', function (e) {
+            $('.delete').on('click', function(e) {
                 e.preventDefault();
                 $('#deleteMeasurerInput').val($(this).data('id'));
                 $('#modalDelete').modal();

@@ -162,6 +162,9 @@ return [
         'measurer_id' => 'medidor',
         'reference' => 'referencia',
         'shortName' => 'nombre corto',
+        'serial_numer' => 'número de serie',
+        'brand' => 'marca',
+        'model' => 'modelo',
     ],
 
 ];

@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreTankRequest;
-use App\Project;
 use App\Tank;
-use App\Traits\UpdateProjectTrait;
+use App\Project;
+use App\Measurer;
 use Illuminate\Http\Request;
+use App\Traits\UpdateProjectTrait;
+use App\Http\Requests\StoreTankRequest;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class TanksController extends Controller
 {
@@ -27,6 +29,7 @@ class TanksController extends Controller
     public function create()
     {
         return view('tanks.create', [
+            'tank' => new Tank,
             'projects' => Project::pluck('name', 'id'),
         ]);
     }
@@ -48,6 +51,36 @@ class TanksController extends Controller
 
         Tank::create( $data );
 
+        return redirect()->route('tanks.index');
+    }
+
+    public function edit(Tank $tank)
+    {
+        return view('tanks.edit', [
+            'tank' => $tank,
+            'projects' => Project::pluck('name', 'id'),
+        ]);
+    }
+
+    public function update(Tank $tank, StoreTankRequest $request)
+    {
+        $suma_medidores = Tank::where([
+            ['id', '!=', $tank->id],
+            ['project_id', $tank->project_id],
+            ])->sum('capacity');
+
+        if ($tank->project->actual_capacity > ($suma_medidores + $request->capacity)) {
+            Alert::error('Error', 'La capacidad no puede ser menor que el inventario actual');
+            return redirect()->back();
+        }
+
+        $tank->project->total_capacity = $suma_medidores + $request->capacity;
+        $tank->project->percentage = $this->calculatePercentage($tank->project);
+        $tank->project->save();
+
+        $tank->update( $request->validated() );
+
+        Alert::success('Actualizado', 'Los datos han sido guardados con éxito');
         return redirect()->route('tanks.index');
     }
 

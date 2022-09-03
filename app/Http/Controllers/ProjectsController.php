@@ -42,11 +42,13 @@ class ProjectsController extends Controller
     public function update(Project $project, Request $request)
     {
         $data = $request->validate([
-            'name' => 'required',
-            'reference' => 'required',
+            'name' => 'required|string|min:5',
+            'reference' => 'nullable|string',
         ]);
 
         $project->update( $data );
+
+        Alert::success('Actualizado', 'Condominio actualizado correctamente');
 
         return redirect()->route('projects.index');
     }

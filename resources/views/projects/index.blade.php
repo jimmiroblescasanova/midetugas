@@ -49,7 +49,7 @@
                                     </td>
                                     <td>{{ $project->reference }}</td>
                                     <td>
-                                        <a href="{{ route('projects.edit', $project) }}" class="btn btn-xs btn-primary"><i
+                                        <a href="{{ route('projects.edit', $project) }}" class="btn btn-xs btn-default"><i
                                                 class="fas fa-edit mr-2"></i>Editar</a>
                                     </td>
                                 </tr>

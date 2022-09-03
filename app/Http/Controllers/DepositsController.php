@@ -20,7 +20,7 @@ class DepositsController extends Controller
     public function create()
     {
         return view('deposits.create', [
-            'clients' => Client::where('measurer_id', '!=', NULL)->pluck('name', 'id'),
+            'clients' => Client::pluck('name', 'id'),
         ]);
     }
 
@@ -28,7 +28,7 @@ class DepositsController extends Controller
     {
 
         DB::transaction(function () use ($request) {
-            $deposit = Deposit::create( $request->validated() );
+            Deposit::create( $request->validated() );
             $client = Client::findOrFail($request['client_id']);
             $client->deposit += $request['total'];
             $client->save();
