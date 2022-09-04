@@ -96,16 +96,6 @@ class ClientsController extends Controller
         return redirect()->route('clients.index');
     }
 
-    public function detach(Client $client)
-    {
-        $measurer = Measurer::where('client_id', $client->id)->first();
-        $measurer->active = false;
-        $measurer->client_id = NULL;
-        $measurer->save();
-
-        return redirect()->route('clients.index');
-    }
-
     public function status(Client $client)
     {
         $client->status = !$client->status;

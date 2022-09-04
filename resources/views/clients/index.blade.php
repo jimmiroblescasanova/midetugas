@@ -2,12 +2,12 @@
 
 @section('header')
     <div class="col-sm-6">
-        <h1><i class="fas fa-users"></i> Clientes</h1>
+        <h1><i class="fas fa-users mr-2"></i>Clientes</h1>
     </div>
     @can('create_clients')
         <div class="col-sm-6">
             <a href="{{ route('clients.create') }}" class="btn btn-primary btn-sm float-sm-right btn-block-xs-only">
-                <i class="fas fa-pencil-alt"></i> Crear nuevo</a>
+                <i class="fas fa-pencil-alt mr-2"></i>Crear nuevo</a>
         </div>
     @endcan
 @stop
@@ -19,30 +19,33 @@
                 <div class="card-body table-responsive">
                     <table id="dataTableClients" class="table table-striped">
                         <thead>
-                        <tr>
-                            <th>Número de cuenta</th>
-                            <th>Nombre completo</th>
-                            <th>Email</th>
-                            <th>Nombre corto</th>
-                            <th>Teléfono</th>
-                            <th>Estado</th>
-                            <th>Acción</th>
-                        </tr>
+                            <tr>
+                                <th>Número de cuenta</th>
+                                <th>Nombre completo</th>
+                                <th>Email</th>
+                                <th>Nombre corto</th>
+                                <th>Teléfono</th>
+                                <th>Estado</th>
+                                <th>Acción</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        @foreach ($clients as $client)
-                            <tr>
-                                <td>{{ $client->id }}</td>
-                                <td>{{ $client->name }}</td>
-                                <td>{{ $client->email }}</td>
-                                <td>{{ $client->shortName }}</td>
-                                <td>{{ $client->phone }}</td>
-                                <td>{!! (!$client->status) ? '<span class="badge badge-success">Activo</span>' : '<span class="badge badge-warning">Inactivo</span>' !!}</td>
-                                <td class="text-right">
-                                    <a href="{{ route('clients.show', $client) }}" class="btn btn-xs btn-primary"><i class="fas fa-eye"></i> Ver / Editar</a>
-                                </td>
-                            </tr>
-                        @endforeach
+                            @foreach ($clients as $client)
+                                <tr>
+                                    <td>{{ $client->id }}</td>
+                                    <td>{{ $client->name }}</td>
+                                    <td>{{ $client->email }}</td>
+                                    <td>{{ $client->shortName }}</td>
+                                    <td>{{ $client->phone }}</td>
+                                    <td>{!! !$client->status
+                                        ? '<span class="badge badge-success">Activo</span>'
+                                        : '<span class="badge badge-warning">Inactivo</span>' !!}</td>
+                                    <td class="text-right">
+                                        <a href="{{ route('clients.show', $client) }}" class="btn btn-xs btn-primary">
+                                            <i class="fas fa-eye mr-2"></i>Ver / Editar</a>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -53,7 +56,7 @@
 
 @section('scripts')
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('#dataTableClients').DataTable({
                 "responsive": true,
                 "autoWidth": false,
@@ -62,11 +65,11 @@
                 },
             });
 
-            $('.setMeasurerBtn').on('click', function (e){
+            /* $('.setMeasurerBtn').on('click', function(e) {
                 e.preventDefault();
                 $('#client_id').val($(this).data('id'));
                 $('#setMeasurerModal').modal();
-            });
+            }); */
         });
     </script>
 @stop

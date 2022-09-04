@@ -2,7 +2,7 @@
 
 @section('header')
     <div class="col-sm-6">
-        <h1><i class="far fa-clipboard"></i> Capturar corte</h1>
+        <h1><i class="far fa-clipboard mr-2"></i>Capturar corte</h1>
     </div>
 @stop
 
@@ -69,8 +69,8 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-block-xs-only"><i class="fas fa-save"></i>
-                                Guardar</button>
+                            <button type="submit" class="btn btn-primary btn-block-xs-only">
+                                <i class="fas fa-save mr-2"></i>Guardar</button>
                         </div>
                     </form>
                 </div>

@@ -96,7 +96,7 @@
                             @can('show_documents')
                                 <li class="nav-item">
                                     <a href="{{ route('documents.index') }}"
-                                        class="nav-link {{ setActive('documents.index') }}">
+                                        class="nav-link {{ setActive('documents.index') . setActive('documents.show') }}">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Listado</p>
                                     </a>

@@ -33,7 +33,7 @@
                             <input type="text" class="form-control" readonly name="total_capacity" id="total_capacity"
                                 value="{{ $project->total_capacity }}">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group d-flex justify-content-between">
                             <button type="submit" class="btn btn-sm btn-primary">
                                 <i class="fas fa-save mr-2"></i>Actualizar</button>
                             <button type="button" class="btn btn-sm btn-danger" onclick="history.back();">

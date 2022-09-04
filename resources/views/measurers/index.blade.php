@@ -2,12 +2,12 @@
 
 @section('header')
     <div class="col-sm-6">
-        <h1><i class="fas fa-tachometer-alt"></i> Medidores</h1>
+        <h1><i class="fas fa-tachometer-alt mr-2"></i>Medidores</h1>
     </div>
     @can('create_measurers')
         <div class="col-sm-6">
             <a href="{{ route('measurers.create') }}" class="btn btn-primary btn-sm float-sm-right btn-block-xs-only">
-                <i class="fas fa-pencil-alt"></i> Crear nuevo</a>
+                <i class="fas fa-pencil-alt mr-2"></i>Crear nuevo</a>
         </div>
     @endcan
 @stop
@@ -42,10 +42,11 @@
                                     <td class="text-center">{!! setBadge(!is_null($measurer->client_id)) !!}</td>
                                     @can('delete_measurers')
                                         <td class="text-right">
-                                            <a href="{{ route('measurers.edit', $measurer) }}" class="btn btn-default btn-xs"><i
-                                                    class="fas fa-edit"></i> Editar</a>
+                                            <a href="{{ route('measurers.edit', $measurer) }}" class="btn btn-default btn-xs">
+                                                <i class="fas fa-edit mr-2"></i>Editar</a>
                                             <button type="button" class="btn btn-danger btn-xs delete"
-                                                data-id="{{ $measurer->id }}"><i class="fas fa-trash"></i> Eliminar
+                                                data-id="{{ $measurer->id }}">
+                                                <i class="fas fa-trash mr-2"></i> Eliminar
                                             </button>
                                         </td>
                                     @endcan

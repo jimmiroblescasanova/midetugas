@@ -36,8 +36,8 @@
                                     <td>{{ $tank->serial_number }}</td>
                                     <td>{{ $tank->capacity }} L</td>
                                     <td>
-                                        <a href="{{ route('tanks.edit', $tank) }}" class="btn btn-xs btn-default"><i
-                                                class="fas fa-edit mr-2"></i>Editar</a>
+                                        <a href="{{ route('tanks.edit', $tank) }}" class="btn btn-xs btn-default">
+                                            <i class="fas fa-edit mr-2"></i>Editar</a>
                                     </td>
                                 </tr>
                             @endforeach

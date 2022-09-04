@@ -38,8 +38,8 @@ Route::patch('/clients-address/{client}', 'AddressesController@update')
 // Route for attaching a measurer
 Route::post('/clients/attach-measurer', 'ClientsController@attach')
     ->name('clients.attach')->middleware('permission:edit_clients');
-Route::get('/clients/{client}/detach-measurer', 'ClientsController@detach')
-    ->name('clients.detach')->middleware('permission:edit_clients');
+/* Route::get('/clients/{client}/detach-measurer', 'ClientsController@detach')
+    ->name('clients.detach')->middleware('permission:edit_clients'); */
 // Route for change the status on a client
 Route::get('/clients/{client}/suspend', 'ClientsController@status')
     ->name('clients.status')->middleware('permission:change_status');
