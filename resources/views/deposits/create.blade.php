@@ -74,9 +74,10 @@
                             <label for="tax_address">Dirección fiscal:</label>
                             <textarea name="tax_address" id="tax_address" rows="2" class="form-control"></textarea>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group d-flex justify-content-between">
                             <button type="submit" class="btn btn-sm btn-primary btn-block-xs-only">
                                 <i class="fas fa-save mr-2"></i>Guardar</button>
+                            <x-buttons.back />
                         </div>
                     </form>
                 </div>
