@@ -74,7 +74,8 @@ Route::get('/documents/{id}/authorize', 'DocumentsController@authorizeDocument')
 Route::get('/documents/{id}/cancel', 'DocumentsController@cancel')
     ->name('documents.cancel')->middleware('permission:cancel_documents');
 Route::get('/documents/{id}/print', 'DocumentsController@print')->name('documents.print');
-Route::get('/documents/{document}/sendtocomercial', 'DocumentsController@linkCtiComercial')->name('documents.linkCtiComercial');
+
+Route::get('documents/multiple-pdf/download', 'DocumentsController@multiPdf')->name('documents.multiPdf');
 
 Route::get('/payments', 'PaymentsController@index')->name('payments.index')->middleware('permission:pay_documents');
 Route::post('/payments/create', 'PaymentsController@createForm')->name('payments.createForm');
@@ -139,17 +140,19 @@ Route::post('/deposits', 'DepositsController@store')->name('deposits.store');
 Route::get('/deposits/{deposit}/show', 'DepositsController@show')->name('deposits.show');
 Route::get('/deposits/{deposit}/cancel', 'DepositsController@cancel')->name('deposits.cancel');
 
-Route::get('/reports/lecture', 'ReportsController@lectureReportParameters')->name('report01.parameters');
-Route::post('reports/lecture', 'ReportsController@lectureReport')->name('report01.show');
-Route::get('/reports/account-status', 'ReportsController@accountStatusParameters')->name('report02.parameters');
-Route::post('/reports/account-status/excel', 'ReportsController@accountStatusExcel')->name('report02.excel');
-Route::post('/reports/account/print', 'ReportsController@printAccount')->name('account.print');
-Route::post('/ajax/account-status', 'ReportsController@accountStatusAjax')->name('report02.screen');
+Route::get('/reportes/TomaDeLectura', 'ReportsController@parametrosTomaDeLectura')->name('tomaDeLectura.parameters');
+Route::post('reportes/TomaDeLectura', 'ReportsController@pdfTomaDeLectura')->name('tomaDeLectura.show');
+
+Route::get('/reportes/cobranza', 'ReportsController@parametrosCobranza')->name('cobranza.parameters');
+Route::post('/reportes/cobranza/excel', 'ReportsController@excelCobranza')->name('cobranza.excel');
+Route::post('/reportes/cobranza/screen', 'ReportsController@pantalaCobranza')->name('cobranza.screen');
+Route::post('/reports/cobranza/pdf', 'ReportsController@pdfCobranza')->name('cobranza.pdf');
+
 Route::get('/reports/edc', 'ReportsController@edcParameters')->name('edc.parameters');
 Route::post('/ajax/edc', 'ReportsController@edcScreen')->name('edc.screen');
 Route::post('/reports/edc/excel', 'ReportsController@edcExportExcel')->name('edc.excel');
 
-Route::get('/test', 'TestController@index');
+// Route::get('/test', 'TestController@index');
 //Route::get('scripts', 'ScriptsController@calculateIvaColumn');
 Route::get('/configurations/tasks', 'ConfigurationsController@tasks')
     ->name('configuration.tasks')

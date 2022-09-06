@@ -2,23 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\admDocumentos;
-use App\admMovimientos;
-use App\Mail\AuthorizeReceipt;
-use App\Measurer;
 use App\Price;
 use App\Client;
+use ZipArchive;
 use App\Project;
 use App\Document;
+use App\Measurer;
 use Carbon\Carbon;
+use App\admDocumentos;
+use App\admMovimientos;
 use App\Traits\SendSmsTrait;
 use App\Traits\GraphBarTrait;
+use App\Mail\AuthorizeReceipt;
 use App\Traits\UpdateProjectTrait;
 use Illuminate\Support\Facades\DB;
-use App\Http\Requests\SaveDocumentRequest;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
-use Storage;
+use App\Http\Requests\SaveDocumentRequest;
 
 class DocumentsController extends Controller
 {
@@ -330,5 +332,49 @@ class DocumentsController extends Controller
         $pdf->setPaper('A4', 'portrait');
 //        Storage::put('/pdf/'. $docto->reference .'.pdf', $pdf->output());
         return $pdf;
+    }
+
+    public function multiPdf()
+    {
+        $save_to = "pdf/" . NOW()->format('Ymdis');
+        Storage::makeDirectory( $save_to );
+
+        $documents = Document::where('client_id', 5000)->get();
+
+        foreach($documents as $i => $docto){
+            // Se obtiene los históricos de meses anteriores
+            $historic = Document::select('id', 'period', 'month_quantity', 'total')
+                ->where([
+                ['client_id', $docto->client_id],
+                ['id', '<=', $docto->id],
+                ['status', '!=', 3]
+            ])->orderByDesc('id')->get();
+
+            // Trait to generate the chart
+            $chart = $this->generateChart($historic);
+
+            $html = '';
+            $view = view('print.document')->with(compact('docto','chart', 'historic'));
+            $html .= $view->render();
+            \PDF::loadHTML($html)->save( public_path("storage/".$save_to ."/{$docto->id}.pdf") );
+
+            echo $i . "<br>";
+        }
+
+        $zip = new ZipArchive;
+        $fileName = "storage/".$save_to .".zip";
+
+        if ($zip->open(public_path($fileName), ZipArchive::CREATE)== TRUE)
+        {
+            $files = File::files(public_path("storage/".$save_to));
+
+            foreach ($files as $key => $value){
+                $relativeName = basename($value);
+                $zip->addFile($value, $relativeName);
+            }
+            $zip->close();
+        }
+
+        return "Link: " . public_path($fileName);
     }
 }

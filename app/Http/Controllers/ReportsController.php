@@ -3,24 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Client;
-use App\Document;
-use App\Exports\AccountStatusReport;
-use App\Exports\EdcExportReport;
 use App\Project;
+use App\Document;
 use Illuminate\Http\Request;
+use App\Exports\EdcExportReport;
 use Illuminate\Support\Facades\DB;
+use App\Exports\AccountStatusReport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ReportsController extends Controller
 {
-    public function lectureReportParameters()
+    public function parametrosTomaDeLectura()
     {
         return view('reports.lecture.parameters', [
             'projects' => Project::all(),
         ]);
     }
 
-    public function lectureReport(Request $request)
+    public function pdfTomaDeLectura(Request $request)
     {
         $project = Project::find($request->project_id);
         $clients = Client::where('project_id', $project->id)->orderBy('name', $request['order'])->get();
@@ -34,7 +34,7 @@ class ReportsController extends Controller
         return $pdf->stream();
     }
 
-    public function accountStatusParameters()
+    public function parametrosCobranza()
     {
         $years = DB::table('documents')->selectRaw('year(date) as year')
             ->where('status', '2')
@@ -43,14 +43,13 @@ class ReportsController extends Controller
             ->orderByDesc('year')
             ->get();
 
-
-        return view('reports.account-status.index',[
+        return view('reports.cobranza.index',[
             'clients' => Client::pluck('name', 'id'),
             'years' => $years,
         ]);
     }
 
-    public function printAccount(Request $request)
+    public function pdfCobranza(Request $request)
     {
         $documents = Document::whereBetween('client_id', [$request['client_first'], $request['client_last']])
         ->whereMonth('date', '<=', $request['month'])
@@ -61,14 +60,14 @@ class ReportsController extends Controller
 
 
         // Generar el PDF
-        $pdf = \PDF::loadView('reports.account-status.print', [
+        $pdf = \PDF::loadView('reports.cobranza.print', [
         'documents' => $documents,
         ]);
         $pdf->setPaper('statement', 'portrait');
         return $pdf->stream();
     }
 
-    public function accountStatusAjax(Request $request)
+    public function pantallaCobranza(Request $request)
     {
 
         if ($request->ajax())
@@ -95,7 +94,7 @@ class ReportsController extends Controller
 
     }
 
-    public function accountStatusExcel(Request $request)
+    public function excelCobranza(Request $request)
     {
         $request->validate([
             'client_first' => 'required|lte:client_last',
@@ -104,7 +103,7 @@ class ReportsController extends Controller
             'client_first.lte' => 'El cliente inicial no puede ser mayor que el cliente final'
         ]);
 
-        return Excel::download(new AccountStatusReport($request), 'invoices.xlsx');
+        return Excel::download(new AccountStatusReport($request), 'cobranza.xlsx');
     }
 
     public function edcParameters()

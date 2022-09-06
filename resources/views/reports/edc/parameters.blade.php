@@ -88,7 +88,8 @@
                             <i class="fas fa-desktop mr-2"></i>Pantalla
                         </button>
                         <button type="submit" id="exportExcel" formaction="{{ route('edc.excel') }}"
-                            class="btn btn-sm btn-success"><i class="fas fa-file-excel mr-2"></i>Excel</button>
+                            class="btn btn-sm btn-success">
+                            <i class="fas fa-file-excel mr-2"></i>Excel</button>
                     </form>
                 </div>
             </div>

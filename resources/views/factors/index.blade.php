@@ -22,6 +22,7 @@
                             <tr>
                                 <th>Factor PSIG</th>
                                 <th>Valor</th>
+                                <th style="width: 200px;">&nbsp;</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -29,6 +30,11 @@
                                 <tr>
                                     <td scope="row">{{ $factor->psig }}</td>
                                     <td>{{ $factor->value }}</td>
+                                    <td class="text-right">
+                                        <button type="button" class="btn btn-xs btn-default">
+                                            <i class="fas fa-edit mr-2"></i>Editar
+                                        </button>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

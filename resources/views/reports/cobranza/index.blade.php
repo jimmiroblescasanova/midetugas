@@ -2,7 +2,7 @@
 
 @section('header')
     <div class="col-sm-6">
-        <h1><i class="fas fa-user"></i> Reporte: Saldos de clientes (Cobranza)</h1>
+        <h1><i class="fas fa-user mr-2"></i>Reporte: Cobranza</h1>
     </div>
 @stop
 
@@ -78,12 +78,13 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" id="execute" class="btn btn-sm btn-primary"><i class="fas fa-desktop"></i>
-                            Pantalla</button>
-                        <button type="submit" formaction="{{ route('account.print') }}" class="btn btn-sm btn-danger"><i
-                                class="fas fa-file-pdf"></i> PDF</button>
-                        <button type="submit" id="exportExcel" formaction="{{ route('report02.excel') }}"
-                            class="btn btn-sm btn-success"><i class="fas fa-file-excel"></i> Excel</button>
+                        <button type="submit" id="execute" class="btn btn-sm btn-primary">
+                            <i class="fas fa-desktop mr-2"></i>Pantalla</button>
+                        <button type="submit" formaction="{{ route('cobranza.pdf') }}" class="btn btn-sm btn-danger"><i
+                                class="fas fa-file-pdf mr-2"></i>PDF</button>
+                        <button type="submit" id="exportExcel" formaction="{{ route('cobranza.excel') }}"
+                            class="btn btn-sm btn-success">
+                            <i class="fas fa-file-excel mr-2"></i>Excel</button>
                     </form>
                 </div>
             </div>
@@ -118,7 +119,7 @@
         $("#execute").click(function(event) {
             event.preventDefault();
             const token = $('meta[name="csrf-token"]').attr('content');
-            let route = "{{ route('report02.screen') }}";
+            let route = "{{ route('cobranza.screen') }}";
             let data = $('#account-status').serialize();
 
             $.ajax({
