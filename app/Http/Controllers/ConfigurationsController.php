@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Tank;
+use App\Project;
 use App\Document;
 use App\Inventory;
-use App\Project;
-use App\Tank;
-use App\Traits\UpdateProjectTrait;
+use App\Jobs\DownloadPdfs;
 use Illuminate\Http\Request;
+use App\Traits\UpdateProjectTrait;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class ConfigurationsController extends Controller
@@ -67,5 +68,31 @@ class ConfigurationsController extends Controller
 
         Alert::success('Finalizado', 'Proceso ejecutado correctamente.');
         return redirect()->back();
+    }
+
+    public function descargaMasiva()
+    {
+        return view('configurations.descarga-masiva');
+    }
+
+    public function multiPdf(Request $request)
+    {
+        $datos_validos = $request->validate([
+            'startDate' => 'required|date|before:endDate',
+            'endDate' => 'required|date|after:startDate',
+            'email' => 'required|email',
+        ]);
+
+        $validar_documentos = Document::whereBetween('date', [$datos_validos['startDate'], $datos_validos['endDate']])->first();
+
+        if (!$validar_documentos) {
+            Alert::error('Error', 'No hay documentos en ese rango de fechas.');
+            return redirect()->back();
+        }
+
+        dispatch(new DownloadPdfs( $datos_validos ));
+
+        Alert::success('Correcto', 'Se te enviara un correo con el enlace de descarga.');
+        return redirect()->route('home');
     }
 }

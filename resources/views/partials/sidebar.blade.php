@@ -167,8 +167,8 @@
                     </ul>
                 </li>
                 @can('run_tasks')
-                    <li class="nav-item has-treeview {{ showMenu('configuration.*') }}">
-                        <a href="#" class="nav-link {{ setActive('configuration.*') }}">
+                    <li class="nav-item has-treeview {{ showMenu('configuration.*') . showMenu('procesos.*') }}">
+                        <a href="#" class="nav-link {{ setActive('configuration.*') . setActive('procesos.*') }}">
                             <i class="nav-icon fas fa-cogs"></i>
                             <p>Configuraciones
                                 <i class="right fas fa-angle-left"></i>
@@ -179,6 +179,15 @@
                                 <a href="{{ route('factors.index') }}" class="nav-link {{ setActive('factors.index') }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Fact. de correccion</p>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('procesos.descargaMasiva') }}"
+                                    class="nav-link {{ setActive('procesos.descargaMasiva') }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Generar PDF Masivo</p>
                                 </a>
                             </li>
                         </ul>

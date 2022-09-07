@@ -23,10 +23,12 @@ Homestead.json
 .phpunit.result.cache
 
 /.idea
-/public/index.php
-/public/.htaccess
-/public/.DS_Store
+public/index.php
+public/.htaccess
+public/.DS_Store
+storage/.DS_Store
 _ide_helper.php
 .phpstorm.meta.php
 error_log
 .DS_Store
+.prettierignore

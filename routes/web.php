@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 Auth::routes();
 Route::get('/', 'Auth\LoginController@showLoginForm')->name('showLoginForm');
@@ -152,14 +153,18 @@ Route::get('/reports/edc', 'ReportsController@edcParameters')->name('edc.paramet
 Route::post('/ajax/edc', 'ReportsController@edcScreen')->name('edc.screen');
 Route::post('/reports/edc/excel', 'ReportsController@edcExportExcel')->name('edc.excel');
 
-// Route::get('/test', 'TestController@index');
-//Route::get('scripts', 'ScriptsController@calculateIvaColumn');
 Route::get('/configurations/tasks', 'ConfigurationsController@tasks')
     ->name('configuration.tasks')
     ->middleware('permission:run_tasks');
 Route::post('/configurations/tasks', 'ConfigurationsController@recalcularInventario')
     ->name('configurations.run.recalcularInventario')
     ->middleware('permission:run_tasks');
+Route::get('procesos/descarga-masiva', 'ConfigurationsController@descargaMasiva')->name('procesos.descargaMasiva');
+Route::post('procesos/descarga-masiva', 'ConfigurationsController@multiPdf')->name('procesos.multiPdf');
 
 Route::get('/configuration/factors', 'FactorsController@index')->name('factors.index');
 Route::post('/configuration/factors', 'FactorsController@store')->name('factors.store');
+
+Route::get('/download/{file}', function($file){
+    return Storage::download('pdf/' . $file . '.zip');
+});
