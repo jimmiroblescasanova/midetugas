@@ -27,7 +27,7 @@
                                 <th>Capacidad actual (L)</th>
                                 <th>Porcentaje</th>
                                 <th>Referencia</th>
-                                <th>Acción</th>
+                                <th class="text-center" style="width: 100px;"><i class="fas fa-cogs"></i></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -48,7 +48,7 @@
                                         </small>
                                     </td>
                                     <td>{{ $project->reference }}</td>
-                                    <td>
+                                    <td class="text-right">
                                         <a href="{{ route('projects.edit', $project) }}" class="btn btn-xs btn-default"><i
                                                 class="fas fa-edit mr-2"></i>Editar</a>
                                     </td>

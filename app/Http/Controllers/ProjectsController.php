@@ -27,8 +27,9 @@ class ProjectsController extends Controller
             'reference' => 'nullable|string',
         ]);
 
-        Project::create( $data );
-        Alert::success('Correcto', 'Condominio creado correctamente');
+        Project::create($data);
+
+        Alert::success('Correcto', 'El registro ha sido creado con éxito.');
         return redirect()->route('projects.index');
     }
 
@@ -46,11 +47,22 @@ class ProjectsController extends Controller
             'reference' => 'nullable|string',
         ]);
 
-        $project->update( $data );
+        $project->update($data);
 
-        Alert::success('Actualizado', 'Condominio actualizado correctamente');
-
+        Alert::success('Actualizado', 'Registro actualizado correctamente');
         return redirect()->route('projects.index');
     }
 
+    public function destroy(Project $project)
+    {
+        if ($project->tanks()->exists() || $project->clients()->exists() || $project->inventories()->exists()) {
+            Alert::error('Error', 'El registro no se ha podido eliminar, valida que no tenga información asociada.');
+            return redirect()->back();
+        }
+
+        $project->delete();
+
+        Alert::success('Hecho', 'El registro ha sido eliminado con éxito de la base de datos.');
+        return redirect()->route('projects.index');
+    }
 }

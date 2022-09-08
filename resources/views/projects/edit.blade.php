@@ -4,6 +4,12 @@
     <div class="col-sm-6">
         <h1><i class="far fa-building mr-2"></i>Editar condominio</h1>
     </div>
+    <div class="col-sm-6 d-flex justify-content-end">
+        <form action="{{ route('projects.destroy', $project) }}" method="POST">
+            @csrf @method('DELETE')
+            <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt mr-2"></i>Eliminar</button>
+        </form>
+    </div>
 @stop
 
 @section('content')
@@ -18,7 +24,6 @@
                             <label for="name">Nombre del condominio</label>
                             <input type="text" class="form-control" name="name" id="name"
                                 value="{{ $project->name }}">
-                            {{-- <small id="helpId" class="form-text text-muted">Help text</small> --}}
                         </div>
                         <div class="form-group">
                             <label for="reference">Referencia</label>

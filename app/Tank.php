@@ -17,6 +17,11 @@ class Tank extends Model
         return $this->belongsTo(Project::class);
     }
 
+    public function inventories()
+    {
+        return $this->hasMany(Inventory::class);
+    }
+
     public function setSerialNumberAttribute($sn)
     {
         return $this->attributes['serial_number'] = Str::upper($sn);

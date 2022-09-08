@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Tank;
 use App\Project;
-use App\Measurer;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Traits\UpdateProjectTrait;
 use App\Http\Requests\StoreTankRequest;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -81,6 +80,35 @@ class TanksController extends Controller
         $tank->update( $request->validated() );
 
         Alert::success('Actualizado', 'Los datos han sido guardados con éxito');
+        return redirect()->route('tanks.index');
+    }
+
+    public function destroy(Tank $tank)
+    {
+        $capacidad_nueva = $tank->project->total_capacity - $tank->capacity;
+
+        if ($capacidad_nueva < $tank->project->actual_capacity) {
+            Alert::error('Error', 'La capacidad total no puede ser menos a la actual');
+            return redirect()->back();
+        }
+
+        try {
+            DB::beginTransaction();
+            // actualiza los valores antes de eliminar el registro
+            $tank->project->total_capacity = $capacidad_nueva;
+            $tank->project->percentage = $this->calculatePercentage($tank->project);
+            $tank->project->save();
+            // procede a eliminar el registro
+            $tank->delete();
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            Alert::error('Error', 'No se pudo eliminar el registro.');
+            return redirect()->back();
+        }
+
+        Alert::success('Hecho', 'El registro ha sido eliminado de la base de datos con éxito');
         return redirect()->route('tanks.index');
     }
 

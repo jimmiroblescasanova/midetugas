@@ -25,7 +25,7 @@
                                 <th>Modelo</th>
                                 <th>Numero de serie</th>
                                 <th>Capacidad</th>
-                                <th>&nbsp;</th>
+                                <th class="text-center" style="width: 100px;"><i class="fas fa-cogs"></i></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -35,7 +35,7 @@
                                     <td>{{ $tank->model }}</td>
                                     <td>{{ $tank->serial_number }}</td>
                                     <td>{{ $tank->capacity }} L</td>
-                                    <td>
+                                    <td class="text-right">
                                         <a href="{{ route('tanks.edit', $tank) }}" class="btn btn-xs btn-default">
                                             <i class="fas fa-edit mr-2"></i>Editar</a>
                                     </td>

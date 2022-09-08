@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\TanksController;
+use App\Http\Controllers\ProjectsController;
 
 Auth::routes();
 Route::get('/', 'Auth\LoginController@showLoginForm')->name('showLoginForm');
@@ -38,9 +40,7 @@ Route::patch('/clients-address/{client}', 'AddressesController@update')
     ->name('address.update')->middleware('permission:edit_addresses');
 // Route for attaching a measurer
 Route::post('/clients/attach-measurer', 'ClientsController@attach')
-    ->name('clients.attach')->middleware('permission:edit_clients');
-/* Route::get('/clients/{client}/detach-measurer', 'ClientsController@detach')
-    ->name('clients.detach')->middleware('permission:edit_clients'); */
+->name('clients.attach')->middleware('permission:edit_clients');
 // Route for change the status on a client
 Route::get('/clients/{client}/suspend', 'ClientsController@status')
     ->name('clients.status')->middleware('permission:change_status');
@@ -107,12 +107,11 @@ Route::post('/users/{user}/permissions', 'UsersController@permissions')
 Route::post('/price', 'PricesController@store')
     ->name('prices.store')->middleware('permission:update_prices');
 
-Route::get('/projects', 'ProjectsController@index')
-    ->name('projects.index')->middleware('permission:show_projects');
-Route::post('/projects', 'ProjectsController@store')
-    ->name('projects.store')->middleware('permission:create_projects');
+Route::get('/projects', 'ProjectsController@index')->name('projects.index')->middleware('permission:show_projects');
+Route::post('/projects', 'ProjectsController@store')->name('projects.store')->middleware('permission:create_projects');
 Route::get('/projects/{project}/edit', 'ProjectsController@edit')->name('projects.edit');
 Route::patch('/projects/{project}/edit', 'ProjectsController@update')->name('projects.update');
+Route::delete('/projects/{project}/edit', [ProjectsController::class, 'destroy'])->name('projects.destroy');
 
 Route::get('/tanks', 'TanksController@index')
     ->name('tanks.index')->middleware('permission:show_tanks');
@@ -122,6 +121,7 @@ Route::post('/tanks', 'TanksController@store')
     ->name('tanks.store')->middleware('permission:create_tanks');
 Route::get('/tanks/{tank}/edit', 'TanksController@edit')->name('tanks.edit');
 Route::patch('/tank/{tank}/edit', 'TanksController@update')->name('tanks.update');
+Route::delete('/tanks/{tank}/edit', [TanksController::class, 'destroy'])->name('tanks.destroy');
 
 Route::get('/inventories', 'InventoriesController@index')
     ->name('inventories.index')->middleware('permission:show_inventories');
@@ -132,8 +132,7 @@ Route::post('/inventories', 'InventoriesController@store')
 Route::post('inventories/fill-tank', 'InventoriesController@fillTanks')
     ->name('inventories.fillTanks');
 
-Route::get('/clients/{client}/link', 'ClientsController@link_client')
-    ->name('clients.link');
+Route::get('/clients/{client}/link', 'ClientsController@link_client')->name('clients.link');
 
 Route::get('/deposits', 'DepositsController@index')->name('deposits.index');
 Route::get('/deposits/create', 'DepositsController@create')->name('deposits.create');

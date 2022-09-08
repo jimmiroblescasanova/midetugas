@@ -4,6 +4,12 @@
     <div class="col-sm-6">
         <h1><i class="fas fa-user mr-2"></i>Editar tanque</h1>
     </div>
+    <div class="col-sm-6 d-flex justify-content-end">
+        <form action="{{ route('tanks.destroy', $tank) }}" method="POST">
+            @csrf @method('DELETE')
+            <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt mr-2"></i>Eliminar</button>
+        </form>
+    </div>
 @stop
 
 @section('content')
