@@ -164,6 +164,10 @@ class DocumentsController extends Controller
 
     public function authorizeDocument($id)
     {
+        // Datos del token para Twilio
+        $sid = config('services.twilio.sid');
+        $token = config('services.twilio.token');
+
         $docto = Document::findOrFail($id);
         $pdf = $this->getPDF($docto);
         Storage::put('/pdf/'. $docto->reference .'.pdf', $pdf->output());
@@ -174,6 +178,15 @@ class DocumentsController extends Controller
 //            $this->receiptGenerated($docto->client->phoneNumber);
             $docto->status = 2;
             $docto->save();
+            // Enviar notificación por mensaje
+            $twilio = new \Twilio\Rest\Client($sid, $token);
+            $message = $twilio->messages
+            ->create("whatsapp:+5219981576290", // to
+            array(
+            "from" => "whatsapp:+14155238886",
+            "body" => "Se ha generado su recibo de consumo de gas, por un total de $".$docto->total.", con fecha limite de pago el ".$docto->payment_date->format('d/m/Y').", puede consultar el documento PDF en su correo electrónico."
+            )
+            );
             DB::commit();
         } catch (\Exception $e)
         {
