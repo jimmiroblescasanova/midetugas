@@ -175,18 +175,21 @@ class DocumentsController extends Controller
         try {
             DB::beginTransaction();
             Mail::to($docto->client->email)->queue(new AuthorizeReceipt( $docto->reference ));
+            // enviar recibo por sms AWS
 //            $this->receiptGenerated($docto->client->phoneNumber);
+            // Cambia el status el documento a "autorizado"
             $docto->status = 2;
             $docto->save();
             // Enviar notificación por mensaje
-            $twilio = new \Twilio\Rest\Client($sid, $token);
+            /* $twilio = new \Twilio\Rest\Client($sid, $token);
             $message = $twilio->messages
             ->create("whatsapp:+5219981576290", // to
-            array(
-            "from" => "whatsapp:+14155238886",
-            "body" => "Se ha generado su recibo de consumo de gas, por un total de $".$docto->total.", con fecha limite de pago el ".$docto->payment_date->format('d/m/Y').", puede consultar el documento PDF en su correo electrónico."
-            )
-            );
+                array(
+                    "from" => "whatsapp:+14155238886",
+                    "body" => "Se ha generado su recibo de consumo de gas, por un total de $" . $docto->total . ", con fecha limite de pago el " . $docto->payment_date->format('d/m/Y') . ", puede consultar el documento PDF en su correo electrónico."
+                )
+            ); */
+            // Si todo se ejecuta sin error, se guardan los cambios
             DB::commit();
         } catch (\Exception $e)
         {
