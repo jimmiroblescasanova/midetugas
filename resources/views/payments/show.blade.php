@@ -4,6 +4,13 @@
     <div class="col-sm-6">
         <h1><i class="fas fa-hand-holding-usd mr-2"></i>Ver pago</h1>
     </div>
+    <div class="col-sm-6 d-flex justify-content-end">
+        <form action="{{ route('payments.delete', $payment) }}" method="POST">
+            @csrf @method('DELETE')
+            <button type="submit" class="btn btn-sm btn-danger btn-block-xs-only">
+                <i class="fas fa-trash-alt mr-2"></i>Eliminar</button>
+        </form>
+    </div>
 @stop
 
 @section('content')

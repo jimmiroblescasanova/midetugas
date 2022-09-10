@@ -24,7 +24,7 @@
                     @endif
                     @if (($document->status == 1 || $document->status == 2) &&
                         auth()->user()->can('cancel_documents'))
-                        <a href="{{ route('documents.cancel', $document->id) }}" class="btn btn-app">
+                        <a href="{{ route('documents.cancel', $document) }}" class="btn btn-app">
                             <i class="fas fa-ban"></i>Cancelar</a>
                     @endif
                     <a href="{{ route('documents.print', $document->id) }}" class="btn btn-app" target="_blank">

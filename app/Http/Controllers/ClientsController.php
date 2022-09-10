@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\admClientes;
 use App\Client;
 use App\Project;
 use App\Measurer;
 use App\Mail\TestEmail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Requests\StoreClientRequest;
 use App\Http\Requests\UpdateClientRequest;
 
@@ -39,14 +41,22 @@ class ClientsController extends Controller
 
     public function store(StoreClientRequest $request)
     {
-        $client = Client::create($request->validated());
+        try {
+            DB::beginTransaction();
+            $client = Client::create($request->validated());
 
-        if ($request['measurer_id'] != 'NULL')
-        {
-            $measurer = Measurer::findOrFail($request->measurer_id);
-            $measurer->client_id = $client->id;
-            $measurer->active = true;
-            $measurer->save();
+            if ($request['measurer_id'] != 0) {
+                $measurer = Measurer::findOrFail($request->measurer_id);
+                $measurer->client_id = $client->id;
+                $measurer->active = true;
+                $measurer->save();
+            }
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            Log::error($th->getMessage());
+            abort(500, $th->getMessage());
         }
 
         return redirect()->route('contacts.create', $client->id);

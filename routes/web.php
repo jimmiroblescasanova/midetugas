@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\TanksController;
 use App\Http\Controllers\FactorsController;
 use App\Http\Controllers\ProjectsController;
+use App\Http\Controllers\DocumentsController;
 
 Auth::routes();
 Route::get('/', 'Auth\LoginController@showLoginForm')->name('showLoginForm');
@@ -41,7 +42,7 @@ Route::patch('/clients-address/{client}', 'AddressesController@update')
     ->name('address.update')->middleware('permission:edit_addresses');
 // Route for attaching a measurer
 Route::post('/clients/attach-measurer', 'ClientsController@attach')
-->name('clients.attach')->middleware('permission:edit_clients');
+    ->name('clients.attach')->middleware('permission:edit_clients');
 // Route for change the status on a client
 Route::get('/clients/{client}/suspend', 'ClientsController@status')
     ->name('clients.status')->middleware('permission:change_status');
@@ -71,8 +72,7 @@ Route::get('/documents/{document}/ver', 'DocumentsController@show')
     ->name('documents.show')->middleware('permission:show_documents');
 Route::get('/documents/{id}/authorize', 'DocumentsController@authorizeDocument')
     ->name('documents.authorize')->middleware('permission:authorize_documents');
-Route::get('/documents/{id}/cancel', 'DocumentsController@cancel')
-    ->name('documents.cancel')->middleware('permission:cancel_documents');
+Route::get('/documents/{document}/cancel', [DocumentsController::class, 'cancel'])->name('documents.cancel')->middleware('permission:cancel_documents');
 Route::get('/documents/{id}/print', 'DocumentsController@print')->name('documents.print');
 
 Route::get('documents/multiple-pdf/download', 'DocumentsController@multiPdf')->name('documents.multiPdf');
@@ -81,12 +81,9 @@ Route::get('/payments', 'PaymentsController@index')->name('payments.index')->mid
 Route::post('/payments/create', 'PaymentsController@createForm')->name('payments.createForm');
 // Livewire component
 Route::get('/payments/create/client/{id}', Livewire\CreatePayment::class)->name('payments.create');
-Route::post('/payments', 'PaymentsController@store')
-    ->name('payments.store')->middleware('permission:pay_documents');
+Route::post('/payments', 'PaymentsController@store')->name('payments.store')->middleware('permission:pay_documents');
 Route::get('/payments/show/{payment}', 'PaymentsController@show')->name('payments.show');
-
-Route::delete('/payments', 'PaymentsController@destroy')
-    ->name('payments.delete');
+Route::delete('/payments/show/{payment}', 'PaymentsController@destroy')->name('payments.delete');
 
 Route::get('/users', 'UsersController@index')
     ->name('users.index')->middleware('permission:show_users');
@@ -164,6 +161,6 @@ Route::get('/configuration/factors', 'FactorsController@index')->name('factors.i
 Route::post('/configuration/factors', 'FactorsController@store')->name('factors.store');
 Route::delete('/configuration/factors', [FactorsController::class, 'destroy'])->name('factors.destroy');
 
-Route::get('/download/{file}', function($file){
+Route::get('/download/{file}', function ($file) {
     return Storage::download('pdf/' . $file . '.zip');
 });
