@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\TanksController;
+use App\Http\Controllers\FactorsController;
 use App\Http\Controllers\ProjectsController;
 
 Auth::routes();
@@ -163,6 +164,7 @@ Route::post('procesos/descarga-masiva', 'ConfigurationsController@multiPdf')->na
 
 Route::get('/configuration/factors', 'FactorsController@index')->name('factors.index');
 Route::post('/configuration/factors', 'FactorsController@store')->name('factors.store');
+Route::delete('/configuration/factors', [FactorsController::class, 'destroy'])->name('factors.destroy');
 
 Route::get('/download/{file}', function($file){
     return Storage::download('pdf/' . $file . '.zip');

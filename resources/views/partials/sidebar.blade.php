@@ -167,8 +167,8 @@
                     </ul>
                 </li>
                 @can('run_tasks')
-                    <li class="nav-item has-treeview {{ showMenu('configuration.*') . showMenu('procesos.*') }}">
-                        <a href="#" class="nav-link {{ setActive('configuration.*') . setActive('procesos.*') }}">
+                    <li class="nav-item has-treeview {{ showMenu('configuration.*') . showMenu('procesos.*') . showMenu('factors.*') }}">
+                        <a href="#" class="nav-link {{ setActive('configuration.*') . setActive('procesos.*') . setActive('factors.*') }}">
                             <i class="nav-icon fas fa-cogs"></i>
                             <p>Configuraciones
                                 <i class="right fas fa-angle-left"></i>

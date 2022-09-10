@@ -31,8 +31,8 @@
                                     <td scope="row">{{ $factor->psig }}</td>
                                     <td>{{ $factor->value }}</td>
                                     <td class="text-right">
-                                        <button type="button" class="btn btn-xs btn-default">
-                                            <i class="fas fa-edit mr-2"></i>Editar
+                                        <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modalDelete" data-id="{{ $factor->id }}">
+                                            <i class="fas fa-trash-alt mr-2"></i>Eliminar
                                         </button>
                                     </td>
                                 </tr>
@@ -82,4 +82,38 @@
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
+
+    <!-- Modal DELETE -->
+    <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="EliminarFactor" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmar eliminación</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+                <div class="modal-footer">
+                    <form action="{{ route('factors.destroy') }}" method="post">
+                        @csrf @method('DELETE')
+                        <input type="hidden" name="id" value="">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+@stop
+
+@section('scripts')
+    <script>
+        $('#modalDelete').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var id = button.data('id');
+            var modal = $(this);
+
+            modal.find('.modal-footer input[name=id]').val(id);
+        });
+    </script>
 @stop
