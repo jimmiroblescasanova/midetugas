@@ -13,6 +13,11 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class ReportsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function parametrosTomaDeLectura()
     {
         return view('reports.lecture.parameters', [

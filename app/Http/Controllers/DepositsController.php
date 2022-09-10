@@ -4,12 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Client;
 use App\Deposit;
-use App\Http\Requests\StoreDepositRequest;
 use Illuminate\Support\Facades\DB;
 use Luecano\NumeroALetras\NumeroALetras;
+use App\Http\Requests\StoreDepositRequest;
 
 class DepositsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         return view('deposits.index', [
