@@ -74,34 +74,19 @@ class ClientsController extends Controller
     public function update(Client $client, UpdateClientRequest $request)
     {
 
-        if($client->measurer()->exists()){
+        if ($client->measurer()->exists()) {
             $client->measurer->update([
-            'client_id' => NULL,
+                'client_id' => NULL,
             ]);
         }
 
-        if ($request->measurer_id != '0')
-        {
+        if ($request->measurer_id != '0') {
             Measurer::findOrFail($request->measurer_id)->update([
-            'client_id' => $client->id,
+                'client_id' => $client->id,
             ]);
-
         }
 
-        $client->update( $request->validated() );
-
-        return redirect()->route('clients.index');
-    }
-
-    public function attach(Request $request)
-    {
-        $client = Client::findOrFail($request->client_id);
-        $client->measurer_id = $request->measurer_id;
-        $client->save();
-
-        $measurer = Measurer::findOrFail($request->measurer_id);
-        $measurer->active = true;
-        $measurer->save();
+        $client->update($request->validated());
 
         return redirect()->route('clients.index');
     }
@@ -109,8 +94,7 @@ class ClientsController extends Controller
     public function status(Client $client)
     {
         $client->status = !$client->status;
-        if ($client->reconnection_charge == FALSE)
-        {
+        if ($client->reconnection_charge == FALSE) {
             $client->reconnection_charge = TRUE;
         }
         $client->save();
@@ -122,50 +106,8 @@ class ClientsController extends Controller
     {
         Mail::to($client->email)
             ->cc('direccion@efigas.com.mx')
-            ->send( new TestEmail );
+            ->send(new TestEmail);
 
         return redirect()->route('clients.index');
     }
-
-    public function link_client(Client $client)
-    {
-        $id = admClientes::orderBy('CIDCLIENTEPROVEEDOR', 'DESC')->first()->CIDCLIENTEPROVEEDOR;
-
-        $client_linked = admClientes::create(
-            [
-                'CIDCLIENTEPROVEEDOR' => $id+1,
-                'CCODIGOCLIENTE' => 'SMART'.$client['id'],
-                'CRAZONSOCIAL' => $client['name'],
-                'CFECHAALTA' => NOW(),
-                'CRFC' => $client['rfc'],
-                'CIDMONEDA' => '1',
-                'CLISTAPRECIOCLIENTE' => '1',
-                'CBANVENTACREDITO' => '1',
-                'CTIPOCLIENTE' => '1',
-                'CESTATUS' => '1',
-                'CDIAPAGO' => '31',
-                'CDIASREVISION' => '31',
-                'CDIASEMBARQUECLIENTE' => '31',
-                'CDIASEMBARQUEPROVEEDOR' => '31',
-                'CTEXTOEXTRA3' => 'web',
-                'CBANCREDITOYCOBRANZA' => '1',
-                'CBANENVIO' => '1',
-                'CBANAGENTE' => '1',
-                'CBANIMPUESTO' => '1',
-                'CTIMESTAMP' => NOW(),
-                'CIDMONEDA2' => '1',
-                'CEMAIL1' => $client['email'],
-                'CIDADDENDA' => '-1',
-                'CIDCOMPLEM' => '-1',
-            ]
-        );
-
-        $client->update([
-            'admCode' => $id+1
-        ]);
-        $client->save();
-
-        return $client_linked;
-    }
-
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreInventoryRequest;
+use App\Http\Resources\TankResource;
 use App\Traits\UpdateProjectTrait;
 use App\Inventory;
 use App\Project;
@@ -15,7 +16,7 @@ class InventoriesController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except('fillTanks');
     }
 
     public function index()
@@ -34,16 +35,15 @@ class InventoriesController extends Controller
 
     public function store(StoreInventoryRequest $request)
     {
-        $project = Project::findOrFail( $request->project_id );
+        $project = Project::findOrFail($request->project_id);
         $new_total = $project->actual_capacity + $request->quantity;
 
-        if ($project->total_capacity >= $new_total)
-        {
+        if ($project->total_capacity >= $new_total) {
             $project->actual_capacity = $new_total;
             $project->percentage = $this->calculatePercentage($project);
             $project->save();
 
-            Inventory::create( $request->validated() );
+            Inventory::create($request->validated());
         }
 
         return redirect()->route('inventories.index');
@@ -51,15 +51,10 @@ class InventoriesController extends Controller
 
     public function fillTanks()
     {
-        if (request()->ajax())
-        {
-            $tanks = Tank::select('id', 'brand', 'model', 'serial_number')
-                ->where('project_id', request()->input('project_id'))
-                ->get();
+        $tanks = Tank::select('id', 'brand', 'model', 'serial_number')
+            ->where('project_id', request()->input('project_id'))
+            ->get();
 
-            return response()->json([
-                'tanks' => $tanks,
-            ]);
-        }
+        return TankResource::collection($tanks);
     }
 }

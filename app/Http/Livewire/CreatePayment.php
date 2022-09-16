@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Livewire;
+namespace App\Http\Livewire;
 
 use App\Client;
 use App\Document;

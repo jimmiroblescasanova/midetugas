@@ -75,11 +75,11 @@
 
 @section('scripts')
     <script>
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
+        // $.ajaxSetup({
+        //     headers: {
+        //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //     }
+        // });
 
         let today, datepicker;
         today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
@@ -94,21 +94,19 @@
             $('#project_id').on('change', function(e) {
                 // let id = $( "#project_id option:selected" ).val();
                 let id = e.target.value;
-                console.log(id);
+                // console.log(id);
 
                 $.ajax({
-
-                    url: "{{ route('inventories.fillTanks') }}",
+                    url: "/api/inventories/fill-tank",
                     type: "POST",
                     data: {
                         project_id: id
                     },
                     success: function(data) {
                         $('#tank_id').empty();
-                        // console.log(data);
-                        console.log(data.tanks);
-                        $.each(data.tanks, function(index, tank) {
-                            // console.log(tank.serial_number);
+                        // console.log(data.data);
+                        $.each(data.data, function(index, tank) {
+                            console.log(tank);
                             $('#tank_id').append('<option value="' + tank.id + '">' +
                                 tank.brand + ' - ' + tank.model + ' - ' + tank
                                 .serial_number + '</option>');
