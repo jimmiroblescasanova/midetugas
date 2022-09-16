@@ -91,8 +91,9 @@
                                         @endforeach
                                     </tbody>
                                 </table>
-                                <div class="form-group">
+                                <div class="form-group d-flex justify-content-between">
                                     <button type="submit" class="btn btn-sm btn-primary">Guardar</button>
+                                    <x-buttons.back />
                                 </div>
                             </form>
                         </div>
@@ -102,34 +103,36 @@
         </div>
     </section>
 
-    <script>
-        var tabla = document.getElementById("tablaDocumentos");
+    @push('scripts')
+        <script>
+            var tabla = document.getElementById("tablaDocumentos");
 
-        function validateForm() {
-            var pending = document.getElementById("pending").value;
+            function validateForm() {
+                var pending = document.getElementById("pending").value;
 
-            for (let i = 1, row; row = tabla.rows[i]; i++) {
-                var saldoDocumento = Math.round((row.cells[4].innerText) * 100) / 100;
-                var abonoDocumento = Math.round((document.getElementById("pay-" + (i - 1)).value) * 100) / 100;
+                for (let i = 1, row; row = tabla.rows[i]; i++) {
+                    var saldoDocumento = Math.round((row.cells[4].innerText) * 100) / 100;
+                    var abonoDocumento = Math.round((document.getElementById("pay-" + (i - 1)).value) * 100) / 100;
 
-                console.log(abonoDocumento - saldoDocumento);
+                    console.log(abonoDocumento - saldoDocumento);
 
-                if (abonoDocumento > saldoDocumento) {
-                    alert("El abono no puede ser mayor que el saldo pendiente");
+                    if (abonoDocumento > saldoDocumento) {
+                        alert("El abono no puede ser mayor que el saldo pendiente");
+                        return false;
+                    }
+                }
+
+                if (pending < 0) {
+                    alert("El pendiente por abonar no puede ser negativo");
                     return false;
                 }
-            }
 
-            if (pending < 0) {
-                alert("El pendiente por abonar no puede ser negativo");
-                return false;
-            }
-
-            if (pending > 0) {
-                if (!confirm("El saldo pendiente será agregado a la cuenta")) {
-                    return false;
+                if (pending > 0) {
+                    if (!confirm("El saldo pendiente será agregado a la cuenta")) {
+                        return false;
+                    }
                 }
             }
-        }
-    </script>
+        </script>
+    @endpush
 </div>

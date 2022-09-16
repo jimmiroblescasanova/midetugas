@@ -61,7 +61,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="card-footer">
+                <div class="card-footer d-flex justify-content-end">
                     <button onclick="history.back();" class="btn btn-default btn-sm"><i
                             class="fas fa-hand-point-left mr-2"></i>Atrás</button>
                 </div>
