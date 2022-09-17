@@ -18,7 +18,7 @@ class Client extends Model
         return $this->attributes['rfc'] = strtoupper($val);
     }
 
-    public function setReferenceAttribute($val) :string
+    public function setReferenceAttribute($val): string
     {
         return $this->attributes['reference'] = strtoupper($val);
     }
@@ -71,5 +71,13 @@ class Client extends Model
     public function getAccountNumberAttribute()
     {
         return str_pad($this->attributes['id'], 4, '0', STR_PAD_LEFT);
+    }
+
+    public function scopeSearchClient($query, $search)
+    {
+        return $query->where('name', 'LIKE', "%{$search}%")
+            ->orWhere('shortName', 'LIKE', "%{$search}%")
+            ->orWhere('email', 'LIKE', "%{$search}%")
+            ->orWhere('reference', 'LIKE', "%{$search}%");
     }
 }

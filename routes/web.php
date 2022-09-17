@@ -32,7 +32,8 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/testSMS/{id}', [SMSController::class, 'sendSMS'])->name('sms');
 
 //Routes for creating and updating a client
-Route::get('/clients', [ClientsController::class, 'index'])->name('clients.index')->middleware('permission:show_clients');
+// Route::get('/clients', [ClientsController::class, 'index'])->name('clients.index')->middleware('permission:show_clients');
+Route::get('/clients', App\Http\Livewire\Clients::class)->name('clients.index')->middleware('permission:show_clients');
 Route::get('/clients/create', [ClientsController::class, 'create'])->name('clients.create')->middleware('permission:create_clients');
 Route::post('/clients', [ClientsController::class, 'store'])->name('clients.store')->middleware('permission:create_clients');
 Route::get('/clients/{client}', [ClientsController::class, 'show'])->name('clients.show')->middleware('permission:show_clients');
