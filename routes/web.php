@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SMSController;
 use Illuminate\Support\Facades\Storage;
@@ -19,13 +18,19 @@ use App\Http\Controllers\AddressesController;
 use App\Http\Controllers\DocumentsController;
 use App\Http\Controllers\MeasurersController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\InventoriesController;
 use App\Http\Controllers\ConfigurationsController;
 
-Auth::routes();
 Route::get('/', [LoginController::class, 'showLoginForm'])->name('showLoginForm');
 Route::post('login', [LoginController::class, 'login'])->name('login');
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::post('/password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+Route::post('/password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
+Route::get('/password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::get('/password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
