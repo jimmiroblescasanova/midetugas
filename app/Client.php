@@ -75,9 +75,11 @@ class Client extends Model
 
     public function scopeSearchClient($query, $search)
     {
-        return $query->where('name', 'LIKE', "%{$search}%")
-            ->orWhere('shortName', 'LIKE', "%{$search}%")
-            ->orWhere('email', 'LIKE', "%{$search}%")
-            ->orWhere('reference', 'LIKE', "%{$search}%");
+        $search = "%$search%";
+
+        return $query->where('name', 'LIKE', $search)
+            ->orWhere('shortName', 'LIKE', $search)
+            ->orWhere('email', 'LIKE', $search)
+            ->orWhere('reference', 'LIKE', $search);
     }
 }

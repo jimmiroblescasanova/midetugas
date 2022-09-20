@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Factor;
 use App\Measurer;
-use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Requests\StoreMeasurerRequest;
 use App\Http\Requests\UpdateMeasurerRequest;
@@ -33,7 +32,7 @@ class MeasurersController extends Controller
 
     public function store(StoreMeasurerRequest $request)
     {
-        Measurer::create( $request->validated() );
+        Measurer::create($request->validated());
         Alert::success('Correcto', 'Medidor almacenado correctamente');
         return redirect()->route('measurers.index');
     }
@@ -48,24 +47,21 @@ class MeasurersController extends Controller
 
     public function update(Measurer $measurer, UpdateMeasurerRequest $request)
     {
-        $measurer->update( $request->validated() );
+        $measurer->update($request->validated());
         Alert::success('Actualizado', 'Medidor actualizado correctamente');
 
         return redirect()->route('measurers.index');
     }
 
-    public function destroy(Request $request)
+    public function destroy(Measurer $measurer)
     {
-        $measurer = Measurer::findOrFail($request->id);
-
-        if ($measurer->active == true)
-        {
-            return redirect()->back()->with('message', 'No se puede eliminar un medidor activo. Se debe des-asociar del cliente primero.');
+        if ($measurer->active == true) {
+            Alert::error('Error', 'No se puede eliminar un medidor activo. Se debe des-asociar del cliente primero.');
+            return redirect()->back();
         }
 
         $measurer->delete();
         Alert::info('Eliminado', 'Medidor eliminado correctamente');
         return redirect()->route('measurers.index');
     }
-
 }

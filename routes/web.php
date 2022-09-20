@@ -32,7 +32,6 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/testSMS/{id}', [SMSController::class, 'sendSMS'])->name('sms');
 
 //Routes for creating and updating a client
-// Route::get('/clients', [ClientsController::class, 'index'])->name('clients.index')->middleware('permission:show_clients');
 Route::get('/clients', App\Http\Livewire\Clients::class)->name('clients.index')->middleware('permission:show_clients');
 Route::get('/clients/create', [ClientsController::class, 'create'])->name('clients.create')->middleware('permission:create_clients');
 Route::post('/clients', [ClientsController::class, 'store'])->name('clients.store')->middleware('permission:create_clients');
@@ -54,12 +53,13 @@ Route::get('/clients/{client}/suspend', [ClientsController::class, 'status'])->n
 // Route for sending test email
 Route::get('/clients/{client}/test-email', [ClientsController::class, 'testEmail'])->name('clients.testEmail');
 
-Route::get('/measurers', [MeasurersController::class, 'index'])->name('measurers.index')->middleware('permission:show_measurers');
+// Ruta para CRUD de los medidores
+Route::get('/measurers', App\Http\Livewire\Measurers::class)->name('measurers.index')->middleware('permission:show_measurers');
 Route::get('/measurers/create', [MeasurersController::class, 'create'])->name('measurers.create')->middleware('permission:create_measurers');
 Route::post('/measurers', [MeasurersController::class, 'store'])->name('measurers.store')->middleware('permission:create_measurers');
 Route::get('measurers/{measurer}/edit', [MeasurersController::class, 'edit'])->name('measurers.edit');
 Route::patch('measurers/{measurer}', [MeasurersController::class, 'update'])->name('measurers.update');
-Route::delete('/measurers', [MeasurersController::class, 'destroy'])->name('measurers.destroy')->middleware('permission:delete_measurers');
+Route::delete('/measurers/{measurer}', [MeasurersController::class, 'destroy'])->name('measurers.destroy')->middleware('permission:delete_measurers');
 
 // Routes for documents
 Route::get('/documents', [DocumentsController::class, 'index'])->name('documents.index');

@@ -77,12 +77,14 @@ class ClientsController extends Controller
         if ($client->measurer()->exists()) {
             $client->measurer->update([
                 'client_id' => NULL,
+                'active' => false,
             ]);
         }
 
         if ($request->measurer_id != '0') {
             Measurer::findOrFail($request->measurer_id)->update([
                 'client_id' => $client->id,
+                'active' => true,
             ]);
         }
 
