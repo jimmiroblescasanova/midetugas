@@ -222,14 +222,10 @@ class DocumentsController extends Controller
     public function print($id)
     {
         $docto = Document::findOrFail($id);
-        $file = "/pdf/{$docto->reference}.pdf";
+        // $file = "/pdf/{$docto->reference}.pdf";
 
-        if (Storage::disk('public')->exists($file)) {
-            return response()->file(storage_path("app/public/{$file}"));
-        } else {
-            $pdf = $this->generarPDF($docto);
-            return $pdf->stream();
-        }
+        $pdf = $this->generarPDF($docto);
+        return $pdf->stream();
     }
 
     public function generarPDF($docto)
