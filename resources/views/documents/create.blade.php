@@ -22,14 +22,12 @@
                             <div class="col-12">
                                 <div class="form-group">
                                     <label for="client_id">Seleccionar cliente
-                                        <i class="fas fa-question-circle fa-xs" data-toggle="tooltip" data-placement="right"
-                                            title="Solo muestran clientes en condominios con inventario"></i>
+                                        <i class="fas fa-question-circle fa-xs" data-toggle="tooltip" data-placement="right" title="Solo muestran clientes en condominios con inventario y medidor asociado."></i>
                                     </label>
                                     <select class="form-control select2bs4" name="client_id" id="client_id">
                                         @foreach ($clients as $client)
-                                            @if ($client->measurer()->exists() and $client->project->actual_capacity > 0)
-                                                <option value="{{ $client->id }}">{{ $client->name }} - Edif:
-                                                    {{ $client->line_2 }} - Depto: {{ $client->line_3 }}</option>
+                                            @if ($client->measurer()->exists())
+                                                <option value="{{ $client->id }}">{{ $client->name }} - Edif: {{ $client->line_2 }} - Depto: {{ $client->line_3 }}</option>
                                             @endif
                                         @endforeach
                                     </select>
@@ -40,9 +38,7 @@
                             <div class="col-md-6 col-12">
                                 <div class="form-group">
                                     <label for="date">Fecha</label>
-                                    <input type="text" name="date" id="date"
-                                        class="form-control datepicker {{ $errors->first('date') ? 'is-invalid' : '' }}"
-                                        value="{{ old('date') }}">
+                                    <input type="text" name="date" id="date" class="form-control datepicker {{ $errors->first('date') ? 'is-invalid' : '' }}" value="{{ old('date') }}">
                                     {!! $errors->first('date', '<div class="invalid-feedback">:message</div>') !!}
                                 </div>
                             </div>

@@ -73,7 +73,8 @@
                     <option value="{{ $client->measurer->id }}" selected>{{ $client->measurer->model }}</option>
                 @endif
                 @foreach ($measurers as $measurer)
-                    <option value="{{ $measurer->id }}">{{ $measurer->model }}</option>
+                    <option value="{{ $measurer->id }}">{{ $measurer->model }}, {{ $measurer->serial_number }}
+                    </option>
                 @endforeach
             </select>
             {!! $errors->first('measurer_id', '<div class="invalid-feedback">:message</div>') !!}

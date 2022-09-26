@@ -172,10 +172,26 @@
         </tr>
         <tr>
             <td style="font-size: 14px;">
-                <span>Banco: Santander</span>
-                <span>No. Cuenta: 65-50840631-7</span>
-                <span>CLABE: 014691655084063172</span>
-                <span>Nombre: JOMAX OBRA Y EQUIPO INDUSTRIAL SA DE CV</span>
+                <table style="width: 100%">
+                    <tr>
+                        <td><img src="{{ asset('logos/scotiabank.jpg') }}" alt="logo scotiabank" width="100px;"></td>
+                        <td><img src="{{ asset('logos/paypal.jpg') }}" alt="logo paypal" width="100px"></td>
+                        <td><img src="{{ asset('logos/oxxo.jpg') }}" alt="logo oxxo" width="100px"></td>
+                    </tr>
+                    <tr>
+                        <td>Clabe interbancaria</td>
+                        <td>Link de pago</td>
+                        <td>Tarjeta para depósito</td>
+                    </tr>
+                    <tr>
+                        <td>0446 9125 6035 8889 66</td>
+                        <td>https://paypal.me/midetugas</td>
+                        <td>4043 1300 0532 8964</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">Pagos a nombre de: YURI ENRIQUETA SANCHEZ CONTRERAS</td>
+                    </tr>
+                </table>
             </td>
         </tr>
     </table>

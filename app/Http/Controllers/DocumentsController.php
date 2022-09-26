@@ -40,7 +40,7 @@ class DocumentsController extends Controller
     public function create()
     {
         return view('documents.create', [
-            'clients' => Client::all(),
+            'clients' => Client::has('project')->get(),
         ]);
     }
 

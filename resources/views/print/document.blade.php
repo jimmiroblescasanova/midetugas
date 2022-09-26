@@ -292,8 +292,7 @@
                         <span class="titleOrange">DATOS PARA PAGO</span>
                         <table class="datos-banco" style="width: 100%">
                             <tr>
-                                <td><img src="{{ asset('logos/scotiabank.jpg') }}" alt="logo scotiabank"
-                                        width="100px;"></td>
+                                <td><img src="{{ asset('logos/scotiabank.jpg') }}" alt="logo scotiabank" width="100px;"></td>
                                 <td><img src="{{ asset('logos/paypal.jpg') }}" alt="logo paypal" width="100px"></td>
                                 <td><img src="{{ asset('logos/oxxo.jpg') }}" alt="logo oxxo" width="100px"></td>
                             </tr>
@@ -303,7 +302,7 @@
                                 <td>Tarjeta para depósito</td>
                             </tr>
                             <tr>
-                                <td>0446 9125 6035 8889</td>
+                                <td>0446 9125 6035 8889 66</td>
                                 <td>https://paypal.me/midetugas</td>
                                 <td>4043 1300 0532 8964</td>
                             </tr>
