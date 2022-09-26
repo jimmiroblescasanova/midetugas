@@ -425,7 +425,7 @@
                     {{-- medidor --}}
                     <div class="medidor">
                         <div class="title">Medidor</div>
-                        <img src="{{ asset($docto->photo) }}" width="170px" alt="">
+                        <img src="{{ asset('storage/'.$docto->photo) }}" width="170px" alt="">
                     </div>
                 </td>
             </tr>
