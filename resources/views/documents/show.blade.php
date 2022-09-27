@@ -103,8 +103,7 @@
                                 Estado del documento: {!! status($document->status) !!}
                             </div>
                             <h3 class="text-primary"><i class="fas fa-image"></i> Fotografía del medidor</h3>
-                            <img src="{{ asset('storage/'.$document->photo) }}" class="img-fluid mx-auto d-block rounded"
-                                alt="">
+                            <img src="{{ asset('storage/'.$document->photo) }}" class="img-fluid mx-auto d-block rounded" alt="">
 
                             <div class="text-muted float-sm-right">
                                 <p class="text-sm">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Image;
 use App\Price;
 use App\Client;
 use App\Project;
@@ -46,6 +47,18 @@ class DocumentsController extends Controller
 
     public function store(SaveDocumentRequest $request)
     {
+        // almacena la ruta tmp de foto
+        $files = $request->file('photo');
+        // convert image
+        $ImageUpload = Image::make($files);
+        // Corrige la orientacion de la imagen
+        if ($ImageUpload->exif('Orientation') == 6) {
+            $ImageUpload->rotate(-90)->heighten(800);
+        } elseif($ImageUpload->exif('Orientation') == 8) {
+            $ImageUpload->rotate(90)->heighten(800);
+        }
+        $ImageUpload->encode('jpg');
+
         // Primero obtenemos el precio actual de la BD
         $price = Price::latest()->first()->price;
         // Se obtiene el cliente capturado
@@ -58,7 +71,8 @@ class DocumentsController extends Controller
         // Se calcula el día de pago a partir de la fecha de captura
         $payment_date = Carbon::create($request->date)->addDays(10);
         // Guarda la foto y asigna la ruta
-        $photo = $request->file('photo')->store('images');
+        $photo = 'images/' . $files->hashName();
+        // $photo = $request->file('photo')->store('images');
         // Consumo del mes
         $month_quantity = $request->final_quantity - $client->measurer->actual_measure;
         // Factor de correccion
@@ -119,6 +133,8 @@ class DocumentsController extends Controller
                     'actual_capacity' => $project->actual_capacity - ($month_quantity * 4.1848), // Se multiplica por la conversión a litros
                     'percentage' => $this->calculatePercentage($project),
                 ]);
+            // Guarda la foto en BD
+            Storage::put($photo, $ImageUpload->__toString());
             // Si es correcto, guarda los cambios
             DB::commit();
         } catch (\Exception $e) {
