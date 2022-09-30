@@ -74,10 +74,10 @@
                 <tr>
                     <td>{{ $document->client->name }}</td>
                     <td>{{ $document->client->project->name }}</td>
-                    <td>{{ $document->client->line_1 }}</td>
-                    <td>{{ $document->suma }}</td>
-                    <td>{{ $document->suma - $document->pendiente }}</td>
-                    <td>{{ $document->pendiente }}</td>
+                    <td>{{ $document->client->line_3 }}</td>
+                    <td>{{ contabilidad($document->suma /100) }}</td>
+                    <td>{{ contabilidad(($document->suma - $document->pendiente) / 100) }}</td>
+                    <td>{{ contabilidad($document->pendiente / 100) }}</td>
                 </tr>
             @endforeach
         </tbody>

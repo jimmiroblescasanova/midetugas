@@ -26,6 +26,7 @@ class SaveDocumentRequest extends FormRequest
         return [
             'client_id' => 'required|exists:clients,id',
             'date' => 'required|date',
+            'admCharge' => 'required|numeric',
             'final_quantity' => 'required',
             'photo' => 'required|image'
         ];

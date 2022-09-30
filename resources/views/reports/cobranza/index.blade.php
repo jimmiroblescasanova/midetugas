@@ -23,7 +23,7 @@
                             </div>
                         @endif
                     </div>
-                    <form id="account-status" method="POST">
+                    <form id="account-status" target="_blank" method="POST">
                         @csrf
                         <div class="row">
                             <div class="col-md-2">
@@ -58,7 +58,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="client_first">Seleccionar cliente inicial</label>
-                                    <select name="client_first" id="client_first" class="form-control">
+                                    <select name="client_first" id="client_first" class="select2bs4 form-control">
                                         @foreach ($clients as $id => $client)
                                             <option value="{{ $id }}">{{ $client }} ({{ $id }})
                                             </option>
@@ -69,7 +69,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="client_last">Seleccionar cliente final</label>
-                                    <select name="client_last" id="client_last" class="form-control">
+                                    <select name="client_last" id="client_last" class="select2bs4 form-control">
                                         @foreach ($clients as $id => $client)
                                             <option value="{{ $id }}">{{ $client }} ({{ $id }})
                                             </option>
@@ -80,9 +80,9 @@
                         </div>
                         <button type="submit" id="execute" class="btn btn-sm btn-primary">
                             <i class="fas fa-desktop mr-2"></i>Pantalla</button>
-                        <button type="submit" formaction="{{ route('cobranza.pdf') }}" class="btn btn-sm btn-danger"><i
+                        <button type="submit" formaction="{{ route('reportes.cobranza.pdf') }}" class="btn btn-sm btn-danger"><i
                                 class="fas fa-file-pdf mr-2"></i>PDF</button>
-                        <button type="submit" id="exportExcel" formaction="{{ route('cobranza.excel') }}"
+                        <button type="submit" id="exportExcel" formaction="{{ route('reportes.cobranza.excel') }}"
                             class="btn btn-sm btn-success">
                             <i class="fas fa-file-excel mr-2"></i>Excel</button>
                     </form>
@@ -98,6 +98,7 @@
                         <thead>
                             <tr>
                                 <th>Cliente</th>
+                                <th>Departamento</th>
                                 <th>Total</th>
                                 <th>Abonos</th>
                                 <th>Saldo</th>
@@ -119,7 +120,7 @@
         $("#execute").click(function(event) {
             event.preventDefault();
             const token = $('meta[name="csrf-token"]').attr('content');
-            let route = "{{ route('cobranza.screen') }}";
+            let route = "{{ route('reportes.cobranza.screen') }}";
             let data = $('#account-status').serialize();
 
             $.ajax({
@@ -137,6 +138,7 @@
                     $.each(rows, function(i, val) {
                         // console.log(val.id);
                         html += "<tr><td>" + val.client.name + "</td>" +
+                            "<td>"+ val.client.line_3 +"</td>"+
                             "<td>" + numeral(val.suma / 100).format('$0,0.00') + "</td>" +
                             "<td class='text-right'>" + numeral((val.suma - val.pendiente) /
                                 100)

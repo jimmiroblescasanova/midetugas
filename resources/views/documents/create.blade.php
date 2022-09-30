@@ -35,20 +35,27 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6 col-12">
+                            <div class="col-md-4 col-12">
                                 <div class="form-group">
                                     <label for="date">Fecha</label>
                                     <input type="text" name="date" id="date" class="form-control datepicker {{ $errors->first('date') ? 'is-invalid' : '' }}" value="{{ old('date') }}">
                                     {!! $errors->first('date', '<div class="invalid-feedback">:message</div>') !!}
                                 </div>
                             </div>
-                            <div class="col-md-6 col-12">
+                            <div class="col-md-4 col-12">
                                 <div class="form-group">
                                     <label for="final_quantity">Lectura actual</label>
                                     <input type="text" name="final_quantity" id="final_quantity"
                                         class="form-control {{ $errors->first('final_quantity') ? 'is-invalid' : '' }}"
                                         value="{{ old('final_quantity') }}">
                                     {!! $errors->first('final_quantity', '<div class="invalid-feedback">:message</div>') !!}
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-12">
+                                <div class="form-group">
+                                    <label for="admCharge">Cargo por administración</label>
+                                    <input type="text" name="admCharge" id="admCharge" class="form-control {{ $errors->first('admCharge') ? 'is-invalid' : '' }}" value="{{ old('admCharge') }}">
+                                    {!! $errors->first('admCharge', '<div class="invalid-feedback">:message</div>') !!}
                                 </div>
                             </div>
                         </div>

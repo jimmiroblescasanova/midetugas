@@ -71,6 +71,7 @@ Route::get('/documents', [DocumentsController::class, 'index'])->name('documents
 Route::get('/documents/create', [DocumentsController::class, 'create'])->name('documents.create')->middleware('permission:create_documents');
 Route::post('/documents', [DocumentsController::class, 'store'])->name('documents.store')->middleware('permission:create_documents');
 Route::get('/documents/{document}/ver', [DocumentsController::class, 'show'])->name('documents.show')->middleware('permission:show_documents');
+Route::post('/documents/{document}/ver/discount', [DocumentsController::class, 'discount'])->name('documents.discount')->middleware('permission:create_documents');
 Route::get('/documents/{id}/authorize', [DocumentsController::class, 'authorizeDocument'])->name('documents.authorize')->middleware('permission:authorize_documents');
 Route::get('/documents/{document}/cancel', [DocumentsController::class, 'cancel'])->name('documents.cancel')->middleware('permission:cancel_documents');
 Route::get('/documents/{id}/print', [DocumentsController::class, 'print'])->name('documents.print');
@@ -117,17 +118,32 @@ Route::post('/deposits', [DepositsController::class, 'store'])->name('deposits.s
 Route::get('/deposits/{deposit}/show', [DepositsController::class, 'show'])->name('deposits.show');
 Route::get('/deposits/{deposit}/cancel', [DepositsController::class, 'cancel'])->name('deposits.cancel');
 
-Route::get('/reportes/TomaDeLectura', [ReportsController::class, 'parametrosTomaDeLectura'])->name('tomaDeLectura.parameters');
-Route::post('reportes/TomaDeLectura', [ReportsController::class, 'pdfTomaDeLectura'])->name('tomaDeLectura.show');
+Route::group([
+    'prefix' => '/reportes/TomaDeLectura',
+    'as' => 'reportes.tomaDeLectura.',
+], function() {
+    Route::get('/', [ReportsController::class, 'parametrosTomaDeLectura'])->name('parameters');
+    Route::post('/', [ReportsController::class, 'pdfTomaDeLectura'])->name('show');
+});
 
-Route::get('/reportes/cobranza', [ReportsController::class, 'parametrosCobranza'])->name('cobranza.parameters');
-Route::post('/reportes/cobranza/excel', [ReportsController::class, 'excelCobranza'])->name('cobranza.excel');
-Route::post('/reportes/cobranza/screen', [ReportsController::class, 'pantallaCobranza'])->name('cobranza.screen');
-Route::post('/reports/cobranza/pdf', [ReportsController::class, 'pdfCobranza'])->name('cobranza.pdf');
+Route::group([
+    'prefix' => '/reportes/cobranza',
+    'as' => 'reportes.cobranza.',
+], function() {
+    Route::get('/', [ReportsController::class, 'parametrosCobranza'])->name('parameters');
+    Route::post('/excel', [ReportsController::class, 'excelCobranza'])->name('excel');
+    Route::post('/screen', [ReportsController::class, 'pantallaCobranza'])->name('screen');
+    Route::post('/pdf', [ReportsController::class, 'pdfCobranza'])->name('pdf');
+});
 
-Route::get('/reports/edc', [ReportsController::class, 'edcParameters'])->name('edc.parameters');
-Route::post('/ajax/edc', [ReportsController::class, 'edcScreen'])->name('edc.screen');
-Route::post('/reports/edc/excel', [ReportsController::class, 'edcExportExcel'])->name('edc.excel');
+Route::group([
+    'prefix' => '/reportes/edc',
+    'as' => 'reportes.edc.'
+], function() {
+    Route::get('/', [ReportsController::class, 'edcParameters'])->name('parameters');
+    Route::post('/ajax', [ReportsController::class, 'edcScreen'])->name('screen');
+    Route::post('/excel', [ReportsController::class, 'edcExportExcel'])->name('excel');
+});
 
 Route::get('/configurations/tasks', [ConfigurationsController::class, 'tasks'])->name('configuration.tasks')->middleware('permission:run_tasks');
 Route::post('/configurations/tasks', [ConfigurationsController::class, 'recalcularInventario'])->name('configurations.run.recalcularInventario')->middleware('permission:run_tasks');
@@ -141,3 +157,5 @@ Route::delete('/configuration/factors', [FactorsController::class, 'destroy'])->
 Route::get('/download/{file}', function ($file) {
     return Storage::download('pdf/' . $file . '.zip');
 });
+
+Route::get('/reportes/depositos-garantia', \App\Http\Livewire\Reportes\DepositosGarantia::class)->name('reportes.depositos-garantia.index');

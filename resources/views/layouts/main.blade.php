@@ -24,6 +24,7 @@
     <!-- overlayScrollbars -->
     <link rel="stylesheet" href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" />
     <link rel="stylesheet" href="{{ asset('/css/app.css') }}">
+    @livewireStyles
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed">
@@ -88,6 +89,7 @@
     <script src="https://unpkg.com/gijgo@1.9.13/js/messages/messages.es-es.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/min/moment-with-locales.min.js"></script>
+    @livewireScripts
     @yield('scripts')
     <script>
         $('#logoutButton').on('click', function(event) {
@@ -97,7 +99,6 @@
         //Initialize Select2 Elements
         $('.select2bs4').select2({
             theme: 'bootstrap4',
-            allowClear: true
         });
     </script>
 </body>

@@ -136,8 +136,8 @@
                     </li>
                 @endcan
                 <li
-                    class="nav-item has-treeview {{ showMenu('tomaDeLectura.*') . showMenu('cobranza.*') . showMenu('edc.*') }}">
-                    <a href="#" class="nav-link {{ setActive('tomaDeLectura.*') . setActive('cobranza.*') }}">
+                    class="nav-item has-treeview {{ showMenu('reportes.*') }}">
+                    <a href="#" class="nav-link {{ setActive('reportes.*') }}">
                         <i class="nav-icon fas fa-funnel-dollar"></i>
                         <p>Reportes
                             <i class="right fas fa-angle-left"></i>
@@ -145,23 +145,27 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('tomaDeLectura.parameters') }}"
-                                class="nav-link {{ setActive('tomaDeLectura.*') }}">
+                            <a href="{{ route('reportes.tomaDeLectura.parameters') }}" class="nav-link {{ setActive('reportes.tomaDeLectura.*') }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Toma de lectura</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('cobranza.parameters') }}"
-                                class="nav-link {{ setActive('cobranza.*') }}">
+                            <a href="{{ route('reportes.cobranza.parameters') }}" class="nav-link {{ setActive('reportes.cobranza.*') }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Saldo de clientes</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('edc.parameters') }}" class="nav-link {{ setActive('edc.*') }}">
+                            <a href="{{ route('reportes.edc.parameters') }}" class="nav-link {{ setActive('reportes.edc.*') }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Estado de cuenta</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('reportes.depositos-garantia.index') }}" class="nav-link {{ setActive('reportes.depositos-garantia.*') }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Depositos</p>
                             </a>
                         </li>
                     </ul>

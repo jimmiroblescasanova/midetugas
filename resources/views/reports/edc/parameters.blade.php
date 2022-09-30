@@ -58,9 +58,9 @@
                             <div class="col-md-5">
                                 <div class="form-group">
                                     <label for="client">Seleccionar cliente</label>
-                                    <select name="client" id="client" class="form-control">
-                                        @foreach ($clients as $id => $client)
-                                            <option value="{{ $id }}">{{ $client }}</option>
+                                    <select name="client" id="client" class="select2bs4 form-control">
+                                        @foreach ($clients as $client)
+                                            <option value="{{ $client->id }}">{{ $client->name }} ({{ $client->line_3 }})</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -87,7 +87,7 @@
                         <button type="submit" id="execute" class="btn btn-sm btn-primary">
                             <i class="fas fa-desktop mr-2"></i>Pantalla
                         </button>
-                        <button type="submit" id="exportExcel" formaction="{{ route('edc.excel') }}"
+                        <button type="submit" id="exportExcel" formaction="{{ route('reportes.edc.excel') }}"
                             class="btn btn-sm btn-success">
                             <i class="fas fa-file-excel mr-2"></i>Excel</button>
                     </form>
@@ -135,7 +135,7 @@
         $("#execute").click(function(event) {
             event.preventDefault();
             const token = $('meta[name="csrf-token"]').attr('content');
-            let route = "{{ route('edc.screen') }}";
+            let route = "{{ route('reportes.edc.screen') }}";
             let data = $('#edcForm').serialize();
 
             $.ajax({

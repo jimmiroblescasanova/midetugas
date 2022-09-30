@@ -37,7 +37,7 @@ class PaymentsController extends Controller
         $paymentData = [
             'client_id' => $request->client,
             'amount' => $request->total,
-            'date' => NOW(),
+            'date' => $request->date,
         ];
 
         try {

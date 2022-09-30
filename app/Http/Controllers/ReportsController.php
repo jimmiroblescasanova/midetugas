@@ -121,7 +121,7 @@ class ReportsController extends Controller
         ->get();
 
         return view('reports.edc.parameters', [
-            'clients' => Client::pluck('name', 'id'),
+            'clients' => Client::all(),
             'years' => $years
         ]);
     }
@@ -131,6 +131,7 @@ class ReportsController extends Controller
         if($request->ajax())
         {
             $documents = Document::where('client_id', $request->client)
+                ->where('status', '<>', 3)
                 ->when(!$request->allDocuments, function ($q){
                     $q->where('pending', '>', 0);
                 })

@@ -34,6 +34,13 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
+                                    <label for="date" class="col-sm-3 col-form-label">Fecha del pago</label>
+                                    <div class="col-sm-9">
+                                        <input type="date" class="form-control" id="date" name="date"
+                                            value="{{ $client->date }}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
                                     <label for="name" class="col-sm-3 col-form-label">Saldo a favor</label>
                                     <div class="col-sm-3">
                                         <input type="text" readonly class="form-control-plaintext" id="saldo"

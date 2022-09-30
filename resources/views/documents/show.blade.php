@@ -22,13 +22,16 @@
                         <a href="{{ route('payments.create', $document->client_id) }}" class="btn btn-app">
                             <i class="fas fa-coins"></i>Pagar</a>
                     @endif
+                    <button class="btn btn-app" data-toggle="modal" data-target="#discountModal">
+                        <i class="fas fa-percent"></i>Descuento
+                    </button>
+                    <a href="{{ route('documents.print', $document->id) }}" class="btn btn-app" target="_blank">
+                        <i class="fas fa-print"></i>Imprimir</a>
                     @if (($document->status == 1 || $document->status == 2) &&
                         auth()->user()->can('cancel_documents'))
                         <a href="{{ route('documents.cancel', $document) }}" class="btn btn-app">
                             <i class="fas fa-ban"></i>Cancelar</a>
                     @endif
-                    <a href="{{ route('documents.print', $document->id) }}" class="btn btn-app" target="_blank">
-                        <i class="fas fa-print"></i>Imprimir</a>
                     <button type="button" class="btn btn-app" onclick="history.back()">
                         <i class="far fa-hand-point-left"></i>Atrás</button>
                 </div>
@@ -41,7 +44,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1">
-                            <div class="row">
+                            {{-- <div class="row">
                                 <div class="col-12 col-sm-4">
                                     <div class="info-box bg-light">
                                         <div class="info-box-content">
@@ -69,7 +72,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="row">
                                 <div class="col-6">
                                     <h4>Datos del cliente</h4>
@@ -102,8 +105,44 @@
                             <div class="mb-3">
                                 Estado del documento: {!! status($document->status) !!}
                             </div>
+                            <table class="table table-sm">
+                                <tr>
+                                    <th>Consumo</th>
+                                    <td class="text-right">{{ number_format($document->subtotal, 2) }}</td>
+                                </tr>
+                                <tr>
+                                    <th>(+)Cargo por admon.</th>
+                                    <td class="text-right">{{ number_format($document->adm_charge, 2) }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Subtotal</th>
+                                    <td class="text-right">
+                                        {{ number_format($document->subtotal + $document->adm_charge, 2) }}</td>
+                                </tr>
+                                <tr>
+                                    <th>(-)Descuento</th>
+                                    <td class="text-right">{{ number_format($document->discount, 2) }}</td>
+                                </tr>
+                                <tr>
+                                    <th>(+)IVA</th>
+                                    <td class="text-right">{{ number_format($document->iva, 2) }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Total</th>
+                                    <td class="text-right">{{ number_format($document->total, 2) }}</td>
+                                </tr>
+                                <tr>
+                                    <th>(+)Saldo anterior</th>
+                                    <td class="text-right">{{ number_format($acumulado, 2) }}</td>
+                                </tr>
+                                <tr>
+                                    <th>(=)A PAGAR</th>
+                                    <td class="text-right">{{ number_format($acumulado + $document->total, 2) }}</td>
+                                </tr>
+                            </table>
                             <h3 class="text-primary"><i class="fas fa-image"></i> Fotografía del medidor</h3>
-                            <img src="{{ asset('storage/'.$document->photo) }}" class="img-fluid mx-auto d-block rounded" alt="">
+                            <img src="{{ asset('storage/' . $document->photo) }}" height="300px"
+                                class="mx-auto d-block rounded" alt="">
 
                             <div class="text-muted float-sm-right">
                                 <p class="text-sm">
@@ -116,8 +155,36 @@
             </div>
         </div>
     </div>
-    </div>
 @stop
+
+@section('modal-section')
+    <div class="modal fade" id="discountModal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Aplicar descuento</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{{ route('documents.discount', $document) }}" method="post">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                          <label for="discount">Cantidad del descuento</label>
+                          <input type="text" class="form-control" name="discount" id="discount">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+@endsection
 
 @section('scripts')
     <script>

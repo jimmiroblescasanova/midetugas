@@ -32,14 +32,20 @@
                                 value="{{ $payment->client->rfc }}">
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label for="total" class="col-sm-3 col-form-label">Importe del pago</label>
-                        <div class="col-sm-9">
+                    <div class="row">
+                        <div class="form-group col-sm-6">
+                            <label for="total" class="col-form-label">Importe del pago</label>
                             <input type="text" name="total" id="total" class="form-control-plaintext" readonly
                                 value="$ {{ number_format($payment->amount, 2) }}">
                         </div>
+                        <div class="form-group col-sm-6">
+                            <label for="total" class="col-form-label">Fecha del pago</label>
+                            <input type="text" name="total" id="total" class="form-control-plaintext" readonly
+                                value="{{ $payment->date->format('d-m-Y') }}">
+                        </div>
                     </div>
                     <hr>
+                    <span>Documentos pagados:</span>
                     <table class="table table-sm table-striped table-inverse" id="tablaDocumentos">
                         <thead class="thead-inverse">
                             <tr>

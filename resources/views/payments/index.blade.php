@@ -61,12 +61,13 @@
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="">Seleccionar un cliente</label>
-                            <select class="form-control" name="client" id="client">
+                            @livewire('search-clients')
+                            {{-- <label for="">Seleccionar un cliente</label>
+                            <select class="form-control select2" name="client" id="client">
                                 @foreach ($clients as $id => $name)
                                     <option value="{{ $id }}">{{ $name }}</option>
                                 @endforeach
-                            </select>
+                            </select> --}}
                         </div>
                     </div>
                     <div class="modal-footer">

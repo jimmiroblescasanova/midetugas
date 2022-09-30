@@ -10,6 +10,7 @@ use App\Document;
 use App\Measurer;
 use Carbon\Carbon;
 use App\Traits\SendSmsTrait;
+use Illuminate\Http\Request;
 use App\Traits\GraphBarTrait;
 use App\Mail\AuthorizeReceipt;
 use App\Traits\UpdateProjectTrait;
@@ -78,7 +79,8 @@ class DocumentsController extends Controller
         // Factor de correccion
         $correction_factor = $client->measurer->correction_factor;
         // Subtotal del mes
-        $subtotal = (100 + ($month_quantity * $correction_factor) * $price);
+        $neto = ($month_quantity * $correction_factor) * $price;
+        $subtotal = $neto + $request->admCharge;
         // Calculo del IVA
         $iva = ($subtotal * 1.16) - $subtotal;
         // Importe total del mes
@@ -99,9 +101,9 @@ class DocumentsController extends Controller
             'month_quantity' => $month_quantity,
             'correction_factor' => $correction_factor,
             'period' => Carbon::create($request->date)->subMonth()->isoFormat('MMMM, Y'),
-            'adm_charge' => 100,
+            'adm_charge' => $request->admCharge*100,
             'price' => $price,
-            'subtotal' => $subtotal * 100,
+            'subtotal' => $neto * 100,
             'iva' => $iva * 100,
             'total' => $total * 100,
             'pending' => $total * 100,
@@ -161,7 +163,7 @@ class DocumentsController extends Controller
         return view('documents.show', [
             'document' => $document,
             'chart' => $chart,
-            'advance_payment' => Client::findOrFail($document->client_id)->advance_payment,
+            'acumulado' => $this->calcularAcumulado($document->client_id, $document->date),
         ]);
     }
 
@@ -203,6 +205,23 @@ class DocumentsController extends Controller
 
         Alert::success('Autorizado', 'El registro ha sido autorizado con éxito.');
         return redirect()->route('documents.index');
+    }
+
+    public function discount(Document $document, Request $request)
+    {
+        $subtotal = ($document->subtotal + $document->adm_charge) - $request->discount;
+        $iva = ($subtotal * 1.16) - $subtotal;
+        $total = $subtotal + $iva;
+
+        $document->update([
+            'discount' => $request->discount,
+            'iva' => $iva,
+            'total' => $total,
+            'pending' => $total,
+        ]);
+
+        Alert::info('Descuento aplicado', 'El descuento se ha aplicado correctamente.');
+        return redirect()->back();
     }
 
     public function cancel(Document $document)
@@ -260,10 +279,23 @@ class DocumentsController extends Controller
         // Generar el PDF
         $pdf = \PDF::loadView('print.document', [
             'docto' => $docto,
+            'acumulado' => $this->calcularAcumulado($docto->client_id, $docto->date),
             'chart' => urlencode($chart),
             'historic' => $historic->take(2),
         ]);
         $pdf->setPaper('A4', 'portrait');
         return $pdf;
+    }
+
+    public function calcularAcumulado($client, $date): int
+    {
+        // calcular el acumulado de saldos
+        $acumulado = Document::where([
+            ['client_id', $client],
+            ['status', 2],
+            ['date', '<', $date]
+        ])->sum('pending');
+
+        return $acumulado / 100;
     }
 }

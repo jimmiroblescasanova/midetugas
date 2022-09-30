@@ -11,7 +11,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('tomaDeLectura.show') }}" method="POST">
+                    <form target="_blank" action="{{ route('reportes.tomaDeLectura.show') }}" method="POST">
                         @csrf
                         <div class="row">
                             <div class="col-md-8">

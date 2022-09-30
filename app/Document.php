@@ -56,9 +56,9 @@ class Document extends Model
         return $this->attributes['iva'] / 100;
     }
 
-    public function setTotalAtribute($val)
+    public function setTotalAttribute($val)
     {
-        return $this->attributes['total'] = $val*100;
+        return $this->attributes['total'] = $val * 100;
     }
 
     public function getTotalAttribute()
@@ -76,9 +76,24 @@ class Document extends Model
         return $this->attributes['pending'] / 100;
     }
 
-    public function getGrandTotalAttribute()
+    public function setDiscountAttribute($val)
     {
-        return $this->total + $this->previous_balance;
+        return $this->attributes['discount'] = $val * 100;
+    }
+
+    public function getDiscountAttribute()
+    {
+        return $this->attributes['discount'] / 100;
+    }
+
+    public function setAdmChargeAttribute($val)
+    {
+        return $this->attributes['adm_charge'] = $val * 100;
+    }
+
+    public function getAdmChargeAttribute()
+    {
+        return $this->attributes['adm_charge'] / 100;
     }
 
 }

@@ -356,69 +356,37 @@
                         <div class="title">Estado de Cuenta</div>
                         <table id="tabla-saldos">
                             <tr>
-                                <td>Saldo anterior</td>
-                                <td style="width: 40%;">
-                                    <span>$</span>
-                                    <span>
-                                        {{ number_format($docto->client->balance, 2) }}
-                                    </span>
-                                </td>
-                            </tr>
-                            {{-- <tr>
-                                <td>Ajuste meses ant.</td>
-                                <td>
-                                    <span>$</span>
-                                    <span>{{ number_format($docto->previous_balance, 2) }}</span>
-                                </td>
-                            </tr> --}}
-                            <tr>
-                                <td>Consumo del mes</td>
-                                <td>
-                                    <span>$</span>
-                                    <span>{{ number_format($docto->subtotal - 100, 2) }}</span>
-                                </td>
+                                <th>Consumo</th>
+                                <td class="text-right">{{ contabilidad($docto->subtotal) }}</td>
                             </tr>
                             <tr>
-                                <td>Cargo por administración</td>
-                                <td>
-                                    <span>$</span>
-                                    <span>{{ number_format($docto->adm_charge, 2) }}</span>
-                                </td>
+                                <th>(+)Cargo por admon.</th>
+                                <td class="text-right">{{ contabilidad($docto->adm_charge) }}</td>
                             </tr>
                             <tr>
-                                <td>Subtotal</td>
-                                <td>
-                                    <span>$</span>
-                                    <span>{{ number_format($docto->subtotal, 2) }}</span>
-                                </td>
+                                <th>Subtotal</th>
+                                <td class="text-right">
+                                    {{ contabilidad($docto->subtotal + $docto->adm_charge) }}</td>
                             </tr>
                             <tr>
-                                <td>IVA</td>
-                                <td>
-                                    <span>$</span>
-                                    <span>{{ number_format($docto->iva, 2) }}</span>
-                                </td>
+                                <th>(-)Descuento</th>
+                                <td class="text-right">{{ contabilidad($docto->discount) }}</td>
                             </tr>
                             <tr>
-                                <td>Cargos del mes</td>
-                                <td>
-                                    <span>$</span>
-                                    <span>{{ number_format($docto->total, 2) }}</span>
-                                </td>
+                                <th>(+)IVA</th>
+                                <td class="text-right">{{ contabilidad($docto->iva) }}</td>
                             </tr>
-                            {{-- <tr>
-                                <td>Ajuste mes siguiente</td>
-                                <td>
-                                    <span>$</span>
-                                    <span>{{ number_format($docto->client->balance, 2) }}</span>
-                                </td>
-                            </tr> --}}
                             <tr>
-                                <td>A pagar</td>
-                                <td>
-                                    <span>$</span>
-                                    <span>{{ number_format($docto->total + $docto->client->balance, 2) }}</span>
-                                </td>
+                                <th>Total</th>
+                                <td class="text-right">{{ contabilidad($docto->total) }}</td>
+                            </tr>
+                            <tr>
+                                <th>(+)Saldo anterior</th>
+                                <td class="text-right">{{ contabilidad($acumulado) }}</td>
+                            </tr>
+                            <tr>
+                                <th>(=)A PAGAR</th>
+                                <td class="text-right">{{ contabilidad($acumulado + $docto->total) }}</td>
                             </tr>
                         </table>
                     </div>

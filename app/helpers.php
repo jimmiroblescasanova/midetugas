@@ -42,3 +42,10 @@ if (!function_exists('status')) {
         }
     }
 }
+
+if (!function_exists('contabilidad')) {
+    function contabilidad($number)
+    {
+        return "$ " . number_format($number, 2);
+    }
+}
