@@ -6,9 +6,12 @@
                     <h1><i class="fas fa-hand-holding-usd"></i> Clientes</h1>
                 </div>
                 @can('create_clients')
-                    <div class="col-sm-6">
-                        <a href="{{ route('clients.create') }}"
-                            class="btn btn-primary btn-sm float-sm-right btn-block-xs-only">
+                    <div class="col-sm-6 text-right">
+                        <button type="button" wire:click="export" class="btn btn-sm btn-default">
+                            <i class="fas fa-download mr-2"></i>Exportar</button>
+                        <button type="button" data-toggle="modal" data-target="#importarClientesModal" class="btn btn-sm btn-default">
+                            <i class="fas fa-upload mr-2"></i>Importar</button>
+                        <a href="{{ route('clients.create') }}" class="btn btn-primary btn-sm btn-block-xs-only">
                             <i class="fas fa-pencil-alt mr-2"></i>Crear nuevo</a>
                     </div>
                 @endcan
@@ -77,8 +80,7 @@
                                             <td>{{ $cliente->email }}</td>
                                             <td>{{ $cliente->reference }}</td>
                                             <td class="text-right">
-                                                <a href="{{ route('clients.show', $cliente) }}"
-                                                    class="btn btn-xs btn-default">
+                                                <a href="{{ route('clients.show', $cliente) }}" class="btn btn-xs btn-default">
                                                     <i class="fas fa-eye mr-2"></i>Ver / Editar</a>
                                             </td>
                                         </tr>
@@ -94,4 +96,14 @@
             </div>
         </div>
     </section>
+    @include('imports.clients')
 </div>
+
+@push('scripts')
+<script>
+    Livewire.on('forceCloseModal', event => {
+        $('#importarClientesModal').modal('hide');
+    });
+ </script>
+@endpush
+

@@ -18,8 +18,8 @@ class CreateClientsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('shortName');
-            $table->string('rfc')->unique();
-            $table->string('email')->unique();
+            $table->string('rfc');
+            $table->string('email');
             $table->string('country_code');
             $table->string('phone');
             $table->string('line_1')->nullable();
@@ -41,8 +41,6 @@ class CreateClientsTable extends Migration
             $table->unsignedBigInteger('project_id')->nullable();
             $table->timestamps();
         });
-
-        DB::update("ALTER TABLE clients AUTO_INCREMENT = 5000;");
     }
 
     /**
