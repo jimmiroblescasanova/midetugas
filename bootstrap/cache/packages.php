@@ -129,6 +129,13 @@
       'Flasher' => 'Flasher\\Laravel\\Facade\\Flasher',
     ),
   ),
+  'protonemedia/laravel-form-components' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'ProtoneMedia\\LaravelFormComponents\\Support\\ServiceProvider',
+    ),
+  ),
   'realrashid/sweet-alert' => 
   array (
     'providers' => 

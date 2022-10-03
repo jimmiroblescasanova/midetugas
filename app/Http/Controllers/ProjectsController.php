@@ -31,7 +31,7 @@ class ProjectsController extends Controller
 
         if ($project instanceof Project) {
             Flasher::addSuccess('El registro ha sido guardado con éxito');
-            return redirect()->route('projects.index');
+            return redirect()->route('projects.index', '#');
         }
 
         Flasher::addError('Ha ocurrido un error, intenta de nuevo');

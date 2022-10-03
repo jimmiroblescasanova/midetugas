@@ -72,13 +72,10 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ route('projects.store') }}" method="POST">
+                <x-form>
                     @csrf
                     <div class="modal-body">
-                        <div class="form-group">
-                            <label for="name">Nombre</label>
-                            <input type="text" class="form-control" name="name" id="name" autofocus>
-                        </div>
+                        <x-form-input name="name" label="Nombre del condominio:" />
                         <div class="form-group">
                             <label for="reference">Referencia</label>
                             <input type="text" class="form-control" name="reference" id="reference">
@@ -92,7 +89,7 @@
                             <i class="fas fa-ban mr-2"></i>Cancelar
                         </button>
                     </div>
-                </form>
+                </x-form>
             </div>
             <!-- /.modal-content -->
         </div>
@@ -111,9 +108,18 @@
                     "url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"
                 },
             });
-            $('#createNewProject').on('shown.bs.modal', function () {
-                $('#name').trigger('focus');
-            })
+        });
+        if (window.location.hash === '#create') {
+            $('#createNewProject').modal('show');
+        }
+
+        $('#createNewProject').on('hide.bs.modal', function (){
+            window.location.hash = '#';
+        });
+
+        $('#createNewProject').on('shown.bs.modal', function () {
+            $('input[name="name"]').trigger('focus');
+            window.location.hash = '#create';
         });
     </script>
 @stop
