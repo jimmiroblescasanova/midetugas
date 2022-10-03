@@ -115,13 +115,13 @@
                                     <td class="text-right">{{ number_format($document->adm_charge, 2) }}</td>
                                 </tr>
                                 <tr>
+                                    <th>(-)Descuento</th>
+                                    <td class="text-right">{{ number_format($document->discount, 2) }}</td>
+                                </tr>
+                                <tr>
                                     <th>Subtotal</th>
                                     <td class="text-right">
                                         {{ number_format($document->subtotal + $document->adm_charge, 2) }}</td>
-                                </tr>
-                                <tr>
-                                    <th>(-)Descuento</th>
-                                    <td class="text-right">{{ number_format($document->discount, 2) }}</td>
                                 </tr>
                                 <tr>
                                     <th>(+)IVA</th>
