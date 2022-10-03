@@ -111,6 +111,9 @@
                     "url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"
                 },
             });
+            $('#createNewProject').on('shown.bs.modal', function () {
+                $('#name').trigger('focus');
+            })
         });
     </script>
 @stop

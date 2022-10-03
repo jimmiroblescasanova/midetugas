@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Project;
 use Illuminate\Http\Request;
-use RealRashid\SweetAlert\Facades\Alert;
+use Flasher\Laravel\Facade\Flasher;
 
 class ProjectsController extends Controller
 {
@@ -27,10 +27,15 @@ class ProjectsController extends Controller
             'reference' => 'nullable|string',
         ]);
 
-        Project::create($data);
+        $project = Project::create($data);
 
-        Alert::success('Correcto', 'El registro ha sido creado con éxito.');
-        return redirect()->route('projects.index');
+        if ($project instanceof Project) {
+            Flasher::addSuccess('El registro ha sido guardado con éxito');
+            return redirect()->route('projects.index');
+        }
+
+        Flasher::addError('Ha ocurrido un error, intenta de nuevo');
+        return redirect()->back();
     }
 
     public function edit(Project $project)
@@ -49,20 +54,20 @@ class ProjectsController extends Controller
 
         $project->update($data);
 
-        Alert::success('Actualizado', 'Registro actualizado correctamente');
+        Flasher::addSuccess('El registro ha sido guardado con éxito');
         return redirect()->route('projects.index');
     }
 
     public function destroy(Project $project)
     {
         if ($project->tanks()->exists() || $project->clients()->exists() || $project->inventories()->exists()) {
-            Alert::error('Error', 'El registro no se ha podido eliminar, valida que no tenga información asociada.');
+            Flasher::addError('El registro no se ha podido eliminar, valida que no tenga información asociada.');
             return redirect()->back();
         }
 
         $project->delete();
 
-        Alert::success('Hecho', 'El registro ha sido eliminado con éxito de la base de datos.');
+        Flasher::addInfo('El registro ha sido eliminado con éxito');
         return redirect()->route('projects.index');
     }
 }

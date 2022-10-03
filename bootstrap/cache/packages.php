@@ -118,6 +118,17 @@
       0 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     ),
   ),
+  'php-flasher/flasher-laravel' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Flasher\\Laravel\\FlasherServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Flasher' => 'Flasher\\Laravel\\Facade\\Flasher',
+    ),
+  ),
   'realrashid/sweet-alert' => 
   array (
     'providers' => 

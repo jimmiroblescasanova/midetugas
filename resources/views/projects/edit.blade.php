@@ -41,8 +41,8 @@
                         <div class="form-group d-flex justify-content-between">
                             <button type="submit" class="btn btn-sm btn-primary">
                                 <i class="fas fa-save mr-2"></i>Actualizar</button>
-                            <button type="button" class="btn btn-sm btn-danger" onclick="history.back();">
-                                <i class="fas fa-hand-point-left mr-2"></i>Atrás</button>
+                            <a href="{{ route('projects.index') }}" class="btn btn-sm btn-danger">
+                                <i class="fas fa-hand-point-left mr-2"></i>Atrás</a>
                         </div>
                     </form>
                 </div>

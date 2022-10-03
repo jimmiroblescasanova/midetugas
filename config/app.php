@@ -234,6 +234,7 @@ return [
         'AWS' => Aws\Laravel\AwsFacade::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Image' => Intervention\Image\Facades\Image::class,
+        'Flasher' => Flasher\Laravel\Facade\Flasher::class,
 
     ],
 
