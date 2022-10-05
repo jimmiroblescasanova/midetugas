@@ -72,14 +72,11 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <x-form>
+                <x-form :action="route('projects.store', '#create')">
                     @csrf
                     <div class="modal-body">
                         <x-form-input name="name" label="Nombre del condominio:" />
-                        <div class="form-group">
-                            <label for="reference">Referencia</label>
-                            <input type="text" class="form-control" name="reference" id="reference">
-                        </div>
+                        <x-form-input name="reference" label="Referencia:" />
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="submit" class="btn btn-sm btn-primary">
@@ -119,7 +116,7 @@
 
         $('#createNewProject').on('shown.bs.modal', function () {
             $('input[name="name"]').trigger('focus');
-            window.location.hash = '#create';
+            // window.location.hash = '#create';
         });
     </script>
 @stop
