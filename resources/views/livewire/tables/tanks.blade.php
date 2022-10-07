@@ -7,18 +7,17 @@
                 </div>
                 <input type="text"
                     class="form-control"
-                    wire:model='search'
-                    id="search"
+                    wire:model.debounce.500ms='search'
                     placeholder="Buscar por marca, modelo, serie, capacidad...">
             </div>
         </div>
         <div class="form-group col-6 col-sm-2">
-          <select wire:model="perPage" class="form-control" id="perPage">
-            <option>10</option>
-            <option>20</option>
-            <option>50</option>
-            <option>100</option>
-          </select>
+            <select wire:model="perPage" class="form-control" id="perPage">
+                <option>10</option>
+                <option>20</option>
+                <option>50</option>
+                <option>100</option>
+            </select>
         </div>
         <div class="form-group col-6 col-sm-1">
             <button type="button" wire:click='clear' class="btn btn-default btn-block">Limpiar</button>
@@ -29,33 +28,40 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <x-table.heading sortable wire:click="sortBy('brand')"
-                            :direction="$sortField === 'brand' ? $sortDirection : null">Marca</x-table.heading>
+                        <x-table.heading
+                            sortable
+                            wire:click="sortBy('brand')"
+                            :direction="$sortField === 'brand' ? $sortDirection : null">
+                            Marca
+                        </x-table.heading>
                         <x-table.heading
                             sortable
                             wire:click="sortBy('model')"
                             :direction="$sortField === 'model' ? $sortDirection : null"
-                            style="width: 25%;"
-                        >Modelo</x-table.heading>
+                            style="width: 25%;">
+                            Modelo
+                        </x-table.heading>
                         <x-table.heading
                             sortable
                             wire:click="sortBy('serial_number')"
                             :direction="$sortField === 'serial_number' ? $sortDirection : null"
-                            style="width: 20%;"
-                        >Número de serie</x-table.heading>
+                            style="width: 20%;">
+                            Número de serie
+                        </x-table.heading>
                         <x-table.heading
                             sortable
                             wire:click="sortBy('capacity')"
                             :direction="$sortField === 'capacity' ? $sortDirection : null"
-                            style="width: 20%;"
-                        >Capacidad</x-table.heading>
+                            style="width: 20%;">
+                            Capacidad
+                        </x-table.heading>
                         <x-table.heading style="width: 10%;">
                             <i class="fas fa-cogs"></i>
                         </x-table.heading>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($tanks as $tank)
+                    @forelse ($tanks as $tank)
                     <tr>
                         <td>{{ $tank->brand }}</td>
                         <td>{{ $tank->model }}</td>
@@ -66,7 +72,11 @@
                                 <i class="fas fa-edit mr-2"></i>Editar</a>
                         </td>
                     </tr>
-                    @endforeach
+                    @empty
+                    <tr>
+                        <td colspan="5">No existen resultados para la búsqueda realizada.</td>
+                    </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>

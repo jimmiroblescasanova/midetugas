@@ -17,47 +17,7 @@
 @section('content')
     <div class="row">
         <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <table class="table table-striped" id="dataTableProjects">
-                        <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Capacidad total (L)</th>
-                                <th>Capacidad actual (L)</th>
-                                <th>Porcentaje</th>
-                                <th>Referencia</th>
-                                <th class="text-center" style="width: 100px;"><i class="fas fa-cogs"></i></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($projects as $project)
-                                <tr>
-                                    <td>{{ $project->name }}</td>
-                                    <td>{{ $project->total_capacity }}</td>
-                                    <td>{{ $project->actual_capacity }}</td>
-                                    <td>
-                                        <div class="progress progress-sm">
-                                            <div class="progress-bar bg-green" role="progressbar"
-                                                aria-volumenow="{{ $project->percentage }}" aria-volumemin="0"
-                                                aria-volumemax="100" style="width: {{ $project->percentage }}%">
-                                            </div>
-                                        </div>
-                                        <small>
-                                            {{ $project->percentage }}% capacidad maxima (litros)
-                                        </small>
-                                    </td>
-                                    <td>{{ $project->reference }}</td>
-                                    <td class="text-right">
-                                        <a href="{{ route('projects.edit', $project) }}" class="btn btn-xs btn-default"><i
-                                                class="fas fa-edit mr-2"></i>Editar</a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            @livewire('tables.projects')
         </div>
     </div>
 @stop
@@ -97,15 +57,6 @@
 
 @section('scripts')
     <script>
-        $(document).ready(function() {
-            $('#dataTableProjects').DataTable({
-                "responsive": true,
-                "autoWidth": false,
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"
-                },
-            });
-        });
         if (window.location.hash === '#create') {
             $('#createNewProject').modal('show');
         }
@@ -116,7 +67,6 @@
 
         $('#createNewProject').on('shown.bs.modal', function () {
             $('input[name="name"]').trigger('focus');
-            // window.location.hash = '#create';
         });
     </script>
 @stop
