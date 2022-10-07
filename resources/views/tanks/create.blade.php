@@ -10,19 +10,21 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-body">
-                    <form action="{{ route('tanks.store') }}" role="form" method="POST">
+                <x-form :action="route('tanks.store')">
+                    <div class="card-body">
                         @csrf
                         @include('tanks._form')
-                        <div class="form-group d-flex justify-content-between">
+                    </div>
+                    <div class="card-footer">
+                        <div class="form-group d-flex justify-content-between mb-0">
                             <button type="submit" class="btn btn-sm btn-primary btn-block-xs-only">
                                 <i class="fas fa-save mr-2"></i>Guardar
                             </button>
-                            <button type="button" class="btn btn-sm btn-danger" onclick="history.back();">
-                                <i class="fas fa-hand-point-left mr-2"></i>Cancelar</button>
+                            <a href="{{ route('tanks.index') }}" class="btn btn-sm btn-danger">
+                                <i class="fas fa-hand-point-left mr-2"></i>Cancelar</a>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </x-form>
             </div>
         </div>
     </div>

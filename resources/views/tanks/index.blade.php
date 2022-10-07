@@ -16,49 +16,7 @@
 @section('content')
     <div class="row">
         <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <table class="table" id="dataTableTanks">
-                        <thead>
-                            <tr>
-                                <th>Marca</th>
-                                <th>Modelo</th>
-                                <th>Numero de serie</th>
-                                <th>Capacidad</th>
-                                <th class="text-center" style="width: 100px;"><i class="fas fa-cogs"></i></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($tanks as $tank)
-                                <tr>
-                                    <td>{{ $tank->brand }}</td>
-                                    <td>{{ $tank->model }}</td>
-                                    <td>{{ $tank->serial_number }}</td>
-                                    <td>{{ $tank->capacity }} L</td>
-                                    <td class="text-right">
-                                        <a href="{{ route('tanks.edit', $tank) }}" class="btn btn-xs btn-default">
-                                            <i class="fas fa-edit mr-2"></i>Editar</a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            @livewire('tables.tanks')
         </div>
     </div>
-@stop
-
-@section('scripts')
-    <script>
-        $(document).ready(function() {
-            $('#dataTableTanks').DataTable({
-                "responsive": true,
-                "autoWidth": false,
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"
-                },
-            });
-        });
-    </script>
 @stop

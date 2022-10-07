@@ -5,7 +5,7 @@
     <h1><i class="far fa-building mr-2"></i>Editar condominio</h1>
 </div>
 <div class="col-sm-6 d-flex justify-content-end">
-    <button type="submit" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deletePoject">
+    <button type="submit" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deletePojectModal">
         <i class="fas fa-trash-alt mr-2"></i>Eliminar</button>
 </div>
 @stop
@@ -49,26 +49,7 @@
 @stop
 
 @section('modal-section')
-<!-- Modal -->
-<div class="modal fade" id="deletePoject" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">¿Estas seguro?</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-            </div>
-            <div class="modal-footer">
-                <x-form :action="route('projects.destroy', $project)">
-                    @method('DELETE')
-                    <button type="button" class="btn btn-default" data-dismiss="modal">No, cancelar</button>
-                    <x-form-submit class="btn-danger">Si, eliminar!</x-form-submit>
-                </x-form>
-            </div>
-        </div>
-    </div>
-</div>
+    <x-modals.delete id="deletePojectModal" :action="route('projects.destroy', $project)" />
 @stop
 
 @section('scripts')

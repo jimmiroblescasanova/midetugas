@@ -20,10 +20,20 @@ return [
     */
     'default' => 'flasher',
     'presets' => [
-        'exito' => [
+        'dbCreated' => [
             'type' => 'success',
-            'message' => 'El registro se ha guardado con éxito',
+            'message' => 'El registro ha sido creado con éxito.',
             'title' => 'Éxito',
+        ],
+        'dbUpdated' => [
+            'type' => 'info',
+            'message' => 'El registro ha sido actualizado con éxito.',
+            'title' => 'Actualizado',
+        ],
+        'dbDeleted' => [
+            'type' => 'error',
+            'message' => 'El registro ha sido eliminado con éxito.',
+            'title' => 'Eliminado',
         ],
     ],
 

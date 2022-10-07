@@ -39,6 +39,9 @@ class ConfigurationsController extends Controller
             // Seleccionar a los clientes que pertenecen al condominio
             $clients = Project::find($request->project_id)->clients;
             echo "Clientes: obtenidos correctamente del condominio...<br/>";
+            // Obtener los tanques del condominio
+            $sum_quantity_tanks = Tank::where('project_id', $request->project_id)->sum('capacity');
+            echo "Capacidad total del condominio calculada...<br/>";
             // Totales del condominio/proyecto
             $month_quantity_total = 0;
 
@@ -58,6 +61,7 @@ class ConfigurationsController extends Controller
             // Actualizar valores del condominio
             echo "Actualizando importes del condominio... ";
             $project->actual_capacity = $project_total;
+            $project->total_capacity = $sum_quantity_tanks;
             $project->percentage = $this->calculatePercentage($project);
             $project->save();
             echo "Done <br/>";
@@ -66,8 +70,8 @@ class ConfigurationsController extends Controller
             abort(403, 'No se pudo completar el proceso.');
         }
 
-        Alert::success('Finalizado', 'Proceso ejecutado correctamente.');
-        return redirect()->back();
+        // Alert::success('Finalizado', 'Proceso ejecutado correctamente.');
+        return "<br>Proceso terminado: <a href='/'>COMPLETAR</a>";
     }
 
     public function descargaMasiva()

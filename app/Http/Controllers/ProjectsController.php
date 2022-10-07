@@ -30,11 +30,11 @@ class ProjectsController extends Controller
         $project = Project::create($data);
 
         if ($project instanceof Project) {
-            Flasher::addSuccess('El registro ha sido guardado con éxito');
+            Flasher::addPreset('dbCreated');
             return redirect()->route('projects.index', '#');
         }
 
-        Flasher::addError('Ha ocurrido un error, intenta de nuevo');
+        Flasher::addWarning('Ha ocurrido un error, intenta de nuevo.');
         return redirect()->back();
     }
 
@@ -54,20 +54,20 @@ class ProjectsController extends Controller
 
         $project->update($data);
 
-        Flasher::addSuccess('El registro ha sido guardado con éxito');
+        Flasher::addPreset('dbUpdated');
         return redirect()->route('projects.index');
     }
 
     public function destroy(Project $project)
     {
         if ($project->tanks()->exists() || $project->clients()->exists() || $project->inventories()->exists()) {
-            Flasher::addError('El registro no se ha podido eliminar, valida que no tenga información asociada.');
+            Flasher::addWarning('El registro no se ha podido eliminar, valida que no tenga información asociada.');
             return redirect()->back();
         }
 
         $project->delete();
 
-        Flasher::addInfo('El registro ha sido eliminado con éxito');
+        Flasher::addPreset('dbDeleted');
         return redirect()->route('projects.index');
     }
 }

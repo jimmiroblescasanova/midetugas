@@ -6,8 +6,8 @@ use App\Tank;
 use App\Project;
 use Illuminate\Support\Facades\DB;
 use App\Traits\UpdateProjectTrait;
+use Flasher\Laravel\Facade\Flasher;
 use App\Http\Requests\StoreTankRequest;
-use RealRashid\SweetAlert\Facades\Alert;
 
 class TanksController extends Controller
 {
@@ -50,6 +50,7 @@ class TanksController extends Controller
 
         Tank::create( $data );
 
+        Flasher::addPreset('dbCreated');
         return redirect()->route('tanks.index');
     }
 
@@ -69,7 +70,7 @@ class TanksController extends Controller
             ])->sum('capacity');
 
         if ($tank->project->actual_capacity > ($suma_medidores + $request->capacity)) {
-            Alert::error('Error', 'La capacidad no puede ser menor que el inventario actual');
+            Flasher::addError('La capacidad no puede ser menor que el inventario actual');
             return redirect()->back();
         }
 
@@ -79,7 +80,7 @@ class TanksController extends Controller
 
         $tank->update( $request->validated() );
 
-        Alert::success('Actualizado', 'Los datos han sido guardados con éxito');
+        Flasher::addPreset('dbUpdated');
         return redirect()->route('tanks.index');
     }
 
@@ -88,7 +89,7 @@ class TanksController extends Controller
         $capacidad_nueva = $tank->project->total_capacity - $tank->capacity;
 
         if ($capacidad_nueva < $tank->project->actual_capacity) {
-            Alert::error('Error', 'La capacidad total no puede ser menos a la actual');
+            Flasher::addWarning('La capacidad total no puede ser menos a la actual');
             return redirect()->back();
         }
 
@@ -104,11 +105,11 @@ class TanksController extends Controller
         } catch (\Throwable $th) {
             DB::rollBack();
 
-            Alert::error('Error', 'No se pudo eliminar el registro.');
+            Flasher::addWarning('No se pudo eliminar el registro.');
             return redirect()->back();
         }
 
-        Alert::success('Hecho', 'El registro ha sido eliminado de la base de datos con éxito');
+        Flasher::addPreset('dbDeleted');
         return redirect()->route('tanks.index');
     }
 
