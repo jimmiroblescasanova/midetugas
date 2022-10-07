@@ -36,15 +36,17 @@
                         <x-table.heading
                             sortable
                             wire:click="sortBy('reference')"
-                            :direction="$sortField === 'reference' ? $sortDirection : null">
+                            :direction="$sortField === 'reference' ? $sortDirection : null"
+                            style="width: 20%;">
                             Referencia</x-table.heading>
                         <x-table.heading
                             sortable
                             wire:click="sortBy('total_capacity')"
-                            :direction="$sortField === 'total_capacity' ? $sortDirection : null">
+                            :direction="$sortField === 'total_capacity' ? $sortDirection : null"
+                            style="width: 15%;">
                             Capacidad total (L)</x-table.heading>
-                        <x-table.heading>Capacidad actual (L)</x-table.heading>
-                        <x-table.heading>Porcentaje</x-table.heading>
+                        <x-table.heading style="width: 15%;">Capacidad actual (L)</x-table.heading>
+                        <x-table.heading style="width: 15%;">Porcentaje</x-table.heading>
                         <x-table.heading style="width: 10%;"><i class="fas fa-cogs"></i></x-table.heading>
                     </tr>
                 </thead>
@@ -63,7 +65,7 @@
                                 </div>
                             </div>
                             <small>
-                                {{ $project->percentage }}% capacidad maxima (litros)
+                                {{ $project->percentage }}% capacidad maxima
                             </small>
                         </td>
                         <td class="text-right">
