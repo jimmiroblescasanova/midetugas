@@ -17,9 +17,7 @@ class MeasurersController extends Controller
 
     public function index()
     {
-        return view('measurers.index', [
-            'measurers' => Measurer::all(),
-        ]);
+        return view('measurers.index');
     }
 
     public function create()

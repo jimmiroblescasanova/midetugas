@@ -37,17 +37,17 @@
                             sortable
                             wire:click="sortBy('reference')"
                             :direction="$sortField === 'reference' ? $sortDirection : null"
-                            style="width: 20%;">
+                            width="20%">
                             Referencia</x-table.heading>
                         <x-table.heading
                             sortable
                             wire:click="sortBy('total_capacity')"
                             :direction="$sortField === 'total_capacity' ? $sortDirection : null"
-                            style="width: 15%;">
-                            Capacidad total (L)</x-table.heading>
-                        <x-table.heading style="width: 15%;">Capacidad actual (L)</x-table.heading>
-                        <x-table.heading style="width: 15%;">Porcentaje</x-table.heading>
-                        <x-table.heading style="width: 10%;"><i class="fas fa-cogs"></i></x-table.heading>
+                            width="15%">
+                            Capacidad total</x-table.heading>
+                        <x-table.heading width="15%">Capacidad actual</x-table.heading>
+                        <x-table.heading width="10%">Porcentaje</x-table.heading>
+                        <x-table.heading width="10%"><i class="fas fa-cogs"></i></x-table.heading>
                     </tr>
                 </thead>
                 <tbody>
@@ -55,8 +55,8 @@
                     <tr>
                         <td>{{ $project->name }}</td>
                         <td>{{ $project->reference }}</td>
-                        <td>{{ $project->total_capacity }}</td>
-                        <td>{{ $project->actual_capacity }}</td>
+                        <td>{{ $project->total_capacity }} L</td>
+                        <td>{{ $project->actual_capacity }} L</td>
                         <td>
                             <div class="progress progress-sm">
                                 <div class="progress-bar bg-green" role="progressbar"
@@ -65,7 +65,7 @@
                                 </div>
                             </div>
                             <small>
-                                {{ $project->percentage }}% capacidad maxima
+                                {{ $project->percentage }}%
                             </small>
                         </td>
                         <td class="text-right">

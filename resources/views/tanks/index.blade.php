@@ -2,7 +2,7 @@
 
 @section('header')
     <div class="col-sm-6">
-        <h1><i class="fas fa-user mr-2"></i>Tanques</h1>
+        <h1><i class="fas fa-project-diagram mr-2"></i>Tanques</h1>
     </div>
     @can('create_tanks')
         <div class="col-sm-6">

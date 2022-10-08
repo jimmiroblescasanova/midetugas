@@ -3,10 +3,13 @@
 namespace App;
 
 use App\Client;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Measurer extends Model
 {
+    use HasFactory;
+
     protected $guarded = [];
 
     public function setModelAttribute($val)
@@ -24,7 +27,7 @@ class Measurer extends Model
         return $this->belongsTo(Client::class);
     }
 
-    public function scopeSearchMeasurer($query, $search)
+    public function scopeSearch($query, $search)
     {
         $search = "%$search%";
 

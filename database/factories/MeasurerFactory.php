@@ -1,20 +1,26 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
-use App\Client;
 use App\Factor;
-use App\Measurer;
-use Faker\Generator as Faker;
-use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Measurer::class, function (Faker $faker) {
-    return [
-        'brand' => $faker->citySuffix,
-        'model' => $faker->city,
-        'serial_number' => $faker->numerify('######'),
-        'actual_measure' => 0,
-        'correction_factor' => $faker->numberBetween(1, Factor::count()),
-        'active' => false,
-    ];
-});
+class MeasurerFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'brand' => $this->faker->citySuffix,
+            'model' => $this->faker->city,
+            'serial_number' => $this->faker->numerify('######'),
+            'actual_measure' => 0,
+            'correction_factor' => Factor::inRandomOrder()->first()->value,
+            'active' => false,
+        ];
+    }
+}

@@ -1,9 +1,10 @@
 @props([
     'sortable' => null,
     'direction' => null,
+    'width' => null,
 ])
 
-<th {{ $attributes->merge(['class' => 'text-center']) }}>
+<th {{ $attributes->merge(['class' => 'text-center']) }} style="width:{{ $width }};">
     @unless ($sortable)
         {{ $slot }}
     @else

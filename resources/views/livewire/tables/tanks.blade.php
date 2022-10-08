@@ -38,24 +38,24 @@
                             sortable
                             wire:click="sortBy('model')"
                             :direction="$sortField === 'model' ? $sortDirection : null"
-                            style="width: 25%;">
+                            width="25%">
                             Modelo
                         </x-table.heading>
                         <x-table.heading
                             sortable
                             wire:click="sortBy('serial_number')"
                             :direction="$sortField === 'serial_number' ? $sortDirection : null"
-                            style="width: 20%;">
+                            width="20%">
                             Número de serie
                         </x-table.heading>
                         <x-table.heading
                             sortable
                             wire:click="sortBy('capacity')"
                             :direction="$sortField === 'capacity' ? $sortDirection : null"
-                            style="width: 20%;">
+                            width="20%">
                             Capacidad
                         </x-table.heading>
-                        <x-table.heading style="width: 10%;">
+                        <x-table.heading width="10%">
                             <i class="fas fa-cogs"></i>
                         </x-table.heading>
                     </tr>

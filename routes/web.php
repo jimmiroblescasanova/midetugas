@@ -59,7 +59,7 @@ Route::get('/clients/{client}/suspend', [ClientsController::class, 'status'])->n
 Route::get('/clients/{client}/test-email', [ClientsController::class, 'testEmail'])->name('clients.testEmail');
 
 // Ruta para CRUD de los medidores
-Route::get('/measurers', App\Http\Livewire\Measurers::class)->name('measurers.index')->middleware('permission:show_measurers');
+Route::get('/measurers', [MeasurersController::class, 'index'])->name('measurers.index')->middleware('permission:show_measurers');
 Route::get('/measurers/create', [MeasurersController::class, 'create'])->name('measurers.create')->middleware('permission:create_measurers');
 Route::post('/measurers', [MeasurersController::class, 'store'])->name('measurers.store')->middleware('permission:create_measurers');
 Route::get('measurers/{measurer}/edit', [MeasurersController::class, 'edit'])->name('measurers.edit');
