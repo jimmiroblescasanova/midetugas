@@ -15,10 +15,10 @@ use App\Traits\GraphBarTrait;
 use App\Mail\AuthorizeReceipt;
 use App\Traits\UpdateProjectTrait;
 use Illuminate\Support\Facades\DB;
+use Flasher\Laravel\Facade\Flasher;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
-use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Requests\SaveDocumentRequest;
 
 class DocumentsController extends Controller
@@ -107,7 +107,7 @@ class DocumentsController extends Controller
             'iva' => $iva * 100,
             'total' => $total * 100,
             'pending' => $total * 100,
-            'previous_balance' => $saldoAFavor,
+            // 'previous_balance' => $saldoAFavor,
             'photo' => $photo,
             'created_at' => NOW(),
         ];
@@ -145,7 +145,9 @@ class DocumentsController extends Controller
             abort(403, $e->getMessage());
         }
 
-        return redirect()->route('documents.create')->with('message', 'Lectura capturada correctamente.');
+        Flasher::addSuccess('Recibo generado correctamente');
+
+        return redirect()->route('documents.create');
     }
 
     public function show(Document $document)
@@ -203,7 +205,7 @@ class DocumentsController extends Controller
             abort(404, $e->getMessage());
         }
 
-        Alert::success('Autorizado', 'El registro ha sido autorizado con éxito.');
+        Flasher::addSuccess('El registro ha sido autorizado con éxito.');
         return redirect()->route('documents.index');
     }
 
@@ -220,7 +222,7 @@ class DocumentsController extends Controller
             'pending' => $total,
         ]);
 
-        Alert::info('Descuento aplicado', 'El descuento se ha aplicado correctamente.');
+        Flasher::addInfo('El descuento se ha aplicado correctamente.');
         return redirect()->back();
     }
 
@@ -250,7 +252,7 @@ class DocumentsController extends Controller
             abort(403, $th->getMessage());
         }
 
-        Alert::info('Cancelado', 'El registro ha sido cancelado con éxito.');
+        Flasher::addWarning('El registro ha sido cancelado con éxito.');
         return redirect()->route('documents.index');
     }
 
