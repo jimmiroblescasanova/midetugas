@@ -6,11 +6,11 @@ use App\Client;
 use App\Project;
 use App\Measurer;
 use App\Mail\TestEmail;
-use Illuminate\Http\Request;
+use Maatwebsite\Excel\Excel;
+use App\Exports\ClientsExport;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
-use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Requests\StoreClientRequest;
 use App\Http\Requests\UpdateClientRequest;
 
@@ -23,12 +23,7 @@ class ClientsController extends Controller
 
     public function index()
     {
-        $measurers = Measurer::select('id', 'serial_number')->where('active', false)->get();
-
-        return view('clients.index', [
-            'clients' => Client::all(),
-            'measurers' => $measurers,
-        ]);
+        return view('clients.index');
     }
 
     public function create()
@@ -111,5 +106,10 @@ class ClientsController extends Controller
             ->send(new TestEmail);
 
         return redirect()->route('clients.index');
+    }
+
+    public function export()
+    {
+        return (new ClientsExport)->download('clientes_' . time() . '.csv', Excel::CSV, ['Content-Type' => 'text/csv']);
     }
 }

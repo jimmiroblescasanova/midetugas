@@ -5,8 +5,9 @@ namespace App\Imports;
 use App\Client;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithStartRow;
+use Maatwebsite\Excel\Concerns\WithValidation;
 
-class ClientsImport implements ToModel, WithStartRow
+class ClientsImport implements ToModel, WithStartRow, WithValidation
 {
     public function startRow(): int
     {
@@ -41,5 +42,25 @@ class ClientsImport implements ToModel, WithStartRow
             'ref2_name' => $row[17],
             'ref2_phone' => $row[18],
         ]);
+    }
+
+    public function rules(): array
+    {
+        return [
+            '*.0' => 'string|min:5',
+            '*.2' => 'required|string|min:12|max:13',
+            '*.3' => 'required|email',
+            '*.4' => 'required|string|size:7',
+        ];
+    }
+
+    public function customValidationAttributes()
+    {
+        return [
+            '0' => 'nombre',
+            '2' => 'rfc',
+            '3' => 'email',
+            '4' => 'referencia',
+        ];
     }
 }

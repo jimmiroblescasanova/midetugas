@@ -2,10 +2,13 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Client extends Model
 {
+    use HasFactory;
+
     protected $guarded = [];
 
     public function setNameAttribute($val): string
@@ -73,13 +76,12 @@ class Client extends Model
         return str_pad($this->attributes['id'], 4, '0', STR_PAD_LEFT);
     }
 
-    public function scopeSearchClient($query, $search)
+    public function scopeSearch($query, $search)
     {
         $search = "%$search%";
 
         return $query->where('name', 'LIKE', $search)
             ->orWhere('shortName', 'LIKE', $search)
-            ->orWhere('email', 'LIKE', $search)
             ->orWhere('reference', 'LIKE', $search);
     }
 }

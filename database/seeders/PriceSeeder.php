@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use App\Price;
 use Illuminate\Database\Seeder;
 

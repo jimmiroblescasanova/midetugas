@@ -13,14 +13,9 @@ class ClientsExport implements FromQuery, WithMapping, WithHeadings, ShouldAutoS
 {
     use Exportable;
 
-    public function __construct($search)
-    {
-        $this->search = $search;
-    }
-
     public function query()
     {
-        return Client::searchClient($this->search);
+        return Client::query();
     }
 
     public function headings(): array
