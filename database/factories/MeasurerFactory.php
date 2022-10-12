@@ -19,7 +19,7 @@ class MeasurerFactory extends Factory
             'model' => $this->faker->city,
             'serial_number' => $this->faker->numerify('######'),
             'actual_measure' => 0,
-            'correction_factor' => Factor::inRandomOrder()->first()->value,
+            'correction_factor' => $this->faker->randomFloat(2, 1, 3),
             'active' => false,
         ];
     }

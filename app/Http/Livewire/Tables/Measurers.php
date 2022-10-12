@@ -24,6 +24,11 @@ class Measurers extends Component
         $this->resetPage();
     }
 
+    public function updatedStatus()
+    {
+        $this->resetPage();
+    }
+
     public function mount()
     {
         $this->sortField = 'brand';

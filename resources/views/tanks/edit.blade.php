@@ -18,6 +18,9 @@
                     <div class="card-body">
                         @method('PATCH')
                         @include('tanks._form')
+                        <div class="text-muted text-right">
+                            <small>Última modificación: {{ $tank->updated_at->diffForHumans() }}</small>
+                        </div>
                     </div>
                     <div class="card-footer">
                         <div class="from-group d-flex justify-content-between mb-0">
