@@ -48,6 +48,13 @@ class DocumentsController extends Controller
 
     public function store(SaveDocumentRequest $request)
     {
+        // Se obtiene el cliente capturado
+        $client = Client::with('project')->find($request->client_id);
+        if ($client->project->actual_capacity <= 0) {
+            Flasher::addWarning('El condominio del cliente no tiene inventario.');
+            return redirect()->back();
+        }
+
         // almacena la ruta tmp de foto
         $files = $request->file('photo');
         // convert image
@@ -62,8 +69,6 @@ class DocumentsController extends Controller
 
         // Primero obtenemos el precio actual de la BD
         $price = Price::latest()->first()->price;
-        // Se obtiene el cliente capturado
-        $client = Client::find($request->client_id);
         // Calcula el saldo a favor del cliente
         $saldoAFavor = Document::where([
             ['client_id', $client->id],
