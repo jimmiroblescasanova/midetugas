@@ -2,14 +2,11 @@
 
 @section('header')
     <div class="col-sm-6">
-        <h1><i class="fas fa-user mr-2"></i>Editar medidor</h1>
+        <h1><i class="fas fa-tachometer-alt mr-2"></i>Editar medidor</h1>
     </div>
-    <div class="col-sm-6 d-flex justify-content-end">
-        <form action="{{ route('measurers.destroy', $measurer) }}" method="POST">
-            @csrf @method('delete')
-            <button type="submit" class="btn btn-sm btn-danger">
-                <i class="fas fa-trash-alt mr-2"></i>Eliminar</button>
-        </form>
+    <div class="col-sm-6">
+        <button type="button" class="btn btn-sm btn-danger float-right" data-toggle="modal" data-target="#deleteMeasurerModal">
+            <i class="fas fa-trash-alt mr-2"></i>Eliminar</button>
     </div>
 @stop
 
@@ -17,25 +14,36 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-body">
-                    <form role="form" action="{{ route('measurers.update', $measurer) }}" method="POST">
+                <form role="form" action="{{ route('measurers.update', $measurer) }}" method="POST">
+                    <div class="card-body">
                         @csrf
                         @method('patch')
                         @include('measurers._form')
-                        <div class="text-muted text-right">
-                            <small>Última modificación: {{ $measurer->updated_at->diffForHumans() }}</small>
+                        <div class="row">
+                            <div class="col-6">
+                                <x-form-input name="actual_measure" :bind="$measurer" label="Lectura actual:"></x-form-input>
+                            </div>
+                            <div class="col-6 align-self-end">
+                                <div class="text-muted text-right">
+                                    <small>Última modificación: {{ $measurer->updated_at->diffForHumans() }}</small>
+                                </div>
+                            </div>
                         </div>
-                    </form>
-                </div>
-                <div class="card-footer">
-                    <div class="from-group d-flex justify-content-between mb-0">
-                        <button type="submit" class="btn btn-sm btn-primary">
-                            <i class="fas fa-edit mr-2"></i>Actualizar</button>
-                        <a href="{{ route('measurers.index') }}" type="button" class="btn btn-sm btn-danger">
-                            <i class="fas fa-hand-point-left mr-2"></i>Cancelar</a>
                     </div>
-                </div>
+                    <div class="card-footer">
+                        <div class="from-group d-flex justify-content-between mb-0">
+                            <x-form-submit class="btn-sm">
+                                <i class="fas fa-edit mr-2"></i>Actualizar
+                            </x-form-submit>
+                            <x-buttons.back route="measurers.index" />
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 @stop
+
+@section('modal-section')
+    <x-modals.delete id="deleteMeasurerModal" :action="route('measurers.destroy', $measurer)" />
+@endsection

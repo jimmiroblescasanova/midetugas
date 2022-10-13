@@ -6,7 +6,7 @@
     </div>
     @can('create_tanks')
         <div class="col-sm-6">
-            <a href="{{ route('tanks.create') }}" class="btn btn-primary btn-sm float-sm-right btn-block-xs-only">
+            <a href="{{ route('tanks.create') }}" class="btn btn-primary btn-sm btn-block-xs-only float-right">
                 <i class="fas fa-pencil-alt mr-2"></i>Crear nuevo
             </a>
         </div>

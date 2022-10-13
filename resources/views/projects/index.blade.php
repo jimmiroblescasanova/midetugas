@@ -5,8 +5,8 @@
         <h1><i class="far fa-building mr-2"></i>Condominios</h1>
     </div>
     @can('create_projects')
-        <div class="col-sm-6">
-            <button type="button" class="btn btn-primary btn-sm float-sm-right btn-block-xs-only" data-toggle="modal"
+        <div class="col-sm-6 d-flex justify-content-end">
+            <button type="button" class="btn btn-primary btn-sm btn-block-xs-only" data-toggle="modal"
                 data-target="#createNewProject">
                 <i class="fas fa-pencil-alt mr-2"></i>Crear nuevo
             </button>

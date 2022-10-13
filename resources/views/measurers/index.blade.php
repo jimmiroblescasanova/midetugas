@@ -5,8 +5,8 @@
         <h1><i class="fas fa-tachometer-alt mr-2"></i>Medidores</h1>
     </div>
     @can('create_measurers')
-        <div class="col-sm-6 text-right">
-            <a href="{{ route('measurers.create') }}" class="btn btn-primary btn-sm btn-block-xs-only">
+        <div class="col-sm-6">
+            <a href="{{ route('measurers.create') }}" class="btn btn-primary btn-sm btn-block-xs-only float-right">
                 <i class="fas fa-pencil-alt mr-2"></i>Crear nuevo</a>
         </div>
     @endcan

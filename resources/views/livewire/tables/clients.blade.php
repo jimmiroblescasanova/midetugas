@@ -60,7 +60,7 @@
                             wire:click="sortBy('reference')"
                             :direction="$sortField === 'reference' ? $sortDirection : null">
                             Referencia</x-table.heading>
-                        <x-table.heading width="15%"><i class="fas fa-cogs"></i></x-table.heading>
+                        <x-table.heading width="15%"><i class="fas fa-tools"></i></x-table.heading>
                     </tr>
                 </thead>
                 <tbody>
@@ -87,7 +87,6 @@
             {{ $clientes->links() }}
         </div>
     </div>
-
 </div>
 
 @push('lw-scripts')

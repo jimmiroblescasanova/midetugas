@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Factor;
 use App\Measurer;
+use Flasher\Laravel\Facade\Flasher;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Requests\StoreMeasurerRequest;
 use App\Http\Requests\UpdateMeasurerRequest;
@@ -24,14 +25,14 @@ class MeasurersController extends Controller
     {
         return view('measurers.create', [
             'measurer' => new Measurer(),
-            'factors' => Factor::all(),
+            'factors' => Factor::pluck('psig', 'value'),
         ]);
     }
 
     public function store(StoreMeasurerRequest $request)
     {
         Measurer::create($request->validated());
-        Alert::success('Correcto', 'Medidor almacenado correctamente');
+        Flasher::addPreset('dbCreated');
         return redirect()->route('measurers.index');
     }
 
@@ -39,14 +40,14 @@ class MeasurersController extends Controller
     {
         return view('measurers.edit', [
             'measurer' => $measurer,
-            'factors' => Factor::all(),
+            'factors' => Factor::pluck('psig', 'value'),
         ]);
     }
 
     public function update(Measurer $measurer, UpdateMeasurerRequest $request)
     {
         $measurer->update($request->validated());
-        Alert::success('Actualizado', 'Medidor actualizado correctamente');
+        Flasher::addPreset('dbUpdated');
 
         return redirect()->route('measurers.index');
     }
@@ -54,12 +55,12 @@ class MeasurersController extends Controller
     public function destroy(Measurer $measurer)
     {
         if ($measurer->active == true) {
-            Alert::error('Error', 'No se puede eliminar un medidor activo. Se debe des-asociar del cliente primero.');
+            Flasher::addWarning('No se puede eliminar un medidor activo. Se debe des-asociar del cliente primero.');
             return redirect()->back();
         }
 
         $measurer->delete();
-        Alert::info('Eliminado', 'Medidor eliminado correctamente');
+        Flasher::addPreset('dbDeleted');
         return redirect()->route('measurers.index');
     }
 }

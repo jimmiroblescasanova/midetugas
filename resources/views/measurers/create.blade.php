@@ -2,7 +2,7 @@
 
 @section('header')
     <div class="col-sm-6">
-        <h1>Alta de medidor</h1>
+        <h1><i class="fas fa-tachometer-alt mr-2"></i>Alta de medidor</h1>
     </div>
 @stop
 
@@ -10,34 +10,25 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-body">
-                    <form role="form" action="{{ route('measurers.store') }}" method="POST">
+                <x-form :action="route('measurers.store')">
+                    <div class="card-body">
                         @csrf
                         @include('measurers._form')
                         <div class="row">
                             <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="actual_measure">Consumo actual (m3)</label>
-                                    <input type="text"
-                                           class="form-control {{ $errors->first('actual_measure') ? 'is-invalid' : '' }}"
-                                           name="actual_measure"
-                                           id="actual_measure"
-                                           placeholder="Consumo actual"
-                                           value="0">
-                                    {!! $errors->first('actual_measure', '<div class="invalid-feedback">:message</div>') !!}
-                                </div>
+                                <x-form-input name="actual_measure" label="Consumo actual (m3)" />
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <button type="submit" class="btn btn-sm btn-primary btn-block-xs-only"><i class="fas fa-save"></i> Guardar</button>
-                            </div>
-                            <div class="col-sm-6">
-                                <button type="button" onclick="history.back();" class="btn btn-sm btn-danger btn-block-xs-only float-sm-right"><i class="fas fa-hand-point-left"></i> Cancelar</button>
-                            </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="from-group d-flex justify-content-between mb-0">
+                            <x-form-submit class="btn-sm">
+                                <i class="fas fa-save mr-2"></i>Actualizar
+                            </x-form-submit>
+                            <x-buttons.back route="measurers.index" />
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </x-form>
             </div>
         </div>
     </div>

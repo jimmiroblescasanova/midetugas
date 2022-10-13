@@ -56,7 +56,7 @@
                             Capacidad
                         </x-table.heading>
                         <x-table.heading width="10%">
-                            <i class="fas fa-cogs"></i>
+                            <i class="fas fa-tools"></i>
                         </x-table.heading>
                     </tr>
                 </thead>

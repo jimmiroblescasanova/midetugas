@@ -1,13 +1,13 @@
 @extends('layouts.main')
 
 @section('header')
-<div class="col-sm-6">
-    <h1><i class="far fa-building mr-2"></i>Editar condominio</h1>
-</div>
-<div class="col-sm-6 d-flex justify-content-end">
-    <button type="submit" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deletePojectModal">
-        <i class="fas fa-trash-alt mr-2"></i>Eliminar</button>
-</div>
+    <div class="col-sm-6">
+        <h1><i class="far fa-building mr-2"></i>Editar condominio</h1>
+    </div>
+    <div class="col-sm-6 d-flex justify-content-end">
+        <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deletePojectModal">
+            <i class="fas fa-trash-alt mr-2"></i>Eliminar</button>
+    </div>
 @stop
 
 @section('content')
@@ -38,8 +38,7 @@
                         <x-form-submit class="btn-sm">
                             <i class="fas fa-save mr-2"></i>Actualizar
                         </x-form-submit>
-                        <a href="{{ route('projects.index') }}" class="btn btn-sm btn-danger">
-                            <i class="fas fa-hand-point-left mr-2"></i>Atrás</a>
+                        <x-buttons.back route="projects.index" />
                     </div>
                 </div>
             </x-form>

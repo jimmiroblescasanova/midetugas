@@ -2,10 +2,10 @@
 
 @section('header')
     <div class="col-sm-6">
-        <h1><i class="fas fa-user mr-2"></i>Editar tanque</h1>
+        <h1><i class="fas fa-project-diagram mr-2"></i>Editar tanque</h1>
     </div>
-    <div class="col-sm-6 d-flex justify-content-end">
-        <button type="submit" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteTankModal">
+    <div class="col-sm-6">
+        <button type="button" class="btn btn-sm btn-danger float-right" data-toggle="modal" data-target="#deleteTankModal">
             <i class="fas fa-trash-alt mr-2"></i>Eliminar</button>
     </div>
 @stop
@@ -24,10 +24,10 @@
                     </div>
                     <div class="card-footer">
                         <div class="from-group d-flex justify-content-between mb-0">
-                            <button type="submit" class="btn btn-sm btn-primary">
-                                <i class="fas fa-edit mr-2"></i>Actualizar</button>
-                            <a href="{{ route('tanks.index') }}" type="button" class="btn btn-sm btn-danger">
-                                <i class="fas fa-hand-point-left mr-2"></i>Cancelar</a>
+                            <x-form-submit class="btn-sm">
+                                <i class="fas fa-edit mr-2"></i>Actualizar
+                            </x-form-submit>
+                            <x-buttons.back route="tanks.index" />
                         </div>
                     </div>
                 </x-form>
@@ -40,14 +40,3 @@
     <x-modals.delete id="deleteTankModal" :action="route('tanks.destroy', $tank)" />
 @stop
 
-@section('scripts')
-    <script>
-        let today, datepicker;
-        today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
-        datepicker = $('.datepicker').datepicker({
-            locale: 'es-es',
-            format: 'yyyy-mm-dd',
-            uiLibrary: 'bootstrap4',
-        });
-    </script>
-@stop
