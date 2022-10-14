@@ -2,7 +2,7 @@
   "_args": [
     [
       "daterangepicker@3.1.0",
-      "/Users/jimmirobles/Sites/efigas"
+      "/Users/jimmirobles/Sites/midetugas"
     ]
   ],
   "_from": "daterangepicker@3.1.0",
@@ -26,7 +26,7 @@
   ],
   "_resolved": "https://registry.npmjs.org/daterangepicker/-/daterangepicker-3.1.0.tgz",
   "_spec": "3.1.0",
-  "_where": "/Users/jimmirobles/Sites/efigas",
+  "_where": "/Users/jimmirobles/Sites/midetugas",
   "author": {
     "name": "Dan Grossman",
     "email": "dan@dangrossman.info",

@@ -2,7 +2,7 @@
   "_args": [
     [
       "@fullcalendar/daygrid@4.4.2",
-      "/Users/jimmirobles/Sites/efigas"
+      "/Users/jimmirobles/Sites/midetugas"
     ]
   ],
   "_from": "@fullcalendar/daygrid@4.4.2",
@@ -28,7 +28,7 @@
   ],
   "_resolved": "https://registry.npmjs.org/@fullcalendar/daygrid/-/daygrid-4.4.2.tgz",
   "_spec": "4.4.2",
-  "_where": "/Users/jimmirobles/Sites/efigas",
+  "_where": "/Users/jimmirobles/Sites/midetugas",
   "author": {
     "name": "Adam Shaw",
     "email": "arshaw@arshaw.com",

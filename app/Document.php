@@ -13,6 +13,10 @@ class Document extends Model
         'payment_date'
     ];
 
+    protected $casts = [
+        'date' => 'date:Y-m-d',
+    ];
+
     public function client()
     {
         return $this->belongsTo('App\Client');

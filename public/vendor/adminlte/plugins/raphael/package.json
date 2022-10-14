@@ -2,7 +2,7 @@
   "_args": [
     [
       "raphael@2.3.0",
-      "/Users/jimmirobles/Sites/efigas"
+      "/Users/jimmirobles/Sites/midetugas"
     ]
   ],
   "_from": "raphael@2.3.0",
@@ -27,7 +27,7 @@
   ],
   "_resolved": "https://registry.npmjs.org/raphael/-/raphael-2.3.0.tgz",
   "_spec": "2.3.0",
-  "_where": "/Users/jimmirobles/Sites/efigas",
+  "_where": "/Users/jimmirobles/Sites/midetugas",
   "author": {
     "name": "Dmitry Baranovskiy"
   },

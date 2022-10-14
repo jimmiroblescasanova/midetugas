@@ -38,3 +38,10 @@ hr.hr-text::before {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+// remove calendar icon from input text: Chrome
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+}

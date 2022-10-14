@@ -36,27 +36,25 @@
                         </div>
                         <div class="row">
                             <div class="col-md-4 col-12">
-                                <div class="form-group">
-                                    <label for="date">Fecha</label>
-                                    <input type="text" name="date" id="date" class="form-control datepicker {{ $errors->first('date') ? 'is-invalid' : '' }}" value="{{ old('date') }}">
-                                    {!! $errors->first('date', '<div class="invalid-feedback">:message</div>') !!}
-                                </div>
+                                <x-form-input type="date" name="date" label="Fecha de corte:">
+                                    @slot('prepend')
+                                    <i class="fas fa-calendar-alt"></i>
+                                    @endslot
+                                </x-form-input>
                             </div>
                             <div class="col-md-4 col-12">
-                                <div class="form-group">
-                                    <label for="final_quantity">Lectura actual</label>
-                                    <input type="text" name="final_quantity" id="final_quantity"
-                                        class="form-control {{ $errors->first('final_quantity') ? 'is-invalid' : '' }}"
-                                        value="{{ old('final_quantity') }}">
-                                    {!! $errors->first('final_quantity', '<div class="invalid-feedback">:message</div>') !!}
-                                </div>
+                                <x-form-input name="final_quantity" label="Lectura actual:">
+                                    @slot('prepend')
+                                    <i class="fas fa-barcode"></i>
+                                    @endslot
+                                </x-form-input>
                             </div>
                             <div class="col-md-4 col-12">
-                                <div class="form-group">
-                                    <label for="admCharge">Cargo por administración</label>
-                                    <input type="text" name="admCharge" id="admCharge" class="form-control {{ $errors->first('admCharge') ? 'is-invalid' : '' }}" value="{{ old('admCharge') }}">
-                                    {!! $errors->first('admCharge', '<div class="invalid-feedback">:message</div>') !!}
-                                </div>
+                                <x-form-input name="admCharge" label="Cargo por administración:">
+                                    @slot('prepend')
+                                    <i class="fas fa-dollar-sign"></i>
+                                    @endslot
+                                </x-form-input>
                             </div>
                         </div>
                         <div class="row">
@@ -84,14 +82,6 @@
 
 @section('scripts')
     <script>
-        let datepicker;
-        datepicker = $('.datepicker').datepicker({
-            locale: 'es-es',
-            format: 'yyyy-mm-dd',
-            uiLibrary: 'bootstrap4',
-            value: moment().format('YYYY-MM-DD'),
-        });
-
         $('[data-toggle="tooltip"]').tooltip();
     </script>
 @stop
