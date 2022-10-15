@@ -64,6 +64,8 @@ class DocumentsController extends Controller
             $ImageUpload->rotate(-90)->heighten(800);
         } elseif($ImageUpload->exif('Orientation') == 8) {
             $ImageUpload->rotate(90)->heighten(800);
+        } else {
+            $ImageUpload->heighten(800);
         }
         $ImageUpload->encode('jpg');
 
