@@ -10,64 +10,50 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-body">
-                    <form action="{{ route('inventories.store') }}" role="form" method="POST">
-                        @csrf
+                <x-form :action="route('inventories.store')">
+                    <div class="card-body">
                         <input type="hidden" name="user" value="{{ auth()->user()->name }}">
                         <div class="row">
                             <div class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="date">Fecha</label>
-                                    <input type="text"
-                                        class="form-control datepicker {{ $errors->first('date') ? 'is-invalid' : '' }}"
-                                        name="date" id="date" value="{{ old('date') }}">
-                                    {!! $errors->first('date', '<div class="invalid-feedback">:message</div>') !!}
-                                </div>
+                                <x-form-select name="project_id" class="select2bs4" :options="$projects" id="project_id" label="Condominio:" />
                             </div>
                             <div class="col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="project_id">Condominio</label>
-                                    <select
-                                        class="form-control select2bs4 {{ $errors->first('project_id') ? 'is-invalid' : '' }}"
-                                        name="project_id" id="project_id" data-placeholder="Selecciona una opción">
-                                        <option></option>
-                                        @foreach ($projects as $id => $project)
-                                            <option value="{{ $id }}">{{ $project }}</option>
-                                        @endforeach
-                                    </select>
-                                    {!! $errors->first('project_id', '<div class="invalid-feedback">:message</div>') !!}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="tank_id">Tanque</label>
-                                    <select
-                                        class="form-control select2bs4 {{ $errors->first('tank_id') ? 'is-invalid' : '' }}"
-                                        name="tank_id" id="tank_id">
+                                    <label for="tank_id">Tanque:</label>
+                                    <select class="form-control select2bs4 {{ $errors->first('tank_id') ? 'is-invalid' : '' }}" name="tank_id"
+                                        id="tank_id">
                                         <option></option>
                                     </select>
                                     {!! $errors->first('tank_id', '<div class="invalid-feedback">:message</div>') !!}
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="quantity">Cantidad (L)</label>
-                                    <input type="text"
-                                        class="form-control {{ $errors->first('quantity') ? 'is-invalid' : '' }}"
-                                        name="quantity" id="quantity" value="{{ old('quantity') }}">
-                                    {!! $errors->first('quantity', '<div class="invalid-feedback">:message</div>') !!}
-                                </div>
+                                <x-form-input type="date" name="date" label="Fecha de ingreso:">
+                                    @slot('prepend')
+                                    <i class="fas fa-calendar-alt"></i>
+                                    @endslot
+                                </x-form-input>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <x-form-input type="number" step="0.01" name="quantity" label="Cantidad (L):">
+                                    @slot('prepend')
+                                    <i class="fas fa-gas-pump"></i>
+                                    @endslot
+                                </x-form-input>
                             </div>
                         </div>
-                        <div class="form-group d-flex justify-content-between">
-                            <button type="submit" class="btn btn-sm btn-primary">
-                                <i class="fas fa-save mr-2"></i>Enviar</button>
-                            <x-buttons.back />
+                    </div>
+                    <div class="card-footer">
+                        <div class="form-group d-flex justify-content-between mb-0">
+                            <x-form-submit class="btn-sm">
+                                <i class="fas fa-save mr-2"></i>Guardar
+                            </x-form-submit>
+                            <x-buttons.back route="inventories.index" />
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </x-form>
             </div>
         </div>
     </div>
@@ -75,26 +61,9 @@
 
 @section('scripts')
     <script>
-        // $.ajaxSetup({
-        //     headers: {
-        //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //     }
-        // });
-
-        let today, datepicker;
-        today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
-        datepicker = $('.datepicker').datepicker({
-            // minDate: today,
-            locale: 'es-es',
-            format: 'yyyy-mm-dd',
-            uiLibrary: 'bootstrap4',
-        });
-
         $(document).ready(function() {
             $('#project_id').on('change', function(e) {
-                // let id = $( "#project_id option:selected" ).val();
                 let id = e.target.value;
-                // console.log(id);
 
                 $.ajax({
                     url: "/api/inventories/fill-tank",
@@ -104,16 +73,15 @@
                     },
                     success: function(data) {
                         $('#tank_id').empty();
-                        // console.log(data.data);
                         $.each(data.data, function(index, tank) {
                             console.log(tank);
                             $('#tank_id').append('<option value="' + tank.id + '">' +
                                 tank.brand + ' - ' + tank.model + ' - ' + tank
                                 .serial_number + '</option>');
                         });
-
                     }
                 });
+
             });
         });
     </script>

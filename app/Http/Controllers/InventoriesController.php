@@ -22,7 +22,7 @@ class InventoriesController extends Controller
     public function index()
     {
         return view('inventories.index', [
-            'inventories' => Inventory::orderBy('date')->get(),
+            'inventories' => Inventory::orderBy('date', 'asc')->get(),
         ]);
     }
 
@@ -56,5 +56,12 @@ class InventoriesController extends Controller
             ->get();
 
         return TankResource::collection($tanks);
+    }
+
+    public function show(Inventory $inventory)
+    {
+        return view('inventories.show', [
+            'inventory' => $inventory,
+        ]);
     }
 }

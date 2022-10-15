@@ -18,13 +18,14 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <table class="table" id="dataTableInventories">
+                    <table class="table" id="">
                         <thead>
                         <tr>
                             <th>Fecha</th>
                             <th>Condominio</th>
                             <th>Tanque</th>
                             <th>Cantidad</th>
+                            <th><i class="fas fa-tools"></i></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -34,6 +35,7 @@
                                 <td>{{ $inventory->project->name }}</td>
                                 <td>{{ $inventory->tank->brand . ' - ' . $inventory->tank->model . ' - ' . $inventory->tank->serial_number }}</td>
                                 <td>{{ $inventory->quantity }} L</td>
+                                <td><a href="{{ route('inventories.show', $inventory) }}" class="btn btn-xs btn-default"><i class="fas fa-eye mr-2"></i>Ver</a></td>
                             </tr>
                         @endforeach
                         </tbody>

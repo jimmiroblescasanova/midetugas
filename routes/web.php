@@ -111,7 +111,8 @@ Route::delete('/tanks/{tank}/edit', [TanksController::class, 'destroy'])->name('
 
 Route::get('/inventories', [InventoriesController::class, 'index'])->name('inventories.index')->middleware('permission:show_inventories');
 Route::get('/inventories/create', [InventoriesController::class, 'create'])->name('inventories.create')->middleware('permission:create_inventories');
-Route::post('/inventories', [InventoriesController::class, 'store'])->name('inventories.store')->middleware('permission:create_inventories');
+Route::post('/inventories/create', [InventoriesController::class, 'store'])->name('inventories.store')->middleware('permission:create_inventories');
+Route::get('/inventories/{inventory}/show', [InventoriesController::class, 'show'])->name('inventories.show');
 
 Route::get('/deposits', [DepositsController::class, 'index'])->name('deposits.index');
 Route::get('/deposits/create', [DepositsController::class, 'create'])->name('deposits.create');
