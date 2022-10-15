@@ -105,7 +105,7 @@ class DocumentsController extends Controller
             'start_quantity' => $client->measurer->actual_measure,
             'month_quantity' => $month_quantity,
             'correction_factor' => $correction_factor,
-            'period' => Carbon::create($request->date)->subMonth()->isoFormat('MMMM, Y'),
+            'period' => Carbon::create($request->date)->isoFormat('MMMM, Y'),
             'adm_charge' => $request->admCharge*100,
             'price' => $price,
             'subtotal' => $neto * 100,
@@ -233,6 +233,11 @@ class DocumentsController extends Controller
 
     public function cancel(Document $document)
     {
+        if ($document->payments()->exists()) {
+            Flasher::addWarning('No se puede cancelar, elimine los pagos primero.');
+            return redirect()->back();
+        }
+
         try {
             $measurer = Measurer::where('client_id', $document->client_id)->first();
             $project = Project::findOrFail($document->client->project_id);
@@ -254,7 +259,7 @@ class DocumentsController extends Controller
         } catch (\Throwable $th) {
             DB::rollBack();
             Log::error($th->getMessage());
-            abort(403, $th->getMessage());
+            abort(500, $th->getMessage());
         }
 
         Flasher::addWarning('El registro ha sido cancelado con éxito.');
@@ -264,9 +269,8 @@ class DocumentsController extends Controller
     public function print($id)
     {
         $docto = Document::findOrFail($id);
-        // $file = "/pdf/{$docto->reference}.pdf";
-
         $pdf = $this->generarPDF($docto);
+
         return $pdf->stream();
     }
 

@@ -9,6 +9,10 @@ class Inventory extends Model
     protected $guarded = [];
     protected $dates = ['date'];
 
+    protected $casts = [
+        'date' => 'date:Y-m-d',
+    ];
+
     public function project()
     {
         return $this->belongsTo('App\Project');

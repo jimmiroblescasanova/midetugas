@@ -61,7 +61,7 @@ class InventoriesController extends Controller
     public function show(Inventory $inventory)
     {
         return view('inventories.show', [
-            'inventory' => $inventory,
+            'inventory' => $inventory->load(['project:id,name', 'tank:id,model,serial_number']),
         ]);
     }
 }
