@@ -131,7 +131,7 @@ class ReportsController extends Controller
         if($request->ajax())
         {
             $documents = Document::where('client_id', $request->client)
-                ->where('status', '<>', 3)
+                ->where('status', '==', 2)
                 ->when(!$request->allDocuments, function ($q){
                     $q->where('pending', '>', 0);
                 })

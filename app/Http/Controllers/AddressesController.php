@@ -6,6 +6,7 @@ use App\Addresses;
 use App\Http\Requests\SaveAddressRequest;
 use App\Client;
 use App\Project;
+use Flasher\Laravel\Facade\Flasher;
 use Illuminate\Http\Request;
 
 class AddressesController extends Controller
@@ -27,6 +28,7 @@ class AddressesController extends Controller
     {
         $client->update( $request->validated() );
 
+        Flasher::addPreset('dbCreated');
         return redirect()->route('clients.index');
     }
 }

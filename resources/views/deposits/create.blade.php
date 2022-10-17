@@ -11,17 +11,14 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('deposits.store') }}" method="POST">
-                        @csrf
+                    <x-form :action="route('deposits.store')">
                         <div class="row">
                             <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="date">Fecha:</label>
-                                    <input type="text" name="date"
-                                        class="form-control datepicker {{ $errors->first('date') ? 'is-invalid' : '' }}"
-                                        id="date">
-                                    {!! $errors->first('date', '<div class="invalid-feedback">:message</div>') !!}
-                                </div>
+                                <x-form-input type="date" name="date" label="Seleccionar fecha:">
+                                    @slot('prepend')
+                                    <i class="fas fa-calendar-alt"></i>
+                                    @endslot
+                                </x-form-input>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
@@ -77,24 +74,11 @@
                         <div class="form-group d-flex justify-content-between">
                             <button type="submit" class="btn btn-sm btn-primary btn-block-xs-only">
                                 <i class="fas fa-save mr-2"></i>Guardar</button>
-                            <x-buttons.back />
+                            <x-buttons.back route="deposits.index"/>
                         </div>
-                    </form>
+                    </x-form>
                 </div>
             </div>
         </div>
     </div>
-@stop
-
-@section('scripts')
-    <script>
-        let today, datepicker;
-        today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
-        datepicker = $('.datepicker').datepicker({
-            // minDate: today,
-            locale: 'es-es',
-            format: 'yyyy-mm-dd',
-            uiLibrary: 'bootstrap4',
-        });
-    </script>
 @stop
