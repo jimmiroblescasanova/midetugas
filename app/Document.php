@@ -100,4 +100,9 @@ class Document extends Model
         return $this->attributes['adm_charge'] / 100;
     }
 
+    public function scopePending($query)
+    {
+        $query->where('status', 1);
+    }
+
 }

@@ -7,7 +7,7 @@
 @stop
 
 @section('alert')
-    @include('partials.alerts.success')
+    @include('partials.alerts.warning')
 @stop
 
 @section('content')

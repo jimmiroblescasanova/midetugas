@@ -40,9 +40,9 @@
                     <div class="row mb-2">
                         @yield('header')
                     </div>
-                </div>
 
-                @yield('alert')
+                    @yield('alert')
+                </div>
             </section>
 
             <section class="content">

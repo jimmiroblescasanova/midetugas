@@ -50,6 +50,14 @@ class DocumentsController extends Controller
     {
         // Se obtiene el cliente capturado
         $client = Client::with('project')->find($request->client_id);
+        // Se valida si existen documentos pendientes por autorizar
+        if ($client->documents()->pending()->exists()) {
+            // En caso de existir, se detiene el proceso
+            return redirect()
+                ->back()
+                ->with('alert-message', 'Existen documentos sin autorizar del cliente, autoriza o cancela los documentos pendientes, click <a href="/documents">AQUI</a> para dirigirte al listado');
+        }
+        // Se valida si el condominio tiene existencia suficiente
         if ($client->project->actual_capacity <= 0) {
             Flasher::addWarning('El condominio del cliente no tiene inventario.');
             return redirect()->back();
