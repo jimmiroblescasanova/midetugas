@@ -75,7 +75,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="6">No existen resultados para la búsqueda realizada.</td>
+                        <td colspan="7">No existen resultados para la búsqueda realizada.</td>
                     </tr>
                     @endforelse
                 </tbody>

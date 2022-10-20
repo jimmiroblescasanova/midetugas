@@ -19,7 +19,7 @@ class CreateMeasurersTable extends Migration
             $table->string('model');
             $table->string('serial_number')->unique();
             $table->double('actual_measure')->default(0);
-            $table->double('correction_factor')->default(1);
+            $table->string('correction_factor')->default(1);
             $table->boolean('active')->default(false);
             $table->foreignId('client_id')->nullable()->constrained('clients');
             $table->timestamps();

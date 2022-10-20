@@ -16,7 +16,7 @@ class CreateFactorsTable extends Migration
         Schema::create('factors', function (Blueprint $table) {
             $table->id();
             $table->string('psig');
-            $table->double('value');
+            $table->string('value');
             $table->timestamps();
         });
     }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Factor;
 use Illuminate\Http\Request;
-use RealRashid\SweetAlert\Facades\Alert;
+use Flasher\Laravel\Facade\Flasher;
 
 class FactorsController extends Controller
 {
@@ -26,7 +26,7 @@ class FactorsController extends Controller
     {
         Factor::create($request->only('psig', 'value'));
 
-        Alert::success('Éxito', 'El registro se ha guardado con éxito.');
+        Flasher::addPreset('dbCreated');
         return redirect()->route('factors.index');
     }
 
@@ -34,7 +34,7 @@ class FactorsController extends Controller
     {
         Factor::find($request->id)->delete();
 
-        Alert::success('Éxito', 'El registro se ha eliminado con éxito.');
+        Flasher::addPreset('dbDeleted');
         return redirect()->route('factors.index');
     }
 }
