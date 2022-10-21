@@ -105,4 +105,21 @@ class Document extends Model
         $query->where('status', 1);
     }
 
+    public function scopeSearch($query, $search)
+    {
+        $search = "%$search%";
+
+        return $query->whereHas('client', function($q) use ($search){
+                $q->where('name', 'LIKE', $search);
+            })
+            ->orWhere('documents.id', 'LIKE', $search)
+            ->orWhere('period', 'LIKE', $search)
+            ->orWhere('total', 'LIKE', $search);
+    }
+
+    public function scopeWithClientName($query)
+    {
+        return $query->join('clients', 'documents.client_id', '=', 'clients.id')
+            ->select('documents.*', 'clients.id as idClient', 'clients.name as name');
+    }
 }

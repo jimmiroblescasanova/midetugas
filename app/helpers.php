@@ -30,15 +30,15 @@ if (!function_exists('status')) {
     {
         switch ($state) {
             case 1:
-                return '<span class="badge badge-warning">Pendiente</span>';
+                return '<small><span class="badge badge-warning">Pendiente</span></small>';
             case 2:
-                return '<span class="badge badge-primary">Autorizado</span>';
+                return '<small><span class="badge badge-primary">Autorizado</span></small>';
             case 3:
-                return '<span class="badge badge-danger">Cancelado</span>';
+                return '<small><span class="badge badge-danger">Cancelado</span></small>';
             case 4:
-                return '<span class="badge badge-success">Pagado</span>';
+                return '<small><span class="badge badge-success">Pagado</span></small>';
             default:
-                return 'Something wne wrong';
+                return 'Something went wrong';
         }
     }
 }
