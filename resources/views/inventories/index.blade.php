@@ -17,11 +17,11 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-body">
-                    <table class="table" id="">
+                <div class="card-body p-0">
+                    <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th>Fecha</th>
+                            <th>Fecha de Ingreso</th>
                             <th>Condominio</th>
                             <th>Tanque</th>
                             <th>Cantidad</th>
@@ -35,27 +35,16 @@
                                 <td>{{ $inventory->project->name }}</td>
                                 <td>{{ $inventory->tank->brand . ' - ' . $inventory->tank->model . ' - ' . $inventory->tank->serial_number }}</td>
                                 <td>{{ $inventory->quantity }} L</td>
-                                <td><a href="{{ route('inventories.show', $inventory) }}" class="btn btn-xs btn-default"><i class="fas fa-eye mr-2"></i>Ver</a></td>
+                                <td class="text-right"><a href="{{ route('inventories.show', $inventory) }}" class="btn btn-xs btn-default"><i class="fas fa-eye mr-2"></i>Ver</a></td>
                             </tr>
                         @endforeach
                         </tbody>
                     </table>
                 </div>
+                <div class="card-footer">
+                    {{ $inventories->links() }}
+                </div>
             </div>
         </div>
     </div>
-@stop
-
-@section('scripts')
-    <script>
-        $(document).ready(function () {
-            $('#dataTableInventories').DataTable({
-                "responsive": true,
-                "autoWidth": false,
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"
-                },
-            });
-        });
-    </script>
 @stop

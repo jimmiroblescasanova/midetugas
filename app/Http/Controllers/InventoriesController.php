@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreInventoryRequest;
-use App\Http\Resources\TankResource;
-use App\Traits\UpdateProjectTrait;
-use App\Inventory;
-use App\Project;
 use App\Tank;
-use Illuminate\Http\Request;
+use App\Project;
+use App\Inventory;
+use App\Traits\UpdateProjectTrait;
+use App\Http\Resources\TankResource;
+use App\Http\Requests\StoreInventoryRequest;
 
 class InventoriesController extends Controller
 {
@@ -22,7 +21,7 @@ class InventoriesController extends Controller
     public function index()
     {
         return view('inventories.index', [
-            'inventories' => Inventory::orderBy('date', 'asc')->get(),
+            'inventories' => Inventory::orderBy('date', 'asc')->paginate(),
         ]);
     }
 
