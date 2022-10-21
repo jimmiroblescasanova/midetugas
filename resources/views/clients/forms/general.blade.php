@@ -70,11 +70,10 @@
                 class='form-control select2bs4 {{ $errors->first('measurer_id') ? 'is-invalid' : '' }}'>
                 <option value="0">Sin medidor</option>
                 @if ($client->measurer()->exists())
-                    <option value="{{ $client->measurer->id }}" selected>{{ $client->measurer->model }}</option>
+                    <option value="{{ $client->measurer->id }}" selected>{{ $client->measurer->serial_number }}</option>
                 @endif
                 @foreach ($measurers as $measurer)
-                    <option value="{{ $measurer->id }}">{{ $measurer->model }}, {{ $measurer->serial_number }}
-                    </option>
+                    <option value="{{ $measurer->id }}">{{ $measurer->serial_number }}</option>
                 @endforeach
             </select>
             {!! $errors->first('measurer_id', '<div class="invalid-feedback">:message</div>') !!}
