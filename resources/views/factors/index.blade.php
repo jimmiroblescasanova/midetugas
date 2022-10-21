@@ -17,7 +17,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <table class="table">
+                    <table class="table table-striped">
                         <thead>
                             <tr>
                                 <th>Factor PSIG</th>
@@ -40,6 +40,9 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="card-footer">
+                    {{ $factors->links() }}
+                </div>
             </div>
         </div>
     </div>
@@ -50,7 +53,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Capturar nuevo precio</h5>
+                    <h5 class="modal-title">Capturar nuevo</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

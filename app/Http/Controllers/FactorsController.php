@@ -15,7 +15,7 @@ class FactorsController extends Controller
 
     public function index()
     {
-        $factors = Factor::all();
+        $factors = Factor::paginate();
 
         return view('factors.index', [
             'factors' => $factors,
