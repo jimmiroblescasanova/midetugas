@@ -15,13 +15,12 @@
                         <input type="hidden" name="user" value="{{ auth()->user()->name }}">
                         <div class="row">
                             <div class="col-12 col-md-6">
-                                <x-form-select name="project_id" class="select2bs4" :options="$projects" id="project_id" label="Condominio:" />
+                                <x-form-select name="project_id" class="select2bs4" :options="$projects" id="project_id" label="Condominio:" placeholder="Seleccionar un condominio..." />
                             </div>
                             <div class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label for="tank_id">Tanque:</label>
-                                    <select class="form-control select2bs4 {{ $errors->first('tank_id') ? 'is-invalid' : '' }}" name="tank_id"
-                                        id="tank_id">
+                                    <select class="form-control select2bs4 {{ $errors->first('tank_id') ? 'is-invalid' : '' }}" name="tank_id" id="tank_id" data-placeholder="No existen resultados...">
                                         <option></option>
                                     </select>
                                     {!! $errors->first('tank_id', '<div class="invalid-feedback">:message</div>') !!}

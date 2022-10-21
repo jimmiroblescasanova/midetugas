@@ -1,9 +1,14 @@
 @extends('layouts.main')
 
 @section('header')
-<div class="col-sm-6">
-    <h1><i class="fas fa-boxes mr-2"></i>Entrada de inventario</h1>
-</div>
+    <div class="col-sm-6">
+        <h1><i class="fas fa-boxes mr-2"></i>Entrada de inventario</h1>
+    </div>
+    <div class="col-sm-6">
+        <button type="button" class="btn btn-sm btn-danger float-right" data-toggle="modal"
+            data-target="#deleteInventoryModal">
+            <i class="fas fa-trash-alt mr-2"></i>Eliminar</button>
+    </div>
 @stop
 
 @section('content')
@@ -77,3 +82,7 @@
     </div>
 </div>
 @stop
+
+@section('modal-section')
+<x-modals.delete id="deleteInventoryModal" :action="route('inventories.destroy', $inventory)" />
+@endsection
