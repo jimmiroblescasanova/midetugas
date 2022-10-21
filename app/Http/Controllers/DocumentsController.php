@@ -9,6 +9,7 @@ use App\Project;
 use App\Document;
 use App\Measurer;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 use App\Traits\SendSmsTrait;
 use Illuminate\Http\Request;
 use App\Traits\GraphBarTrait;
@@ -55,7 +56,7 @@ class DocumentsController extends Controller
             // En caso de existir, se detiene el proceso
             return redirect()
                 ->back()
-                ->with('alert-message', 'Existen documentos sin autorizar del cliente, autoriza o cancela los documentos pendientes, click <a href="/documents">AQUI</a> para dirigirte al listado');
+                ->with('alert-message', 'Existen documentos sin autorizar del cliente, autoriza o cancela los documentos pendientes, click <a href="/documents?search='.Str::replace(' ', '+', $client->name). '&status=1">AQUI</a> para dirigirte al listado');
         }
         // Se valida si el condominio tiene existencia suficiente
         if ($client->project->actual_capacity <= 0) {
