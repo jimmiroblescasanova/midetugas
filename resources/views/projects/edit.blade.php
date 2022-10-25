@@ -33,6 +33,7 @@
                         <small>Última modificación: {{ $project->updated_at->diffForHumans() }}</small>
                     </div>
                 </div>
+                @endbind 
                 <div class="card-footer">
                     <div class="d-flex justify-content-between">
                         <x-form-submit class="btn-sm">
