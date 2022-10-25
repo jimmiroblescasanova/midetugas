@@ -63,6 +63,7 @@
                         wire:click="sortBy('documents.period')"
                         :direction="$sortField === 'documents.period' ? $sortDirection : null">Periodo</x-table.heading>
                         <x-table.heading width="10%">Total</x-table.heading>
+                        <x-table.heading width="10%">Pendiente</x-table.heading>
                         <x-table.heading width="10%"><i class="fas fa-tools"></i></x-table.heading>
                     </tr>
                 </thead>
@@ -74,6 +75,7 @@
                         <td>{{ $document->client->line_3 }}</td>
                         <td>{{ $document->period }}</td>
                         <td class="text-right">{{ contabilidad($document->total) }}</td>
+                        <td class="text-right">{{ contabilidad($document->pending) }}</td>
                         <td class="text-right">
                             <a href="{{ route('documents.show', $document) }}" class="btn btn-xs btn-default">
                                 <i class="fas fa-eye mr-2"></i>Revisar</a>
