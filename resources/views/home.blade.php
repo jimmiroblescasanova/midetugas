@@ -10,7 +10,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-9">
+        <div class="col-lg-9">
             <div class="card card-outline card-primary">
                 <div class="card-header">
                     Capacidad de los condominios
@@ -23,7 +23,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-lg-3">
             <div class="small-box bg-info">
                 <div class="inner">
                     <h3>$ {{ number_format($actual_price, 2) }}</h3>
