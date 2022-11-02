@@ -1,5 +1,7 @@
 @extends('layouts.main')
 
+@section('title', 'Reporte de toma de lecturas')
+
 @section('header')
     <div class="col-sm-6">
         <h1><i class="fas fa-user mr-2"></i>Reporte: Toma de lecturas</h1>

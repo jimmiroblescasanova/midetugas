@@ -1,5 +1,7 @@
 @extends('layouts.main')
 
+@section('title', 'Dashboard')
+
 @section('header')
     <div class="col-sm-6">
         <h1><i class="fas fa-home mr-2"></i>Inicio</h1>

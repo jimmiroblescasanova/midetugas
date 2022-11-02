@@ -1,8 +1,10 @@
 @extends('layouts.main')
 
+@section('title', 'Usuarios de acceso')
+
 @section('header')
     <div class="col-sm-6">
-        <h1><i class="fas fa-user mr-2"></i>Usuarios</h1>
+        <h1><i class="fas fa-user mr-2"></i>Usuarios de acceso</h1>
     </div>
     @can('create_users')
         <div class="col-sm-6">

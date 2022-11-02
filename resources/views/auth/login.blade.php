@@ -1,6 +1,6 @@
 @extends('layouts.auth')
 
-@section('title', 'Acceso de clientes')
+@section('title', 'Administración')
 
 @section('content')
     <div class="login-logo">

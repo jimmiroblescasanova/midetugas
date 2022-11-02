@@ -1,5 +1,7 @@
 @extends('layouts.main')
 
+@section('title', 'Descarga masiva PDF')
+
 @section('header')
     <div class="col-sm-6">
         <h1><i class="far fa-file-pdf mr-2"></i>Descargar PDF masivamente</h1>

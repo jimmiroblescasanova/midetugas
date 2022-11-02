@@ -1,5 +1,7 @@
 @extends('layouts.main')
 
+@section('title', 'Todos los tanques')
+
 @section('header')
     <div class="col-sm-6">
         <h1><i class="fas fa-project-diagram mr-2"></i>Tanques</h1>

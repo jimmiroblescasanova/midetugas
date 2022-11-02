@@ -1,5 +1,7 @@
 @extends('layouts.main')
 
+@section('title', 'Nuevo tanque')
+
 @section('header')
     <div class="col-sm-6">
         <h1><i class="fas fa-user mr-2"></i>Crear tanque</h1>

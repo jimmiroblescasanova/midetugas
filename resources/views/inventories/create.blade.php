@@ -1,5 +1,7 @@
 @extends('layouts.main')
 
+@section('title', 'Entrada de inventario')
+
 @section('header')
     <div class="col-sm-6">
         <h1><i class="fas fa-boxes mr-2"></i>Inventarios</h1>

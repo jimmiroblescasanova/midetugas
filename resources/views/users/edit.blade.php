@@ -1,5 +1,7 @@
 @extends('layouts.main')
 
+@section('title', 'Editar usuario')
+
 @section('header')
     <div class="col-sm-6">
         <h1><i class="fas fa-user-cog"></i> Editar usuario</h1>

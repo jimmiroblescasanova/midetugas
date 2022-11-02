@@ -1,5 +1,7 @@
 @extends('layouts.main')
 
+@section('title', 'Nuevo recibo')
+
 @section('header')
     <div class="col-sm-6">
         <h1><i class="far fa-clipboard mr-2"></i>Capturar corte</h1>

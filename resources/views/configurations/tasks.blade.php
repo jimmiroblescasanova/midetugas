@@ -1,5 +1,7 @@
 @extends('layouts.main')
 
+@section('title', 'Procesos especiales')
+
 @section('header')
     <div class="col-sm-6">
         <h1><i class="fas fa-user"></i> Procesos especiales</h1>

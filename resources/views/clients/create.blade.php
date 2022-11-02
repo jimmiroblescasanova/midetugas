@@ -1,5 +1,7 @@
 @extends('layouts.main')
 
+@section('title', 'Crear clientes')
+
 @section('header')
     <div class="col-sm-6">
         <h1><i class="fas fa-users"></i> Nuevo cliente</h1>

@@ -1,5 +1,7 @@
 @extends('layouts.main')
 
+@section('title', 'Editar condominio')
+
 @section('header')
     <div class="col-sm-6">
         <h1><i class="far fa-building mr-2"></i>Editar condominio</h1>

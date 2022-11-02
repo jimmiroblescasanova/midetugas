@@ -1,5 +1,7 @@
 @extends('layouts.main')
 
+@section('title', 'Recibos')
+
 @section('header')
     <div class="col-sm-6">
         <h1><i class="fas fa-receipt mr-2"></i>Recibos</h1>

@@ -1,5 +1,7 @@
 @extends('layouts.main')
 
+@section('title', 'Ver / Editar recibo')
+
 @section('header')
     <div class="col-sm-6">
         <h1><i class="fas fa-tachometer-alt mr-2"></i>Detalles del consumo</h1>

@@ -1,5 +1,7 @@
 @extends('layouts.main')
 
+@section('title', 'Ver información del pago')
+
 @section('header')
     <div class="col-sm-6">
         <h1><i class="fas fa-hand-holding-usd mr-2"></i>Ver pago</h1>
