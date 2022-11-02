@@ -10,20 +10,20 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-8">
-            <div class="card card-info">
+        <div class="col-md-9">
+            <div class="card card-outline card-primary">
                 <div class="card-header">
-                    Consumos de gas globales
+                    Capacidad de los condominios
                 </div>
                 <div class="card-body">
                     <div class="chart">
                         <canvas id="myChart"
-                            style="min-height: 300px; height: 300px; max-height: 300px; max-width: 100%;"></canvas>
+                            style="min-height: 300px; height: 300px; max-height: 500px; max-width: 100%;"></canvas>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="small-box bg-info">
                 <div class="inner">
                     <h3>$ {{ number_format($actual_price, 2) }}</h3>
@@ -31,37 +31,38 @@
                     <p>Precio actual m<sup>3</sup></p>
                 </div>
                 <div class="icon">
-                    <i class="fas fa-money-bill-alt"></i>
+                    <i class="fas fa-gas-pump"></i>
                 </div>
                 @can('update_prices')
                     <a href="#" id="newPrice" class="small-box-footer">Actualizar precio <i
                             class="fas fa-arrow-circle-right"></i></a>
                 @endcan
             </div>
-            <div class="card card-danger">
-                <div class="card-header">
-                    Clientes atrasados
+            <div class="small-box bg-success">
+                <div class="inner">
+                    <h3>$ {{ number_format($today_payments, 2) }}</h3>
+
+                    <p>Ingresos del día</p>
                 </div>
-                <div class="card-body p-0">
-                    <table class="table table-sm table-striped">
-                        <thead>
-                            <tr>
-                                <th>Folio</th>
-                                <th>Cliente</th>
-                                <th>Vencimiento</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($documents as $document)
-                                <tr>
-                                    <td><a href="{{ route('documents.show', $document->id) }}">{{ $document->id }}</a></td>
-                                    <td>{{ $document->client->name }}</td>
-                                    <td>{{ $document->payment_date->diffForHumans() }}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                <div class="icon">
+                    <i class="fas fa-hand-holding-usd"></i>
                 </div>
+                <a href="{{ route('payments.index') }}" class="small-box-footer">
+                    Ver todos los pagos <i class="fas fa-arrow-circle-right"></i>
+                </a>
+            </div>
+            <div class="small-box bg-warning">
+                <div class="inner">
+                    <h3>{{ $pending_doctos }}</h3>
+
+                    <p>Documentos sin autorizar</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-receipt"></i>
+                </div>
+                <a href="{{ route('documents.index', 'status=1') }}" class="small-box-footer">
+                    Ver documentos pendientes <i class="fas fa-arrow-circle-right"></i>
+                </a>
             </div>
         </div>
     </div>
@@ -113,22 +114,27 @@
             data: {
                 labels: {!! json_encode($chart['label']) !!},
                 datasets: [{
-                    label: 'Facturado',
-                    data: {!! json_encode($chart['total_amount']) !!},
-                    backgroundColor: '#1b7ed4',
+                    label: 'Capacidad actual',
+                    data: {!! json_encode($chart['actual_capacity']) !!},
+                    backgroundColor: '#C0392B',
                 }, {
-                    label: 'Pendiente de pago',
-                    data: {!! json_encode($chart['total_pending']) !!},
-                    backgroundColor: '#a9a9a9',
+                    label: 'Capacidad total',
+                    data: {!! json_encode($chart['total_capacity']) !!},
+                    backgroundColor: '#1b7ed4',
                 }]
             },
             options: {
                 scales: {
+                    xAxes: [{
+                        stacked: true,
+                    }],
                     yAxes: [{
+                        stacked: true,
                         ticks: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            stepSize: 1000,
                         }
-                    }]
+                    }],
                 }
             }
         });

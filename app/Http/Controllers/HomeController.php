@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Price;
+use App\Payment;
+use App\Project;
 use App\Document;
-use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -20,33 +22,32 @@ class HomeController extends Controller
 
     public function index()
     {
-        $datasets = DB::table('documents')
-            ->select(DB::raw('period, year(date) as year, month(date) as month, SUM(total) as total_amount, SUM(pending) as total_pending'))
-            ->where('status', '2')
-            ->orWhere('status', '4')
-            ->groupBy('period', 'month', 'year')
-            ->orderBy('year')
-            ->orderBy('month')
+        $projects = Project::query()
+            ->select('name', 'total_capacity', 'actual_capacity')
             ->get();
 
         $chart['label'] = [];
-        $chart['total_amount'] = [];
-        $chart['total_pending'] = [];
-        foreach ($datasets->reverse()->take(12) as $data)
+        $chart['total_capacity'] = [];
+        $chart['actual_capacity'] = [];
+        foreach ($projects as $data)
         {
-            array_push($chart['label'], $data->period);
-            array_push($chart['total_amount'], $data->total_amount);
-            array_push($chart['total_pending'], $data->total_pending);
+            array_push($chart['label'], $data->name);
+            array_push($chart['total_capacity'], $data->total_capacity);
+            array_push($chart['actual_capacity'], $data->actual_capacity);
         }
 
-        $documents = Document::where([
-            ['pending', '>', 0.01],
-            ['status', '!=', 1]
-        ])->take(10)->get();
+        $today_payments = Payment::query()
+            ->whereDate('created_at', Carbon::today())
+            ->sum('amount');
+
+        $pending_doctos = Document::query()
+            ->where('status', '1')
+            ->count();
 
         return view('home', [
             'actual_price' => Price::latest()->first()->price,
-            'documents' => $documents,
+            'pending_doctos' => $pending_doctos,
+            'today_payments' => $today_payments / 100,
             'chart' => $chart,
         ]);
     }
