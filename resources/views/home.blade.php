@@ -18,7 +18,7 @@
                 <div class="card-body">
                     <div class="chart">
                         <canvas id="myChart"
-                            style="min-height: 300px; height: 300px; max-height: 500px; max-width: 100%;"></canvas>
+                            style="min-height: 300px; height: 300px; max-height: 450px; max-width: 100%;"></canvas>
                     </div>
                 </div>
             </div>
@@ -132,7 +132,7 @@
                         stacked: true,
                         ticks: {
                             beginAtZero: true,
-                            stepSize: 1000,
+                            stepSize: 2000,
                         }
                     }],
                 }
