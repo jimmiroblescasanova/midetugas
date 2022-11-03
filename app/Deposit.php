@@ -29,4 +29,10 @@ class Deposit extends Model
     {
         return $this->attributes['total'] / 100;
     }
+
+    public function scopeWithClientName($query)
+    {
+        return $query->join('clients', 'deposits.client_id', '=', 'clients.id')
+            ->select('deposits.*', 'clients.id as idClient', 'clients.name as name');
+    }
 }

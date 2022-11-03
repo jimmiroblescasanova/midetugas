@@ -4,6 +4,7 @@
   'reportes.depositos-garantia' => 'App\\Http\\Livewire\\Reportes\\DepositosGarantia',
   'search-clients' => 'App\\Http\\Livewire\\SearchClients',
   'tables.clients' => 'App\\Http\\Livewire\\Tables\\Clients',
+  'tables.deposits' => 'App\\Http\\Livewire\\Tables\\Deposits',
   'tables.documents' => 'App\\Http\\Livewire\\Tables\\Documents',
   'tables.measurers' => 'App\\Http\\Livewire\\Tables\\Measurers',
   'tables.payments' => 'App\\Http\\Livewire\\Tables\\Payments',
