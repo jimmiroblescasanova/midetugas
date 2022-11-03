@@ -40,13 +40,16 @@ class InventoriesController extends Controller
         $project = Project::findOrFail($request->project_id);
         $new_total = $project->actual_capacity + $request->quantity;
 
-        if ($project->total_capacity >= $new_total) {
-            $project->actual_capacity = $new_total;
-            $project->percentage = $this->calculatePercentage($project);
-            $project->save();
-
-            Inventory::create($request->validated());
+        if ($project->total_capacity <= $new_total) {
+            Flasher::addError('No se puede exceder la capacidad.')    ;
+            return back();
         }
+
+        $project->actual_capacity = $new_total;
+        $project->percentage = $this->calculatePercentage($project);
+        $project->save();
+
+        Inventory::create($request->validated());
 
         Flasher::addPreset('dbCreated');
         return redirect()->route('inventories.index');
