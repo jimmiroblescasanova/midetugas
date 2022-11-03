@@ -15,10 +15,9 @@
                 <div class="card-header">
                     Capacidad de los condominios
                 </div>
-                <div class="card-body">
-                    <div class="chart">
-                        <canvas id="myChart"
-                            style="min-height: 300px; height: 300px; max-height: 450px; max-width: 100%;"></canvas>
+                <div class="card-body overflow-auto">
+                    <div class="chart" style="width:80vw">
+                        <canvas id="myChart" style="height: 300px; min-height: 300px; max-height: 450px;"></canvas>
                     </div>
                 </div>
             </div>
@@ -124,12 +123,9 @@
                 }]
             },
             options: {
+                maintainAspectRatio: true,
                 scales: {
-                    xAxes: [{
-                        stacked: true,
-                    }],
                     yAxes: [{
-                        stacked: true,
                         ticks: {
                             beginAtZero: true,
                             stepSize: 2000,
