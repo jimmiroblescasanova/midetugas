@@ -16,35 +16,7 @@
 @section('content')
     <div class="row">
         <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <table class="table table-striped" id="dataTablePayments">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Cliente</th>
-                                <th>Fecha</th>
-                                <th>Importe</th>
-                                <th>Acción</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($payments as $pay)
-                                <tr>
-                                    <td>{{ $pay->id }}</td>
-                                    <td>{{ $pay->client->name }}</td>
-                                    <td>{{ $pay->date->format('d-m-Y') }}</td>
-                                    <td class="text-right">$ {{ number_format($pay->amount, 2) }}</td>
-                                    <td class="text-right">
-                                        <a href="{{ route('payments.show', $pay) }}" class="btn btn-xs btn-primary"><i
-                                                class="fas fa-eye mr-2"></i>Ver</a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            @livewire('tables.payments')
         </div>
     </div>
 
@@ -80,19 +52,4 @@
             </div>
         </div>
     </div>
-@stop
-
-@section('scripts')
-    <script>
-        $(document).ready(function() {
-            $('#dataTablePayments').DataTable({
-                "order": [0, 'desc'],
-                "responsive": true,
-                "autoWidth": false,
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"
-                },
-            });
-        });
-    </script>
 @stop

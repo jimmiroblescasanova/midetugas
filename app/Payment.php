@@ -32,4 +32,21 @@ class Payment extends Model
     public function getAmountAttribute() {
         return $this->attributes['amount'] / 100;
     }
+
+    public function scopeSearch($query, $search)
+    {
+        $search = "%$search%";
+
+        return $query->whereHas('client', function ($q) use ($search) {
+                $q->where('name', 'LIKE', $search);
+            })
+            ->orWhere('payments.id', 'LIKE', $search)
+            ->orWhere('amount', 'LIKE', $search);
+    }
+
+    public function scopeWithClientName($query)
+    {
+        return $query->join('clients', 'payments.client_id', '=', 'clients.id')
+            ->select('payments.*', 'clients.id as idClient', 'clients.name as name');
+    }
 }
