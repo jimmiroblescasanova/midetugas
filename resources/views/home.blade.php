@@ -15,8 +15,8 @@
                 <div class="card-header">
                     Capacidad de los condominios
                 </div>
-                <div class="card-body overflow-auto">
-                    <div class="chart" style="width:80vw">
+                <div class="card-body">
+                    <div class="chart">
                         <canvas id="myChart" style="height: 300px; min-height: 300px; max-height: 450px;"></canvas>
                     </div>
                 </div>

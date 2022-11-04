@@ -24,7 +24,7 @@ class InventoriesController extends Controller
     public function index()
     {
         return view('inventories.index', [
-            'inventories' => Inventory::orderBy('date', 'asc')->paginate(),
+            'inventories' => Inventory::orderBy('date', 'desc')->paginate(),
         ]);
     }
 
