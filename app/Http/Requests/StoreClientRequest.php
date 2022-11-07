@@ -31,6 +31,20 @@ class StoreClientRequest extends FormRequest
             'country_code' => 'required|string',
             'phone' => 'required|numeric',
             'shortName' => 'string|nullable',
+            'measurer_id' => ['nullable', 'exists:measurers,id'],
+            'line_1' => 'required|string',
+            'line_2' => 'nullable|string',
+            'line_3' => 'nullable|string',
+            'locality' => 'required|string',
+            'city' => 'required|string',
+            'state_province' => 'required|string',
+            'country' => 'required|string',
+            'zipcode' => 'required|numeric',
+            'project_id' => ['exists:projects,id'],
+            'ref1_name' => 'string',
+            'ref1_phone' => 'digits:10',
+            'ref2_name' => 'string',
+            'ref2_phone' => 'digits:10',
         ];
     }
 }

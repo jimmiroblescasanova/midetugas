@@ -63,20 +63,12 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-6">
-        <div class="form-group">
-            <label for="shortName">Nombre corto</label>
-            <input type="text" class="form-control {{ $errors->first('shortName') ? 'is-invalid' : '' }}"
-                name="shortName" id="shortName" placeholder="Nombre corto"
-                value="{{ old('shortName', $client->shortName) }}">
-            {!! $errors->first('shortName', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
-    </div>
     <div class="col-md-4">
         <div class="form-group">
             <label for='measurer_id'>Medidor</label>
-            <select id='measurer_id' name='measurer_id' data-placeholder="Seleccionar un medidor" class='form-control {{ $errors->first('measurer_id') ? 'is-invalid' : '' }}' required>
-                <option></option>
+            <select id='measurer_id' name='measurer_id' data-placeholder="Seleccionar o dejar en blanco"
+                class='form-control select2bs4 {{ $errors->first('measurer_id') ? 'is-invalid' : '' }}'>
+                <option value="0">Sin medidor</option>
                 @if ($client->measurer()->exists())
                     <option value="{{ $client->measurer->id }}" selected>{{ $client->measurer->serial_number }}</option>
                 @endif
@@ -87,12 +79,13 @@
             {!! $errors->first('measurer_id', '<div class="invalid-feedback">:message</div>') !!}
         </div>
     </div>
-    <div class="col-md-2 d-flex align-items-center">
+    <div class="col-md-8">
         <div class="form-group">
-            <div class="form-check">
-                <input type="checkbox" name="1" id="SinMedidor" class="form-check-input">
-                <label for="SinMedidor" class="form-check-label">Sin medidor</label>
-            </div>
+            <label for="shortName">Nombre corto</label>
+            <input type="text" class="form-control {{ $errors->first('shortName') ? 'is-invalid' : '' }}"
+                name="shortName" id="shortName" placeholder="Nombre corto"
+                value="{{ old('shortName', $client->shortName) }}">
+            {!! $errors->first('shortName', '<div class="invalid-feedback">:message</div>') !!}
         </div>
     </div>
 </div>

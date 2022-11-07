@@ -9,6 +9,7 @@ use App\Mail\TestEmail;
 use Maatwebsite\Excel\Excel;
 use App\Exports\ClientsExport;
 use Illuminate\Support\Facades\DB;
+use Flasher\Laravel\Facade\Flasher;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\StoreClientRequest;
@@ -31,16 +32,17 @@ class ClientsController extends Controller
         return view('clients.create', [
             'client' => new Client,
             'measurers' => Measurer::where('active', false)->get(),
+            'projects' => Project::pluck('name', 'id'),
         ]);
     }
 
     public function store(StoreClientRequest $request)
-    {
+    {        
         try {
             DB::beginTransaction();
-            $client = Client::create($request->validated());
+            $client = Client::create($request->safe()->except('measurer_id'));
 
-            if ($request['measurer_id'] != 0) {
+            if (array_key_exists('measurer_id', $request->validated())) {
                 $measurer = Measurer::findOrFail($request->measurer_id);
                 $measurer->client_id = $client->id;
                 $measurer->active = true;
@@ -54,7 +56,8 @@ class ClientsController extends Controller
             abort(500, $th->getMessage());
         }
 
-        return redirect()->route('contacts.create', $client->id);
+        Flasher::addSuccess('Cliente agregado correctamente');
+        return redirect()->route('clients.index');
     }
 
     public function show(Client $client)

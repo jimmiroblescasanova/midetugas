@@ -1,4 +1,3 @@
-<option value='+52'>MX - Mexico (+52)</option>
 <option value='+376' >AD - Andorra (+376)</option>
 <option value='+971' >AE - United Arab Emirates (+971)</option>
 <option value='+93' >AF - Afghanistan (+93)</option>
@@ -144,6 +143,7 @@
 <option value='+960' >MV - Maldives (+960)</option>
 <option value='+265' >MW - Malawi (+265)</option>
 <option value='+60' >MY - Malaysia (+60)</option>
+<option value='+52' selected>MX - Mexico (+52)</option>
 <option value='+258' >MZ - Mozambique (+258)</option>
 <option value='+264' >NA - Namibia (+264)</option>
 <option value='+687' >NC - New Caledonia (+687)</option>
