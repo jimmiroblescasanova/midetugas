@@ -44,15 +44,6 @@ Route::post('/clients', [ClientsController::class, 'store'])->name('clients.stor
 Route::get('/clients/{client}', [ClientsController::class, 'show'])->name('clients.show')->middleware('permission:show_clients');
 Route::patch('/clients/{client}', [ClientsController::class, 'update'])->name('clients.update')->middleware('permission:edit_clients');
 
-//Routes for management of contacts
-Route::get('/clients-contacts/{id}', [ContactsController::class, 'create'])->name('contacts.create')->middleware('permission:create_clients');
-Route::patch('/clients-contacts/{client}', [ContactsController::class, 'store'])->name('contacts.store')->middleware('permission:create_clients');
-Route::patch('/clients-contacts-update/{client}', [ContactsController::class, 'update'])->name('contacts.update')->middleware('permission:edit_contacts');
-
-//Routes for creating or updating addresses
-Route::get('/clients-address/{client}', [AddressesController::class, 'create'])->name('address.create')->middleware('permission:create_clients');
-Route::patch('/clients-address/{client}', [AddressesController::class, 'update'])->name('address.update')->middleware('permission:edit_addresses');
-
 // Route for change the status on a client
 Route::get('/clients/{client}/suspend', [ClientsController::class, 'status'])->name('clients.status')->middleware('permission:change_status');
 
