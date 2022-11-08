@@ -90,7 +90,7 @@
     <div class="col-md-2 d-flex align-items-center">
         <div class="form-group">
             <div class="form-check">
-                <input type="checkbox" name="1" id="SinMedidor" class="form-check-input">
+                <input type="checkbox" name="1" id="SinMedidor" class="form-check-input" {{ $client->measurer()->exists() ? '' : 'checked' }}>
                 <label for="SinMedidor" class="form-check-label">Sin medidor</label>
             </div>
         </div>

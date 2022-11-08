@@ -36,58 +36,21 @@
                         </li>
                     </ul>
                 </div>
+                <form action="{{ route('clients.update', $client) }}" role="form" method="POST">
+                @csrf
+                @method('patch')
                 <div class="card-body">
                     <div class="tab-content" id="custom-tabs-four-tabContent">
-                        <div class="tab-pane fade show active" id="custom-tabs-four-home" role="tabpanel"
-                            aria-labelledby="custom-tabs-four-home-tab">
-                            <form action="{{ route('clients.update', $client) }}" role="form" method="POST">
-                                @csrf
-                                @method('patch')
-                                @include('clients.forms.general')
-                                @can('edit_clients')
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <button class="btn btn-sm btn-primary" type="submit">
-                                                <i class="fas fa-save mr-2"></i>Actualizar</button>
-                                        </div>
-                                    </div>
-                                @endcan
-                            </form>
+                        <div class="tab-pane fade show active" id="custom-tabs-four-home" role="tabpanel" aria-labelledby="custom-tabs-four-home-tab">
+                            @include('clients.forms.general')
                         </div>
-                        <div class="tab-pane fade" id="custom-tabs-four-profile" role="tabpanel"
-                            aria-labelledby="custom-tabs-four-profile-tab">
-                            <form action="{{ route('contacts.update', $client) }}" role="form" method="POST">
-                                @csrf
-                                @method('patch')
-                                @include('clients.forms.contacts')
-                                @can('edit_contacts')
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <button class="btn btn-sm btn-primary" type="submit">
-                                                <i class="fas fa-save mr-2"></i>Actualizar</button>
-                                        </div>
-                                    </div>
-                                @endcan
-                            </form>
+                        <div class="tab-pane fade" id="custom-tabs-four-profile" role="tabpanel" aria-labelledby="custom-tabs-four-profile-tab">
+                            @include('clients.forms.contacts')
                         </div>
-                        <div class="tab-pane fade" id="custom-tabs-four-messages" role="tabpanel"
-                            aria-labelledby="custom-tabs-four-messages-tab">
-                            <form action="{{ route('address.update', $client) }}" role="form" method="POST">
-                                @csrf
-                                @method('patch')
-                                @include('clients.forms.address')
-                                @can('edit_addresses')
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <button class="btn btn-sm btn-primary" type="submit">
-                                                <i class="fas fa-save mr-2"></i>Actualizar</button>
-                                        </div>
-                                    </div>
-                                @endcan
-                            </form>
+                        <div class="tab-pane fade" id="custom-tabs-four-messages" role="tabpanel" aria-labelledby="custom-tabs-four-messages-tab">
+                            @include('clients.forms.address')
                         </div>
-                        <div class="tab-pane fade" id="custom-tabs-four-actions" role="tabpanel"
-                            aria-labelledby="custom-tabs-four-actions-tab">
+                        <div class="tab-pane fade" id="custom-tabs-four-actions" role="tabpanel" aria-labelledby="custom-tabs-four-actions-tab">
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
@@ -135,9 +98,16 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <button class="btn btn-sm btn-danger float-sm-right" type="button" onclick="history.back()">
-                        <i class="fas fa-hand-point-left mr-2"></i>Atrás</button>
+                    <div class="d-flex justify-content-between">
+                        @can('edit_clients')
+                            <button class="btn btn-sm btn-primary" type="submit">
+                                <i class="fas fa-save mr-2"></i>Actualizar cliente
+                            </button>
+                        @endcan
+                        <x-buttons.back route="clients.index" />
+                    </div>
                 </div>
+                </form>
             </div>
         </div>
     </div>
@@ -174,4 +144,24 @@
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
+@stop
+
+@section('scripts')
+<script>
+    $('#measurer_id').select2({
+        theme: 'bootstrap4',
+    });
+
+    document.addEventListener("DOMContentLoaded", function(event) {
+        let SinMedidor = document.getElementById('SinMedidor');
+
+        if (SinMedidor.checked) {
+            $('#measurer_id').prop('disabled', true);
+        }
+
+        SinMedidor.addEventListener('click', () => {
+            $('#measurer_id').prop('disabled', SinMedidor.checked);
+        });
+    });
+</script>
 @stop

@@ -12,8 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Flasher\Laravel\Facade\Flasher;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
-use App\Http\Requests\StoreClientRequest;
-use App\Http\Requests\UpdateClientRequest;
+use App\Http\Requests\SaveClientRequest;
 
 class ClientsController extends Controller
 {
@@ -36,7 +35,7 @@ class ClientsController extends Controller
         ]);
     }
 
-    public function store(StoreClientRequest $request)
+    public function store(SaveClientRequest $request)
     {        
         try {
             DB::beginTransaction();
@@ -69,25 +68,38 @@ class ClientsController extends Controller
         ]);
     }
 
-    public function update(Client $client, UpdateClientRequest $request)
+    public function update(Client $client, SaveClientRequest $request)
     {
 
-        if ($client->measurer()->exists()) {
-            $client->measurer->update([
-                'client_id' => NULL,
-                'active' => false,
-            ]);
+        try {
+            DB::beginTransaction();
+            // elimina el enlace cliente-medidores
+            if ($client->measurer()->exists()) {
+                $client->measurer->update([
+                    'client_id' => NULL,
+                    'active' => false,
+                ]);
+            }
+            // attach new measurer_id to client_id and sets true
+            if (array_key_exists('measurer_id', $request->validated())) {
+                Measurer::findOrFail($request->measurer_id)->update([
+                    'client_id' => $client->id,
+                    'active' => true,
+                ]);
+            }
+
+            // update information about client
+            $client->update($request->safe()->except('measurer_id'));
+
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            Log::error($th->getMessage());
+            abort(500, $th->getMessage());
         }
-
-        if ($request->measurer_id != '0') {
-            Measurer::findOrFail($request->measurer_id)->update([
-                'client_id' => $client->id,
-                'active' => true,
-            ]);
-        }
-
-        $client->update($request->validated());
-
+        
+        Flasher::addSuccess('Cliente actualizado correctamente');
         return redirect()->route('clients.index');
     }
 
