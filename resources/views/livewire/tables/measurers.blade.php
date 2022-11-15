@@ -56,7 +56,9 @@
                         <x-table.heading width="15%">Medida actual</x-table.heading>
                         <x-table.heading width="10%">Factor</x-table.heading>
                         <x-table.heading width="10%">Estado</x-table.heading>
-                        <x-table.heading width="10%"><i class="fas fa-tools"></i></x-table.heading>
+                        @can('edit_measurers')
+                            <x-table.heading width="10%"><i class="fas fa-tools"></i></x-table.heading>
+                        @endcan
                     </tr>
                 </thead>
                 <tbody>
@@ -69,8 +71,11 @@
                         <td>{{ $medidor->correction_factor }}</td>
                         <td>{!! setBadge($medidor->active) !!}</td>
                         <td class="text-right">
-                            <a href="{{ route('measurers.edit', $medidor) }}" class="btn btn-default btn-xs">
-                                <i class="fas fa-edit mr-2"></i>Editar</a>
+                            @can('edit_measurers')
+                                <a href="{{ route('measurers.edit', $medidor) }}" class="btn btn-default btn-xs">
+                                    <i class="fas fa-edit mr-2"></i>Editar
+                                </a>
+                            @endcan
                         </td>
                     </tr>
                     @empty

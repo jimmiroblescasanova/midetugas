@@ -6,10 +6,12 @@
     <div class="col-sm-6">
         <h1><i class="fas fa-tachometer-alt mr-2"></i>Editar medidor</h1>
     </div>
-    <div class="col-sm-6">
-        <button type="button" class="btn btn-sm btn-danger float-right" data-toggle="modal" data-target="#deleteMeasurerModal">
-            <i class="fas fa-trash-alt mr-2"></i>Eliminar</button>
-    </div>
+    @can('delete_measurers')
+        <div class="col-sm-6">
+            <button type="button" class="btn btn-sm btn-danger float-right" data-toggle="modal" data-target="#deleteMeasurerModal">
+                <i class="fas fa-trash-alt mr-2"></i>Eliminar</button>
+        </div>
+    @endcan
 @stop
 
 @section('content')
