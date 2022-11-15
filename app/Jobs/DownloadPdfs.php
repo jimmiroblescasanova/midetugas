@@ -47,6 +47,12 @@ class DownloadPdfs implements ShouldQueue
         $documents = Document::whereBetween('date', [$this->data['startDate'], $this->data['endDate']])->get();
 
         foreach($documents as $docto){
+            // calcular el acumulado de saldos
+            $acumulado = Document::where([
+                ['client_id', $docto->client_id],
+                ['status', 2],
+                ['date', '<', $docto->date]
+            ])->sum('pending');
             // Se obtiene los históricos de meses anteriores
             $historic = Document::select('id', 'period', 'month_quantity', 'total')
             ->where([
@@ -59,7 +65,7 @@ class DownloadPdfs implements ShouldQueue
             $chart = $this->generateChart($historic);
 
             $html = '';
-            $view = view('print.document')->with(compact('docto','chart', 'historic'));
+            $view = view('print.document')->with(compact('docto','chart', 'historic', 'acumulado'));
             $html .= $view->render();
             \PDF::loadHTML($html)->save( public_path("storage/".$save_to ."/{$docto->id}.pdf") );
         }

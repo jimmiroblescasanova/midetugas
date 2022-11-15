@@ -9,6 +9,7 @@ use App\Inventory;
 use App\Jobs\DownloadPdfs;
 use Illuminate\Http\Request;
 use App\Traits\UpdateProjectTrait;
+use Flasher\Laravel\Facade\Flasher;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class ConfigurationsController extends Controller
@@ -87,16 +88,19 @@ class ConfigurationsController extends Controller
             'email' => 'required|email',
         ]);
 
-        $validar_documentos = Document::whereBetween('date', [$datos_validos['startDate'], $datos_validos['endDate']])->first();
+        $validar_documentos = Document::query()
+            ->whereBetween('date', [$datos_validos['startDate'], $datos_validos['endDate']])
+            ->where('status', 2)
+            ->first();
 
         if (!$validar_documentos) {
-            Alert::error('Error', 'No hay documentos en ese rango de fechas.');
+            Flasher::addError('No hay documentos autorizados en ese rango de fechas.');
             return redirect()->back();
         }
 
         dispatch(new DownloadPdfs( $datos_validos ));
 
-        Alert::success('Correcto', 'Se te enviara un correo con el enlace de descarga.');
+        Flasher::addSuccess('Se te enviara un correo con el enlace de descarga.');
         return redirect()->route('home');
     }
 }
