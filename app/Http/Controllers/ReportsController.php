@@ -48,8 +48,13 @@ class ReportsController extends Controller
             ->orderByDesc('year')
             ->get();
 
+        $clients = Client::query()
+            ->where('status', 0)
+            ->orderBy('id', 'asc')
+            ->get();
+
         return view('reports.cobranza.index',[
-            'clients' => Client::pluck('name', 'id'),
+            'clients' => $clients,
             'years' => $years,
         ]);
     }
@@ -120,8 +125,13 @@ class ReportsController extends Controller
         ->orderByDesc('year')
         ->get();
 
+        $clients = Client::query()
+        ->where('status', 0)
+        ->orderBy('name', 'asc')
+        ->get();
+
         return view('reports.edc.parameters', [
-            'clients' => Client::all(),
+            'clients' => $clients,
             'years' => $years
         ]);
     }

@@ -61,9 +61,8 @@
                                 <div class="form-group">
                                     <label for="client_first">Seleccionar cliente inicial</label>
                                     <select name="client_first" id="client_first" class="select2bs4 form-control">
-                                        @foreach ($clients as $id => $client)
-                                            <option value="{{ $id }}">{{ $client }} ({{ $id }})
-                                            </option>
+                                        @foreach ($clients as $client)
+                                            <option value="{{ $client->id }}">{{ $client->name }} ({{ $client->line_3 }})</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -72,9 +71,8 @@
                                 <div class="form-group">
                                     <label for="client_last">Seleccionar cliente final</label>
                                     <select name="client_last" id="client_last" class="select2bs4 form-control">
-                                        @foreach ($clients as $id => $client)
-                                            <option value="{{ $id }}">{{ $client }} ({{ $id }})
-                                            </option>
+                                        @foreach ($clients as $client)
+                                            <option value="{{ $client->id }}">{{ $client->name }} ({{ $client->line_3 }})</option>
                                         @endforeach
                                     </select>
                                 </div>

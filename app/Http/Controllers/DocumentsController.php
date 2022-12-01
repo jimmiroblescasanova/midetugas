@@ -95,7 +95,7 @@ class DocumentsController extends Controller
         // Factor de correccion
         $correction_factor = $client->measurer->correction_factor;
         // Subtotal del mes
-        $neto = ($month_quantity * $correction_factor) * $price;
+        $neto = round($month_quantity * $correction_factor, 2) * $price;
         $subtotal = $neto + $request->admCharge;
         // Calculo del IVA
         $iva = ($subtotal * 1.16) - $subtotal;
@@ -318,6 +318,6 @@ class DocumentsController extends Controller
             ['date', '<', $date]
         ])->sum('pending');
 
-        return $acumulado / 100;
+        return $acumulado;
     }
 }

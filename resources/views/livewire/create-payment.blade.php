@@ -48,7 +48,7 @@
                                     <label for="date" class="col-sm-3 col-form-label">Fecha del pago</label>
                                     <div class="col-sm-9">
                                         <input type="date" class="form-control" id="date" name="date"
-                                            value="{{ $client->date }}">
+                                            value="{{ $client->date }}" required>
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -69,7 +69,7 @@
                                     <label for="total" class="col-sm-3 col-form-label">Importe del pago</label>
                                     <div class="col-sm-3">
                                         <input type="number" step=".01" wire:model.lazy="total" name="total"
-                                            id="total" class="form-control" required>
+                                            id="total" class="form-control">
                                     </div>
                                     <label for="pending" class="col-sm-3 col-form-label">Pendiente por abonar</label>
                                     <div class="col-sm-3">
@@ -122,10 +122,10 @@
 
     @push('scripts')
         <script>
-            var tabla = document.getElementById("tablaDocumentos");
+            let tabla = document.getElementById("tablaDocumentos");
+            let pending = document.getElementById("pending");
 
             function validateForm() {
-                var pending = document.getElementById("pending").value;
 
                 for (let i = 1, row; row = tabla.rows[i]; i++) {
                     var saldoDocumento = Math.round((row.cells[4].innerText) * 100) / 100;
@@ -139,12 +139,12 @@
                     }
                 }
 
-                if (pending < 0) {
+                if (pending.value < 0) {
                     alert("El pendiente por abonar no puede ser negativo");
                     return false;
                 }
 
-                if (pending > 0) {
+                if (pending.value > 0) {
                     if (!confirm("El saldo pendiente será agregado a la cuenta")) {
                         return false;
                     }

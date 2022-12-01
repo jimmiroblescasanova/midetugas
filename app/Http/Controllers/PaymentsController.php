@@ -39,6 +39,19 @@ class PaymentsController extends Controller
             'date' => $request->date,
         ];
 
+        // validar los abonos
+        $count = 0;
+        foreach($request->pay as $id => $value) {
+            if (!is_null($value)) {
+                $count++;
+            }
+        }
+        // Si no se abono ningun documento se regresa
+        if ($count == 0) {
+            Flasher::addWarning('Debes abonar el pago a algun documento.');
+            return back();
+        }
+
         try {
             DB::beginTransaction();
             $pay = Payment::create($paymentData);

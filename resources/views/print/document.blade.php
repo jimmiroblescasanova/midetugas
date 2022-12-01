@@ -276,7 +276,7 @@
                                     <td>{{ $docto->final_quantity }}</td>
                                     <td>{{ $docto->month_quantity }}</td>
                                     <td>{{ $docto->correction_factor }}</td>
-                                    <td>{{ number_format($docto->month_quantity * $docto->correction_factor, 2) }}</td>
+                                    <td>{{ number_format(round($docto->month_quantity * $docto->correction_factor, 2), 2) }}</td>
                                     <td>$ {{ number_format($docto->price, 2) }}</td>
                                 </tr>
                             </tbody>
@@ -382,11 +382,11 @@
                             </tr>
                             <tr>
                                 <th>(+)Saldo anterior</th>
-                                <td class="text-right">{{ contabilidad($acumulado) }}</td>
+                                <td class="text-right">{{ contabilidad($acumulado/100) }}</td>
                             </tr>
                             <tr>
                                 <th>(=)A PAGAR</th>
-                                <td class="text-right">{{ contabilidad($acumulado + $docto->total) }}</td>
+                                <td class="text-right">{{ contabilidad(($acumulado/100) + $docto->total) }}</td>
                             </tr>
                         </table>
                     </div>
