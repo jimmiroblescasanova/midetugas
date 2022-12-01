@@ -75,7 +75,7 @@ Route::post('/payments', [PaymentsController::class, 'store'])->name('payments.s
 Route::get('/payments/show/{payment}', [PaymentsController::class, 'show'])->name('payments.show');
 Route::delete('/payments/show/{payment}', [PaymentsController::class, 'destroy'])->name('payments.delete');
 // Livewire component
-Route::get('/payments/create/client/{id}', \App\Http\Livewire\CreatePayment::class)->name('payments.create');
+Route::get('/payments/create/client/{id}', \App\Http\Livewire\CreatePayment::class)->name('payments.create')->middleware('auth');
 
 Route::get('/users', [UsersController::class, 'index'])->name('users.index')->middleware('permission:show_users');
 Route::get('/users/create', [UsersController::class, 'create'])->name('users.create')->middleware('permission:create_users');
@@ -152,4 +152,4 @@ Route::get('/download/{file}', function ($file) {
     return Storage::download('pdf/' . $file . '.zip');
 });
 
-Route::get('/reportes/depositos-garantia', \App\Http\Livewire\Reportes\DepositosGarantia::class)->name('reportes.depositos-garantia.index');
+Route::get('/reportes/depositos-garantia', \App\Http\Livewire\Reportes\DepositosGarantia::class)->name('reportes.depositos-garantia.index')->middleware('auth');

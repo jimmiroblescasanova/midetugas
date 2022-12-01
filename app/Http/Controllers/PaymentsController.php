@@ -7,9 +7,8 @@ use App\Payment;
 use App\Document;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Flasher\Laravel\Facade\Flasher;
 use Illuminate\Support\Facades\Log;
-use RealRashid\SweetAlert\Facades\Alert;
-use App\Http\Requests\SavePaymentRequest;
 use App\Http\Requests\CreatePaymentRequest;
 
 class PaymentsController extends Controller
@@ -70,6 +69,7 @@ class PaymentsController extends Controller
             abort(403, $th->getMessage());
         }
 
+        Flasher::addSuccess('Pago aplicado correctamente');
         return redirect()->route('payments.index');
     }
 
@@ -99,7 +99,7 @@ class PaymentsController extends Controller
             abort(500, $e->getMessage());
         }
 
-        Alert::info('Eliminado', 'Registro eliminado correctamente.');
-        return redirect()->route('documents.index');
+        Flasher::addInfo('Registro eliminado correctamente.');
+        return redirect()->route('payments.index');
     }
 }

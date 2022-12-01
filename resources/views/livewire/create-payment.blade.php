@@ -19,20 +19,31 @@
                                 method="POST">
                                 @csrf
                                 <input type="hidden" name="client" value="{{ $client->id }}">
-                                <div class="form-group row">
-                                    <label for="rfc" class="col-sm-3 col-form-label">No. de cuenta</label>
+                                <div class="row">
                                     <div class="col-sm-9">
-                                        <input type="text" readonly class="form-control-plaintext" id="rfc"
-                                            value="{{ $client->id }}">
+                                        <div class="form-group row">
+                                            <label for="rfc" class="col-sm-3 col-form-label">No. de cuenta</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" readonly class="form-control-plaintext"
+                                                    id="rfc" value="{{ $client->id }}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="name" class="col-sm-3 col-form-label">Nombre del
+                                                cliente</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" readonly class="form-control-plaintext"
+                                                    id="name" value="{{ $client->name }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 text-right">
+                                        <button type="submit" class="btn bg-success btn-app">
+                                            <i class="fas fa-check"></i>APLICAR PAGO
+                                        </button>
                                     </div>
                                 </div>
-                                <div class="form-group row">
-                                    <label for="name" class="col-sm-3 col-form-label">Nombre del cliente</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" readonly class="form-control-plaintext" id="name"
-                                            value="{{ $client->name }}">
-                                    </div>
-                                </div>
+
                                 <div class="form-group row">
                                     <label for="date" class="col-sm-3 col-form-label">Fecha del pago</label>
                                     <div class="col-sm-9">
@@ -98,11 +109,10 @@
                                         @endforeach
                                     </tbody>
                                 </table>
-                                <div class="form-group d-flex justify-content-between">
-                                    <button type="submit" class="btn btn-sm btn-primary">Guardar</button>
-                                    <x-buttons.back />
-                                </div>
                             </form>
+                        </div>
+                        <div class="card-footer text-right">
+                            <x-buttons.back />
                         </div>
                     </div>
                 </div>
