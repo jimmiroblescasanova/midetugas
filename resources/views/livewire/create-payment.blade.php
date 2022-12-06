@@ -68,7 +68,7 @@
                                 <div class="form-group row">
                                     <label for="total" class="col-sm-3 col-form-label">Importe del pago</label>
                                     <div class="col-sm-3">
-                                        <input type="number" step=".01" wire:model.lazy="total" name="total"
+                                        <input type="number" step=".01" wire:model.debounce.500ms="total" name="total"
                                             id="total" class="form-control">
                                     </div>
                                     <label for="pending" class="col-sm-3 col-form-label">Pendiente por abonar</label>
@@ -102,7 +102,7 @@
                                                 <td style="width:15%;">
                                                     <input class="form-control form-control-sm" type="number"
                                                         name="pay[{{ $document->id }}]" step=".01"
-                                                        wire:model.lazy="pay.{{ $i }}"
+                                                        wire:model.debounce.300ms="pay.{{ $i }}"
                                                         id="pay-{{ $i }}">
                                                 </td>
                                             </tr>
