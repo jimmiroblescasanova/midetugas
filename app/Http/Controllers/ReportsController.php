@@ -89,7 +89,9 @@ class ReportsController extends Controller
                 ], 400);
             }
 
-            $documents = Document::whereBetween('client_id', [$request['client_first'], $request['client_last']])
+            $documents = Document::query()
+            ->where('status', 2)
+            ->whereBetween('client_id', [$request['client_first'], $request['client_last']])
             ->whereMonth('date', '<=', $request['month'])
             ->whereYear('date', '<=', $request['year'])
             ->groupBy('client_id')
