@@ -48,8 +48,15 @@
         theme: 'bootstrap4',
     });
 
-    SinMedidor.addEventListener('click', () => {
-        $('#measurer_id').prop('disabled', SinMedidor.checked);
+    
+    window.addEventListener('DOMContentLoaded', (event) => {
+        if(SinMedidor.checked){
+            $('#measurer_id').prop('disabled', true);
+        }
+        console.log(SinMedidor.checked);
+        SinMedidor.addEventListener('click', () => {
+            $('#measurer_id').prop('disabled', SinMedidor.checked);
+        });
     });
 </script>
 @stop
