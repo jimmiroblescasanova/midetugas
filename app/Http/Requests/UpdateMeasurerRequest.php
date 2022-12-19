@@ -33,6 +33,7 @@ class UpdateMeasurerRequest extends FormRequest
                 'string',
                 Rule::unique('measurers')->ignore($this->measurer->id),
             ],
+            'actual_measure' => ['required', 'numeric'],
         ];
     }
 }
