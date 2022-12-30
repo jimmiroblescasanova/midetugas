@@ -385,8 +385,12 @@
                                 <td class="text-right">{{ contabilidad($acumulado/100) }}</td>
                             </tr>
                             <tr>
+                                <th>(-)Saldo en cuenta</th>
+                                <td class="text-right">{{ contabilidad($docto->client->balance) }}</td>
+                            </tr>
+                            <tr>
                                 <th>(=)A PAGAR</th>
-                                <td class="text-right">{{ contabilidad(($acumulado/100) + $docto->total) }}</td>
+                                <td class="text-right">{{ contabilidad(($acumulado/100) + $docto->pending - $docto->client->balance) }}</td>
                             </tr>
                         </table>
                     </div>

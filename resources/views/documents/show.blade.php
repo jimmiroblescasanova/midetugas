@@ -109,8 +109,12 @@
                                     <td class="text-right">{{ number_format($acumulado/100, 2) }}</td>
                                 </tr>
                                 <tr>
+                                    <th>(-)Saldo en cuenta</th>
+                                    <td class="text-right">{{ number_format($document->client->balance, 2) }}</td>
+                                </tr>
+                                <tr>
                                     <th>(=)A PAGAR</th>
-                                    <td class="text-right">{{ number_format(($acumulado/100) + $document->total, 2) }}</td>
+                                    <td class="text-right">{{ contabilidad(($acumulado/100) + $document->pending - $document->client->balance) }}</td>
                                 </tr>
                             </table>
                             <h3 class="text-primary"><i class="fas fa-image"></i> Fotografía del medidor</h3>
