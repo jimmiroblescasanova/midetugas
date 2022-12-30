@@ -75,7 +75,7 @@
                                     <div class="col-sm-3">
                                         <input type="text" readonly id="pending" name="pending"
                                             class="form-control-plaintext"
-                                            value="{{ number_format(($balance != false ? $total + $client->balance : $total) - $paymentSum, 2) }}">
+                                            value="{{ number_format( (float)($balance != false ? $total + $client->balance : $total) - (float)$paymentSum, 2) }}">
                                     </div>
                                 </div>
                                 <hr>
