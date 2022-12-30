@@ -73,9 +73,8 @@
                                     </div>
                                     <label for="pending" class="col-sm-3 col-form-label">Pendiente por abonar</label>
                                     <div class="col-sm-3">
-                                        <input type="text" readonly id="pending" name="pending"
-                                            class="form-control-plaintext"
-                                            value="{{ number_format( (float)($balance != false ? $total + $client->balance : $total) - (float)$paymentSum, 2) }}">
+                                        <input type="text" readonly id="pending" name="pending" class="form-control-plaintext"
+                                            value="{{ (float)($balance != false ? $total + $client->balance : $total) - (float)$paymentSum }}">
                                     </div>
                                 </div>
                                 <hr>
