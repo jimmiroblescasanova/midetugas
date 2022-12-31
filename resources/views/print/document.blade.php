@@ -328,7 +328,7 @@
                                     <td>TOTAL A PAGAR</td>
                                 </tr>
                                 <tr>
-                                    <td>$ {{ number_format($docto->total + $docto->client->balance, 2) }}</td>
+                                    <td>{{ contabilidad(($acumulado/100) + $docto->pending - $docto->client->balance) }}</td>
                                 </tr>
                                 <tr>
                                     <td>PERIODO</td>
