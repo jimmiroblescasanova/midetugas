@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Image;
 use App\Price;
 use App\Client;
 use App\Project;
@@ -14,11 +13,13 @@ use App\Traits\SendSmsTrait;
 use Illuminate\Http\Request;
 use App\Traits\GraphBarTrait;
 use App\Mail\AuthorizeReceipt;
+use Barryvdh\DomPDF\Facade as PDF;
 use App\Traits\UpdateProjectTrait;
 use Illuminate\Support\Facades\DB;
 use Flasher\Laravel\Facade\Flasher;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\SaveDocumentRequest;
 
@@ -187,10 +188,6 @@ class DocumentsController extends Controller
 
     public function authorizeDocument($id)
     {
-        // Datos del token para Twilio
-        $sid = config('services.twilio.sid');
-        $token = config('services.twilio.token');
-
         try {
             DB::beginTransaction();
             $docto = Document::findOrFail($id);
@@ -198,21 +195,10 @@ class DocumentsController extends Controller
             $pdf = $this->generarPDF($docto);
             Storage::put('/pdf/' . $docto->reference . '.pdf', $pdf->output());
             // Envía correo de generación del recibo
-            Mail::to($docto->client->email)->queue(new AuthorizeReceipt($docto->reference));
-            // enviar recibo por sms AWS
-            //            $this->receiptGenerated($docto->client->phoneNumber);
+            //Mail::to($docto->client->email)->queue(new AuthorizeReceipt($docto->reference));
             // Cambia el status el documento a "autorizado"
             $docto->status = 2;
             $docto->save();
-            // Enviar notificación por mensaje
-            /* $twilio = new \Twilio\Rest\Client($sid, $token);
-            $message = $twilio->messages
-            ->create("whatsapp:+5219981576290", // to
-                array(
-                    "from" => "whatsapp:+14155238886",
-                    "body" => "Se ha generado su recibo de consumo de gas, por un total de $" . $docto->total . ", con fecha limite de pago el " . $docto->payment_date->format('d/m/Y') . ", puede consultar el documento PDF en su correo electrónico."
-                )
-            ); */
             // Si todo se ejecuta sin error, se guardan los cambios
             DB::commit();
         } catch (\Exception $e) {
@@ -244,8 +230,13 @@ class DocumentsController extends Controller
 
     public function cancel(Document $document)
     {
-        if ($document->payments()->exists()) {
-            Flasher::addWarning('No se puede cancelar, elimine los pagos primero.');
+        $activeDocuments = Document::where([
+            ['client_id', $document->client_id], 
+            ['date', '>', $document->date],
+            ])->count();
+
+        if ($document->payments()->exists() || $activeDocuments >= 1) {
+            Flasher::addWarning('No se puede cancelar, cancele los pagos existentes o documentos futuros.');
             return redirect()->back();
         }
 
@@ -299,7 +290,7 @@ class DocumentsController extends Controller
         $chart = $this->generateChart($historic);
 
         // Generar el PDF
-        $pdf = \PDF::loadView('print.document', [
+        $pdf = PDF::loadView('print.document', [
             'docto' => $docto,
             'acumulado' => $this->calcularAcumulado($docto->client_id, $docto->date),
             'chart' => urlencode($chart),
@@ -319,5 +310,14 @@ class DocumentsController extends Controller
         ])->sum('pending');
 
         return $acumulado;
+    }
+
+    public function sendEmail(Document $document)
+    {
+        Mail::to($document->client->email)->send(new AuthorizeReceipt($document->reference));
+
+        flash()->addSuccess('Correo enviado con éxito');
+
+        return back();
     }
 }

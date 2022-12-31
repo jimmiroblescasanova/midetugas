@@ -25,7 +25,7 @@ class Document extends Model
     public function payments()
     {
         return $this->belongsToMany('App\Payment')
-            ->using(RoleUser::class)
+            // ->using(RoleUser::class)
             ->withPivot('amount')
             ->withTimestamps();
     }

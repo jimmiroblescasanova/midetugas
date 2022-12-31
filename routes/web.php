@@ -66,6 +66,7 @@ Route::get('/documents/{document}/ver', [DocumentsController::class, 'show'])->n
 Route::post('/documents/{document}/ver/discount', [DocumentsController::class, 'discount'])->name('documents.discount')->middleware('permission:create_documents');
 Route::get('/documents/{id}/authorize', [DocumentsController::class, 'authorizeDocument'])->name('documents.authorize')->middleware('permission:authorize_documents');
 Route::get('/documents/{document}/cancel', [DocumentsController::class, 'cancel'])->name('documents.cancel')->middleware('permission:cancel_documents');
+Route::get('/documents/{document}/send-email', [DocumentsController::class, 'sendEmail'])->name('documents.sendEmail');
 Route::get('/documents/{id}/print', [DocumentsController::class, 'print'])->name('documents.print');
 Route::get('/documents/multiple-pdf/download', [DocumentsController::class, 'multiPdf'])->name('documents.multiPdf');
 

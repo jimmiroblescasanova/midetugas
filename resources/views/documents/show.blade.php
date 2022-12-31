@@ -29,13 +29,17 @@
                     </button>
                     <a href="{{ route('documents.print', $document->id) }}" class="btn btn-app" target="_blank">
                         <i class="fas fa-print"></i>Imprimir</a>
+                    <a href="{{ route('documents.sendEmail', $document) }}" class="btn btn-app">
+                        <i class="fas fa-envelope"></i>Email
+                    </a>
                     @if (($document->status == 1 || $document->status == 2) &&
                         auth()->user()->can('cancel_documents'))
                         <a href="{{ route('documents.cancel', $document) }}" class="btn btn-app">
                             <i class="fas fa-ban"></i>Cancelar</a>
                     @endif
-                    <button type="button" class="btn btn-app" onclick="history.back()">
-                        <i class="far fa-hand-point-left"></i>Atrás</button>
+                    <a href="{{ route('documents.index') }}" class="btn btn-app">
+                        <i class="far fa-hand-point-left"></i>Atrás
+                    </a>
                 </div>
             </div>
         </div>
@@ -128,6 +132,37 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    Relación de pagos
+                </div>
+                <div class="card-body p-0">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Fecha</th>
+                                <th>Importe $</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($document->payments as $payment)
+                            <tr>
+                                <td scope="row">
+                                    <a href="{{ route('payments.show', $payment) }}">{{ $payment->id }}</a>
+                                </td>
+                                <td>{{ $payment->date->format('d/m/Y') }}</td>
+                                <td>$ {{ number_format($payment->amount, 2) }}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
