@@ -21,7 +21,7 @@
                                     <label for="project_id">Seleccionar condominio:</label>
                                     <select class="form-control select2bs4" name="project_id" id="project_id"
                                         data-placeholder="Selecciona un condominio">
-                                        <option value=""></option>
+                                        <option></option>
                                         @foreach ($projects as $project)
                                             <option value="{{ $project->id }}">{{ $project->name }}</option>
                                         @endforeach

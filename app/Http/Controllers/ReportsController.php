@@ -7,6 +7,7 @@ use App\Project;
 use App\Document;
 use Illuminate\Http\Request;
 use App\Exports\EdcExportReport;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\DB;
 use App\Exports\AccountStatusReport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -31,7 +32,7 @@ class ReportsController extends Controller
         $clients = Client::where('project_id', $project->id)->orderBy('name', $request['order'])->get();
 
         // Generar el PDF
-        $pdf = \PDF::loadView('reports.lecture.print', [
+        $pdf = PDF::loadView('reports.lecture.print', [
             'clients' => $clients,
             'project' => $project,
         ]);
@@ -46,22 +47,19 @@ class ReportsController extends Controller
             ->orWhere('status', '4')
             ->groupBy('year')
             ->orderByDesc('year')
-            ->get();
+            ->pluck('year');
 
-        $clients = Client::query()
-            ->where('status', 0)
-            ->orderBy('id', 'asc')
-            ->get();
+        $projects = Project::pluck('name', 'id');
 
         return view('reports.cobranza.index',[
-            'clients' => $clients,
+            'projects' => $projects,
             'years' => $years,
         ]);
     }
 
     public function pdfCobranza(Request $request)
     {
-        $documents = Document::whereBetween('client_id', [$request['client_first'], $request['client_last']])
+        $documents = Document::whereIn('client_id', $request->clients)
         ->whereMonth('date', '<=', $request['month'])
         ->whereYear('date', '<=', $request['year'])
         ->groupBy('client_id')
@@ -70,49 +68,19 @@ class ReportsController extends Controller
 
 
         // Generar el PDF
-        $pdf = \PDF::loadView('reports.cobranza.print', [
+        $pdf = PDF::loadView('reports.cobranza.print', [
         'documents' => $documents,
         ]);
         $pdf->setPaper('statement', 'portrait');
         return $pdf->stream();
     }
 
-    public function pantallaCobranza(Request $request)
-    {
-
-        if ($request->ajax())
-        {
-            if ($request['client_first'] > $request['client_last'])
-            {
-                return response()->json([
-                    'error' => 'El cliente inicial no puede ser mayor que el cliente final',
-                ], 400);
-            }
-
-            $documents = Document::query()
-            ->where('status', 2)
-            ->whereBetween('client_id', [$request['client_first'], $request['client_last']])
-            ->whereMonth('date', '<=', $request['month'])
-            ->whereYear('date', '<=', $request['year'])
-            ->groupBy('client_id')
-            ->selectRaw('client_id, SUM(total) as suma, SUM(pending) as pendiente')
-            ->with('client')
-            ->get();
-
-            return response()->json([
-                'documents' => $documents,
-            ], 200);
-        }
-
-    }
-
     public function excelCobranza(Request $request)
     {
         $request->validate([
-            'client_first' => 'required|lte:client_last',
-            'client_last' => 'required'
+            'clients' => 'required|array',
         ], [
-            'client_first.lte' => 'El cliente inicial no puede ser mayor que el cliente final'
+            'clients.required' => 'Debes seleccionar al menos un cliente.'
         ]);
 
         return Excel::download(new AccountStatusReport($request), 'cobranza.xlsx');
@@ -159,7 +127,6 @@ class ReportsController extends Controller
 
     public function edcExportExcel(Request $request)
     {
-
         return Excel::download( new EdcExportReport($request), 'estado_de_cuenta.xlsx');
     }
 }

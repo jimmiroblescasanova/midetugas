@@ -54,7 +54,6 @@
                         :direction="$sortField === 'name' ? $sortDirection : null">Cliente</x-table.heading>
                         <x-table.heading
                         sortable
-                        width="13%"
                         wire:click="sortBy('name')"
                         :direction="$sortField === 'name' ? $sortDirection : null">Departamento</x-table.heading>
                         <x-table.heading

@@ -2,8 +2,8 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Client extends Model
 {
@@ -74,6 +74,11 @@ class Client extends Model
     public function getAccountNumberAttribute()
     {
         return str_pad($this->attributes['id'], 4, '0', STR_PAD_LEFT);
+    }
+
+    public function getSearchableNameAttribute()
+    {
+        return $this->attributes['name'] . ' - ' . $this->attributes['line_3'];
     }
 
     public function scopeSearch($query, $search)

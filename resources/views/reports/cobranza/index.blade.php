@@ -18,14 +18,14 @@
                             <div class="alert alert-danger alert-dismissible">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                                 <span>
-                                    @error('client_first')
+                                    @error('clients')
                                         {{ $message }}
                                     @enderror
                                 </span>
                             </div>
                         @endif
                     </div>
-                    <form id="account-status" target="_blank" method="POST">
+                    <form id="account-status" method="POST">
                         @csrf
                         <div class="row">
                             <div class="col-md-2">
@@ -51,63 +51,43 @@
                                 <div class="form-group">
                                     <label for="year">Año</label>
                                     <select name="year" id="year" class="form-control">
-                                        @foreach ($years as $i)
-                                            <option value="{{ $i->year }}">{{ $i->year }}</option>
+                                        @foreach ($years as $i => $year)
+                                            <option>{{ $year }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-8">
                                 <div class="form-group">
-                                    <label for="client_first">Seleccionar cliente inicial</label>
-                                    <select name="client_first" id="client_first" class="select2bs4 form-control">
-                                        @foreach ($clients as $client)
-                                            <option value="{{ $client->id }}">{{ $client->name }} ({{ $client->line_3 }})</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="client_last">Seleccionar cliente final</label>
-                                    <select name="client_last" id="client_last" class="select2bs4 form-control">
-                                        @foreach ($clients as $client)
-                                            <option value="{{ $client->id }}">{{ $client->name }} ({{ $client->line_3 }})</option>
+                                    <label for="select_project">Condominios</label>
+                                    <select id="select_project" class="form-control select2bs4" data-placeholder="Selecciona un condominio">
+                                        <option></option>
+                                        @foreach ($projects as $id => $project)
+                                            <option value="{{ $id }}">{{ $project }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" id="execute" class="btn btn-sm btn-primary">
-                            <i class="fas fa-desktop mr-2"></i>Pantalla</button>
-                        <button type="submit" formaction="{{ route('reportes.cobranza.pdf') }}" class="btn btn-sm btn-danger"><i
-                                class="fas fa-file-pdf mr-2"></i>PDF</button>
-                        <button type="submit" id="exportExcel" formaction="{{ route('reportes.cobranza.excel') }}"
-                            class="btn btn-sm btn-success">
-                            <i class="fas fa-file-excel mr-2"></i>Excel</button>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <select id="clients_list" class="form-control select2bs4" data-placeholder="Selecciona los clientes" name="clients[]" multiple="multiple">
+                                        <option></option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="submit" formaction="{{ route('reportes.cobranza.pdf') }}" class="btn btn-sm btn-danger"><i
+                                        class="fas fa-file-pdf mr-2"></i>PDF</button>
+                                <button type="submit" id="exportExcel" formaction="{{ route('reportes.cobranza.excel') }}"
+                                    class="btn btn-sm btn-success">
+                                    <i class="fas fa-file-excel mr-2"></i>Excel</button>
+                            </div>
+                        </div>
                     </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <table id="result" class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Cliente</th>
-                                <th>Departamento</th>
-                                <th>Total</th>
-                                <th>Abonos</th>
-                                <th>Saldo</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                        </tbody>
-                    </table>
                 </div>
             </div>
         </div>
@@ -115,48 +95,33 @@
 @stop
 
 @section('scripts')
-    <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
     <script>
-        $("#execute").click(function(event) {
-            event.preventDefault();
-            const token = $('meta[name="csrf-token"]').attr('content');
-            let route = "{{ route('reportes.cobranza.screen') }}";
-            let data = $('#account-status').serialize();
+        const selectProject = document.getElementById('selectProject');
+        const clientsList = document.getElementById('clients_list');
 
+        $('#select_project').on('change', () => {
+            let project = $('#select_project').val();
+            
             $.ajax({
                 type: 'POST',
-                url: route,
-                headers: {
-                    'X-CSRF-TOKEN': token
+                url: '/api/clients-from-project',
+                data: {
+                project: project,
                 },
-                data: data,
-                dataType: 'json',
                 success: function(data) {
-                    console.log(data);
-                    let rows = data.documents;
-                    let html = "";
-                    $.each(rows, function(i, val) {
-                        // console.log(val.id);
-                        html += "<tr><td>" + val.client.name + "</td>" +
-                            "<td>"+ val.client.line_3 +"</td>"+
-                            "<td>" + numeral(val.suma / 100).format('$0,0.00') + "</td>" +
-                            "<td class='text-right'>" + numeral((val.suma - val.pendiente) /
-                                100)
-                            .format('$0,0.00') +
-                            "</td>" +
-                            "<td class='text-right'>" + numeral(val.pendiente / 100).format(
-                                '$0,0.00') +
-                            "</td>" +
-                            "</tr>";
+                    let select = $('#clients_list');
+                    select.empty();
+
+                    $.each(data, function(key, value) {
+                        select.append($('<option>', {
+                            value: key,
+                            text: value,
+                        }));
                     });
-                    $('#result>tbody').html(html);
                 },
-                error: function(data) {
-                    console.log(data);
-                    $('#messageError').html(
-                        '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> El cliente inicial no puede ser mayor que el cliente final</div>'
-                    );
-                },
+                error: function(error) {
+                    console.log('An error occurred: ' + error)
+                }
             });
         });
     </script>

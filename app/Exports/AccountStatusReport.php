@@ -13,9 +13,11 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class AccountStatusReport implements FromView, ShouldAutoSize, WithStyles, WithColumnFormatting
 {
+    public $data; 
+
     public function __construct($request)
     {
-        $this->request = $request;
+        $this->data = $request;
     }
 
     public function styles(Worksheet $sheet)
@@ -36,10 +38,10 @@ class AccountStatusReport implements FromView, ShouldAutoSize, WithStyles, WithC
 
     public function view(): View
     {
-        $documents =  Document::where('status', '!=', 3)
-            ->whereBetween('client_id', [$this->request['client_first'], $this->request['client_last']])
-            ->whereMonth('date', '=', $this->request['month'])
-            ->whereYear('date', '=', $this->request['year'])
+        $documents =  Document::where('status', 2)
+            ->whereIn('client_id', $this->data['clients'])
+            ->whereMonth('date', '<=', $this->data['month'])
+            ->whereYear('date', '<=', $this->data['year'])
             ->with('client')
             ->get();
 

@@ -16,22 +16,24 @@
                     @if ($document->status === 1 &&
                         auth()->user()->can('authorize_documents'))
                         <a href="{{ route('documents.authorize', $document->id) }}" class="btn btn-app">
-                            <i class="far fa-thumbs-up"></i>Autorizar</a>
+                            <i class="far fa-thumbs-up"></i>Autorizar
+                        </a>
                     @endif
                     @if ($document->status === 2 &&
                         $document->pending > 0.01 &&
                         auth()->user()->can('pay_documents'))
                         <a href="{{ route('payments.create', $document->client_id) }}" class="btn btn-app">
-                            <i class="fas fa-coins"></i>Pagar</a>
+                            <i class="fas fa-coins"></i>Pagar
+                        </a>
+                        <a href="{{ route('documents.sendEmail', $document) }}" class="btn btn-app">
+                            <i class="fas fa-envelope"></i>Email
+                        </a>
                     @endif
-                    <button class="btn btn-app" data-toggle="modal" data-target="#discountModal">
-                        <i class="fas fa-percent"></i>Descuento
-                    </button>
-                    <a href="{{ route('documents.print', $document->id) }}" class="btn btn-app" target="_blank">
-                        <i class="fas fa-print"></i>Imprimir</a>
-                    <a href="{{ route('documents.sendEmail', $document) }}" class="btn btn-app">
-                        <i class="fas fa-envelope"></i>Email
-                    </a>
+                    @if ($document->status == 1)
+                        <button class="btn btn-app" data-toggle="modal" data-target="#discountModal">
+                            <i class="fas fa-percent"></i>Descuento
+                        </button>
+                    @endif
                     @if (($document->status == 1 || $document->status == 2) &&
                         auth()->user()->can('cancel_documents'))
                         <a href="{{ route('documents.cancel', $document) }}" class="btn btn-app">

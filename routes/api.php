@@ -1,22 +1,14 @@
 <?php
 
+use App\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InventoriesController;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
-
-/*Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});*/
-
 Route::post('inventories/fill-tank', [InventoriesController::class, 'fillTanks']);
+
+Route::post('clients-from-project', function (Request $request){
+    $clients = Client::where('project_id', $request->project)->get()->pluck('searchableName', 'id');
+
+    return $clients;
+});
