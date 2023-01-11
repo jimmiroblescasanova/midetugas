@@ -49,7 +49,7 @@ class ReportsController extends Controller
             ->orderByDesc('year')
             ->pluck('year');
 
-        $projects = Project::pluck('name', 'id');
+        $projects = Project::orderBy('name', 'asc')->pluck('name', 'id');
 
         return view('reports.cobranza.index',[
             'projects' => $projects,

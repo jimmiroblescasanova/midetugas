@@ -78,7 +78,7 @@ class Client extends Model
 
     public function getSearchableNameAttribute()
     {
-        return $this->attributes['name'] . ' - ' . $this->attributes['line_3'];
+        return $this->attributes['name'] . ' - ' . $this->attributes['shortName'];
     }
 
     public function scopeSearch($query, $search)
