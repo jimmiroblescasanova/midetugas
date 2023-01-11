@@ -111,8 +111,8 @@
 
                     $.each(data, function(key, value) {
                         select.append($('<option>', {
-                            value: key,
-                            text: value,
+                            value: value.id,
+                            text: `${value.name} - ${value.shortName}`,
                         }));
                     });
                 },
