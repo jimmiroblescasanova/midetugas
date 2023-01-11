@@ -150,9 +150,3 @@ Route::get('/download/{file}', function ($file) {
 });
 
 Route::get('/reportes/depositos-garantia', \App\Http\Livewire\Reportes\DepositosGarantia::class)->name('reportes.depositos-garantia.index')->middleware('auth');
-
-Route::get('conf/close-pays', function (){
-    \App\Payment::where('closed', false)->update([
-        'closed' => true,
-    ]);
-});
