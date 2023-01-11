@@ -22,7 +22,7 @@ class ReportsController extends Controller
     public function parametrosTomaDeLectura()
     {
         return view('reports.lecture.parameters', [
-            'projects' => Project::all(),
+            'projects' => Project::orderBy('name', 'asc')->pluck('name', 'id'),
         ]);
     }
 

@@ -23,7 +23,7 @@ class EditPayment extends Component
     public function mount()
     {
         $this->usingBalance = $this->payment->balance == 0 ? false : true;
-        $this->payAmount = $this->payment->amount + $this->payment->balance;
+        $this->payAmount = round($this->payment->amount + $this->payment->balance, 2);
     }
 
     public function updatedUsingBalance()
@@ -49,7 +49,7 @@ class EditPayment extends Component
             ]);
         }
 
-        $this->payAmount = $this->payment->amount + $this->payment->balance;
+        $this->payAmount = round($this->payment->amount + $this->payment->balance, 2);
     }
 
     public function addPay($id, $amount)
@@ -57,7 +57,7 @@ class EditPayment extends Component
         $document = Document::find($id);
 
         if ($amount > $this->pendingPaid) {
-            flash()->addError("Solo puedes abonar máximo: $ {$this->pendingPaid}.");
+            flash()->addError("Solo puedes abonar máximo: $ {$this->pendingPaid}");
 
             $this->emit('closeModal');
             return false;
@@ -114,9 +114,9 @@ class EditPayment extends Component
 
     public function setAmounts()
     {
-        $this->totalPaid = $this->payment->documents()->sum('amount') / 100;
+        $this->totalPaid = round($this->payment->documents()->sum('amount') / 100, 2);
 
-        $this->pendingPaid = $this->payAmount - $this->totalPaid;
+        $this->pendingPaid = round($this->payAmount - $this->totalPaid, 2);
     }
 
     public function render()

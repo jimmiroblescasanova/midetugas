@@ -39,6 +39,10 @@
             width: 100%;
         }
 
+        table tbody {
+            font-size: 12px;
+        }
+
         .table-bordered td,
         th {
             border: 1px solid gray;
@@ -76,8 +80,8 @@
             @foreach ($clients as $client)
                 @if ($client->measurer()->exists())
                     <tr>
-                        <td>{{ $client->name }}</td>
-                        <td>{{ $client->line_2 }}</td>
+                        <td style="text-align: left;">{{ $client->name }}</td>
+                        <td>{{ $client->line_3 }}</td>
                         <td>{{ $client->measurer->serial_number }}</td>
                         <td>{{ $client->measurer->actual_measure }}</td>
                         <td>_____________</td>
