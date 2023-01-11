@@ -19,6 +19,8 @@
                             <i class="far fa-thumbs-up"></i>Autorizar
                         </a>
                     @endif
+                    <a href="{{ route('documents.print', $document->id) }}" class="btn btn-app" target="_blank">
+                        <i class="fas fa-print"></i>Imprimir</a>
                     @if ($document->status === 2)
                         <a href="{{ route('documents.sendEmail', $document) }}" class="btn btn-app">
                             <i class="fas fa-envelope"></i>Email
