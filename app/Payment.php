@@ -33,6 +33,14 @@ class Payment extends Model
         return $this->attributes['amount'] / 100;
     }
 
+    public function setBalanceAttribute($val) {
+        return $this->attributes['balance'] = $val * 100;
+    }
+
+    public function getBalanceAttribute() {
+        return $this->attributes['balance'] / 100;
+    }
+
     public function scopeSearch($query, $search)
     {
         $search = "%$search%";

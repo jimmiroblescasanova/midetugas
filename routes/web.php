@@ -10,18 +10,16 @@ use App\Http\Controllers\PricesController;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\FactorsController;
 use App\Http\Controllers\ReportsController;
-use App\Http\Controllers\ContactsController;
 use App\Http\Controllers\DepositsController;
 use App\Http\Controllers\PaymentsController;
 use App\Http\Controllers\ProjectsController;
-use App\Http\Controllers\AddressesController;
 use App\Http\Controllers\DocumentsController;
 use App\Http\Controllers\MeasurersController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\ForgotPasswordController;
-use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\InventoriesController;
 use App\Http\Controllers\ConfigurationsController;
+use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 
 Route::get('/', [LoginController::class, 'showLoginForm'])->name('showLoginForm');
 Route::post('login', [LoginController::class, 'login'])->name('login');
@@ -71,12 +69,10 @@ Route::get('/documents/{id}/print', [DocumentsController::class, 'print'])->name
 Route::get('/documents/multiple-pdf/download', [DocumentsController::class, 'multiPdf'])->name('documents.multiPdf');
 
 Route::get('/payments', [PaymentsController::class, 'index'])->name('payments.index')->middleware('permission:pay_documents');
-Route::post('/payments/create', [PaymentsController::class, 'createForm'])->name('payments.createForm');
 Route::post('/payments', [PaymentsController::class, 'store'])->name('payments.store')->middleware('permission:pay_documents');
-Route::get('/payments/show/{payment}', [PaymentsController::class, 'show'])->name('payments.show');
-Route::delete('/payments/show/{payment}', [PaymentsController::class, 'destroy'])->name('payments.delete');
-// Livewire component
-Route::get('/payments/create/client/{id}', \App\Http\Livewire\CreatePayment::class)->name('payments.create')->middleware('auth');
+Route::get('/payments/{payment}/show', [PaymentsController::class, 'show'])->name('payments.show');
+Route::get('/payments/{payment}/edit', [PaymentsController::class, 'edit'])->name('payments.edit');
+Route::delete('/payments/{payment}/show', [PaymentsController::class, 'destroy'])->name('payments.delete');
 
 Route::get('/users', [UsersController::class, 'index'])->name('users.index')->middleware('permission:show_users');
 Route::get('/users/create', [UsersController::class, 'create'])->name('users.create')->middleware('permission:create_users');
@@ -154,3 +150,9 @@ Route::get('/download/{file}', function ($file) {
 });
 
 Route::get('/reportes/depositos-garantia', \App\Http\Livewire\Reportes\DepositosGarantia::class)->name('reportes.depositos-garantia.index')->middleware('auth');
+
+Route::get('conf/close-pays', function (){
+    \App\Payment::where('closed', false)->update([
+        'closed' => true,
+    ]);
+});

@@ -19,12 +19,7 @@
                             <i class="far fa-thumbs-up"></i>Autorizar
                         </a>
                     @endif
-                    @if ($document->status === 2 &&
-                        $document->pending > 0.01 &&
-                        auth()->user()->can('pay_documents'))
-                        <a href="{{ route('payments.create', $document->client_id) }}" class="btn btn-app">
-                            <i class="fas fa-coins"></i>Pagar
-                        </a>
+                    @if ($document->status === 2)
                         <a href="{{ route('documents.sendEmail', $document) }}" class="btn btn-app">
                             <i class="fas fa-envelope"></i>Email
                         </a>

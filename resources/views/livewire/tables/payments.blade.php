@@ -62,10 +62,17 @@
                             <td>{{ $pay->created_at->format('d/m/Y') }}</td>
                             <td>{{ $pay->client->name }}</td>
                             <td>{{ contabilidad($pay->amount) }}</td>
-                            <td>
+                            <td class="text-center">
+                                @if (!$pay->closed)
+                                    <a href="{{ route('payments.edit', $pay) }}" class="btn btn-primary btn-xs">
+                                        <i class="fas fa-edit mr-2"></i>
+                                        Continuar
+                                    </a>
+                                @else 
                                 <a href="{{ route('payments.show', $pay) }}" class="btn btn-xs btn-default">
                                     <i class="fas fa-eye mr-2"></i>Ver
                                 </a>
+                                @endif
                             </td>
                         </tr>
                     @empty

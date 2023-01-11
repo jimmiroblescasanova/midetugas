@@ -96,9 +96,6 @@
 
 @section('scripts')
     <script>
-        const selectProject = document.getElementById('selectProject');
-        const clientsList = document.getElementById('clients_list');
-
         $('#select_project').on('change', () => {
             let project = $('#select_project').val();
             

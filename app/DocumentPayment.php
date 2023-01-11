@@ -15,5 +15,4 @@ class DocumentPayment extends Pivot
     {
         return $this->attributes['amount'] / 100;
     }
-
 }

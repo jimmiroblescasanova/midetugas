@@ -4,12 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Client;
 use App\Payment;
-use App\Document;
+use App\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Flasher\Laravel\Facade\Flasher;
-use Illuminate\Support\Facades\Log;
-use App\Http\Requests\CreatePaymentRequest;
 
 class PaymentsController extends Controller
 {
@@ -21,69 +19,22 @@ class PaymentsController extends Controller
     public function index()
     {
         return view('payments.index', [
-            'payments' => Payment::orderByDesc('id')->get(),
-            'clients' => Client::pluck('name', 'id'),
+            'unclosedPayments' => Payment::where('closed', false)->count(),
+            'projects' => Project::orderBy('name', 'asc')->pluck('name', 'id'),
         ]);
-    }
-
-    public function createForm(CreatePaymentRequest $request)
-    {
-        return redirect()->route('payments.create', $request->client);
     }
 
     public function store(Request $request)
     {
         $paymentData = [
             'client_id' => $request->client,
-            'amount' => $request->total,
+            'amount' => $request->amount,
             'date' => $request->date,
         ];
 
-        // validar los abonos
-        $count = 0;
-        foreach($request->pay as $id => $value) {
-            if (!is_null($value)) {
-                $count++;
-            }
-        }
-        // Si no se abono ningun documento se regresa
-        if ($count == 0) {
-            Flasher::addWarning('Debes abonar el pago a algun documento.');
-            return back();
-        }
+        $pay = Payment::create($paymentData);
 
-        try {
-            DB::beginTransaction();
-            $pay = Payment::create($paymentData);
-
-            $client = Client::findOrFail($request->client);
-            if (array_key_exists('useBalance', $request->toArray())) {
-                $client->balance = $request->pending;
-            } else {
-                $client->balance = $client->balance + $request->pending;
-            }
-            $client->save();
-
-            foreach ($request->pay as $id => $value) {
-                if (!is_null($value)) {
-                    $document = Document::findOrFail($id);
-                    $document->pending = $document->pending - $value;
-                    $document->save();
-
-                    $pay->documents()->attach($id, [
-                        'amount' => $value * 100,
-                    ]);
-                }
-            }
-            DB::commit();
-        } catch (\Throwable $th) {
-            DB::rollBack();
-            Log::error($th->getMessage());
-            abort(403, $th->getMessage());
-        }
-
-        Flasher::addSuccess('Pago aplicado correctamente');
-        return redirect()->route('payments.index');
+        return redirect()->route('payments.edit', $pay);
     }
 
     function show(Payment $payment)
@@ -93,11 +44,27 @@ class PaymentsController extends Controller
         ]);
     }
 
+    function edit(Payment $payment)
+    {
+        return view('payments.edit', [
+            'payment' => $payment,
+        ]);
+    }
+
     public function destroy(Payment $payment)
     {
         try {
             DB::beginTransaction();
 
+            // obtenemos el pendiente 
+            $amountUsed = $payment->documents()->sum('amount') / 100;
+            // calculamos el pendiente del documento pago
+            $pendingToPay = $payment->balance - (($payment->amount + $payment->balance) - $amountUsed);
+            // actualizamos el saldo del cliente
+            $payment->client->update([
+                'balance' => $payment->client->balance + $pendingToPay,
+            ]);
+            // actualizamos todos los documentos, sumando el pago asociado
             foreach ($payment->documents as $document) {
                 $document->pending += $document->pivot->amount;
                 $document->save();

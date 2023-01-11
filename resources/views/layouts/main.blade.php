@@ -85,7 +85,6 @@
     <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/min/moment-with-locales.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     @livewireScripts
-    @yield('scripts')
     <script>
         $('#logoutButton').on('click', function(event) {
             event.preventDefault();
@@ -95,7 +94,12 @@
         $('.select2bs4').select2({
             theme: 'bootstrap4',
         });
+        // funcion para convertir txtbox a money
+        function setCurrency(e) {
+            e.value = parseFloat(e.value).toFixed(2);
+        }
     </script>
+    @yield('scripts')
     @stack('lw-scripts')
 </body>
 
