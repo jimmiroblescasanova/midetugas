@@ -62,7 +62,7 @@
                             <input type="date" class="form-control" name="date">
                         </div>
                         <div class="form-group">
-                            <input type="number" onchange="setCurrency(this);" class="form-control" name="amount" placeholder="Ingresa la cantidad del pago">
+                            <input type="text" class="form-control" name="amount" placeholder="Ingresa la cantidad del pago" data-type="currency">
                         </div>
                     </div>
                     <div class="modal-footer">

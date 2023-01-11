@@ -124,7 +124,7 @@
                                 <td>{{ $document->id }}</td>
                                 <td>{{ $document->date->format('d/m/Y') }}</td>
                                 <td>{{ number_format($document->pending, 2) }}</td>
-                                <td><input type="number" onchange="setCurrency(this);" class="form-control form-control-sm" name="pay-{{ $document->id }}"></td>
+                                <td><input type="text" data-type="currency" class="form-control form-control-sm" name="pay-{{ $document->id }}"></td>
                                 <td>
                                     <button type="button" onclick="addPay({{ $document->id }})" class="btn btn-sm  btn-success">Aplicar</button>
                                 </td>
