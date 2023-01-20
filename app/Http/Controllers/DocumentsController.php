@@ -232,8 +232,10 @@ class DocumentsController extends Controller
     {
         $activeDocuments = Document::where([
             ['client_id', $document->client_id], 
-            ['date', '>', $document->date],
-            ])->count();
+            ['id', '>', $document->id],
+            ])
+            ->whereIn('status', [1,2])
+            ->count();
 
         if ($document->payments()->exists() || $activeDocuments >= 1) {
             Flasher::addWarning('No se puede cancelar, cancele los pagos existentes o documentos futuros.');
