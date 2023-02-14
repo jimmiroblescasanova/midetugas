@@ -60,7 +60,7 @@
                             <div class="col-md-8">
                                 <div class="form-group">
                                     <label for="select_project">Condominios</label>
-                                    <select id="select_project" class="form-control select2bs4" data-placeholder="Selecciona un condominio">
+                                    <select id="select_project" name="project" class="form-control select2bs4" data-placeholder="Selecciona un condominio">
                                         <option></option>
                                         @foreach ($projects as $id => $project)
                                             <option value="{{ $id }}">{{ $project }}</option>
@@ -71,20 +71,13 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="form-group">
-                                    <select id="clients_list" class="form-control select2bs4" data-placeholder="Selecciona los clientes" name="clients[]" multiple="multiple">
-                                        <option></option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <button type="submit" formaction="{{ route('reportes.cobranza.pdf') }}" class="btn btn-sm btn-danger"><i
-                                        class="fas fa-file-pdf mr-2"></i>PDF</button>
+                                <button type="submit" formaction="{{ route('reportes.cobranza.pdf') }}" class="btn btn-sm btn-danger">
+                                    <i class="fas fa-file-pdf mr-2"></i>PDF
+                                </button>
                                 <button type="submit" id="exportExcel" formaction="{{ route('reportes.cobranza.excel') }}"
                                     class="btn btn-sm btn-success">
-                                    <i class="fas fa-file-excel mr-2"></i>Excel</button>
+                                    <i class="fas fa-file-excel mr-2"></i>Excel
+                                </button>
                             </div>
                         </div>
                     </form>
@@ -95,31 +88,4 @@
 @stop
 
 @section('scripts')
-    <script>
-        $('#select_project').on('change', () => {
-            let project = $('#select_project').val();
-            
-            $.ajax({
-                type: 'POST',
-                url: '/api/clients-from-project',
-                data: {
-                project: project,
-                },
-                success: function(data) {
-                    let select = $('#clients_list');
-                    select.empty();
-
-                    $.each(data, function(key, value) {
-                        select.append($('<option>', {
-                            value: value.id,
-                            text: `${value.name} - ${value.shortName}`,
-                        }));
-                    });
-                },
-                error: function(error) {
-                    console.log('An error occurred: ' + error)
-                }
-            });
-        });
-    </script>
 @stop

@@ -37,6 +37,12 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
+                        <x-table.heading 
+                        sortable
+                        wire:click="sortBy('id')"
+                        :direction="$sortField === 'id' ? $sortDirection : null">
+                            ID
+                        </x-table.heading>
                         <x-table.heading
                             sortable
                             wire:click="sortBy('name')"
@@ -66,6 +72,7 @@
                 <tbody>
                     @forelse ($clientes as $cliente)
                     <tr>
+                        <td>{{ $cliente->id }}</td>
                         <td>{{ $cliente->name }}</td>
                         <td>{{ $cliente->shortName }}</td>
                         <td>{{ $cliente->line_3 }}</td>

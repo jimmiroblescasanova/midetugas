@@ -59,13 +59,14 @@ class ReportsController extends Controller
 
     public function pdfCobranza(Request $request)
     {
-        $documents = Document::whereIn('client_id', $request->clients)
+        $clients = Client::where('project_id', $request->project)->pluck('id');
+
+        $documents = Document::whereIn('client_id', $clients)
         ->whereMonth('date', '<=', $request['month'])
         ->whereYear('date', '<=', $request['year'])
         ->groupBy('client_id')
         ->selectRaw('client_id, SUM(total) as suma, SUM(pending) as pendiente')
         ->get();
-
 
         // Generar el PDF
         $pdf = PDF::loadView('reports.cobranza.print', [

@@ -32,7 +32,8 @@ class Clients extends Component
 
     public function mount()
     {
-        $this->sortField = 'name';
+        $this->sortField = 'id';
+        $this->sortDirection = 'desc';
         $this->projects = Project::pluck('name', 'id');
     }
 
