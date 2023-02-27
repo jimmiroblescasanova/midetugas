@@ -90,22 +90,21 @@ class DocumentsController extends Controller
         $payment_date = Carbon::create($request->date)->addDays(10);
         // Guarda la foto y asigna la ruta
         $photo = 'images/' . $files->hashName();
-        // $photo = $request->file('photo')->store('images');
         // Consumo del mes
         $month_quantity = $request->final_quantity - $client->measurer->actual_measure;
         // Factor de correccion
         $correction_factor = $client->measurer->correction_factor;
         // Subtotal del mes
         $neto = round($month_quantity * $correction_factor, 2) * $price;
-        $subtotal = $neto + $request->admCharge;
+        $subtotal = $neto + $request->admCharge + $request->reconnection;
         // Calculo del IVA
         $iva = ($subtotal * 1.16) - $subtotal;
         // Importe total del mes
         $total = $subtotal + $iva;
         // Se valida si el cliente tiene cargo adicional y se suma
-        if ($client->reconnection_charge == TRUE) {
+        /* if ($client->reconnection_charge == TRUE) {
             $total += 99;
-        }
+        } */
         // Se obtiene el condominio del cliente
         $project = Project::find($client->project_id);
         // Guarda todos los valores en un array
@@ -118,7 +117,8 @@ class DocumentsController extends Controller
             'month_quantity' => $month_quantity,
             'correction_factor' => $correction_factor,
             'period' => Carbon::create($request->date)->isoFormat('MMMM, Y'),
-            'adm_charge' => $request->admCharge*100,
+            'adm_charge' => $request->admCharge * 100,
+            'reconnection' => $request->reconnection * 100,
             'price' => $price,
             'subtotal' => $neto * 100,
             'iva' => $iva * 100,

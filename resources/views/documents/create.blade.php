@@ -37,24 +37,31 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-4 col-12">
+                            <div class="col-md-3 col-12">
                                 <x-form-input type="date" name="date" label="Fecha de corte:">
                                     @slot('prepend')
                                     <i class="fas fa-calendar-alt"></i>
                                     @endslot
                                 </x-form-input>
                             </div>
-                            <div class="col-md-4 col-12">
+                            <div class="col-md-3 col-12">
                                 <x-form-input name="final_quantity" label="Lectura actual:">
                                     @slot('prepend')
                                     <i class="fas fa-barcode"></i>
                                     @endslot
                                 </x-form-input>
                             </div>
-                            <div class="col-md-4 col-12">
+                            <div class="col-md-3 col-12">
                                 <x-form-input name="admCharge" label="Cargo por administración:">
                                     @slot('prepend')
                                     <i class="fas fa-dollar-sign"></i>
+                                    @endslot
+                                </x-form-input>
+                            </div>
+                            <div class="col-md-3 col-12">
+                                <x-form-input name="reconnection" label="Cargo por reconexión:">
+                                    @slot('prepend')
+                                    <i class="fas fa-plug"></i>
                                     @endslot
                                 </x-form-input>
                             </div>

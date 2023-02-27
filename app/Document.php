@@ -100,6 +100,16 @@ class Document extends Model
         return $this->attributes['adm_charge'] / 100;
     }
 
+    public function setReconnectionAttribute($val)
+    {
+        return $this->attributes['reconnection'] = $val * 100;
+    }
+
+    public function getReconnectionAttribute()
+    {
+        return $this->attributes['reconnection'] / 100;
+    }
+
     public function scopePending($query)
     {
         $query->where('status', 1);

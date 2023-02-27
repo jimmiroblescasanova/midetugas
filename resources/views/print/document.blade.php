@@ -167,7 +167,7 @@
         /* Tabla de saldos de la cuenta */
         #tabla-saldos {
             border-spacing: 0;
-            font-size: 11px;
+            font-size: 9px;
             text-align: right;
             width: 100%;
         }
@@ -364,9 +364,13 @@
                                 <td class="text-right">{{ contabilidad($docto->adm_charge) }}</td>
                             </tr>
                             <tr>
+                                <th>(+)Reconexión.</th>
+                                <td class="text-right">{{ contabilidad($docto->reconnection) }}</td>
+                            </tr>
+                            <tr>
                                 <th>Subtotal</th>
                                 <td class="text-right">
-                                    {{ contabilidad($docto->subtotal + $docto->adm_charge) }}</td>
+                                    {{ contabilidad($docto->subtotal + $docto->adm_charge + $docto->reconnection) }}</td>
                             </tr>
                             <tr>
                                 <th>(-)Descuento</th>
