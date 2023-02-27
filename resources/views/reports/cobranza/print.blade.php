@@ -39,11 +39,20 @@
             width: 100%;
         }
 
+        table.table-bordered {
+            font-size: 10px;
+        }
+
         .table-bordered td,
         th {
             border: 1px solid gray;
             padding: 5px 0;
             text-align: center;
+        }
+
+        .table-bordered td.numeric-cell {
+            width: auto;
+            padding: 0 3px;
         }
     </style>
 </head>
@@ -63,6 +72,7 @@
             <tr>
                 <th>Cliente</th>
                 <th>Condominio</th>
+                <th>Torre</th>
                 <th>Departamento</th>
                 <th>Cargos</th>
                 <th>Abonos</th>
@@ -70,16 +80,21 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($documents as $document)
+            @forelse ($documents as $document)
+            <tr>
+                <td>{{ $document->client->name }}</td>
+                <td>{{ $document->client->project->name }}</td>
+                <td>{{ $document->client->line_2 }}</td>
+                <td>{{ $document->client->line_3 }}</td>
+                <td class="numeric-cell">{{ contabilidad($document->suma /100) }}</td>
+                <td class="numeric-cell">{{ contabilidad(($document->suma - $document->pendiente) / 100) }}</td>
+                <td class="numeric-cell">{{ contabilidad($document->pendiente / 100) }}</td>
+            </tr>
+            @empty
                 <tr>
-                    <td>{{ $document->client->name }}</td>
-                    <td>{{ $document->client->project->name }}</td>
-                    <td>{{ $document->client->line_3 }}</td>
-                    <td>{{ contabilidad($document->suma /100) }}</td>
-                    <td>{{ contabilidad(($document->suma - $document->pendiente) / 100) }}</td>
-                    <td>{{ contabilidad($document->pendiente / 100) }}</td>
+                    <td colspan="7">No hay información en el rango seleccionado.</td>
                 </tr>
-            @endforeach
+            @endforelse 
         </tbody>
     </table>
 </body>

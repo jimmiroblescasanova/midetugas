@@ -71,7 +71,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <button type="submit" formaction="{{ route('reportes.cobranza.pdf') }}" class="btn btn-sm btn-danger">
+                                <button type="submit" formtarget="_blank" formaction="{{ route('reportes.cobranza.pdf') }}" class="btn btn-sm btn-danger">
                                     <i class="fas fa-file-pdf mr-2"></i>PDF
                                 </button>
                                 <button type="submit" id="exportExcel" formaction="{{ route('reportes.cobranza.excel') }}"

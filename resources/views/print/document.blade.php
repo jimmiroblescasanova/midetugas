@@ -232,7 +232,7 @@
                                 </tr>
                                 <tr>
                                     <td>Calle / Mz / Lt</td>
-                                    <td>{{ $docto->client->line_1 }}, {{ $docto->client->line_2 }}</td>
+                                    <td>{{ $docto->client->line_1 }}</td>
                                     <td>Ciudad</td>
                                     <td>{{ $docto->client->city }}</td>
                                 </tr>
