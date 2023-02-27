@@ -14,7 +14,7 @@ trait GraphBarTrait
         foreach ($historic->take(13) as $h)
         {
             $arr_period = $arr_period . '"' . $h->period . '",';
-            $arr_data = $arr_data . $h->month_quantity . ',';
+            $arr_data = $arr_data . round($h->month_quantity * $h->correction_factor, 2) . ',';
         }
         $arr_period = $arr_period . ']';
         $arr_data = $arr_data . ']';

@@ -170,7 +170,7 @@ class DocumentsController extends Controller
     public function show(Document $document)
     {
         // Obtener datos para la tabla de barras
-        $historic = Document::select('id', 'period', 'month_quantity')
+        $historic = Document::select('id', 'period', 'month_quantity', 'correction_factor')
             ->where([
                 ['client_id', $document->client_id],
                 ['id', '<=', $document->id],
@@ -281,7 +281,7 @@ class DocumentsController extends Controller
     public function generarPDF($docto)
     {
         // Se obtiene los históricos de meses anteriores
-        $historic = Document::select('id', 'period', 'month_quantity', 'total')
+        $historic = Document::select('id', 'period', 'month_quantity', 'correction_factor', 'total')
             ->where([
                 ['client_id', $docto->client_id],
                 ['id', '<=', $docto->id],

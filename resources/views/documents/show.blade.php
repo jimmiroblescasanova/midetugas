@@ -68,8 +68,8 @@
                                         <dd>{{ $document->start_quantity }} m3</dd>
                                         <dt>Cantidad final:</dt>
                                         <dd>{{ $document->final_quantity }} m3</dd>
-                                        <dt>Consumo del mes:</dt>
-                                        <dd>{{ $document->month_quantity }} m3</dd>
+                                        <dt>Consumo <sup>m3</sup> del mes:</dt>
+                                        <dd>{{ number_format(round($document->month_quantity * $document->correction_factor, 2), 2) }} m3</dd>
                                     </dl>
                                 </div>
                             </div>
