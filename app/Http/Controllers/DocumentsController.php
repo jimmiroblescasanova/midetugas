@@ -91,14 +91,14 @@ class DocumentsController extends Controller
         // Guarda la foto y asigna la ruta
         $photo = 'images/' . $files->hashName();
         // Consumo del mes
-        $month_quantity = $request->final_quantity - $client->measurer->actual_measure;
+        $month_quantity = round($request->final_quantity - $client->measurer->actual_measure, 3);
         // Factor de correccion
         $correction_factor = $client->measurer->correction_factor;
         // Subtotal del mes
-        $neto = round($month_quantity * $correction_factor, 2) * $price;
+        $neto = round(($month_quantity * $correction_factor) * $price, 2);
         $subtotal = $neto + $request->admCharge + $request->reconnection;
         // Calculo del IVA
-        $iva = ($subtotal * 1.16) - $subtotal;
+        $iva = round( ($subtotal * 1.16) - $subtotal, 2);
         // Importe total del mes
         $total = $subtotal + $iva;
         // Se valida si el cliente tiene cargo adicional y se suma
@@ -213,8 +213,8 @@ class DocumentsController extends Controller
 
     public function discount(Document $document, Request $request)
     {
-        $subtotal = ($document->subtotal + $document->adm_charge) - $request->discount;
-        $iva = ($subtotal * 1.16) - $subtotal;
+        $subtotal = ($document->subtotal + $document->adm_charge + $document->reconnection) - $request->discount;
+        $iva = round( ($subtotal * 1.16) - $subtotal, 2);
         $total = $subtotal + $iva;
 
         $document->update([
