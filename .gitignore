@@ -32,4 +32,3 @@ _ide_helper.php
 error_log
 .DS_Store
 .prettierignore
-resources/.DS_Store
