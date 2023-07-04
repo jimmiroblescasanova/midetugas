@@ -276,7 +276,7 @@
                                     <td>{{ $docto->final_quantity }}</td>
                                     <td>{{ $docto->month_quantity }}</td>
                                     <td>{{ $docto->correction_factor }}</td>
-                                    <td>{{ number_format(round($docto->month_quantity * $docto->correction_factor, 2), 4) }}</td>
+                                    <td>{{ number_format(round($docto->month_quantity * $docto->correction_factor, 4), 4) }}</td>
                                     <td>$ {{ number_format($docto->price, 2) }}</td>
                                 </tr>
                             </tbody>
