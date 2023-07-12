@@ -29,7 +29,7 @@
                                     <select class="form-control select2bs4" name="client_id" id="client_id">
                                         @foreach ($clients as $client)
                                             @if ($client->measurer()->exists())
-                                                <option value="{{ $client->id }}">{{ $client->name }} - Edif: {{ $client->line_2 }} - Depto: {{ $client->line_3 }}</option>
+                                                <option value="{{ $client->id }}">{{ $client->name }} / {{ $client->shortName }} - Edif: {{ $client->line_2 }} - Depto: {{ $client->line_3 }}</option>
                                             @endif
                                         @endforeach
                                     </select>
