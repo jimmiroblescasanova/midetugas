@@ -15,7 +15,7 @@ class FactorsController extends Controller
 
     public function index()
     {
-        $factors = Factor::paginate();
+        $factors = Factor::paginate(15);
 
         return view('factors.index', [
             'factors' => $factors,
@@ -30,9 +30,23 @@ class FactorsController extends Controller
         return redirect()->route('factors.index');
     }
 
-    public function destroy(Request $request)
+    public function edit(Factor $factor)
     {
-        Factor::find($request->id)->delete();
+        return view('factors.edit', compact('factor'));
+    }
+
+    public function update(Factor $factor, Request $request)
+    {
+        $factor->value = $request->value;
+        $factor->save();
+
+        Flasher::addSuccess('Registro actualizado');
+        return redirect()->route('factors.index');
+    }
+
+    public function destroy(Factor $factor)
+    {
+        $factor->delete();
 
         Flasher::addPreset('dbDeleted');
         return redirect()->route('factors.index');

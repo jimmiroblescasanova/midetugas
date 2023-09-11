@@ -180,7 +180,7 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{ route('factors.index') }}" class="nav-link {{ setActive('factors.index') }}">
+                                <a href="{{ route('factors.index') }}" class="nav-link {{ setActive('factors.*') }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Fact. de correccion</p>
                                 </a>

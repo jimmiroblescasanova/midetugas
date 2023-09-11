@@ -143,7 +143,9 @@ Route::post('procesos/descarga-masiva', [ConfigurationsController::class, 'multi
 
 Route::get('/configuration/factors', [FactorsController::class, 'index'])->name('factors.index');
 Route::post('/configuration/factors', [FactorsController::class, 'store'])->name('factors.store');
-Route::delete('/configuration/factors', [FactorsController::class, 'destroy'])->name('factors.destroy');
+Route::get('/configuration/factors/{factor}/edit', [FactorsController::class, 'edit'])->name('factors.edit');
+Route::patch('/configuration/factors/{factor}/edit', [FactorsController::class, 'update'])->name('factors.update');
+Route::delete('configuration/factors/{factor}/edit', [FactorsController::class, 'destroy'])->name('factors.destroy');
 
 Route::get('/download/{file}', function ($file) {
     return Storage::download('pdf/' . $file . '.zip');
