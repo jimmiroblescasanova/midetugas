@@ -37,6 +37,7 @@ class FactorsController extends Controller
 
     public function update(Factor $factor, Request $request)
     {
+        $factor->psig = $request->psig;
         $factor->value = $request->value;
         $factor->save();
 

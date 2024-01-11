@@ -30,7 +30,7 @@
                         <tbody>
                             @foreach ($factors as $factor)
                                 <tr>
-                                    <td scope="row">{{ $factor->psig }}</td>
+                                    <td scope="row">{{ $factor->psig }} PSIG</td>
                                     <td>{{ $factor->value }}</td>
                                     <td class="text-right">
                                         <a href="{{ route('factors.edit', $factor) }}" class="btn btn-xs btn-default">

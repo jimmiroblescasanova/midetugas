@@ -24,11 +24,16 @@
                         <div class="row">
                             <div class="col">
                                 <label for="psig">Factor PSIG</label>
-                                <input type="text" class="form-control" name="psig" id="psig" value="{{ $factor->psig }}" readonly>
+                                <div class="input-group mb-3">
+                                    <input type="number" step="0.0001" class="form-control" name="psig" id="psig" value="{{ $factor->psig }}">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">PSIG</span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col">
                                 <label for="value">Valor</label>
-                                <input type="number" step="any" class="form-control" name="value" id="value" value="{{ $factor->value }}">
+                                <input type="number" step="0.0001" class="form-control" name="value" id="value" value="{{ $factor->value }}">
                             </div>
                         </div>
                     </div>
