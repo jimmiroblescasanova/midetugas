@@ -27,7 +27,7 @@ class UpdateMeasurerRequest extends FormRequest
         return [
             'brand' => 'required|string',
             'model' => 'required|string',
-            'correction_factor' => 'required|numeric',
+            'factor_id' => 'required|exists:factors,id',
             'serial_number' => [
                 'required',
                 'string',

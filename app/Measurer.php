@@ -3,8 +3,9 @@
 namespace App;
 
 use App\Client;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Factor;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Measurer extends Model
 {
@@ -25,6 +26,11 @@ class Measurer extends Model
     public function client()
     {
         return $this->belongsTo(Client::class);
+    }
+
+    public function factor()
+    {
+        return $this->belongsTo(Factor::class);
     }
 
     public function scopeSearch($query, $search)

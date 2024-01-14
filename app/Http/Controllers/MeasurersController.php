@@ -18,14 +18,16 @@ class MeasurersController extends Controller
 
     public function index()
     {
-        return view('measurers.index');
+        $factor_existe = Measurer::where('factor_id', null)->count();
+
+        return view('measurers.index', compact('factor_existe'));
     }
 
     public function create()
     {
         return view('measurers.create', [
             'measurer' => new Measurer(),
-            'factors' => Factor::pluck('psig', 'value'),
+            'factors' => Factor::pluck('psig', 'id'),
         ]);
     }
 
@@ -40,7 +42,7 @@ class MeasurersController extends Controller
     {
         return view('measurers.edit', [
             'measurer' => $measurer,
-            'factors' => Factor::pluck('psig', 'value'),
+            'factors' => Factor::pluck('psig', 'id'),
         ]);
     }
 

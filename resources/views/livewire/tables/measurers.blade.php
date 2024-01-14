@@ -68,7 +68,7 @@
                         <td>{{ $medidor->model }}</td>
                         <td>{{ $medidor->serial_number }}</td>
                         <td>{{ $medidor->actual_measure }} m<sup>3</sup></td>
-                        <td>{{ $medidor->correction_factor }}</td>
+                        <td>{{ $medidor->factor->psig ?? '-' }} PSIG</td>
                         <td>{!! setBadge($medidor->active) !!}</td>
                         <td class="text-right">
                             @can('edit_measurers')

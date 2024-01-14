@@ -93,7 +93,7 @@ class DocumentsController extends Controller
         // Consumo del mes
         $month_quantity = round($request->final_quantity - $client->measurer->actual_measure, 3);
         // Factor de correccion
-        $correction_factor = $client->measurer->correction_factor;
+        $correction_factor = $client->measurer->factor->value;
         // Subtotal del mes
         $neto = round(($month_quantity * $correction_factor) * $price, 2);
         $subtotal = $neto + $request->admCharge + $request->reconnection;
