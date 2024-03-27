@@ -18,7 +18,8 @@
     ),
     'aliases' => 
     array (
-      'PDF' => 'Barryvdh\\DomPDF\\Facade',
+      'Pdf' => 'Barryvdh\\DomPDF\\Facade\\Pdf',
+      'PDF' => 'Barryvdh\\DomPDF\\Facade\\Pdf',
     ),
   ),
   'binarytorch/larecipe' => 
@@ -30,24 +31,6 @@
     'aliases' => 
     array (
       'LaRecipe' => 'BinaryTorch\\LaRecipe\\LaRecipe',
-    ),
-  ),
-  'facade/ignition' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Facade\\Ignition\\IgnitionServiceProvider',
-    ),
-    'aliases' => 
-    array (
-      'Flare' => 'Facade\\Ignition\\Facades\\Flare',
-    ),
-  ),
-  'fideloper/proxy' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Fideloper\\Proxy\\TrustedProxyServiceProvider',
     ),
   ),
   'fruitcake/laravel-cors' => 
@@ -118,15 +101,22 @@
       0 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     ),
   ),
-  'php-flasher/flasher-laravel' => 
+  'nunomaduro/termwind' => 
   array (
     'providers' => 
     array (
-      0 => 'Flasher\\Laravel\\FlasherServiceProvider',
+      0 => 'Termwind\\Laravel\\TermwindServiceProvider',
     ),
+  ),
+  'php-flasher/flasher-laravel' => 
+  array (
     'aliases' => 
     array (
       'Flasher' => 'Flasher\\Laravel\\Facade\\Flasher',
+    ),
+    'providers' => 
+    array (
+      0 => 'Flasher\\Laravel\\FlasherServiceProvider',
     ),
   ),
   'protonemedia/laravel-form-components' => 
@@ -145,6 +135,17 @@
     'aliases' => 
     array (
       'Alert' => 'RealRashid\\SweetAlert\\Facades\\Alert',
+    ),
+  ),
+  'spatie/laravel-ignition' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Spatie\\LaravelIgnition\\IgnitionServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Flare' => 'Spatie\\LaravelIgnition\\Facades\\Flare',
     ),
   ),
   'spatie/laravel-permission' => 
