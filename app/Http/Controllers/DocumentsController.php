@@ -13,18 +13,20 @@ use App\Traits\SendSmsTrait;
 use Illuminate\Http\Request;
 use App\Traits\GraphBarTrait;
 use App\Mail\AuthorizeReceipt;
-use Barryvdh\DomPDF\Facade as PDF;
 use App\Traits\UpdateProjectTrait;
 use Illuminate\Support\Facades\DB;
 use Flasher\Laravel\Facade\Flasher;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Intervention\Image\Facades\Image;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\SaveDocumentRequest;
+use App\Traits\getPDFTrait;
 
 class DocumentsController extends Controller
 {
+    use getPDFTrait;
     use SendSmsTrait;
     use GraphBarTrait;
     use UpdateProjectTrait;
@@ -278,45 +280,9 @@ class DocumentsController extends Controller
         return $pdf->stream();
     }
 
-    public function generarPDF($docto)
-    {
-        // Se obtiene los históricos de meses anteriores
-        $historic = Document::select('id', 'period', 'month_quantity', 'correction_factor', 'total')
-            ->where([
-                ['client_id', $docto->client_id],
-                ['id', '<=', $docto->id],
-                ['status', '!=', 3]
-            ])->orderByDesc('id')->get();
-
-        // Trait to generate the chart
-        $chart = $this->generateChart($historic);
-
-        // Generar el PDF
-        $pdf = PDF::loadView('print.document', [
-            'docto' => $docto,
-            'acumulado' => $this->calcularAcumulado($docto->client_id, $docto->date),
-            'chart' => urlencode($chart),
-            'historic' => $historic->take(2),
-        ]);
-        $pdf->setPaper('A4', 'portrait');
-        return $pdf;
-    }
-
-    public function calcularAcumulado($client, $date): int
-    {
-        // calcular el acumulado de saldos
-        $acumulado = Document::where([
-            ['client_id', $client],
-            ['status', 2],
-            ['date', '<', $date]
-        ])->sum('pending');
-
-        return $acumulado;
-    }
-
     public function sendEmail(Document $document)
     {
-        Mail::to($document->client->email)->send(new AuthorizeReceipt($document->reference));
+        Mail::to($document->client->email)->queue(new AuthorizeReceipt($document));
 
         flash()->addSuccess('Correo enviado con éxito');
 

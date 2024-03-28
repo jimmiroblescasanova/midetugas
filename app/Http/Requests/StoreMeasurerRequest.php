@@ -28,7 +28,7 @@ class StoreMeasurerRequest extends FormRequest
             'model' => 'required|string',
             'serial_number' => 'required|string|unique:measurers',
             'actual_measure' => 'required|numeric',
-            'correction_factor' => 'required|numeric',
+            'factor_id' => 'required|numeric',
         ];
     }
 }

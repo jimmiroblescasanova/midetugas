@@ -6,8 +6,9 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
-use App\Notifications\ResetPasswordNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Notifications\ResetPasswordNotification;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -62,8 +63,10 @@ class User extends Authenticatable
         $this->attributes['password'] = Hash::make($psw);
     }
 
-    public function getShortNameAttribute()
+    protected function shortName(): Attribute
     {
-        return Str::limit($this->name, 20);
+        return Attribute::get(
+            get: fn ($value, $attributes) => Str::limit($attributes['name'], 20),
+        );
     }
 }
