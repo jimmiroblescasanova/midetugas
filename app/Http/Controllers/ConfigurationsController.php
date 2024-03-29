@@ -3,14 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Tank;
+use ZipArchive;
 use App\Project;
 use App\Document;
 use App\Inventory;
-use App\Jobs\DownloadPdfs;
+use Illuminate\Bus\Batch;
 use Illuminate\Http\Request;
+use App\Jobs\GeneratePDFFile;
+use App\Mail\DownloadCompleted;
 use App\Traits\UpdateProjectTrait;
 use Flasher\Laravel\Facade\Flasher;
-use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class ConfigurationsController extends Controller
 {
@@ -88,17 +94,47 @@ class ConfigurationsController extends Controller
             'email' => 'required|email',
         ]);
 
-        $validar_documentos = Document::query()
+        $getDocuments = Document::query()
             ->whereBetween('date', [$datos_validos['startDate'], $datos_validos['endDate']])
             ->where('status', 2)
-            ->first();
+            ->get();
 
-        if (!$validar_documentos) {
+        if ($getDocuments->count() == 0) {
             Flasher::addError('No hay documentos autorizados en ese rango de fechas.');
             return redirect()->back();
         }
 
-        dispatch(new DownloadPdfs( $datos_validos ));
+        // Generar la carpeta para los archivos
+        $folderName = NOW()->format('Ymdis');
+        $storageRoute = "pdf/" . $folderName;
+        Storage::makeDirectory( $storageRoute );
+
+        // Generar el array con los jobs individuales
+        $jobs = [];
+        foreach ($getDocuments as $singleDocument) {
+            $jobs[] = new GeneratePDFFile($singleDocument, $folderName);
+        }
+
+        $email = $request['email'];
+        Bus::batch($jobs)
+        ->then(function (Batch $batch) use ($folderName, $email) {
+            $zip = new ZipArchive;
+            $fileName = "storage/pdf/{$folderName}.zip";
+
+            if ($zip->open(public_path($fileName), ZipArchive::CREATE)== TRUE)
+            {
+                $files = File::files(public_path("storage/pdf/".$folderName));
+
+                foreach ($files as $key => $value){
+                    $relativeName = basename($value);
+                    $zip->addFile($value, $relativeName);
+                }
+                $zip->close();
+            }
+
+            Mail::to( $email)->send(new DownloadCompleted( $folderName ));
+        })
+        ->dispatch();
 
         Flasher::addSuccess('Se te enviara un correo con el enlace de descarga.');
         return redirect()->route('home');

@@ -42,13 +42,13 @@ class DownloadPdfs implements ShouldQueue
     {
         $folderName = NOW()->format('Ymdis');
         $storageRoute = "pdf/" . $folderName;
-        Storage::makeDirectory("public/" . $storageRoute );
+        Storage::makeDirectory( $storageRoute );
 
         $documents = Document::whereBetween('date', [$this->data['startDate'], $this->data['endDate']])->get();
 
         foreach($documents as $docto){
             $pdf = $this->generarPDF($docto);
-            Storage::put("public/{$storageRoute}/{$docto->reference}.pdf", $pdf->output());
+            Storage::put("{$storageRoute}/{$docto->reference}.pdf", $pdf->output());
         }
 
         $zip = new ZipArchive;
