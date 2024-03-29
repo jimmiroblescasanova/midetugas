@@ -4,7 +4,7 @@ namespace App\Jobs;
 
 use ZipArchive;
 use App\Document;
-use App\Traits\getPDFTrait;
+use App\Traits\GetPDFTrait;
 use App\Traits\GraphBarTrait;
 use Illuminate\Bus\Queueable;
 use App\Mail\DownloadCompleted;
@@ -18,7 +18,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 
 class DownloadPdfs implements ShouldQueue
 {
-    use getPDFTrait, GraphBarTrait;
+    use GetPDFTrait, GraphBarTrait;
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public $data;

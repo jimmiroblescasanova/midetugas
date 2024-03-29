@@ -3,7 +3,7 @@
 namespace App\Mail;
 
 use App\Document;
-use App\Traits\getPDFTrait;
+use App\Traits\GetPDFTrait;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
@@ -15,7 +15,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 class AuthorizeReceipt extends Mailable
 {
     use Queueable, SerializesModels;
-    use getPDFTrait;
+    use GetPDFTrait;
 
     public $subject = "Su recibo de gas esta listo";
     public $document;

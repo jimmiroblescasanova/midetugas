@@ -5,7 +5,7 @@ namespace App\Traits;
 use App\Document;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
-trait getPDFTrait
+trait GetPDFTrait
 {
     use GraphBarTrait;
 

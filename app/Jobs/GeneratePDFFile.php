@@ -3,7 +3,7 @@
 namespace App\Jobs;
 
 use App\Document;
-use App\Traits\getPDFTrait;
+use App\Traits\GetPDFTrait;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
@@ -15,7 +15,7 @@ use Illuminate\Contracts\Queue\ShouldBeUnique;
 
 class GeneratePDFFile implements ShouldQueue
 {
-    use getPDFTrait;
+    use GetPDFTrait;
     use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**

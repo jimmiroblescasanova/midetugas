@@ -8,6 +8,7 @@ use App\Project;
 use App\Document;
 use App\Measurer;
 use Carbon\Carbon;
+use App\Traits\GetPDFTrait;
 use Illuminate\Support\Str;
 use App\Traits\SendSmsTrait;
 use Illuminate\Http\Request;
@@ -22,11 +23,10 @@ use Intervention\Image\Facades\Image;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\SaveDocumentRequest;
-use App\Traits\getPDFTrait;
 
 class DocumentsController extends Controller
 {
-    use getPDFTrait;
+    use GetPDFTrait;
     use SendSmsTrait;
     use GraphBarTrait;
     use UpdateProjectTrait;
