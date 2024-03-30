@@ -7,10 +7,11 @@ use App\Project;
 use App\Document;
 use Illuminate\Http\Request;
 use App\Exports\EdcExportReport;
-use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\DB;
 use App\Exports\AccountStatusReport;
 use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
+use App\Http\Requests\ClientBalanceReportRequest;
 
 class ReportsController extends Controller
 {
@@ -76,14 +77,8 @@ class ReportsController extends Controller
         return $pdf->stream();
     }
 
-    public function excelCobranza(Request $request)
+    public function excelCobranza(ClientBalanceReportRequest $request)
     {
-        $request->validate([
-            'clients' => 'required|array',
-        ], [
-            'clients.required' => 'Debes seleccionar al menos un cliente.'
-        ]);
-
         return Excel::download(new AccountStatusReport($request), 'cobranza.xlsx');
     }
 

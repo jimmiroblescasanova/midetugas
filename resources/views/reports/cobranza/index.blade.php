@@ -4,7 +4,7 @@
 
 @section('header')
     <div class="col-sm-6">
-        <h1><i class="fas fa-user mr-2"></i>Reporte: Cobranza</h1>
+        <h1><i class="fas fa-user mr-2"></i>Saldo de Clientes (Por Condominio)</h1>
     </div>
 @stop
 
@@ -17,11 +17,11 @@
                         @if ($errors->any())
                             <div class="alert alert-danger alert-dismissible">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                <span>
-                                    @error('clients')
-                                        {{ $message }}
-                                    @enderror
-                                </span>
+                                <ul class="text-sm">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
                             </div>
                         @endif
                     </div>
