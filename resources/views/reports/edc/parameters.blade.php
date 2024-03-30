@@ -62,7 +62,7 @@
                                     <label for="client">Seleccionar cliente</label>
                                     <select name="client" id="client" class="select2bs4 form-control">
                                         @foreach ($clients as $client)
-                                            <option value="{{ $client->id }}">{{ $client->name }} ({{ $client->line_3 }})</option>
+                                            <option value="{{ $client->id }}">{{ $client->name }} ({{ $client->shortName }})</option>
                                         @endforeach
                                     </select>
                                 </div>

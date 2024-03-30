@@ -3,20 +3,19 @@
 namespace App\Exports;
 
 use App\Client;
-use App\Document;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
+use Maatwebsite\Excel\Events\AfterSheet;
+use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
-use Maatwebsite\Excel\Concerns\WithEvents;
-use Maatwebsite\Excel\Events\AfterSheet;
 
 class EdcExportReport implements FromView, ShouldAutoSize, WithStyles, WithColumnFormatting, WithEvents
 {
-    public function __construct($request)
+    public function __construct(public $request)
     {
         $this->request = $request;
     }

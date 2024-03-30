@@ -43,8 +43,8 @@
         <thead>
             <tr>
                 <th>Fecha</th>
-                <th>Periodo</th>
                 <th>Folio</th>
+                <th>Mes</th>
                 <th>Cargo</th>
                 <th>Abono</th>
                 <th>Saldo</th>
@@ -55,8 +55,8 @@
                 {{ $saldo_total = $saldo_total + $document->pending }}
                 <tr>
                     <td>{{ $document->date->format('d/m/Y') }}</td>
-                    <td>{{ $document->period }}</td>
                     <td>{{ $document->id }}</td>
+                    <td>{{ $document->period }}</td>
                     <td>{{ $document->total }}</td>
                     <td>-{{ $document->total - $document->pending }}</td>
                     <td>{{ $saldo_total }}</td>
