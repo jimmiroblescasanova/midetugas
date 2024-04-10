@@ -292,22 +292,32 @@
                         <span class="titleOrange">DATOS PARA PAGO</span>
                         <table class="datos-banco" style="width: 100%">
                             <tr>
-                                <td><img src="{{ asset('logos/scotiabank.jpg') }}" alt="logo scotiabank" width="100px;"></td>
+                                <td><img src="{{ asset('logos/banregio-logo.png') }}" alt="logo banregio" width="100px;"></td>
                                 <td><img src="{{ asset('logos/paypal.jpg') }}" alt="logo paypal" width="100px"></td>
-                                <td><img src="{{ asset('logos/oxxo.jpg') }}" alt="logo oxxo" width="100px"></td>
                             </tr>
                             <tr>
                                 <td>Clabe interbancaria</td>
                                 <td>Link de pago</td>
+                            </tr>
+                            <tr>
+                                <td>0585 9700 0058 6066 23</td>
+                                <td>https://paypal.me/MIDETUGASSADECV</td>
+                                
+                            </tr>
+                            <tr>
+                                <td><img src="{{ asset('logos/logo-bbva.png') }}" alt="logo bbva" width="100px"></td>
+                                <td><img src="{{ asset('logos/oxxo.jpg') }}" alt="logo oxxo" width="100px"></td>
+                            </tr>
+                            <tr>
+                                <td>Clabe interbancaria</td>
                                 <td>Tarjeta para depósito</td>
                             </tr>
                             <tr>
-                                <td>0446 9125 6035 8889 66</td>
-                                <td>https://paypal.me/midetugas</td>
-                                <td>4043 1300 0532 8964</td>
+                                <td>012 691 00121606735 6</td>
+                                <td>4347 9848 2127 4353</td>
                             </tr>
                             <tr>
-                                <td colspan="3">Pagos a nombre de: YURI ENRIQUETA SANCHEZ CONTRERAS</td>
+                                <td colspan="2">Pagos a nombre de: MIDETUGAS SA DE CV</td>
                             </tr>
                         </table>
                     </div>
