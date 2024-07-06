@@ -108,9 +108,11 @@ class ReportsController extends Controller
         {
             $documents = Document::where('client_id', $request->client)
                 ->where('status', 2)
-                ->when(!$request->allDocuments, function ($q){
+                ->when(!$request->allDocuments, function ($q) use ($request){
                     $q->where('pending', '>', 0);
                 })
+                ->whereYear('date', '>=', $request->year)
+                ->whereMonth('date', '>=', $request->month)
                 ->with('client')
                 ->get();
 
