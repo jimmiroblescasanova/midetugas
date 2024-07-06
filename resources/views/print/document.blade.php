@@ -356,7 +356,13 @@
                                     <td>FECHA LIMITE DE PAGO</td>
                                 </tr>
                                 <tr>
-                                    <td>{{ $docto->payment_date->format('d-M-Y') }}</td>
+                                    <td>
+                                        @if ($acumulado > 0.01)
+                                        INMEDIATO 
+                                        @else
+                                        {{ $docto->payment_date->format('d-M-Y') }}
+                                        @endif
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
