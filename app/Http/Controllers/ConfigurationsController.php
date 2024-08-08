@@ -33,7 +33,7 @@ class ConfigurationsController extends Controller
     {
         return view('configurations.tasks', [
             'projects' => Project::pluck('id', 'name'),
-            'clients' => Client::orderBy('name', 'desc')->get(),
+            'clients' => Client::orderBy('name', 'asc')->get(),
         ]);
     }
 
