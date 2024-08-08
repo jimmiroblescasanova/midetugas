@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Tank;
+use App\Client;
 use ZipArchive;
+use App\Payment;
 use App\Project;
 use App\Document;
 use App\Inventory;
@@ -31,6 +33,7 @@ class ConfigurationsController extends Controller
     {
         return view('configurations.tasks', [
             'projects' => Project::pluck('id', 'name'),
+            'clients' => Client::all(),
         ]);
     }
 
@@ -139,4 +142,48 @@ class ConfigurationsController extends Controller
         Flasher::addSuccess('Se te enviara un correo con el enlace de descarga.');
         return redirect()->route('home');
     }
+
+    public function recalculateClient(Request $request)
+    {
+        $allDocuments = Document::with('payments')
+        ->where('client_id', $request->client)
+        ->whereIn('status', [1,2])
+        ->get();
+
+        $logData = $allDocuments->map(function ($docto) {
+            $total_payed = round($docto->payments->sum('pivot.amount') / 100, 2);
+            $total_payment_balance = round($docto->payments()->sum('payments.balance') / 100, 2);
+            $total_payment_amount = round($docto->payments()->sum('payments.amount') / 100, 2);
+
+            $docto->update([
+                'pending' => round($docto->total - $total_payed, 2),
+            ]);
+        
+            return [
+                'id' => $docto->id,
+                'total' => $docto->total,
+                'pending' => $docto->pending,
+                'total_payed' => $total_payed,
+                'total_payment_amount' => $total_payment_amount,
+                'total_payment_balance' => $total_payment_balance,
+                'total_sent_to_client_balance' => round(($total_payment_balance + $total_payment_amount) - $total_payed, 2),
+            ];
+        }); 
+
+        Flasher::addSuccess('Documentos revisados.');
+
+        $total_documents_amount_payed = $logData->sum('total_payed');
+        $total_of_payments = round(Payment::where('client_id', '=', $request->client)->sum('amount') / 100, 2);
+        $diff = $total_of_payments - $total_documents_amount_payed;
+
+        $client = Client::find($request->client);
+        $client->update([
+            'balance' => $diff,
+        ]);
+
+        Flasher::addSuccess('Balance del cliente actualizado');
+
+        return redirect()->route('home');
+    }
+
 }

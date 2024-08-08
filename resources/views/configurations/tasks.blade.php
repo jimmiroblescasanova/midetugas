@@ -35,6 +35,32 @@
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h3>Verificar y corregir saldos de documentos</h3>
+                    <p>Se realizara una verificación de cada documento y se revisaran si cuenta con pagos, se actualizaran el importe pendiente y/o actualizara el saldo en cuenta del cliente.</p>
+
+                    <form action="{{ route('configurations.run.recalculate-client') }}" method="POST">
+                        @csrf
+                        <div class="form-group row">
+                            <label for="clients" class="col-form-label col-md-4">Seleccionar cliente</label>
+                            <div class="col-md-7">
+                                <select class="form-control" name="client" id="clients">
+                                    @foreach ($clients as $client)
+                                        <option value="{{ $client->id }}">{{ $client->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Procesar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 @stop
 
 @section('scripts')
