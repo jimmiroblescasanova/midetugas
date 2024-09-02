@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use Throwable;
 use ZipArchive;
 use App\Document;
 use App\Traits\GetPDFTrait;
@@ -15,6 +16,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Support\Facades\Log;
 
 class DownloadPdfs implements ShouldQueue
 {
@@ -22,6 +24,13 @@ class DownloadPdfs implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public $data;
+
+    /**
+     * Indicate if the job should be marked as failed on timeout.
+     *
+     * @var bool
+     */
+    public $failOnTimeout = false;
 
     /**
      * Create a new job instance.
@@ -66,5 +75,10 @@ class DownloadPdfs implements ShouldQueue
         }
 
         Mail::to( $this->data['email'] )->send(new DownloadCompleted( $folderName ));
+    }
+    
+    public function failed(?Throwable $exception): void
+    {
+        Log::error($exception);
     }
 }
