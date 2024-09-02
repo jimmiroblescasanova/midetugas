@@ -19,14 +19,21 @@ class GeneratePDFFile implements ShouldQueue
     use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
+     * Indicate if the job should be marked as failed on timeout.
+     *
+     * @var bool
+     */
+    public $failOnTimeout = false;
+    
+    /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(public Document $document, public string $folderName)
-    {
-        //
-    }
+    public function __construct(
+        public Document $document,
+        public string $folderName
+    ) {}
 
     /**
      * Execute the job.

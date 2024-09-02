@@ -16,6 +16,7 @@ use App\Mail\DownloadCompleted;
 use App\Traits\UpdateProjectTrait;
 use Flasher\Laravel\Facade\Flasher;
 use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
@@ -136,6 +137,9 @@ class ConfigurationsController extends Controller
             }
 
             Mail::to( $email)->send(new DownloadCompleted( $folderName ));
+        })
+        ->finally(function (Batch $batch) {
+            Log::info('PDFs masivos completados a las: ' . now());
         })
         ->dispatch();
 
