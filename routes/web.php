@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SMSController;
 use Illuminate\Support\Facades\Storage;
@@ -154,3 +155,7 @@ Route::get('/download/{file}', function ($file) {
 });
 
 Route::get('/reportes/depositos-garantia', \App\Http\Livewire\Reportes\DepositosGarantia::class)->name('reportes.depositos-garantia.index')->middleware('auth');
+
+Route::get('/batch/{batchId}', function (string $batchId) {
+    return Bus::findBatch($batchId);
+});
