@@ -124,6 +124,7 @@ class ConfigurationsController extends Controller
         ->finally(function (Batch $batch) {
             Log::info('PDFs masivos completados a las: ' . now());
         })
+        ->allowFailures()
         ->dispatch();
 
         Flasher::addSuccess('Se te enviara un correo con el enlace de descarga.');
