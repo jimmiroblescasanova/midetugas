@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Tank;
 use App\Client;
-use ZipArchive;
 use App\Payment;
 use App\Project;
 use App\Document;
@@ -12,13 +11,11 @@ use App\Inventory;
 use Illuminate\Bus\Batch;
 use Illuminate\Http\Request;
 use App\Jobs\GeneratePDFFile;
-use App\Mail\DownloadCompleted;
 use App\Traits\UpdateProjectTrait;
 use Flasher\Laravel\Facade\Flasher;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Mail;
+use App\Jobs\CompressMassPdfGeneration;
 use Illuminate\Support\Facades\Storage;
 
 class ConfigurationsController extends Controller
@@ -122,21 +119,7 @@ class ConfigurationsController extends Controller
         $email = $request['email'];
         Bus::batch($jobs)
         ->then(function (Batch $batch) use ($folderName, $email) {
-            $zip = new ZipArchive;
-            $fileName = "storage/pdf/{$folderName}.zip";
-
-            if ($zip->open(public_path($fileName), ZipArchive::CREATE)== TRUE)
-            {
-                $files = File::files(public_path("storage/pdf/".$folderName));
-
-                foreach ($files as $key => $value){
-                    $relativeName = basename($value);
-                    $zip->addFile($value, $relativeName);
-                }
-                $zip->close();
-            }
-
-            Mail::to( $email)->send(new DownloadCompleted( $folderName ));
+            CompressMassPdfGeneration::dispatch($folderName, $email);
         })
         ->finally(function (Batch $batch) {
             Log::info('PDFs masivos completados a las: ' . now());
