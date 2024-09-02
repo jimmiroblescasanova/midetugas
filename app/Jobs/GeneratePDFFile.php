@@ -18,12 +18,7 @@ class GeneratePDFFile implements ShouldQueue
     use GetPDFTrait;
     use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    /**
-     * Indicate if the job should be marked as failed on timeout.
-     *
-     * @var bool
-     */
-    public $failOnTimeout = false;
+    public $timeout = 500;
     
     /**
      * Create a new job instance.
