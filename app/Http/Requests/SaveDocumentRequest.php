@@ -28,7 +28,7 @@ class SaveDocumentRequest extends FormRequest
             'date'              => 'required|date',
             'admCharge'         => 'required|numeric',
             'reconnection'      => 'required|numeric',
-            'final_quantity'    => 'required',
+            'final_quantity'    => 'required|numeric',
             'photo'             => 'required|image'
         ];
     }
