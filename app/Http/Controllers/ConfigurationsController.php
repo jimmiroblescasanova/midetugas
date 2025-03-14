@@ -54,14 +54,13 @@ class ConfigurationsController extends Controller
             $month_quantity_total = 0;
 
             // Sumar las consumos mensuales
-            foreach ($clients as $client)
-            {
+            foreach ($clients as $client) {
                 echo "Calculando cliente: {$client->name}<br/>";
-                  $month_quantity = Document::where([
-                      ['client_id', $client->id],
-                      ['status', '!=', 3]
-                  ])->sum('month_quantity');
-                  $month_quantity_total += $month_quantity;
+                $month_quantity = Document::where([
+                    ['client_id', $client->id],
+                    ['status', '!=', 3]
+                ])->sum('month_quantity');
+                $month_quantity_total += $month_quantity;
             }
             $month_total_converted = $month_quantity_total * 4.1848;
             $project_total = $quantity - $month_total_converted;
@@ -73,7 +72,6 @@ class ConfigurationsController extends Controller
             $project->percentage = $this->calculatePercentage($project);
             $project->save();
             echo "Done <br/>";
-
         } catch (\Exception $e) {
             abort(403, 'No se pudo completar el proceso.');
         }
@@ -84,7 +82,9 @@ class ConfigurationsController extends Controller
 
     public function descargaMasiva()
     {
-        return view('configurations.descarga-masiva');
+        $proyects = Project::orderBy('name', 'asc')->pluck('name', 'id');
+
+        return view('configurations.descarga-masiva', compact('proyects'));
     }
 
     public function multiPdf(Request $request)
@@ -93,12 +93,18 @@ class ConfigurationsController extends Controller
             'startDate' => 'required|date|before:endDate',
             'endDate' => 'required|date|after:startDate',
             'email' => 'required|email',
+            'projects' => 'required|array',
         ]);
 
+        $projects = $datos_validos['projects'];
+
         $getDocuments = Document::query()
-            ->whereBetween('date', [$datos_validos['startDate'], $datos_validos['endDate']])
-            ->where('status', 2)
-            ->get();
+        ->whereHas('client', function ($query) use ($projects) {
+            $query->whereIn('project_id', $projects);
+        })
+        ->whereBetween('date', [$datos_validos['startDate'], $datos_validos['endDate']])
+        ->where('status', 2)
+        ->get();
 
         if ($getDocuments->count() == 0) {
             Flasher::addError('No hay documentos autorizados en ese rango de fechas.');
@@ -108,7 +114,7 @@ class ConfigurationsController extends Controller
         // Generar la carpeta para los archivos
         $folderName = NOW()->format('Ymdis');
         $storageRoute = "pdf/" . $folderName;
-        Storage::makeDirectory( $storageRoute );
+        Storage::makeDirectory($storageRoute);
 
         // Generar el array con los jobs individuales
         $jobs = [];
@@ -134,9 +140,9 @@ class ConfigurationsController extends Controller
     public function recalculateClient(Request $request)
     {
         $allDocuments = Document::with('payments')
-        ->where('client_id', $request->client)
-        ->whereIn('status', [1,2])
-        ->get();
+            ->where('client_id', $request->client)
+            ->whereIn('status', [1, 2])
+            ->get();
 
         $logData = $allDocuments->map(function ($docto) {
             $total_payed = round($docto->payments->sum('pivot.amount') / 100, 2);
@@ -146,7 +152,7 @@ class ConfigurationsController extends Controller
             $docto->update([
                 'pending' => round($docto->total - $total_payed, 2),
             ]);
-        
+
             return [
                 'id' => $docto->id,
                 'total' => $docto->total,
@@ -156,7 +162,7 @@ class ConfigurationsController extends Controller
                 'total_payment_balance' => $total_payment_balance,
                 'total_sent_to_client_balance' => round(($total_payment_balance + $total_payment_amount) - $total_payed, 2),
             ];
-        }); 
+        });
 
         Flasher::addSuccess('Documentos revisados.');
 
@@ -173,5 +179,4 @@ class ConfigurationsController extends Controller
 
         return redirect()->route('home');
     }
-
 }
