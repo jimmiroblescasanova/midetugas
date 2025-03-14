@@ -17,7 +17,7 @@
                         @csrf
                         <div class="row">
                             <div class="form-group col-12 col-sm-6">
-                                <label>Selecctiona uno o varios condominios</label>
+                                <label>Selecciona uno o varios condominios</label>
                                 <select multiple class="form-control" name="projects[]" style="height: 250px">
                                     @foreach ($proyects as $id => $proyect)
                                         <option value="{{ $id }}">{{ $proyect }}</option>
