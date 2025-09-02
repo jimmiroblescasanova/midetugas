@@ -233,7 +233,7 @@ class DocumentsController extends Controller
     public function cancel(Document $document)
     {
         $activeDocuments = Document::where([
-            ['client_id', $document->client_id], 
+            ['client_id', $document->client_id],
             ['id', '>', $document->id],
             ])
             ->whereIn('status', [1,2])
@@ -287,5 +287,29 @@ class DocumentsController extends Controller
         flash()->addSuccess('Correo enviado con éxito');
 
         return back();
+    }
+
+    public function editPhoto(Document $document)
+    {
+        return view('documents.edit_photo', compact('document'));
+    }
+
+    public function updatePhoto(Request $request, Document $document)
+    {
+        $request->validate([
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        // Eliminar imagen anterior si existe
+        if ($document->photo && Storage::disk('public')->exists($document->photo)) {
+            Storage::disk('public')->delete($document->photo);
+        }
+
+        // Guardar nueva imagen
+        $path = $request->file('photo')->store('documents', 'public');
+        $document->photo = $path;
+        $document->save();
+
+        return redirect()->route('documents.show', $document)->with('success', 'Imagen actualizada correctamente.');
     }
 }

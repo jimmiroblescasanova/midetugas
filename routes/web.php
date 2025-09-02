@@ -68,6 +68,8 @@ Route::get('/documents/{document}/cancel', [DocumentsController::class, 'cancel'
 Route::get('/documents/{document}/send-email', [DocumentsController::class, 'sendEmail'])->name('documents.sendEmail');
 Route::get('/documents/{id}/print', [DocumentsController::class, 'print'])->name('documents.print');
 Route::get('/documents/multiple-pdf/download', [DocumentsController::class, 'multiPdf'])->name('documents.multiPdf');
+Route::get('/documents/{document}/edit-photo', [DocumentsController::class, 'editPhoto'])->name('documents.editPhoto');
+Route::post('/documents/{document}/update-photo', [DocumentsController::class, 'updatePhoto'])->name('documents.updatePhoto');
 
 Route::get('/payments', [PaymentsController::class, 'index'])->name('payments.index')->middleware('permission:pay_documents');
 Route::post('/payments', [PaymentsController::class, 'store'])->name('payments.store')->middleware('permission:pay_documents');

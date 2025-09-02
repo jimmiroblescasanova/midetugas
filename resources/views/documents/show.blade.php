@@ -127,7 +127,11 @@
                             <h3 class="text-primary"><i class="fas fa-image"></i> Fotografía del medidor</h3>
                             <img src="{{ asset('storage/' . $document->photo) }}" height="300px"
                                 class="mx-auto d-block rounded" alt="">
-
+                            <div class="text-center my-2">
+                                <a href="{{ route('documents.editPhoto', $document) }}" class="btn btn-warning">
+                                    <i class="fas fa-edit"></i> Editar imagen
+                                </a>
+                            </div>
                             <div class="text-muted float-sm-right">
                                 <p class="text-sm">
                                     Fecha de captura: {{ $document->date->format('d-M-Y') }}
