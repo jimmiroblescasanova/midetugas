@@ -302,7 +302,7 @@
                             <tr>
                                 <td>0585 9700 0058 6066 23</td>
                                 <td>https://paypal.me/MIDETUGASSADECV</td>
-                                
+
                             </tr>
                             <tr>
                                 <td><img src="{{ asset('logos/logo-bbva.png') }}" alt="logo bbva" width="100px"></td>
@@ -310,11 +310,11 @@
                             </tr>
                             <tr>
                                 <td>Clabe interbancaria</td>
-                                <td>Tarjeta para depósito</td>
+                                <td>Depósito a tarjeta Banregio</td>
                             </tr>
                             <tr>
                                 <td>012 691 00121606735 6</td>
-                                <td>4347 9848 2127 4353</td>
+                                <td>4347 9848 1693 6123</td>
                             </tr>
                             <tr>
                                 <td colspan="2">Pagos a nombre de: MIDETUGAS SA DE CV</td>
@@ -358,7 +358,7 @@
                                 <tr>
                                     <td>
                                         @if ($acumulado > 0.01)
-                                        INMEDIATO 
+                                        INMEDIATO
                                         @else
                                         {{ $docto->payment_date->format('d-M-Y') }}
                                         @endif
