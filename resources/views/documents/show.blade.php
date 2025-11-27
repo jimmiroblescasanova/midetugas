@@ -63,12 +63,16 @@
                                 <div class="col-6">
                                     <h4>Datos del cliente</h4>
                                     <dl>
-                                        <dt>No. Cuenta:</dt>
-                                        <dd>{{ $document->client->accountNumber }}</dd>
+                                        <dt>Condominio</dt>
+                                        <dd>{{ $document->client->project->name }}</dd>
                                         <dt>Nombre:</dt>
                                         <dd>{{ $document->client->name }}</dd>
                                         <dt>Teléfono:</dt>
                                         <dd>{{ $document->client->phone }}</dd>
+                                        <dt>Edificio:</dt>
+                                        <dd>{{ $document->client->line_2 }}</dd>
+                                        <dt>Departamento:</dt>
+                                        <dd>{{ $document->client->line_3 }}</dd>
                                     </dl>
                                 </div>
                                 <div class="col-6">
