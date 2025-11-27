@@ -31,26 +31,38 @@
                             :direction="$sortField === 'id' ? $sortDirection : null">
                             ID
                         </x-table.heading>
-                        <x-table.heading 
-                            sortable 
+                        <x-table.heading
+                            sortable
                             width="15%"
                             wire:click="sortBy('date')"
                             :direction="$sortField === 'date' ? $sortDirection : null">
                             Fecha de aplicación
                         </x-table.heading>
-                        <x-table.heading 
-                            sortable 
+                        <x-table.heading
+                            sortable
                             width="15%"
                             wire:click="sortBy('created_at')"
                             :direction="$sortField === 'created_at' ? $sortDirection : null">
                             Fecha de captura</x-table.heading>
-                        <x-table.heading 
-                            sortable 
+                        <x-table.heading
+                            sortable
                             wire:click="sortBy('name')"
                             :direction="$sortField === 'name' ? $sortDirection : null">
                             Cliente
                         </x-table.heading>
-                        <x-table.heading>Importe</x-table.heading>
+                        <x-table.heading
+                        sortable
+                        wire:click="sortBy('line_2')"
+                        :direction="$sortField === 'line_2' ? $sortDirection : null">
+                            Condominio
+                        </x-table.heading>
+                        <x-table.heading
+                            sortable
+                            wire:click="sortBy('line_3')"
+                            :direction="$sortField === 'line_3' ? $sortDirection : null">
+                            Condominio
+                        </x-table.heading>
+                        <x-table.heading width="120px">Importe</x-table.heading>
                         <x-table.heading width="10%">Acción</x-table.heading>
                     </tr>
                 </thead>
@@ -61,6 +73,8 @@
                             <td>{{ $pay->date->format('d/m/Y') }}</td>
                             <td>{{ $pay->created_at->format('d/m/Y') }}</td>
                             <td>{{ $pay->client->name }}</td>
+                            <td>{{ $pay->client->line_2 }}</td>
+                            <td>{{ $pay->client->line_3 }}</td>
                             <td>{{ contabilidad($pay->amount) }}</td>
                             <td class="text-center">
                                 @if (!$pay->closed)
@@ -68,7 +82,7 @@
                                         <i class="fas fa-edit mr-2"></i>
                                         Continuar
                                     </a>
-                                @else 
+                                @else
                                 <a href="{{ route('payments.show', $pay) }}" class="btn btn-xs btn-default">
                                     <i class="fas fa-eye mr-2"></i>Ver
                                 </a>
@@ -78,7 +92,7 @@
                     @empty
                         <tr>
                             <td colspan="6">No existen registros para la búsqueda realizada.</td>
-                        </tr>   
+                        </tr>
                     @endforelse
                 </tbody>
             </table>
@@ -96,7 +110,7 @@
             locale: {
                 format: 'DD/MM/YYYY',
                 cancelLabel: 'Cancelar',
-                applyLabel: 'Aplicar', 
+                applyLabel: 'Aplicar',
                 "daysOfWeek": [
                     "Do",
                     "Lu",
