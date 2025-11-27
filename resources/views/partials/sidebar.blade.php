@@ -204,6 +204,15 @@
                                 </a>
                             </li>
                         </ul>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('configuration.settings') }}"
+                                    class="nav-link {{ setActive('configuration.settings') }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Generales</p>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                 @endcan
                 <li class="nav-item">

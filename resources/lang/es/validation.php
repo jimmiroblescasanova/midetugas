@@ -165,6 +165,7 @@ return [
         'serial_numer' => 'número de serie',
         'brand' => 'marca',
         'model' => 'modelo',
+        'whatsapp_message' => 'mensaje de WhatsApp',
     ],
 
 ];

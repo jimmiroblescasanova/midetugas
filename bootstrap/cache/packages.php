@@ -126,6 +126,18 @@
       0 => 'ProtoneMedia\\LaravelFormComponents\\Support\\ServiceProvider',
     ),
   ),
+  'rawilk/laravel-settings' => 
+  array (
+    'aliases' => 
+    array (
+      'Settings' => 'Rawilk\\Settings\\Facades\\Settings',
+      'SettingsFactory' => 'Rawilk\\Settings\\Drivers\\Factory',
+    ),
+    'providers' => 
+    array (
+      0 => 'Rawilk\\Settings\\SettingsServiceProvider',
+    ),
+  ),
   'realrashid/sweet-alert' => 
   array (
     'aliases' => 

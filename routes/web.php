@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SettingsController;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SMSController;
@@ -151,6 +152,14 @@ Route::post('/configuration/factors', [FactorsController::class, 'store'])->name
 Route::get('/configuration/factors/{factor}/edit', [FactorsController::class, 'edit'])->name('factors.edit');
 Route::patch('/configuration/factors/{factor}/edit', [FactorsController::class, 'update'])->name('factors.update');
 Route::delete('configuration/factors/{factor}/edit', [FactorsController::class, 'destroy'])->name('factors.destroy');
+
+Route::group([
+    'prefix' => 'configuration',
+    'as' => 'configuration.'
+], function() {
+    Route::get('settings', [SettingsController::class, 'index'])->name('settings');
+    Route::post('settings/whatsapp-message', [SettingsController::class, 'updateWhatsappMessage'])->name('settings.update-whatsapp-message');
+});
 
 Route::get('/download/{file}', function ($file) {
     return Storage::download('pdf/' . $file . '.zip');

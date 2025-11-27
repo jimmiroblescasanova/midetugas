@@ -39,6 +39,16 @@
                     <a href="{{ route('documents.index') }}" class="btn btn-app">
                         <i class="far fa-hand-point-left"></i>Atrás
                     </a>
+
+                    @if(filled($document->client->phone))
+                            @php
+                                $message = urlencode(settings()->get('whatsapp_message'));
+                                $client_phone_number = $document->client->country_code . $document->client->phone;
+                            @endphp
+                            <a href="https://wa.me/{{ $client_phone_number }}?text={{ $message }}" class="btn btn-app" target="_blank">
+                                <i class="fab fa-whatsapp"></i> WhatsApp
+                            </a>
+                    @endif
                 </div>
             </div>
         </div>
