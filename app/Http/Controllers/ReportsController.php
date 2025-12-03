@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Client;
 use App\Project;
 use App\Document;
+use App\Services\ReportsDocumentListService;
+use http\Exception;
 use Illuminate\Http\Request;
 use App\Exports\EdcExportReport;
 use Illuminate\Support\Facades\DB;
@@ -126,5 +128,44 @@ class ReportsController extends Controller
     public function edcExportExcel(Request $request)
     {
         return Excel::download( new EdcExportReport($request), 'estado_de_cuenta.xlsx');
+    }
+
+    public function listaRecibos()
+    {
+        $years = DB::table('documents')
+            ->selectRaw('YEAR(date) as year')
+            ->whereIn('status', [2, 4])
+            ->groupBy('year')
+            ->orderByDesc('year')
+            ->pluck('year')
+            ->toArray();
+
+        $projects = Project::pluck('name', 'id');
+
+        return view('reports.lista-recibos.parameters', [
+            'select_years' => $years,
+            'projects' => $projects,
+        ]);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function listaRecibosExecute(Request $request, ReportsDocumentListService $service)
+    {
+        // Validate the year, month, and project (exists on table projects)
+        $data = $request->validate([
+            'year' => 'required|integer|min:2000|max:2100',
+            'month' => 'required|digits_between:1,12',
+            'project_id' => 'required|exists:projects,id',
+            'columns' => 'nullable|array',
+        ]);
+
+
+        return match ($request->input('action')) {
+            'pdf' => $service->generatePdf($data),
+            'excel' => $service->generateXls($data),
+            default => throw new \Exception('Invalid action'),
+        };
     }
 }

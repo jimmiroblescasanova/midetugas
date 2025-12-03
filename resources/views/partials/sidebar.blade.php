@@ -168,6 +168,12 @@
                                 <p>Depositos</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('reportes.documents-list.parameters') }}" class="nav-link {{ setActive('reportes.documents-list.parameters') }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Recibos generados</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 @can('run_tasks')
