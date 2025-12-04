@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Client;
 use App\Project;
 use App\Document;
+use App\Services\ReportsBillingService;
 use App\Services\ReportsDocumentListService;
 use http\Exception;
 use Illuminate\Http\Request;
 use App\Exports\EdcExportReport;
 use Illuminate\Support\Facades\DB;
 use App\Exports\AccountStatusReport;
+use Illuminate\View\View;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use App\Http\Requests\ClientBalanceReportRequest;
@@ -132,13 +134,7 @@ class ReportsController extends Controller
 
     public function listaRecibos()
     {
-        $years = DB::table('documents')
-            ->selectRaw('YEAR(date) as year')
-            ->whereIn('status', [2, 4])
-            ->groupBy('year')
-            ->orderByDesc('year')
-            ->pluck('year')
-            ->toArray();
+        $years = $this->getYears();
 
         $projects = Project::pluck('name', 'id');
 
@@ -167,5 +163,54 @@ class ReportsController extends Controller
             'excel' => $service->generateXls($data),
             default => throw new \Exception('Invalid action'),
         };
+    }
+
+    /**
+     * Show billing report parameters view.
+     */
+    public function billing(): View
+    {
+        return view('reports.billing.parameters', [
+            'years' => $this->getYears(),
+            'projects' => Project::pluck('name', 'id'),
+        ]);
+    }
+
+    /**
+     * Ejecuta el reporte de cobranza según los parámetros enviados.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Services\ReportsBillingService $service
+     *
+     * @return mixed Resultado de la generación del servicio (PDF o Excel).
+     *
+     * @throws \Exception Si la acción no es válida.
+     */
+    public function billingExecute(Request $request, ReportsBillingService $service)
+    {
+        // Validate the year, month, and project (exists on table projects)
+        $data = $request->validate([
+            'year' => 'required|integer|min:2000|max:2100',
+            'month' => 'required|digits_between:1,12',
+            'project_id' => 'required|exists:projects,id',
+            'columns' => 'nullable|array',
+        ]);
+
+        return match ($request->input('action')) {
+            'pdf' => $service->generatePdf($data),
+            'excel' => $service->generateXls($data),
+            default => throw new \Exception('Invalid action'),
+        };
+    }
+
+    protected function getYears(): array
+    {
+        return DB::table('documents')
+            ->selectRaw('YEAR(date) as year')
+            ->whereIn('status', [2, 4])
+            ->groupBy('year')
+            ->orderByDesc('year')
+            ->pluck('year')
+            ->toArray();
     }
 }

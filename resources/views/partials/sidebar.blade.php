@@ -174,6 +174,12 @@
                                 <p>Recibos generados</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('reportes.billing.parameters') }}" class="nav-link {{ setActive('reportes.billing.parameters') }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Cobranza</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 @can('run_tasks')

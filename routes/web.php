@@ -148,6 +148,14 @@ Route::group([
     Route::post('/', [ReportsController::class, 'listaRecibosExecute'])->name('execute');
 });
 
+Route::group([
+    'prefix' => '/reportes/cobranza-2',
+    'as' => 'reportes.billing.'
+], function () {
+    Route::get('/', [ReportsController::class, 'billing'])->name('parameters');
+    Route::post('/', [ReportsController::class, 'billingExecute'])->name('execute');
+});
+
 Route::get('/configurations/tasks', [ConfigurationsController::class, 'tasks'])->name('configuration.tasks')->middleware('permission:run_tasks');
 Route::post('/configurations/tasks/1', [ConfigurationsController::class, 'recalcularInventario'])->name('configurations.run.recalcularInventario')->middleware('permission:run_tasks');
 Route::post('/configurations/tasks/2', [ConfigurationsController::class, 'recalculateClient'])->name('configurations.run.recalculate-client');
