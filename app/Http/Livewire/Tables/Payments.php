@@ -3,9 +3,13 @@
 namespace App\Http\Livewire\Tables;
 
 use App\Payment;
+use Illuminate\View\View;
 use Livewire\Component;
 use App\Traits\WithSorting;
 use App\Traits\WithSearching;
+use App\Exports\PaymentListExport;
+use Maatwebsite\Excel\Facades\Excel;
+use PhpOffice\PhpSpreadsheet\Exception;
 
 class Payments extends Component
 {
@@ -15,13 +19,13 @@ class Payments extends Component
     public $startDate = null;
     public $endDate = null;
 
-    public function mount()
+    public function mount(): void
     {
         $this->sortField = 'id';
         $this->sortDirection = 'desc';
     }
 
-    public function clear()
+    public function clear(): void
     {
         $this->reset([
             'search',
@@ -33,7 +37,27 @@ class Payments extends Component
         $this->emit('ClearDates');
     }
 
-    public function render()
+    /**
+     * @throws Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     */
+    public function exportSearch(): \Symfony\Component\HttpFoundation\BinaryFileResponse
+    {
+        $filename = 'pagos_' . now()->format('Ymd_His') . '.xlsx';
+
+        return Excel::download(
+            new PaymentListExport(
+                search: $this->search,
+                startDate: $this->startDate,
+                endDate: $this->endDate,
+                sortField: $this->sortField,
+                sortDirection: $this->sortDirection,
+            ),
+            $filename
+        );
+    }
+
+    public function render(): View
     {
         $payments = Payment::withClientName()
             ->search($this->search)

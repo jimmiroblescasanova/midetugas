@@ -1,6 +1,6 @@
 <div>
     <div class="row">
-        <div class="form-group col-12 col-md-6">
+        <div class="form-group col-12 col-md-5">
             <input type="text" wire:model.debounce.500ms="search" class="form-control" placeholder="Buscar por nombre, importe">
         </div>
         <div class="form-group col-6 col-md-3">
@@ -17,6 +17,17 @@
         </div>
         <div class="form-group col-md-1">
             <button type="button" wire:click="clear" class="btn btn-default btn-block">Limpiar</button>
+        </div>
+        <div class="form-group col-md-1">
+            <button
+                type="button"
+                wire:click="exportSearch"
+                wire:loading.attr="disabled"
+                wire:target="exportSearch"
+                class="btn btn-success btn-block">
+                <span wire:loading.remove wire:target="exportSearch">Exportar</span>
+                <span wire:loading wire:target="exportSearch">Espera...</span>
+            </button>
         </div>
     </div>
     <div class="card">
@@ -60,7 +71,7 @@
                             sortable
                             wire:click="sortBy('line_3')"
                             :direction="$sortField === 'line_3' ? $sortDirection : null">
-                            Condominio
+                            Departamento
                         </x-table.heading>
                         <x-table.heading width="120px">Importe</x-table.heading>
                         <x-table.heading width="10%">Acción</x-table.heading>
