@@ -19,10 +19,9 @@
             <x-form :action="route('projects.update', $project)">
                 @csrf
                 @method('PATCH')
-                @bind($project)
                 <div class="card-body">
-                    <x-form-input name="name" label="Nombre del condominio:" />
-                    <x-form-input name="reference" label="Referencia:" />
+                    <x-form-input name="name" :bind="$project" label="Nombre del condominio:" />
+                    <x-form-input name="reference" :bind="$project" label="Referencia:" />
                     <div class="form-group">
                         <label for="total_capacity">Capacidad total: <i class="fas fa-question-circle fa-xs"
                             data-toggle="tooltip"
@@ -35,7 +34,6 @@
                         <small>Última modificación: {{ $project->updated_at->diffForHumans() }}</small>
                     </div>
                 </div>
-                @endbind 
                 <div class="card-footer">
                     <div class="d-flex justify-content-between">
                         <x-form-submit class="btn-sm">

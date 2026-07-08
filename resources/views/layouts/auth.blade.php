@@ -2,29 +2,20 @@
 <html lang="es">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>{{ config('app.name') }} | @yield('title', 'WebApp')</title>
-
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{ asset('/vendor/adminlte/plugins/fontawesome-free/css/all.min.css') }}">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="{{ asset('/css/app.css') }}">
+    <title>{{ config('app.name') }} | @yield('title', 'Acceso')</title>
+
+    @filamentStyles
+    @vite('resources/css/app.css')
 </head>
-<body class="hold-transition login-page">
+<body class="min-h-screen bg-gray-100 text-gray-950 antialiased">
+    <main class="flex min-h-screen items-center justify-center px-4 py-10">
+        <div class="w-full max-w-md rounded-lg bg-white p-6 shadow-sm ring-1 ring-gray-200">
+            @yield('content')
+        </div>
+    </main>
 
-@if(session()->has('info'))
-    @include('partials.alerts.info')
-@endif
-
-<div class="login-box">
-    @yield('content')
-</div>
-<!-- /.login-box -->
-
-<!-- AdminLTE App -->
-<script src="{{ asset('/js/app.js') }}"></script>
-
+    @filamentScripts
+    @vite('resources/js/app.js')
 </body>
 </html>
-

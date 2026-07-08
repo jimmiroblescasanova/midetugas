@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Factor;
 use App\Measurer;
 use Flasher\Laravel\Facade\Flasher;
-use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Requests\StoreMeasurerRequest;
 use App\Http\Requests\UpdateMeasurerRequest;
 

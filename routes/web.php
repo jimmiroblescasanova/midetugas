@@ -23,7 +23,7 @@ use App\Http\Controllers\ConfigurationsController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 
-Route::get('/', [LoginController::class, 'showLoginForm'])->name('showLoginForm');
+Route::redirect('/', '/admin')->name('showLoginForm');
 Route::post('login', [LoginController::class, 'login'])->name('login');
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
@@ -32,7 +32,7 @@ Route::post('/password/reset', [ResetPasswordController::class, 'reset'])->name(
 Route::get('/password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
 Route::get('/password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::redirect('/home', '/admin')->name('home');
 
 Route::get('/testSMS/{id}', [SMSController::class, 'sendSMS'])->name('sms');
 

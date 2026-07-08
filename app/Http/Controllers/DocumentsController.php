@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\DB;
 use Flasher\Laravel\Facade\Flasher;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
-use Intervention\Image\Facades\Image;
+use Intervention\Image\Laravel\Facades\Image;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\SaveDocumentRequest;
@@ -70,16 +70,16 @@ class DocumentsController extends Controller
         // almacena la ruta tmp de foto
         $files = $request->file('photo');
         // convert image
-        $ImageUpload = Image::make($files);
+        $ImageUpload = Image::read($files);
         // Corrige la orientacion de la imagen
         if ($ImageUpload->exif('Orientation') == 6) {
-            $ImageUpload->rotate(-90)->heighten(800);
+            $ImageUpload->rotate(-90)->scale(height: 800);
         } elseif($ImageUpload->exif('Orientation') == 8) {
-            $ImageUpload->rotate(90)->heighten(800);
+            $ImageUpload->rotate(90)->scale(height: 800);
         } else {
-            $ImageUpload->heighten(800);
+            $ImageUpload->scale(height: 800);
         }
-        $ImageUpload->encode('jpg');
+        $ImageUpload->toJpeg();
 
         // Primero obtenemos el precio actual de la BD
         $price = Price::latest()->first()->price;
